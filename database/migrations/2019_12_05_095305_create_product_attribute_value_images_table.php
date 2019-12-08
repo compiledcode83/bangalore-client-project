@@ -14,8 +14,16 @@ class CreateProductAttributeValueImagesTable extends Migration
     {
         Schema::create('product_attribute_value_images', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->unsignedBigInteger('product_attribute_value_id');
+            $table->foreign('product_attribute_value_id')
+                ->references('id')->on('product_attribute_values')
+                ->onDelete('cascade');
+
+            $table->string('image');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -14,8 +14,19 @@ class CreateAttributeValuesTable extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->unsignedBigInteger('attribute_id');
+            $table->foreign('attribute_id')
+                    ->references('id')->on('attributes')
+                    ->onDelete('cascade');
+
+            $table->string('value_en');
+            $table->string('value_ar');
+
+            $table->tinyInteger('is_active')->default('1');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

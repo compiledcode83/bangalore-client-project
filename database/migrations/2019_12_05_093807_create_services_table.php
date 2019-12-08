@@ -12,10 +12,26 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('media_services', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->tinyInteger('type')->comment('1 ==> media, 2 ==> services');
+
+            $table->string('title_en');
+            $table->string('title_ar');
+
+            $table->text('short_description_en');
+            $table->text('short_description_ar');
+
+            $table->text('full_description_en');
+            $table->text('full_description_ar');
+
+            $table->string('image');
+
+            $table->tinyInteger('is_active')->default('1');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

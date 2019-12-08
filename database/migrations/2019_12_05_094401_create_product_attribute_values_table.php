@@ -14,8 +14,23 @@ class CreateProductAttributeValuesTable extends Migration
     {
         Schema::create('product_attribute_values', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')
+                ->references('id')->on('products')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('attribute_value_id');
+            $table->foreign('attribute_value_id')
+                ->references('id')->on('attribute_values')
+                ->onDelete('cascade');
+
+            $table->string('sku');
+            $table->integer('stock');
+
+            $table->tinyInteger('is_active')->default('1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

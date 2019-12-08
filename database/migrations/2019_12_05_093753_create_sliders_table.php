@@ -14,8 +14,15 @@ class CreateSlidersTable extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->tinyInteger('order');
+            $table->string('image');
+            $table->string('link');
+
+            $table->tinyInteger('is_active')->default('1');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

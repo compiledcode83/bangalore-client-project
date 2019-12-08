@@ -1,7 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96a4b74c-0974-4564-b980-07c47efc4895" name="Default Changelist" comment="" />
+    <list default="true" id="96a4b74c-0974-4564-b980-07c47efc4895" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wish_lists_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Attribute.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/AttributeValue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Cart.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CartItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Category.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Medium.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/OrderItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/OrderStatus.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ProductAttributeValue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ProductAttributeValueImage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ProductMainImage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ProductPrice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/RelatedProduct.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Review.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Service.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Setting.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Slider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/StaticPage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Status.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/UserAddress.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Wishlist.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093753_create_sliders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093753_create_sliders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093807_create_services_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093807_create_services_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093815_create_media_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093855_create_static_pages_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093855_create_static_pages_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093917_create_statuses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093917_create_statuses_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093937_create_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093937_create_settings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094151_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094151_create_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094222_create_attributes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094222_create_attributes_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094339_create_attribute_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094339_create_attribute_values_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094701_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094701_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094720_create_order_status_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094720_create_order_status_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094746_create_order_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094746_create_order_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094805_create_user_addresses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094805_create_user_addresses_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094828_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094926_create_product_attribute_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094401_create_product_attribute_values_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094953_create_reviews_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094953_create_reviews_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wishlists_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095115_create_product_prices_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095115_create_product_prices_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095141_create_product_main_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095141_create_product_main_images_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095236_create_related_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095236_create_related_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095305_create_product_attribute_value_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095305_create_product_attribute_value_images_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_100215_create_carts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_100215_create_carts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_100335_create_cart_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_100335_create_cart_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +72,9 @@
     <fileColor scope="Non-Project Files (Material Darker)" color="323232" />
     <fileColor scope="Non-Project Files (Material Lighter)" color="eae8e8" />
     <fileColor scope="Non-Project Files (Material Palenight)" color="2f2e43" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -119,9 +175,11 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1UYVRcmamXZbVDgG3eEaNeDUC6p" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Models" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -160,11 +218,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575533508660</updated>
-      <workItem from="1575533509914" duration="2795000" />
+      <workItem from="1575533509914" duration="14144000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

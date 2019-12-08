@@ -14,8 +14,16 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->string('contact_us_banner');
+            $table->string('faq_banner');
+            $table->string('sitemap_banner');
+            $table->string('media_banner');
+            $table->string('services_banner');
+            $table->string('special_offers_banner');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

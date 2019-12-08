@@ -14,8 +14,20 @@ class CreateProductPricesTable extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')
+                ->references('id')->on('products')
+                ->onDelete('cascade');
+
+            $table->integer('max_qty');
+            $table->decimal('individual_unit_price', 8,3);
+            $table->decimal('corporate_unit_price', 8,3);
+            $table->decimal('individual_discounted_unit_price', 8,3);
+            $table->decimal('corporate_discounted_unit_price', 8,3);
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

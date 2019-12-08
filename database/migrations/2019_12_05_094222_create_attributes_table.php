@@ -14,8 +14,14 @@ class CreateAttributesTable extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->string('name_en');
+            $table->string('name_ar');
+
+            $table->tinyInteger('is_active')->default('1');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

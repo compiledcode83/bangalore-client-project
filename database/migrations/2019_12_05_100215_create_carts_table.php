@@ -14,7 +14,18 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
+            $table->string('session_id');
+
+            $table->decimal('total', 8,3);
+            $table->decimal('discount', 8,3);
+            $table->decimal('subtotal', 8,3);
+
             $table->timestamps();
         });
     }

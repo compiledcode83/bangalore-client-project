@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductMainImagesTable extends Migration
+class CreateWish_listsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,20 @@ class CreateProductMainImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_main_images', function (Blueprint $table) {
+        Schema::create('wish_lists', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')
                 ->references('id')->on('products')
                 ->onDelete('cascade');
 
-            $table->string('image');
+            $table->integer('qty');
 
             $table->timestamps();
             $table->softDeletes();
@@ -34,6 +39,6 @@ class CreateProductMainImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_main_images');
+        Schema::dropIfExists('wishlists');
     }
 }
