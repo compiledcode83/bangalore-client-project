@@ -13,7 +13,7 @@ class CreateServicesTable extends Migration
     public function up()
     {
         Schema::create('media_services', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->tinyInteger('type')->comment('1 ==> media, 2 ==> services');
 

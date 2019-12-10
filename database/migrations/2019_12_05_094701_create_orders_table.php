@@ -13,7 +13,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('user_id');
 

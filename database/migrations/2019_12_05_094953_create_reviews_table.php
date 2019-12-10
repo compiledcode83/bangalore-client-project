@@ -13,7 +13,7 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

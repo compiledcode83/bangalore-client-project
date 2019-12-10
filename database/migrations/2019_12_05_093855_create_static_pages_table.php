@@ -24,7 +24,6 @@ class CreateStaticPagesTable extends Migration
             $table->text('body_ar');
 
             $table->string('banner');
-            $table->string('banner');
 
             $table->string('slug');
 

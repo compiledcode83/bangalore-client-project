@@ -13,7 +13,7 @@ class CreateCartItemsTable extends Migration
     public function up()
     {
         Schema::create('cart_items', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('cart_id');
             $table->foreign('cart_id')

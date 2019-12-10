@@ -2,58 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96a4b74c-0974-4564-b980-07c47efc4895" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wish_lists_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/itc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/itc.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Attribute.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AttributeValue.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Cart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/CartItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Category.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Medium.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/OrderItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/OrderStatus.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ProductAttributeValue.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ProductAttributeValueImage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ProductMainImage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ProductPrice.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/RelatedProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Review.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Setting.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Slider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/StaticPage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Status.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserAddress.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Wishlist.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Attribute.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Attribute.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/AttributeValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AttributeValue.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/CartItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CartItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/OrderItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/OrderStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ProductAttributeValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductAttributeValue.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093753_create_sliders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093753_create_sliders_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093807_create_services_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093807_create_services_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093815_create_media_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093855_create_static_pages_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093855_create_static_pages_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093917_create_statuses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093917_create_statuses_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_093937_create_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_093937_create_settings_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094151_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094151_create_categories_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094222_create_attributes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094222_create_attributes_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094339_create_attribute_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094339_create_attribute_values_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094401_create_product_attribute_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094401_create_product_attribute_values_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094701_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094701_create_orders_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094720_create_order_status_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094720_create_order_status_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094746_create_order_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094746_create_order_items_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094805_create_user_addresses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094805_create_user_addresses_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094828_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094926_create_product_attribute_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094401_create_product_attribute_values_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094953_create_reviews_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094953_create_reviews_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wishlists_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wish_lists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095021_create_wish_lists_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095115_create_product_prices_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095115_create_product_prices_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095141_create_product_main_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095141_create_product_main_images_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095236_create_related_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095236_create_related_products_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_095305_create_product_attribute_value_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_095305_create_product_attribute_value_images_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_100215_create_carts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_100215_create_carts_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_100335_create_cart_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_100335_create_cart_items_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,6 +64,27 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MessDetectorBlackList">
+    <option name="filePaths">
+      <list>
+        <option value="$PROJECT_DIR$/_ide_helper.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PHPCSFixerBlackList">
+    <option name="filePaths">
+      <list>
+        <option value="$PROJECT_DIR$/_ide_helper.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PHPCodeSnifferBlackList">
+    <option name="filePaths">
+      <list>
+        <option value="$PROJECT_DIR$/_ide_helper.php" />
+      </list>
+    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -172,6 +182,11 @@
       <path value="$PROJECT_DIR$/vendor/cviebrock/eloquent-sluggable" />
       <path value="$PROJECT_DIR$/vendor/laracasts/generators" />
       <path value="$PROJECT_DIR$/vendor/laravel/helpers" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/encore/laravel-admin" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
     </include_path>
   </component>
   <component name="ProjectId" id="1UYVRcmamXZbVDgG3eEaNeDUC6p" />
@@ -179,7 +194,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../song" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -187,8 +202,13 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -218,7 +238,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575533508660</updated>
-      <workItem from="1575533509914" duration="14144000" />
+      <workItem from="1575533509914" duration="35226000" />
     </task>
     <servers />
   </component>

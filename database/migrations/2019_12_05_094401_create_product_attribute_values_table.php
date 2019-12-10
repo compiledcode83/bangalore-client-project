@@ -13,7 +13,7 @@ class CreateProductAttributeValuesTable extends Migration
     public function up()
     {
         Schema::create('product_attribute_values', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')
