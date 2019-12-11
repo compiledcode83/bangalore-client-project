@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('name_ar');
             $table->text('description_en');
             $table->text('description_ar');
-            $table->string('sku');
+            $table->string('sku')->unique();
             $table->string('main_image');
             $table->string('slug');
 

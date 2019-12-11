@@ -21,4 +21,14 @@ class Product extends Model
      * @var array
      */
     protected $guarded = ['id', 'category_id'];
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function productAttributeValues()
+    {
+        return $this->hasMany(ProductAttributeValue::class);
+    }
 }

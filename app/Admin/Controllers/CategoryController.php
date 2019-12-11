@@ -27,7 +27,7 @@ class CategoryController extends AdminController
         $grid = new Grid(new Category);
 
         $grid->column('id', __('Id'));
-        $grid->column('parent_id', __('Parent id'));
+        $grid->column('parent_id', __('Parent'));
         $grid->column('name_en', __('Name en'));
         $grid->column('name_ar', __('Name ar'));
         $grid->column('description_en', __('Description en'));

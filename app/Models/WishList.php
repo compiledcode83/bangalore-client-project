@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Slider extends Model
+class WishList extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'user_id', 'product_id'];
 }

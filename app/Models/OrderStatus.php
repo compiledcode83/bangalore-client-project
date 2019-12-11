@@ -15,6 +15,8 @@ class OrderStatus extends Model
      */
     protected $dates = ['deleted_at'];
 
+    protected $table = 'order_status';
+
 
     /**
      * The attributes that must be protected from mass assignment.

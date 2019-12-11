@@ -25,7 +25,7 @@ class CreateWishListsTable extends Migration
                 ->references('id')->on('products')
                 ->onDelete('cascade');
 
-            $table->integer('qty');
+            $table->integer('qty')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
