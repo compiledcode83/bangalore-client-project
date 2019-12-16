@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define( UserAddress::class, function ( Faker $faker ) {
     return [
-        'user_id'   => $faker->numberBetween( 1, 35 ),
         'country'   => $faker->country,
         'city'      => $faker->city,
         'area'      => $faker->city,

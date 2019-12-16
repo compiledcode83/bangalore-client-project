@@ -15,4 +15,14 @@ class ProductAttributeValue extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function attributeValue()
+    {
+        return $this->belongsTo(AttributeValue::class);
+    }
+
+    public function attributeImages()
+    {
+        return $this->hasMany(ProductAttributeValueImage::class);
+    }
 }

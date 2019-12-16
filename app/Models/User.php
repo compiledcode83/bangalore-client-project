@@ -52,4 +52,28 @@ class User extends Authenticatable
     {
         return $query->where('type', $type);
     }
+
+    /**
+     * Get addresses for the User.
+     */
+    public function userAddresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    /**
+     * Get wishLists for the User.
+     */
+    public function wishLists()
+    {
+        return $this->hasMany(WishList::class);
+    }
+
+    /**
+     * Get orders for the User.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

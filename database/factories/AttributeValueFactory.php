@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(AttributeValue::class, function (Faker $faker) {
 
-    $value = $faker->name;
+    $value = $faker->colorName;
 
     return [
         'value_en' => $value,

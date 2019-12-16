@@ -21,4 +21,12 @@ class OrderItem extends Model
      * @var array
      */
     protected $guarded = ['id', 'order_id', 'product_attribute_id'];
+
+    /**
+     * Get the order owns this item
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

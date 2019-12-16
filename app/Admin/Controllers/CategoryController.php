@@ -15,7 +15,7 @@ class CategoryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Category';
+    protected $title = 'Categories';
 
     /**
      * Make a grid builder.
@@ -26,19 +26,35 @@ class CategoryController extends AdminController
     {
         $grid = new Grid(new Category);
 
-        $grid->column('id', __('Id'));
-        $grid->column('parent_id', __('Parent'));
-        $grid->column('name_en', __('Name en'));
-        $grid->column('name_ar', __('Name ar'));
-        $grid->column('description_en', __('Description en'));
-        $grid->column('description_ar', __('Description ar'));
-        $grid->column('slug', __('Slug'));
-        $grid->column('banner', __('Banner'));
-        $grid->column('image', __('Image'));
-        $grid->column('is_active', __('Is active'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->filter(function($filter){
+
+            // Remove the default id filter
+            $filter->disableIdFilter();
+
+            // Add Name filter
+            $filter->like('name_en', 'Name');
+
+            // Add Status filter
+            $filter->equal('is_active', 'Status')->radio([
+                ''   => 'All',
+                0    => 'Not Active',
+                1    => 'Active',
+            ]);
+
+        });
+
+        $grid->column('parent_id', __('Parent'))->display(function () {
+            return $this->parent ? $this->parent->name_en : 'Root';
+        })->sortable();
+        $grid->column('name_en', __('Name'))->sortable()->filter('name');
+        $grid->column('description_en', __('Description'));
+        $grid->column('banner', __('Banner'))->image('', 200, 100);;
+        $grid->column('is_active', __('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active'])
+            ->label([
+                0 => 'danger',
+                1 => 'success',
+            ])->sortable();
 
         return $grid;
     }
@@ -79,13 +95,17 @@ class CategoryController extends AdminController
     {
         $form = new Form(new Category);
 
-        $form->number('parent_id', __('Parent id'));
+
+        $rootCategories = Category::rootParent()->pluck('name_en');
+        $rootCategories->prepend('Root --Top Level');
+
+        $form->select('parent_id', __('Select Parent'))->options($rootCategories);
         $form->text('name_en', __('Name en'));
         $form->text('name_ar', __('Name ar'));
         $form->textarea('description_en', __('Description en'));
         $form->textarea('description_ar', __('Description ar'));
-        $form->text('slug', __('Slug'));
-        $form->text('banner', __('Banner'));
+//        $form->text('slug', __('Slug'));
+        $form->image('banner', __('Banner'));
         $form->image('image', __('Image'));
         $form->switch('is_active', __('Is active'))->default(1);
 

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(OrderStatus::class, function (Faker $faker) {
     return [
-        'order_id'    => $faker->numberBetween( 1, 4 ),
-        'status_id'    => $faker->numberBetween( 1, 5 ),
+        'status_id'    => $faker->numberBetween( 1, OrderStatus::all()->count() ),
         'comment'    => $faker->realText(50)
     ];
 });

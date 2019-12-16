@@ -10,4 +10,12 @@ class UserAddress extends Model
     use SoftDeletes;
 
     protected $guarded = ['id', 'user_id'];
+
+    /**
+     * Get the user owns this address
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

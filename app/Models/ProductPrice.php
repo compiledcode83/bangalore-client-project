@@ -10,4 +10,9 @@ class ProductPrice extends Model
     use SoftDeletes;
 
     protected $guarded = ['id', 'product_id'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

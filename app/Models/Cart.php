@@ -21,4 +21,12 @@ class Cart extends Model
      * @var array
      */
     protected $guarded = ['id', 'user_id'];
+
+    /**
+     * Get items for the Cart.
+     */
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

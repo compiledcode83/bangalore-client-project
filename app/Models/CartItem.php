@@ -21,4 +21,12 @@ class CartItem extends Model
      * @var array
      */
     protected $guarded = ['id', 'cart_id', 'product_attribute_value_id'];
+
+    /**
+     * Get the cart owns this item
+     */
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

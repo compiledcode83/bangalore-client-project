@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(ProductAttributeValue::class, function (Faker $faker) {
     return [
-        'product_id'    => $faker->numberBetween( 1, 10 ),
-        'attribute_value_id'    => $faker->numberBetween( 1, 6 ),
+        'attribute_value_id'    => $faker->numberBetween( 1, \App\Models\AttributeValue::all()->count() ),
         'stock'           => $faker->numberBetween( 20, 200 ),
         'sku'            => $faker->word . '_' . $faker->numberBetween( 1000, 9999 ),
     ];

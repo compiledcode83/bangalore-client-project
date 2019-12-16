@@ -26,9 +26,9 @@ class AttributeValue extends Model
     /**
      * Get the attribute values for the attribute.
      */
-    public function attributeValues()
+    public function productAttributeValues()
     {
-        return $this->hasMany(AttributeValue::class);
+        return $this->hasMany(ProductAttributeValue::class);
     }
 
     /**

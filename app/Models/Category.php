@@ -29,9 +29,20 @@ class Category extends Model
      * @param  Builder  $query
      * @return Builder
      */
-    public function scopeRoot($query)
+    public function scopeRootParent($query)
     {
         return $query->where('parent_id', 0);
+    }
+
+    /**
+     * Scope a query to only include children Categories.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeChildren($query)
+    {
+        return $query->where('parent_id', '!=',  0);
     }
 
 
@@ -45,9 +56,18 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->slug = str_slug($model->name);
+        });
     }
 
 }

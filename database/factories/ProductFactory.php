@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define( Product::class, function ( Faker $faker ) {
 
-    $name = $faker->sentence( 4 );
+    $name = $faker->sentence( 2);
 
     return [
-        'category_id'    => $faker->numberBetween( 1, 20 ),
         'name_en'        => $name,
         'name_ar'        => $name,
         'description_en' => $faker->text,

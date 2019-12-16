@@ -1,12 +1,13 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
-use App\ProductAttributeValueImage;
+use App\Models\ProductAttributeValueImage;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
-$factory->define(ProductAttributeValueImage::class, function (Faker $faker) {
+$factory->define( ProductAttributeValueImage::class, function ( Faker $faker ) {
     return [
-        //
+        'image'                      => $faker->imageUrl( 300, 300 ),
     ];
-});
+} );

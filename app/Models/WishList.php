@@ -10,4 +10,12 @@ class WishList extends Model
     use SoftDeletes;
 
     protected $guarded = ['id', 'user_id', 'product_id'];
+
+    /**
+     * Get the user owns this wishList
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

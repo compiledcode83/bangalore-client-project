@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define( WishList::class, function ( Faker $faker ) {
     return [
-        'user_id'    => $faker->numberBetween( 1, 20 ),
-        'product_id' => $faker->numberBetween( 1, 10 ),
+        'product_id' => $faker->numberBetween( 1, \App\Models\Product::all()->count() ),
         'qty'        => $faker->numberBetween( 1, 5 ),
     ];
 } );

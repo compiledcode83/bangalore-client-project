@@ -21,4 +21,28 @@ class Order extends Model
      * @var array
      */
     protected $guarded = ['id', 'user_id'];
+
+    /**
+     * Get the user owns this wishList
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get items for the Order.
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get statuses for the Order.
+     */
+    public function orderStatuses()
+    {
+        return $this->hasMany(OrderStatus::class);
+    }
 }
