@@ -2,44 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96a4b74c-0974-4564-b980-07c47efc4895" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/AttributeValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AttributeValue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/CartItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CartItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/OrderItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/OrderStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderStatus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProductAttributeValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductAttributeValue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProductAttributeValueImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductAttributeValueImage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProductMainImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductMainImage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProductPrice.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductPrice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/RelatedProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/RelatedProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserAddress.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/WishList.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/WishList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/AttributeValueFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/AttributeValueFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/CartFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CartFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/CartItemFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CartItemFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/OrderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/OrderItemFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderItemFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/OrderStatusFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderStatusFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ProductAttributeValueFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ProductAttributeValueFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ProductAttributeValueImageFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ProductAttributeValueImageFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ProductFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ProductFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ProductMainImageFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ProductMainImageFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ProductPriceFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ProductPriceFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/RelatedProductFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RelatedProductFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ReviewFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ReviewFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserAddressFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserAddressFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/WishListFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/WishListFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_05_094400_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/AttributesTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AttributesTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -236,7 +200,7 @@
       <option name="presentableId" value="Default" />
       <updated>1575533508660</updated>
       <workItem from="1575533509914" duration="35870000" />
-      <workItem from="1575978126817" duration="45540000" />
+      <workItem from="1575978126817" duration="45804000" />
     </task>
     <servers />
   </component>
