@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Composer\EventDispatcher\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
