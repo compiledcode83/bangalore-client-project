@@ -15,7 +15,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\User';
+    protected $title = 'Accounts';
 
     /**
      * Make a grid builder.
@@ -27,19 +27,20 @@ class UserController extends AdminController
         $grid = new Grid(new User);
 
         $grid->column('id', __('Id'));
-        $grid->column('first_name', __('First name'));
-        $grid->column('last_name', __('Last name'));
-        $grid->column('phone', __('Phone'));
+        $grid->column('full_name')->display(function () {
+            return $this->first_name.' '.$this->last_name;
+        });
         $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('type', __('Type'));
-        $grid->column('is_subscribed', __('Is subscribed'));
-        $grid->column('is_active', __('Is active'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->column('type', __('Type'))->display(function () {
+            return $this->type == User::TYPE_USER ? __('User') : __('Corporate');
+        })->sortable();
+        $grid->column( 'is_active', __( 'Status' ) )
+            ->using( ['0' => 'Not-Active', '1' => 'Active'] )
+            ->label( [
+                0 => 'danger',
+                1 => 'success',
+            ] )->sortable();
+        $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
         return $grid;
     }
@@ -85,12 +86,12 @@ class UserController extends AdminController
         $form->text('last_name', __('Last name'));
         $form->mobile('phone', __('Phone'));
         $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
-        $form->switch('type', __('Type'))->default(1);
-        $form->switch('is_subscribed', __('Is subscribed'));
+        $form->select('type', __('Account Type'))->options([
+            User::TYPE_USER => __('User'),
+            User::TYPE_CORPORATE => __('Corporate'),
+        ]);
         $form->switch('is_active', __('Is active'))->default(1);
-        $form->text('remember_token', __('Remember token'));
 
         return $form;
     }
