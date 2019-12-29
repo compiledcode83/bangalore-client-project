@@ -13,7 +13,7 @@ class Product extends Model
      * The attributes that should be mutated to dates.
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'created_at'];
 
 
     /**
@@ -22,28 +22,86 @@ class Product extends Model
      */
     protected $guarded = ['id'];
 
+    /**
+     * Set slug for product from name.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->slug = str_slug($model->name);
+        });
+    }
+
+    /**
+     * Get Categories for the product.
+     */
     public function categories()
     {
         return $this->belongsToMany(Category::class);
     }
 
+    /**
+     * Get Attributes Values for the product.
+     */
     public function productAttributeValues()
     {
-        return $this->hasMany(ProductAttributeValue::class);
+        return $this->hasMany(ProductAttributeValue::class, 'product_id');
     }
 
-    public function productMainImages()
+    /**
+     * Set Attributes Main Gallery product.
+     */
+    public function setMainGalleryAttribute($images)
     {
-        return $this->hasMany(ProductMainImage::class);
+        if (is_array($images)) {
+            $this->attributes['main_gallery'] = json_encode($images);
+        }
     }
 
+    /**
+     * Get Main Gallery for the product.
+     */
+    public function getMainGalleryAttribute($images)
+    {
+        return json_decode($images, true);
+    }
+
+    /**
+     * Get prices for the product.
+     */
     public function prices()
     {
-        return $this->hasMany(ProductPrice::class);
+        return $this->hasMany(ProductPrice::class, 'product_id');
     }
 
+    /**
+     * Get Related products for the product.
+     */
     public function relatedProducts()
     {
         return $this->hasMany(RelatedProduct::class);
+    }
+
+    /**
+     * Get related products Ids for the product.
+     *
+     * @var $value
+     * @return array
+     */
+    public function getRelatedAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    /**
+     * Set related products Ids for the product.
+     *
+     * @var $value
+     */
+    public function setRelatedAttribute($value)
+    {
+        $this->attributes['related'] = implode(',', $value);
     }
 }

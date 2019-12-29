@@ -396,6 +396,9 @@ return [
     |
     */
     'extensions' => [
-
+        'material-ui' => [
+            // If the value is set to false, this extension will be disabled
+            'enable' => false
+        ]
     ],
 ];

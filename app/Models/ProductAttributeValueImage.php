@@ -9,7 +9,7 @@ class ProductAttributeValueImage extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'product_attribute_value_id'];
+    protected $guarded = ['id'];
 
     public function productAttributeValue()
     {

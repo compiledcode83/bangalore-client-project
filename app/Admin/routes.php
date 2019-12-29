@@ -16,6 +16,8 @@ Route::group([
     $router->resource('users', UserController::class);
 
     $router->resource('products', ProductController::class);
+    $router->resource('product-attribute-values', ProductAttributeImagesController::class);
+
     $router->resource('statuses', StatusController::class);
     $router->resource('orders', OrderController::class);
     $router->resource('sliders', SliderController::class);

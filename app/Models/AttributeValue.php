@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AttributeValue extends Model
-{
+class AttributeValue extends Model {
+
     use SoftDeletes;
 
     /**
@@ -28,7 +28,7 @@ class AttributeValue extends Model
      */
     public function productAttributeValues()
     {
-        return $this->hasMany(ProductAttributeValue::class);
+        return $this->hasMany( ProductAttributeValue::class, 'attribute_value_id' );
     }
 
     /**
@@ -36,6 +36,20 @@ class AttributeValue extends Model
      */
     public function attribute()
     {
-        return $this->belongsTo(Attribute::class);
+        return $this->belongsTo( Attribute::class );
+    }
+
+    public static function options( $id = null )
+    {
+        if ( !$id )
+        {
+            return self::all()->pluck( 'value_en', 'id' );
+        }
+        if ( !$self = static::find( $id ) )
+        {
+            return [];
+        }
+
+        return $self->pluck( 'value_en', 'id' );
     }
 }

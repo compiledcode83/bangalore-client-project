@@ -9,7 +9,7 @@ class RelatedProduct extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'product_id', 'related_product_id'];
+    protected $guarded = ['id', 'product_id'];
 
     public function product()
     {

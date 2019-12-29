@@ -48,7 +48,7 @@ class CategoryController extends AdminController
         })->sortable();
         $grid->column('name_en', __('Name'))->sortable()->filter('name');
         $grid->column('description_en', __('Description'));
-        $grid->column('banner', __('Banner'))->image('', 200, 100);;
+        $grid->column('banner', __('Banner'))->image('', 200, 100);
         $grid->column('is_active', __('Status'))
             ->using(['0' => 'Not-Active', '1' => 'Active'])
             ->label([

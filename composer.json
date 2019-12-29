@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "cviebrock/eloquent-sluggable": "^6.0",
-        "encore/laravel-admin": "^1.7",
+        "encore/laravel-admin": "^1.6",
         "fideloper/proxy": "^4.0",
+        "jxlwqq/material-ui": "^1.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0"
     },

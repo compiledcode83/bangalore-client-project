@@ -14,7 +14,7 @@ class Category extends Model
      * The attributes that should be mutated to dates.
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'created_at'];
 
 
     /**
@@ -22,6 +22,16 @@ class Category extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->slug = str_slug($model->name);
+        });
+    }
 
     /**
      * Scope a query to only include root Categories.
@@ -59,15 +69,6 @@ class Category extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class);
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($model) {
-            $model->slug = str_slug($model->name);
-        });
     }
 
 }

@@ -9,20 +9,56 @@ class ProductAttributeValue extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'product_id', 'attribute_value_id'];
+    /**
+     * The attributes that should be mutated to dates.
+     * @var array
+     */
+    protected $dates = ['deleted_at', 'created_at'];
+
+    protected $guarded = ['id'];
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function attributeValue()
     {
-        return $this->belongsTo(AttributeValue::class);
+        return $this->belongsTo(AttributeValue::class, 'attribute_value_id');
     }
 
-    public function attributeImages()
+//    public function attributeImages()
+//    {
+//        return $this->hasMany(ProductAttributeValueImage::class);
+//    }
+
+    public function setAsdPicturesAttribute($collection)
     {
-        return $this->hasMany(ProductAttributeValueImage::class);
+
+        if (is_array($collection)) {
+            $this->attributes['asd_pictures'] = json_encode($collection);
+        }
+    }
+//
+    public function getAsdPicturesAttribute($collection)
+    {
+        return json_decode($collection, true) ?: [];
+    }
+
+    public function setMainImagesAttribute($images)
+    {
+//        $current = $this->
+//        dd($images);
+        if (is_array($images)) {
+            $this->attributes['main_images'] = json_encode($images);
+        }
+    }
+//
+    public function getMainImagesAttribute($images)
+    {
+//        dd(['get']);
+//        dd($images);
+//        dd(json_decode($images, true));
+        return json_decode($images, true);
     }
 }
