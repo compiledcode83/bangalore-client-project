@@ -159,11 +159,7 @@ class ProductController extends AdminController {
                 $form->text( 'sku', 'sku' )->rules( 'required' );
                 $form->text( 'stock', 'stock' )->rules( 'required' );
                 $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
-//                $form->text( 'pictures', 'pictures' )->rules( 'required' );
                 $form->multipleImage( 'main_imagess' , 'asasdasda images');
-//                $form->muploader('asd_pictures')->options(['showCancel' => false])->uniqueName();
-
-
             } );
 
         } )->tab( 'Prices', function ( $form ) {
