@@ -39,7 +39,7 @@ class ProductAttributeValue extends Model
             $this->attributes['asd_pictures'] = json_encode($collection);
         }
     }
-//
+
     public function getAsdPicturesAttribute($collection)
     {
         return json_decode($collection, true) ?: [];
@@ -47,18 +47,13 @@ class ProductAttributeValue extends Model
 
     public function setMainImagesAttribute($images)
     {
-//        $current = $this->
-//        dd($images);
         if (is_array($images)) {
             $this->attributes['main_images'] = json_encode($images);
         }
     }
-//
+
     public function getMainImagesAttribute($images)
     {
-//        dd(['get']);
-//        dd($images);
-//        dd(json_decode($images, true));
         return json_decode($images, true);
     }
 }
