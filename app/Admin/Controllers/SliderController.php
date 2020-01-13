@@ -15,7 +15,7 @@ class SliderController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Slider';
+    protected $title = 'Home Slider';
 
     /**
      * Make a grid builder.
@@ -26,14 +26,21 @@ class SliderController extends AdminController
     {
         $grid = new Grid(new Slider);
 
+        $grid->model()->orderBy( 'id', 'desc' );
+
+        $grid->disableExport();
+
         $grid->column('id', __('Id'));
+        $grid->column('title', __('Title'));
         $grid->column('order', __('Order'));
-        $grid->column('image', __('Image'));
-        $grid->column('link', __('Link'));
-        $grid->column('is_active', __('Is active'));
+        $grid->column('image', __('Image'))->image('', '200');
+        $grid->column( 'is_active', __( 'Status' ) )
+            ->using( ['0' => 'Not-Active', '1' => 'Active'] )
+            ->label( [
+                0 => 'danger',
+                1 => 'success',
+            ] )->sortable();
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
 
         return $grid;
     }
@@ -49,13 +56,14 @@ class SliderController extends AdminController
         $show = new Show(Slider::findOrFail($id));
 
         $show->field('id', __('Id'));
+        $show->field('title', __('Title'));
+        $show->field('sub_title', __('Sub title'));
         $show->field('order', __('Order'));
-        $show->field('image', __('Image'));
+        $show->field('image', __('Image'))->image('', '200');
         $show->field('link', __('Link'));
-        $show->field('is_active', __('Is active'));
+        $show->is_active(__('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active']);
         $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
 
         return $show;
     }
@@ -69,7 +77,9 @@ class SliderController extends AdminController
     {
         $form = new Form(new Slider);
 
-        $form->switch('order', __('Order'));
+        $form->text('order', __('Order'));
+        $form->text('title', __('Title'));
+        $form->text('sub_title', __('Sub title'));
         $form->image('image', __('Image'));
         $form->url('link', __('Link'));
         $form->switch('is_active', __('Is active'))->default(1);

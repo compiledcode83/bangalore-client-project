@@ -43,7 +43,14 @@ class CategoryController extends AdminController
 
         });
 
+        $grid->model()->orderBy('id', 'desc');
+
         $grid->column('parent_id', __('Parent'))->display(function () {
+            //in case parent deleted
+            if($this->parent_id != '0' AND !$this->parent)
+            {
+                return '';
+            }
             return $this->parent ? $this->parent->name_en : 'Root';
         })->sortable();
         $grid->column('name_en', __('Name'))->sortable()->filter('name');
@@ -69,19 +76,35 @@ class CategoryController extends AdminController
     {
         $show = new Show(Category::findOrFail($id));
 
+        $rootCategories = Category::rootParent()->pluck('name_en', 'id')->toArray();
+        $rootCategories[0] = 'Root';
+
         $show->field('id', __('Id'));
-        $show->field('parent_id', __('Parent id'));
+        $show->field('parent_id', __('Parent'))
+            ->using($rootCategories);
+        $show->products(__('Products'), function ($product) {
+
+            $product->setResource('/admin/products');
+            $product->name_en();
+            $product->created_at();
+
+            $product->disableActions();
+            $product->disableCreateButton();
+        });
+
         $show->field('name_en', __('Name en'));
         $show->field('name_ar', __('Name ar'));
         $show->field('description_en', __('Description en'));
         $show->field('description_ar', __('Description ar'));
         $show->field('slug', __('Slug'));
-        $show->field('banner', __('Banner'));
-        $show->field('image', __('Image'));
-        $show->field('is_active', __('Is active'));
+        $show->is_active(__('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active']);
+        $show->in_homepage(__('In HomePage Menu Header'))
+            ->using(['0' => 'No', '1' => 'Yes']);
         $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
+        $show->divider();
+        $show->banner(__('Banner'))->image();
+        $show->image(__('Image'))->image();
 
         return $show;
     }
@@ -96,18 +119,19 @@ class CategoryController extends AdminController
         $form = new Form(new Category);
 
 
-        $rootCategories = Category::rootParent()->pluck('name_en');
-        $rootCategories->prepend('Root --Top Level');
+        $rootCategories = Category::rootParent()->pluck('name_en', 'id')->toArray();
+        $rootCategories[0] = 'Root --Top Level';
 
         $form->select('parent_id', __('Select Parent'))->options($rootCategories);
-        $form->text('name_en', __('Name en'));
-        $form->text('name_ar', __('Name ar'));
+        $form->text('name_en', __('Name en'))->required();
+        $form->text('name_ar', __('Name ar'))->required();
         $form->textarea('description_en', __('Description en'));
         $form->textarea('description_ar', __('Description ar'));
 //        $form->text('slug', __('Slug'));
-        $form->image('banner', __('Banner'));
-        $form->image('image', __('Image'));
+        $form->image('banner', __('Banner'))->required();
+        $form->image('image', __('Image'))->required();
         $form->switch('is_active', __('Is active'))->default(1);
+        $form->switch('in_homepage', __('In HomePage Menu Header'))->default(0);
 
         return $form;
     }

@@ -10,4 +10,12 @@ class Status extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
+    /**
+     * Get the order owns this item
+     */
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

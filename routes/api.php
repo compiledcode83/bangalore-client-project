@@ -13,6 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['prefix'=>'v1'], function(){
+
+    Route::get('home-categories','CategoryController@homeCategories');
+    Route::get('home-sliders','SliderController@homeSlides');
+    Route::get('home-arrivals','NewArrivalController@homeNewArrivals');
+    Route::get('home-offers','OfferController@homeOffers');
+    Route::get('home-best-sellers','BestSellerController@homeBestSeller');
+    Route::get('category-products/{slug}','CategoryController@categoryProducts');
+    Route::get('category-more-products/{slug}','CategoryController@loadMoreProducts');
+
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

@@ -29,7 +29,11 @@ class Category extends Model
         parent::boot();
 
         static::saving(function ($model) {
-            $model->slug = str_slug($model->name);
+
+            $slug = str_slug($model->name_en);
+            $count = Category::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+
+            $model->slug = $count ? "{$slug}-{$count}" : $slug;
         });
     }
 

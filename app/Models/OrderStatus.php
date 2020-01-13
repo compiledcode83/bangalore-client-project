@@ -23,12 +23,4 @@ class OrderStatus extends Model
      * @var array
      */
     protected $guarded = ['id', 'order_id', 'status_id'];
-
-    /**
-     * Get the order owns this item
-     */
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
 }

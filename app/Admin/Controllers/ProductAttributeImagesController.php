@@ -44,6 +44,8 @@ class ProductAttributeImagesController extends AdminController
 
         } );
 
+        $grid->model()->orderBy('id', 'desc');
+
         $grid->column('id', __('Id'));
         $grid->product()->name_en('Product')->sortable();
         $grid->attributevalue()->value_en('Color');
@@ -58,7 +60,7 @@ class ProductAttributeImagesController extends AdminController
         $grid->column('main_images', __('Main imagess'))->image( '', 100, 50 );
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
-        $grid->disableActions();
+//        $grid->disableActions();
 
         return $grid;
     }

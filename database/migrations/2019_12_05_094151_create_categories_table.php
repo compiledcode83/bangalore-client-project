@@ -20,8 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name_en');
             $table->string('name_ar');
 
-            $table->text('description_en');
-            $table->text('description_ar');
+            $table->text('description_en')->nullable();
+            $table->text('description_ar')->nullable();
 
             $table->string('slug');
             $table->string('banner');

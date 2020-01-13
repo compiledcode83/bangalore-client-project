@@ -27,11 +27,7 @@ class StatusController extends AdminController
         $grid = new Grid(new Status);
 
         $grid->column('id', __('Id'));
-        $grid->column('name_en', __('Name en'));
-        $grid->column('name_ar', __('Name ar'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+        $grid->column('name_en', __('Name'))->width(1000);
 
         return $grid;
     }
@@ -50,8 +46,6 @@ class StatusController extends AdminController
         $show->field('name_en', __('Name en'));
         $show->field('name_ar', __('Name ar'));
         $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
 
         return $show;
     }
@@ -65,8 +59,8 @@ class StatusController extends AdminController
     {
         $form = new Form(new Status);
 
-        $form->text('name_en', __('Name en'));
-        $form->text('name_ar', __('Name ar'));
+        $form->text('name_en', __('English Name'));
+        $form->text('name_ar', __('Arabic Name'));
 
         return $form;
     }

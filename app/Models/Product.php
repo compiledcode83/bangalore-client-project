@@ -85,6 +85,14 @@ class Product extends Model
     }
 
     /**
+     * Get Related products for the product.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
      * Get related products Ids for the product.
      *
      * @var $value

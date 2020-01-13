@@ -9,5 +9,19 @@ class Review extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'user_id', 'product_id', 'order_id'];
+    protected $guarded = ['id'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function getTotalRateAttribute()
+    {
+        $reviews = Review::where('product_id', $this->product_id)->get();
+//        $count   = $reviews->count();
+        $totalRating= ceil($reviews->sum('rating')/2);
+
+        return '4';
+    }
 }

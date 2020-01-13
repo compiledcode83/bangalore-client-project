@@ -29,4 +29,12 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    /**
+     * Get the attribute values for order item.
+     */
+    public function productAttributeValue()
+    {
+        return $this->belongsTo( ProductAttributeValue::class );
+    }
 }

@@ -77,9 +77,10 @@ class ProductController extends AdminController {
 
         } );
 
+        $grid->model()->orderBy('id', 'desc');
+
         $grid->column( 'id', __( 'Id' ) );
         $grid->column( 'name_en', __( 'Name' ) );
-        $grid->column( 'description_en', __( 'Description' ) )->width( 500 );
         $grid->column( 'sku', __( 'Sku' ) );
         $grid->column( 'main_image', __( 'Main image' ) )->image( '', 200, 100 );
         $grid->column( 'is_active', __( 'Status' ) )
@@ -133,11 +134,19 @@ class ProductController extends AdminController {
 
             $form->text( 'name_en', 'English Name' )->rules( 'required' );
             $form->text( 'name_ar', 'Arabic Name' )->rules( 'required' );
-            $form->textarea( 'description_en', 'English Description' )->rules( 'required' );
-            $form->textarea( 'description_ar', 'Arabic Description' )->rules( 'required' );
+
+            $form->ckeditor( 'short_description_en', 'English Short Description' );
+            $form->ckeditor( 'short_description_ar', 'Arabic Short Description' );
+            $form->ckeditor( 'description_en', 'English Full Description' )->rules( 'required' );
+            $form->ckeditor( 'description_ar', 'Arabic Full Description' )->rules( 'required' );
+            $form->ckeditor( 'more_information_en', 'English More Information' );
+            $form->ckeditor( 'more_information_ar', 'Arabic More Information' );
+
             $form->text( 'sku', 'SKU' )->rules( 'required' )->help( 'Product unique identifier!' );
+            $form->text( 'supplier_price', 'Supplier price' )->rules( 'required' )->help( 'Only Admin can see this price!' );
             $form->image( 'main_image', 'Main Image' )->rules( 'required' );
             $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
+            $form->switch( 'show_left_qty', __( 'Show Left Qty to users' ) )->default( 0 );
 
             $categories = Category::all()->pluck('name_en', 'id');
             $form->multipleSelect('categories')->options($categories);

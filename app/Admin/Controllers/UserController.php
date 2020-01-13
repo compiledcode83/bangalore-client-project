@@ -36,10 +36,10 @@ class UserController extends AdminController
         })->sortable();
         $grid->column( 'is_active', __( 'Status' ) )
             ->using( ['0' => 'Not-Active', '1' => 'Active'] )
-            ->label( [
+            ->label([
                 0 => 'danger',
                 1 => 'success',
-            ] )->sortable();
+            ])->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
         return $grid;

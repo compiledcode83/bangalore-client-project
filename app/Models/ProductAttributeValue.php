@@ -22,6 +22,14 @@ class ProductAttributeValue extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    /**
+     * Get order items for attribute value.
+     */
+    public function orderItems()
+    {
+        return $this->hasMany( OrderItem::class );
+    }
+
     public function attributeValue()
     {
         return $this->belongsTo(AttributeValue::class, 'attribute_value_id');

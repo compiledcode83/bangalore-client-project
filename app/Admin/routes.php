@@ -21,9 +21,14 @@ Route::group([
     $router->resource('statuses', StatusController::class);
     $router->resource('orders', OrderController::class);
     $router->resource('sliders', SliderController::class);
-    $router->resource('media-services', MediaServiceController::class);
     $router->resource('static-pages', StaticPageController::class);
     $router->resource('settings', SettingController::class);
     $router->resource('reviews', ReviewController::class);
+
+    $router->resource('homepage-sections-arrival', HomeNewArrivalController::class);
+    $router->resource('homepage-sections-offers', HomeSpecialOfferController::class);
+
+    $router->resource('media', MediaController::class);
+    $router->resource('service', ServiceController::class);
 
 });
