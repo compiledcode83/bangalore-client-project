@@ -28,6 +28,7 @@ class CategoryController extends Controller {
         {
             foreach ($products as $product)
             {
+                //add ratings
                 if ( $product->reviews->first() )
                 {
                     $reviews = $product->reviews;
@@ -37,6 +38,21 @@ class CategoryController extends Controller {
                         $product->rating = ceil( $reviews->sum( 'rating' ) / $count );
                     }
                 }
+                //add colors
+                $colors = [];
+                if($product->productAttributeValues->first())
+                {
+                    foreach ($product->productAttributeValues as $productAttributeValue)
+                    {
+                        if(isset($productAttributeValue->attributeValue->other_value))
+                        {
+                            $colors [] = $productAttributeValue->attributeValue->other_value;
+                        }
+                    }
+
+                }
+
+                $product->colors = $colors;
             }
 
             $response = [

@@ -1,6 +1,7 @@
 import Home from './components/Home';
 import About from './components/About';
 import ProductList from "./components/ProductList";
+import ProductDetails from "./components/ProductDetails";
 import NotFound from './components/NotFound';
 
 export default {
@@ -24,6 +25,10 @@ export default {
         {
             path: '/categories/:slug',
             component: ProductList
+        },
+        {
+            path: '/products/:slug',
+            component: ProductDetails
         }
     ]
 }

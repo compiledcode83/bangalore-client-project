@@ -31,4 +31,6 @@ Route::group([
     $router->resource('media', MediaController::class);
     $router->resource('service', ServiceController::class);
 
+    $router->resource('attribute-values', ColorController::class);
+
 });

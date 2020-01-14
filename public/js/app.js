@@ -2208,6 +2208,937 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Product-box.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Product-box.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['product'],
+  methods: {
+    onImageLoadFailure: function onImageLoadFailure(event, size) {
+      event.target.src = 'https://via.placeholder.com/' + size;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetails.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductDetails.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductList.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductList.vue?vue&type=script&lang=js& ***!
@@ -2219,6 +3150,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Product_box__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Product-box */ "./resources/js/components/Product-box.vue");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2464,55 +3396,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ProductBox: _Product_box__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   mounted: function mounted() {
     this.slug = this.$route.params.slug;
     this.loadProducts();
@@ -20925,6 +21814,5796 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "prod-bx" }, [
+    _c(
+      "div",
+      { staticClass: "img" },
+      [
+        _c("router-link", { attrs: { to: "/products/" + _vm.product.slug } }, [
+          _c("img", {
+            staticStyle: { "min-height": "250px" },
+            attrs: { src: "/uploads/" + _vm.product.main_image },
+            on: {
+              error: function($event) {
+                return _vm.onImageLoadFailure($event, "250x250")
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "data clearfix" }, [
+      _c("h4", [_vm._v(_vm._s(_vm.product.name_en))]),
+      _vm._v(" "),
+      _c("div", { staticClass: "price" }, [
+        _vm._v("\n            Login to check price\n            ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "rate-cvr clearfix" }, [
+        _c("div", { staticClass: "rate" }, [
+          _c("input", {
+            attrs: { type: "radio", value: "5", disabled: "" },
+            domProps: { checked: _vm.product.rating == 5 }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { title: "text" } }, [_vm._v("5 stars")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "radio", value: "4", disabled: "" },
+            domProps: { checked: _vm.product.rating == 4 }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { title: "text" } }, [_vm._v("4 stars")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "radio", value: "3", disabled: "" },
+            domProps: { checked: _vm.product.rating == 3 }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { title: "text" } }, [_vm._v("3 stars")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "radio", value: "2", disabled: "" },
+            domProps: { checked: _vm.product.rating == 2 }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { title: "text" } }, [_vm._v("2 stars")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "radio", value: "1", disabled: "" },
+            domProps: { checked: _vm.product.rating == 1 }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { title: "text" } }, [_vm._v("1 star")])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.product.colors
+        ? _c(
+            "div",
+            { staticClass: "btn-group", attrs: { "data-toggle": "buttons" } },
+            _vm._l(_vm.product.colors, function(color) {
+              return _c(
+                "label",
+                { staticClass: "btn selct-clr", style: "background:" + color },
+                [
+                  _c("input", {
+                    attrs: {
+                      type: "radio",
+                      name: "options",
+                      autocomplete: "off",
+                      chacked: ""
+                    }
+                  })
+                ]
+              )
+            }),
+            0
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "hover" }, [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("img", { attrs: { src: "/images/favourite.png" } })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "product-detail-bnr fullwidth text-center" }, [
+        _c("ul", { staticClass: "breadcrumb" }, [
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    "http://www.mawaqaa.com/clients/demos/itc/html3/index.html"
+                }
+              },
+              [_vm._v("Home")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    "http://www.mawaqaa.com/clients/demos/itc/html3/bags.html"
+                }
+              },
+              [_vm._v("Product Listing")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "active" }, [_vm._v("Product Name")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "container innr-cont-area" }, [
+        _c(
+          "div",
+          { staticClass: "product-details", attrs: { "data-select2-id": "6" } },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-12" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "single-item slider-for slick-initialized slick-slider"
+                      },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "slick-prev slick-arrow",
+                            staticStyle: { display: "block" },
+                            attrs: { "aria-label": "Previous", type: "button" }
+                          },
+                          [_vm._v("Previous")]
+                        ),
+                        _c("div", { staticClass: "slick-list draggable" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "slick-track",
+                              staticStyle: { opacity: "1", width: "3318px" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "0px",
+                                    top: "0px",
+                                    "z-index": "998",
+                                    opacity: "0",
+                                    transition: "opacity 500ms ease 0s"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "0",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "-553px",
+                                    top: "0px",
+                                    "z-index": "998",
+                                    opacity: "0",
+                                    transition: "opacity 500ms ease 0s"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "1",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "slick-slide slick-current slick-active",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "-1106px",
+                                    top: "0px",
+                                    "z-index": "999",
+                                    opacity: "1"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "2",
+                                    "aria-hidden": "false"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "-1659px",
+                                    top: "0px",
+                                    "z-index": "998",
+                                    opacity: "0",
+                                    transition: "opacity 500ms ease 0s"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "3",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "-2212px",
+                                    top: "0px",
+                                    "z-index": "998",
+                                    opacity: "0",
+                                    transition: "opacity 500ms ease 0s"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "4",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: {
+                                    width: "553px",
+                                    position: "relative",
+                                    left: "-2765px",
+                                    top: "0px",
+                                    "z-index": "998",
+                                    opacity: "0",
+                                    transition: "opacity 500ms ease 0s"
+                                  },
+                                  attrs: {
+                                    "data-slick-index": "5",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "single-item-img",
+                                        staticStyle: {
+                                          width: "100%",
+                                          display: "inline-block"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/bag.jpg",
+                                            alt: ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        ]),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "slick-next slick-arrow",
+                            staticStyle: { display: "block" },
+                            attrs: { "aria-label": "Next", type: "button" }
+                          },
+                          [_vm._v("Next")]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-12" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "multiple-item slider-nav slick-initialized slick-slider"
+                      },
+                      [
+                        _c("div", { staticClass: "slick-list draggable" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "slick-track",
+                              staticStyle: {
+                                opacity: "1",
+                                width: "2272px",
+                                transform: "translate3d(-852px, 0px, 0px)"
+                              }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "-4",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "-3",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "-2",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "-1",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "0",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "1",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "slick-slide slick-current slick-active",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "2",
+                                    "aria-hidden": "false"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-active",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "3",
+                                    "aria-hidden": "false"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-active",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "4",
+                                    "aria-hidden": "false"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-active",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "5",
+                                    "aria-hidden": "false"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "6",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "7",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "8",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "9",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "10",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "slick-slide slick-cloned",
+                                  staticStyle: { width: "142px" },
+                                  attrs: {
+                                    "data-slick-index": "11",
+                                    "aria-hidden": "true",
+                                    tabindex: "-1"
+                                  }
+                                },
+                                [
+                                  _c("div", [
+                                    _c("img", {
+                                      staticStyle: {
+                                        width: "100%",
+                                        display: "inline-block"
+                                      },
+                                      attrs: { src: "/images/bag.jpg", alt: "" }
+                                    })
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 data" }, [
+                _c("h2", [
+                  _vm._v("Glittered mini backpacks "),
+                  _c("span", [_vm._v("( Only 100 left )")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "price clearfix" }, [
+                  _c("div", { staticClass: "pull-left" }, [
+                    _c("strong", [_vm._v("50.00 KD")]),
+                    _vm._v(" "),
+                    _c("u", [_vm._v("75.00 KD")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pull-right stock" }, [
+                    _c("span", [_vm._v("In stock")]),
+                    _vm._v(" "),
+                    _c("strong", [_vm._v("BD3562279")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "we want to make you sure that all those goods you will find among our assortment meet latest safety techniques and standards."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-6 col-lg-5" }, [
+                    _c("div", { staticClass: "rate-cvr clearfix" }, [
+                      _c("div", { staticClass: "rate-big" }, [
+                        _c("input", {
+                          attrs: {
+                            type: "radio",
+                            id: "star25",
+                            name: "rate2",
+                            value: "25"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { attrs: { for: "star25", title: "text" } },
+                          [_vm._v("5 stars")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "radio",
+                            id: "star24",
+                            name: "rate2",
+                            checked: "checked",
+                            value: "24"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { attrs: { for: "star24", title: "text" } },
+                          [_vm._v("4 stars")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "radio",
+                            id: "star23",
+                            name: "rate2",
+                            value: "23"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { attrs: { for: "star23", title: "text" } },
+                          [_vm._v("3 stars")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "radio",
+                            id: "star22",
+                            name: "rate2",
+                            value: "22"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { attrs: { for: "star22", title: "text" } },
+                          [_vm._v("2 stars")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "radio",
+                            id: "star21",
+                            name: "rate2",
+                            value: "21"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { attrs: { for: "star21", title: "text" } },
+                          [_vm._v("1 star")]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "reviews col-sm-6 col-lg-7" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href:
+                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#"
+                        }
+                      },
+                      [
+                        _c("span", { staticClass: "red" }, [_vm._v("10")]),
+                        _vm._v("  Review(s)")
+                      ]
+                    ),
+                    _vm._v("   /\n                            "),
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href:
+                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                          "data-toggle": "modal",
+                          "data-target": "#addReview"
+                        }
+                      },
+                      [_vm._v("Add Your Review")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal fade login-model",
+                    staticStyle: { display: "none" },
+                    attrs: {
+                      id: "addReview",
+                      tabindex: "-1",
+                      role: "dialog",
+                      "aria-labelledby": "exampleModalLabel",
+                      "aria-hidden": "true"
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "modal-dialog",
+                        attrs: { role: "document" }
+                      },
+                      [
+                        _c("div", { staticClass: "modal-content rounded-0" }, [
+                          _c("div", { staticClass: "modal-header" }, [
+                            _vm._v(
+                              "Add Your Review\n                                    "
+                            ),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "close",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal",
+                                  "aria-label": "Close"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: { src: "/images/close.png" }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "modal-body row text-center clearfix add-review-model"
+                            },
+                            [
+                              _c("div", { staticClass: "rate-cvr clearfix" }, [
+                                _c("div", { staticClass: "rate-big" }, [
+                                  _c("input", {
+                                    attrs: {
+                                      type: "radio",
+                                      id: "star025",
+                                      name: "rate002",
+                                      value: "25"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: { for: "star025", title: "text" }
+                                    },
+                                    [_vm._v("5 stars")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: {
+                                      type: "radio",
+                                      id: "star024",
+                                      name: "rate002",
+                                      value: "24"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: { for: "star024", title: "text" }
+                                    },
+                                    [_vm._v("4 stars")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: {
+                                      type: "radio",
+                                      id: "star023",
+                                      name: "rate002",
+                                      value: "23"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: { for: "star023", title: "text" }
+                                    },
+                                    [_vm._v("3 stars")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: {
+                                      type: "radio",
+                                      id: "star022",
+                                      name: "rate002",
+                                      value: "22"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: { for: "star022", title: "text" }
+                                    },
+                                    [_vm._v("2 stars")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: {
+                                      type: "radio",
+                                      id: "star021",
+                                      name: "rate002",
+                                      value: "21"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: { for: "star021", title: "text" }
+                                    },
+                                    [_vm._v("1 star")]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "form",
+                                { staticClass: "col-lg-10 col-lg-offset-1" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "form-group mt-10 mb-10 fullwidth"
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: { for: "exampleInputEmail1" }
+                                        },
+                                        [_vm._v("Nickname")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "email",
+                                          id: "exampleInputEmail1",
+                                          "aria-describedby": "emailHelp",
+                                          placeholder: "Enter email"
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "form-group mt-10 mb-10 fullwidth"
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "exampleInputPassword1"
+                                          }
+                                        },
+                                        [_vm._v("Review Details")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("textarea", {
+                                        staticClass: "form-control"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger rounded-0",
+                                      attrs: { type: "submit" }
+                                    },
+                                    [_vm._v("Submit")]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "file-upload" }, [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "row quantity input2",
+                      staticStyle: { display: "list-item" },
+                      attrs: { id: "select2" }
+                    },
+                    [
+                      _c("div", { staticClass: "col-sm-3" }, [
+                        _vm._v("Uploads -")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("form", [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-upload",
+                              attrs: { for: "file-upload" }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-cloud-upload" }),
+                              _vm._v(
+                                " Click to Upload Image(JPG Or PNG)\n                                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticStyle: { display: "none" },
+                            attrs: {
+                              id: "file-upload",
+                              name: "upload_cont_img",
+                              type: "file"
+                            }
+                          })
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "additionalselects2" } }, [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "row quantity input2",
+                      staticStyle: { display: "list-item" }
+                    },
+                    [
+                      _c("div", { staticClass: "col-sm-3" }, [
+                        _vm._v("Uploads -")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("form", [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-upload",
+                              attrs: { for: "file-upload" }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-cloud-upload" }),
+                              _vm._v(
+                                " Click to Upload Image(JPG Or PNG)\n                                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticStyle: { display: "none" },
+                            attrs: {
+                              id: "file-upload",
+                              name: "upload_cont_img",
+                              type: "file"
+                            }
+                          })
+                        ])
+                      ])
+                    ]
+                  ),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "row quantity input2",
+                      staticStyle: { display: "list-item" }
+                    },
+                    [
+                      _c("div", { staticClass: "col-sm-3" }, [
+                        _vm._v("Uploads -")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("form", [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-upload",
+                              attrs: { for: "file-upload" }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-cloud-upload" }),
+                              _vm._v(
+                                " Click to Upload Image(JPG Or PNG)\n                                "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticStyle: { display: "none" },
+                            attrs: {
+                              id: "file-upload",
+                              name: "upload_cont_img",
+                              type: "file"
+                            }
+                          })
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  {
+                    staticClass: "color-load",
+                    attrs: { "data-select2-id": "5" }
+                  },
+                  [
+                    _c(
+                      "li",
+                      {
+                        staticClass: "row quantity input",
+                        staticStyle: { display: "list-item" },
+                        attrs: { id: "select" }
+                      },
+                      [
+                        _c("div", { staticClass: "col-sm-2" }, [
+                          _c(
+                            "select",
+                            {
+                              staticClass:
+                                "js-example-basic-single color-select form-control select2-hidden-accessible",
+                              attrs: {
+                                name: "state",
+                                "data-select2-id": "1",
+                                tabindex: "-1",
+                                "aria-hidden": "true"
+                              }
+                            },
+                            [
+                              _c("option", {
+                                attrs: { value: "blue", "data-select2-id": "3" }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: { value: "red", "data-select2-id": "7" }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: {
+                                  value: "green",
+                                  "data-select2-id": "8"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: {
+                                  value: "black",
+                                  "data-select2-id": "9"
+                                }
+                              })
+                            ]
+                          ),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "select2 select2-container select2-container--default select2-container--above select2-container--focus",
+                              staticStyle: { width: "68px" },
+                              attrs: { dir: "ltr", "data-select2-id": "2" }
+                            },
+                            [
+                              _c("span", { staticClass: "selection" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "select2-selection select2-selection--single",
+                                    attrs: {
+                                      role: "combobox",
+                                      "aria-haspopup": "true",
+                                      "aria-expanded": "false",
+                                      tabindex: "0",
+                                      "aria-labelledby":
+                                        "select2-state-sw-container"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "select2-selection__rendered",
+                                        attrs: {
+                                          id: "select2-state-sw-container",
+                                          role: "textbox",
+                                          "aria-readonly": "true",
+                                          title: ""
+                                        }
+                                      },
+                                      [
+                                        _c("span", [
+                                          _c("img", {
+                                            staticClass: "img-flag",
+                                            attrs: { src: "/images/red.png" }
+                                          })
+                                        ])
+                                      ]
+                                    ),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass: "select2-selection__arrow",
+                                        attrs: { role: "presentation" }
+                                      },
+                                      [
+                                        _c("b", {
+                                          attrs: { role: "presentation" }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _c("span", {
+                                staticClass: "dropdown-wrapper",
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-2" }, [
+                          _c("input", {
+                            staticClass: "form-control rounded-0",
+                            attrs: { type: "", name: "", value: "1" }
+                          })
+                        ])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "additionalselects" } }),
+                _vm._v(" "),
+                _c("button", { staticClass: "more add" }, [
+                  _vm._v("Add More Colors")
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "more add2" }, [
+                  _vm._v("Add Image")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-6" }, [
+                    _c(
+                      "button",
+                      { staticClass: "btn-lg btn-success full-width" },
+                      [_vm._v("ADD TO CART")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-6" }, [
+                    _c(
+                      "button",
+                      { staticClass: "btn-lg btn-primary full-width" },
+                      [_vm._v("ADD TO WISHLIST")]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-cvr" }, [
+              _c(
+                "ul",
+                { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+                [
+                  _c("li", { attrs: { role: "presentation" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href:
+                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Details",
+                          "aria-controls": "home",
+                          role: "tab",
+                          "data-toggle": "tab",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [_vm._v("Details")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { attrs: { role: "presentation" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href:
+                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Info",
+                          "aria-controls": "profile",
+                          role: "tab",
+                          "data-toggle": "tab",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [_vm._v("More Information")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "active", attrs: { role: "presentation" } },
+                    [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews",
+                            "aria-controls": "messages",
+                            role: "tab",
+                            "data-toggle": "tab",
+                            "aria-expanded": "true"
+                          }
+                        },
+                        [_vm._v("Reviews (6)")]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane",
+                    attrs: { role: "tabpanel", id: "Details" }
+                  },
+                  [
+                    _c("p", [
+                      _vm._v(
+                        "Welcome to our Marine Store. Here you will find all you need for your hobby and free time. We know how important it may be for you. That's why we tried to foresee all your possible demands and needs. First of all, we want to make you sure that all those goods you will find among our assortment meet latest safety techniques and standards. You can find high quality equipment with numerous options here, so don't be afraid to spoil your leisure time because of some unexpected"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("ul", [
+                      _c("li", [
+                        _vm._v(
+                          "Some Discription will be herre some Discription will be herre some Discription will be herre"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _vm._v(
+                          "Some Discription will be herre some Discription will be herre some Discription will be herre"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _vm._v(
+                          "Some Discription will be herre some Discription will be herre some Discription will be herre"
+                        )
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane",
+                    attrs: { role: "tabpanel", id: "Info" }
+                  },
+                  [
+                    _c("p", [
+                      _vm._v(
+                        "Welcome to our Marine Store. Here you will find all you need for your hobby and free time. We know how important it may be for you. That's why we tried to foresee all your possible demands and needs. First of all, we want to make you sure that all those goods you will find among our assortment meet latest safety techniques and standards. You can find high quality equipment with numerous options here, so don't be afraid to spoil your leisure time because of some unexpected"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Welcome to our Marine Store. Here you will find all you need for your hobby and free time. We know how important it may be for you. That's why we tried to foresee all your possible demands and needs. First of all, we want to make you sure that all those goods you will find among our assortment meet latest safety techniques and standards. You can find high quality equipment with numerous options here, so don't be afraid to spoil your leisure time because of some unexpected"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Welcome to our Marine Store. Here you will find all you need for your hobby and free time. We know how important it may be for you. That's why we tried to foresee all your possible demands and needs. First of all, we want to make you sure that all those goods you will find among our assortment meet latest safety techniques and standards. You can find high quality equipment with numerous options here, so don't be afraid to spoil your leisure time because of some unexpected"
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane active",
+                    attrs: { role: "tabpanel", id: "Reviews" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-6 col-md-7" }, [
+                        _c("h4", [_vm._v("Cheri of Goleta,&sp CA")])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-6 col-md-5" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-xs-12 col-sm-5" }, [
+                            _c("div", { staticClass: "rate" }, [
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star35",
+                                  name: "rate3",
+                                  value: "35"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star35", title: "text" } },
+                                [_vm._v("5 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star34",
+                                  name: "rate3",
+                                  checked: "checked",
+                                  value: "34"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star34", title: "text" } },
+                                [_vm._v("4 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star33",
+                                  name: "rate3",
+                                  value: "33"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star33", title: "text" } },
+                                [_vm._v("3 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star32",
+                                  name: "rate3",
+                                  value: "32"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star32", title: "text" } },
+                                [_vm._v("2 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star31",
+                                  name: "rate3",
+                                  value: "31"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star31", title: "text" } },
+                                [_vm._v("1 star")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-12 col-sm-7" }, [
+                            _c("p", { staticClass: "date-rate" }, [
+                              _vm._v("12 Jan 2018 ( 10 days ago )")
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c("p", [
+                          _vm._v(
+                            "I ordered a costume in children's small and was sent an extra small. I asked for a refund and was sent another extra small costume."
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "ShopDisney has me dealing with UPS returns over and over and no refund..."
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-6 col-md-7" }, [
+                        _c("h4", [_vm._v("Cheri of Goleta,&sp CA")])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-6 col-md-5" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-xs-12 col-sm-5" }, [
+                            _c("div", { staticClass: "rate" }, [
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star45",
+                                  name: "rate4",
+                                  value: "45"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star45", title: "text" } },
+                                [_vm._v("5 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star44",
+                                  name: "rate4",
+                                  checked: "checked",
+                                  value: "44"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star44", title: "text" } },
+                                [_vm._v("4 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star43",
+                                  name: "rate4",
+                                  value: "43"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star43", title: "text" } },
+                                [_vm._v("3 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star42",
+                                  name: "rate4",
+                                  value: "42"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star42", title: "text" } },
+                                [_vm._v("2 stars")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "radio",
+                                  id: "star41",
+                                  name: "rate4",
+                                  value: "41"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                { attrs: { for: "star41", title: "text" } },
+                                [_vm._v("1 star")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-12 col-sm-7" }, [
+                            _c("p", { staticClass: "date-rate" }, [
+                              _vm._v("12 Jan 2018 ( 10 days ago )")
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c("p", [
+                          _vm._v(
+                            "I ordered a costume in children's small and was sent an extra small. I asked for a refund and was sent another extra small costume."
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "ShopDisney has me dealing with UPS returns over and over and no refund..."
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "related-products" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("h2", [_vm._v("Related "), _c("span", [_vm._v("Products")])]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "relatedprod-slide slick-initialized slick-slider" },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "slick-prev slick-arrow",
+                  staticStyle: { display: "block" },
+                  attrs: { "aria-label": "Previous", type: "button" }
+                },
+                [_vm._v("Previous")]
+              ),
+              _c("div", { staticClass: "slick-list draggable" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "slick-track",
+                    staticStyle: {
+                      opacity: "1",
+                      width: "3990px",
+                      transform: "translate3d(-1140px, 0px, 0px)"
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "-4",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "65",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star65",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            checked: "checked",
+                                            value: "64",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star64",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "63",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star63",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "62",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star62",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "61",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star61",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "-3",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod3.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "stock" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "75",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star75",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            checked: "checked",
+                                            value: "74",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star74",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "73",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star73",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "72",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star72",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "71",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star71",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "-2",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod1.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "85",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star85",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            checked: "checked",
+                                            value: "84",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star84",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "83",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star83",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "82",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star82",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "81",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star81",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "-1",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "95",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star95",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "94",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star94",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            checked: "checked",
+                                            value: "93",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star93",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "92",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star92",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "91",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star91",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-current slick-active",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "0",
+                          "aria-hidden": "false"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "0"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod1.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star55",
+                                            name: "rate5",
+                                            value: "55",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star55",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star54",
+                                            name: "rate5",
+                                            value: "54",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star54",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star53",
+                                            name: "rate5",
+                                            checked: "checked",
+                                            value: "53",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star53",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star52",
+                                            name: "rate5",
+                                            value: "52",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star52",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star51",
+                                            name: "rate5",
+                                            value: "51",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star51",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option1",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-active",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "1",
+                          "aria-hidden": "false"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "0"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star65",
+                                            name: "rate6",
+                                            value: "65",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star65",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star64",
+                                            name: "rate6",
+                                            checked: "checked",
+                                            value: "64",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star64",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star63",
+                                            name: "rate6",
+                                            value: "63",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star63",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star62",
+                                            name: "rate6",
+                                            value: "62",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star62",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star61",
+                                            name: "rate6",
+                                            value: "61",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star61",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option1",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-active",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "2",
+                          "aria-hidden": "false"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "0"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod3.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "stock" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star75",
+                                            name: "rate7",
+                                            value: "75",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star75",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star74",
+                                            name: "rate7",
+                                            checked: "checked",
+                                            value: "74",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star74",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star73",
+                                            name: "rate7",
+                                            value: "73",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star73",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star72",
+                                            name: "rate7",
+                                            value: "72",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star72",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star71",
+                                            name: "rate7",
+                                            value: "71",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star71",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option1",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-active",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "3",
+                          "aria-hidden": "false"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "0"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod1.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "0"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star85",
+                                            name: "rate8",
+                                            value: "85",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star85",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star84",
+                                            name: "rate8",
+                                            checked: "checked",
+                                            value: "84",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star84",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star83",
+                                            name: "rate8",
+                                            value: "83",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star83",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star82",
+                                            name: "rate8",
+                                            value: "82",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star82",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star81",
+                                            name: "rate8",
+                                            value: "81",
+                                            tabindex: "0"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star81",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option1",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              tabindex: "0"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "4",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star95",
+                                            name: "rate9",
+                                            value: "95",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star95",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star94",
+                                            name: "rate9",
+                                            value: "94",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star94",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star93",
+                                            name: "rate9",
+                                            checked: "checked",
+                                            value: "93",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star93",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star92",
+                                            name: "rate9",
+                                            value: "92",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star92",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "star91",
+                                            name: "rate9",
+                                            value: "91",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star91",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option1",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "option2",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "5",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod1.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate5",
+                                            value: "55",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star55",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate5",
+                                            value: "54",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star54",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate5",
+                                            checked: "checked",
+                                            value: "53",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star53",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate5",
+                                            value: "52",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star52",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate5",
+                                            value: "51",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star51",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "6",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "65",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star65",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            checked: "checked",
+                                            value: "64",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star64",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "63",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star63",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "62",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star62",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate6",
+                                            value: "61",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star61",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "7",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod3.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "stock" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "75",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star75",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            checked: "checked",
+                                            value: "74",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star74",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "73",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star73",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "72",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star72",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate7",
+                                            value: "71",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star71",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "8",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod1.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "85",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star85",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            checked: "checked",
+                                            value: "84",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star84",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "83",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star83",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "82",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star82",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate8",
+                                            value: "81",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star81",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    ),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "slick-slide slick-cloned",
+                        staticStyle: { width: "255px" },
+                        attrs: {
+                          "data-slick-index": "9",
+                          "aria-hidden": "true",
+                          tabindex: "-1"
+                        }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "slide",
+                              staticStyle: {
+                                width: "100%",
+                                display: "inline-block"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "prod-bx" }, [
+                                _c("div", { staticClass: "img" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html",
+                                        tabindex: "-1"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: "/images/prod2.jpg" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "new" }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "hover" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/images/favourite.png"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#",
+                                          tabindex: "-1"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: "/images/cart1.png" }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "data clearfix" }, [
+                                  _c("h4", [_vm._v("Drawstring bag")]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "price" }, [
+                                    _vm._v(
+                                      "\n                            24.00 KD "
+                                    ),
+                                    _c("span", [_vm._v("30.00 KD")])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "rate-cvr clearfix" },
+                                    [
+                                      _c("div", { staticClass: "rate" }, [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "95",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star95",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("5 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "94",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star94",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("4 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            checked: "checked",
+                                            value: "93",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star93",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("3 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "92",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star92",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("2 stars")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          attrs: {
+                                            type: "radio",
+                                            id: "",
+                                            name: "rate9",
+                                            value: "91",
+                                            tabindex: "-1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            attrs: {
+                                              for: "star91",
+                                              title: "text"
+                                            }
+                                          },
+                                          [_vm._v("1 star")]
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "btn-group",
+                                      attrs: { "data-toggle": "buttons" }
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn active selct-clr",
+                                          staticStyle: { background: "#d1bda1" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              chacked: "",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#232323" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "btn selct-clr",
+                                          staticStyle: { background: "#506cbb" }
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "radio",
+                                              name: "options",
+                                              id: "",
+                                              autocomplete: "off",
+                                              tabindex: "-1"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _c(
+                "button",
+                {
+                  staticClass: "slick-next slick-arrow",
+                  staticStyle: { display: "block" },
+                  attrs: { "aria-label": "Next", type: "button" }
+                },
+                [_vm._v("Next")]
+              )
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductList.vue?vue&type=template&id=438ffe92&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductList.vue?vue&type=template&id=438ffe92& ***!
@@ -20988,9 +27667,9 @@ var render = function() {
                 _vm.pagination
                   ? _c("div", { staticClass: "pull-left" }, [
                       _vm._v(
-                        "\n                                " +
+                        "\n                            " +
                           _vm._s(_vm.pagination.total) +
-                          " items\n                            "
+                          " items\n                        "
                       )
                     ])
                   : _vm._e(),
@@ -21004,120 +27683,12 @@ var render = function() {
                 "div",
                 { staticClass: "row" },
                 _vm._l(chunk, function(product) {
-                  return _c("div", { staticClass: "col-sm-4" }, [
-                    _c("div", { staticClass: "prod-bx" }, [
-                      _c(
-                        "div",
-                        { staticClass: "img" },
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "/products/" + product.id } },
-                            [
-                              _c("img", {
-                                staticStyle: { "min-height": "250px" },
-                                attrs: {
-                                  src: "/uploads/" + product.main_image
-                                },
-                                on: {
-                                  error: function($event) {
-                                    return _vm.onImageLoadFailure(
-                                      $event,
-                                      "250x250"
-                                    )
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._m(3, true)
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "data clearfix" }, [
-                        _c("h4", [_vm._v(_vm._s(product.name_en))]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "price" }, [
-                          _vm._v(
-                            "\n                                        Login to check price\n"
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "rate-cvr clearfix" }, [
-                          _c("div", { staticClass: "rate" }, [
-                            _c("input", {
-                              attrs: {
-                                type: "radio",
-                                value: "5",
-                                disabled: ""
-                              },
-                              domProps: { checked: product.rating == 5 }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { title: "text" } }, [
-                              _vm._v("5 stars")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "radio",
-                                value: "4",
-                                disabled: ""
-                              },
-                              domProps: { checked: product.rating == 4 }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { title: "text" } }, [
-                              _vm._v("4 stars")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "radio",
-                                value: "3",
-                                disabled: ""
-                              },
-                              domProps: { checked: product.rating == 3 }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { title: "text" } }, [
-                              _vm._v("3 stars")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "radio",
-                                value: "2",
-                                disabled: ""
-                              },
-                              domProps: { checked: product.rating == 2 }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { title: "text" } }, [
-                              _vm._v("2 stars")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "radio",
-                                value: "1",
-                                disabled: ""
-                              },
-                              domProps: { checked: product.rating == 1 }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { title: "text" } }, [
-                              _vm._v("1 star")
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(4, true)
-                      ])
-                    ])
-                  ])
+                  return _c(
+                    "div",
+                    { staticClass: "col-sm-4" },
+                    [_c("ProductBox", { attrs: { product: product } })],
+                    1
+                  )
                 }),
                 0
               )
@@ -21169,7 +27740,7 @@ var staticRenderFns = [
           },
           [
             _c("span", { staticClass: "glyphicon glyphicon-search" }),
-            _vm._v("\n                  SEARCH\n              ")
+            _vm._v("\n              SEARCH\n          ")
           ]
         )
       ])
@@ -21781,7 +28352,7 @@ var staticRenderFns = [
                   _c("li", [
                     _c("label", { staticClass: "discount-chk" }, [
                       _vm._v(
-                        "Up to 30%\n                                            "
+                        "Up to 30%\n                                        "
                       ),
                       _c("input", {
                         attrs: { type: "checkbox", checked: "checked" }
@@ -21794,7 +28365,7 @@ var staticRenderFns = [
                   _c("li", [
                     _c("label", { staticClass: "discount-chk" }, [
                       _vm._v(
-                        "30% - 50%\n                                            "
+                        "30% - 50%\n                                        "
                       ),
                       _c("input", { attrs: { type: "checkbox" } }),
                       _vm._v(" "),
@@ -21805,7 +28376,7 @@ var staticRenderFns = [
                   _c("li", [
                     _c("label", { staticClass: "discount-chk" }, [
                       _vm._v(
-                        "50% - 60%\n                                            "
+                        "50% - 60%\n                                        "
                       ),
                       _c("input", { attrs: { type: "checkbox" } }),
                       _vm._v(" "),
@@ -21815,9 +28386,7 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("li", [
                     _c("label", { staticClass: "discount-chk" }, [
-                      _vm._v(
-                        "+ 60%\n                                            "
-                      ),
+                      _vm._v("+ 60%\n                                        "),
                       _c("input", { attrs: { type: "checkbox" } }),
                       _vm._v(" "),
                       _c("span", { staticClass: "checkmark" })
@@ -21827,7 +28396,7 @@ var staticRenderFns = [
                   _c("li", [
                     _c("label", { staticClass: "discount-chk" }, [
                       _vm._v(
-                        "Full Price\n                                            "
+                        "Full Price\n                                        "
                       ),
                       _c("input", { attrs: { type: "checkbox" } }),
                       _vm._v(" "),
@@ -21851,81 +28420,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("select", [_c("option", [_vm._v("PRICE - HIGH TO LOW")])])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "hover" }, [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("img", { attrs: { src: "/images/favourite.png" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "btn-group", attrs: { "data-toggle": "buttons" } },
-      [
-        _c(
-          "label",
-          {
-            staticClass: "btn active selct-clr",
-            staticStyle: { background: "#d1bda1" }
-          },
-          [
-            _c("input", {
-              attrs: {
-                type: "radio",
-                name: "options",
-                id: "option2",
-                autocomplete: "off",
-                chacked: ""
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "btn selct-clr",
-            staticStyle: { background: "#232323" }
-          },
-          [
-            _c("input", {
-              attrs: {
-                type: "radio",
-                name: "options",
-                id: "option1",
-                autocomplete: "off"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "btn selct-clr",
-            staticStyle: { background: "#506cbb" }
-          },
-          [
-            _c("input", {
-              attrs: {
-                type: "radio",
-                name: "options",
-                id: "option2",
-                autocomplete: "off"
-              }
-            })
-          ]
-        )
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -37236,6 +43730,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Product-box.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/Product-box.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Product-box.vue?vue&type=template&id=3664ec52& */ "./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52&");
+/* harmony import */ var _Product_box_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Product-box.vue?vue&type=script&lang=js& */ "./resources/js/components/Product-box.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Product_box_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Product-box.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Product-box.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Product-box.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_box_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Product-box.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Product-box.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_box_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Product-box.vue?vue&type=template&id=3664ec52& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Product-box.vue?vue&type=template&id=3664ec52&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_box_vue_vue_type_template_id_3664ec52___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetails.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/ProductDetails.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductDetails.vue?vue&type=template&id=504fa804& */ "./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804&");
+/* harmony import */ var _ProductDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductDetails.vue?vue&type=script&lang=js& */ "./resources/js/components/ProductDetails.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProductDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProductDetails.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetails.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/ProductDetails.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetails.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetails.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetails.vue?vue&type=template&id=504fa804& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetails.vue?vue&type=template&id=504fa804&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetails_vue_vue_type_template_id_504fa804___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ProductList.vue":
 /*!*************************************************!*\
   !*** ./resources/js/components/ProductList.vue ***!
@@ -37317,7 +43949,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Home */ "./resources/js/components/Home.vue");
 /* harmony import */ var _components_About__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/About */ "./resources/js/components/About.vue");
 /* harmony import */ var _components_ProductList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProductList */ "./resources/js/components/ProductList.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_ProductDetails__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProductDetails */ "./resources/js/components/ProductDetails.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+
 
 
 
@@ -37327,7 +43961,7 @@ __webpack_require__.r(__webpack_exports__);
   linkActiveClass: 'link-active',
   routes: [{
     path: '*',
-    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/',
     component: _components_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -37337,6 +43971,9 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: '/categories/:slug',
     component: _components_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }, {
+    path: '/products/:slug',
+    component: _components_ProductDetails__WEBPACK_IMPORTED_MODULE_3__["default"]
   }]
 });
 
