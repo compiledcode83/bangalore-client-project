@@ -272,7 +272,7 @@
                     </div>
                     <!--/.row-->
                     <div class="text-center d-block" v-if="pagination.total >= 9 && pagination.last_page > pagination.current_page">
-                        <a class="viewmore" href="#" @click.prevent="loadProducts(pagination.current_page)" >View More</a>
+                        <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >View More</a>
                     </div>
                 </div><!--/.col-sm-9-->
             </div>
@@ -286,7 +286,7 @@
     import _ from 'lodash';
 
     export default {
-        // props[]
+
         mounted() {
             this.slug = this.$route.params.slug;
             this.loadProducts();
@@ -303,6 +303,15 @@
         },
         methods: {
             loadProducts(){
+                axios.all([
+                    axios.get('/api/v1/category-products/'+this.slug)
+                ]).then(axios.spread((categoryResponse) => {
+                    this.products = categoryResponse.data.products.data;
+                    this.pagination = categoryResponse.data.products;
+                    this.category   = categoryResponse.data.category;
+                }));
+            },
+            loadMoreProducts(){
                 let next_page = this.pagination.current_page + 1;
                 axios.all([
                     axios.get('/api/v1/category-products/'+this.slug+'?page='+ next_page)

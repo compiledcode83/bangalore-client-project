@@ -2513,7 +2513,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // props[]
   mounted: function mounted() {
     this.slug = this.$route.params.slug;
     this.loadProducts();
@@ -2532,14 +2531,23 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     loadProducts: function loadProducts() {
       var _this = this;
 
-      var next_page = this.pagination.current_page + 1;
-      axios.all([axios.get('/api/v1/category-products/' + this.slug + '?page=' + next_page)]).then(axios.spread(function (categoryResponse) {
-        var _this$products;
-
-        (_this$products = _this.products).push.apply(_this$products, _toConsumableArray(categoryResponse.data.products.data));
-
+      axios.all([axios.get('/api/v1/category-products/' + this.slug)]).then(axios.spread(function (categoryResponse) {
+        _this.products = categoryResponse.data.products.data;
         _this.pagination = categoryResponse.data.products;
         _this.category = categoryResponse.data.category;
+      }));
+    },
+    loadMoreProducts: function loadMoreProducts() {
+      var _this2 = this;
+
+      var next_page = this.pagination.current_page + 1;
+      axios.all([axios.get('/api/v1/category-products/' + this.slug + '?page=' + next_page)]).then(axios.spread(function (categoryResponse) {
+        var _this2$products;
+
+        (_this2$products = _this2.products).push.apply(_this2$products, _toConsumableArray(categoryResponse.data.products.data));
+
+        _this2.pagination = categoryResponse.data.products;
+        _this2.category = categoryResponse.data.category;
       }));
     },
     onImageLoadFailure: function onImageLoadFailure(event, size) {
@@ -21126,7 +21134,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.loadProducts(_vm.pagination.current_page)
+                          return _vm.loadMoreProducts()
                         }
                       }
                     },
