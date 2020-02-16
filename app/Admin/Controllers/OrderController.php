@@ -41,27 +41,21 @@ class OrderController extends AdminController
         $grid = new Grid(new Order);
 
         $grid->disableCreateButton();
-
         $grid->expandFilter();
-
         $grid->filter( function ( $filter ) {
-
             // Remove the default id filter
             $filter->disableIdFilter();
             // Add order code filter
             $filter->like( 'order_code', 'Code' );
-
             $filter->equal( 'final_status', 'Status' )->select(function (){
-
                 $finalStatus = Order::groupBy('final_status')->pluck('final_status')->toArray();
                 //copy values to keys
                 $statusFilter = array_combine($finalStatus, $finalStatus);
-
                 return array_map('ucfirst', $statusFilter);
             });
-
         } );
 
+        $grid->model()->orderBy('id', 'desc');
         $grid->column('order_code', __('Order code'));
         $grid->column('user_id', __('User'))->display(function () {
 
@@ -124,7 +118,7 @@ class OrderController extends AdminController
     {
         $form = new Form(new Order);
 
-        $form->number('user_id', __('User id'));
+//        $form->number('user_id', __('User id'));
         $form->text('order_code', __('Order code'));
         $form->text('address', __('Address'));
         $form->decimal('total', __('Total'));
@@ -133,6 +127,12 @@ class OrderController extends AdminController
         $form->select('final_status', __('Status'))
             ->options(Status::all()->pluck('name_en', 'name_en'))
             ->rules('required');
+
+        $form->saving(function ($form) {
+            // update order status
+            // send email
+//            dd([$form->final_status]);
+        });
 
         return $form;
     }

@@ -7,29 +7,26 @@
                      @error="onImageLoadFailure($event, '250x250')" style="min-height: 250px">
                 <!--                                    </a>-->
             </router-link>
+            <span class="new" v-if="product.newIcon"></span>
             <div class="hover">
                 <a href="#"><img src="/images/favourite.png"></a>
-                <!--                                        <a href="#"><img src="/images/cart1.png"></a>-->
             </div>
         </div>
         <div class="data clearfix">
             <h4>{{product.name_en}}</h4>
             <div class="price">
-                Login to check price
-                <!--                                        24.00 KD <span>30.00 KD</span>-->
+                Price on request
             </div>
             <div class="rate-cvr clearfix">
                 <div class="rate">
-                    <input type="radio" value="5" :checked="product.rating == 5" disabled>
-                    <label title="text">5 stars</label>
-                    <input type="radio"  value="4" :checked="product.rating == 4" disabled>
-                    <label title="text">4 stars</label>
-                    <input type="radio" value="3" :checked="product.rating == 3" disabled>
-                    <label title="text">3 stars</label>
-                    <input type="radio" value="2" :checked="product.rating == 2" disabled>
-                    <label title="text">2 stars</label>
-                    <input type="radio" value="1" :checked="product.rating == 1" disabled>
-                    <label title="text">1 star</label>
+                    <star-rating
+                        active-color="#e01b22"
+                        :show-rating="false"
+                        :rating="product.rating"
+                        :item-size=20
+                        border-color="#f4f4f4"
+                        read-only>
+                    </star-rating>
                 </div>
 
             </div>
@@ -44,8 +41,12 @@
 </template>
 
 <script>
+    import {StarRating} from 'vue-rate-it';
     export default {
         props: ['product'],
+        components:{
+            StarRating
+        },
         methods: {
             onImageLoadFailure(event, size) {
                 event.target.src = 'https://via.placeholder.com/' + size;

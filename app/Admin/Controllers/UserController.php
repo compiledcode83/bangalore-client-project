@@ -15,7 +15,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Accounts';
+    protected $title = 'Users Accounts';
 
     /**
      * Make a grid builder.
@@ -26,14 +26,16 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User);
 
+        $grid->model()->where('type', User::TYPE_USER)->orderBy('id', 'desc');
+
         $grid->column('id', __('Id'));
         $grid->column('full_name')->display(function () {
             return $this->first_name.' '.$this->last_name;
         });
         $grid->column('email', __('Email'));
-        $grid->column('type', __('Type'))->display(function () {
-            return $this->type == User::TYPE_USER ? __('User') : __('Corporate');
-        })->sortable();
+//        $grid->column('type', __('Type'))->display(function () {
+//            return $this->type == User::TYPE_USER ? __('User') : __('Corporate');
+//        })->sortable();
         $grid->column( 'is_active', __( 'Status' ) )
             ->using( ['0' => 'Not-Active', '1' => 'Active'] )
             ->label([
@@ -55,20 +57,18 @@ class UserController extends AdminController
     {
         $show = new Show(User::findOrFail($id));
 
-        $show->field('id', __('Id'));
         $show->field('first_name', __('First name'));
         $show->field('last_name', __('Last name'));
         $show->field('phone', __('Phone'));
         $show->field('email', __('Email'));
-        $show->field('email_verified_at', __('Email verified at'));
-        $show->field('password', __('Password'));
-        $show->field('type', __('Type'));
-        $show->field('is_subscribed', __('Is subscribed'));
-        $show->field('is_active', __('Is active'));
-        $show->field('remember_token', __('Remember token'));
+
+        $show->type(__('Account Type'))
+            ->using([User::TYPE_USER => 'USER', User::TYPE_CORPORATE => 'CORPORATE']);
+        $show->is_subscribed(__('Is subscribed'))
+            ->using(['0' => 'Not subscribed', '1' => 'Subscribed']);
+        $show->is_active(__('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active']);
         $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
 
         return $show;
     }
@@ -84,13 +84,8 @@ class UserController extends AdminController
 
         $form->text('first_name', __('First name'));
         $form->text('last_name', __('Last name'));
-        $form->mobile('phone', __('Phone'));
+        $form->mobile('phone', __('Phone'))->options(['mask' => '']);
         $form->email('email', __('Email'));
-        $form->password('password', __('Password'));
-        $form->select('type', __('Account Type'))->options([
-            User::TYPE_USER => __('User'),
-            User::TYPE_CORPORATE => __('Corporate'),
-        ]);
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

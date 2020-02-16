@@ -7,6 +7,7 @@
         <div id="app">
             @include('partials.site-header')
             <router-view></router-view>
+            <vue-progress-bar></vue-progress-bar>
 
             @include('partials.site-footer')
         </div>

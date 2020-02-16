@@ -7,3 +7,15 @@
     color: #c80412 !important;
     font-weight: bold !important;
 }
+
+a.single-category.active {
+    color: #be1522 !important;
+}
+
+.out-stock{
+    background: url(../images/no-stock.png) center center no-repeat;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    padding-top: 20%;
+}

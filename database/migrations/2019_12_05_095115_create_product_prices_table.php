@@ -23,8 +23,8 @@ class CreateProductPricesTable extends Migration
             $table->integer('max_qty');
             $table->decimal('individual_unit_price', 8,3);
             $table->decimal('corporate_unit_price', 8,3);
-            $table->decimal('individual_discounted_unit_price', 8,3);
-            $table->decimal('corporate_discounted_unit_price', 8,3);
+            $table->decimal('individual_discounted_unit_price', 8,3)->nullable();
+            $table->decimal('corporate_discounted_unit_price', 8,3)->nullable();
 
             $table->timestamps();
             $table->softDeletes();

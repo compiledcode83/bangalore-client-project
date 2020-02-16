@@ -11,9 +11,12 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('admin.home');
+    $router->get('/admin/statistics/sales/{month}', 'HomeController@index')->name('admin.home');
 
     $router->resource('categories', CategoryController::class);
     $router->resource('users', UserController::class);
+    $router->resource('corporates', CorporateController::class);
+    $router->resource('pending-corporates', PendingCorporateController::class);
 
     $router->resource('products', ProductController::class);
     $router->resource('product-attribute-values', ProductAttributeImagesController::class);
@@ -22,7 +25,10 @@ Route::group([
     $router->resource('orders', OrderController::class);
     $router->resource('sliders', SliderController::class);
     $router->resource('static-pages', StaticPageController::class);
+
     $router->resource('settings', SettingController::class);
+    $router->get('/settings-update/{id}', 'SettingController@updateSettings')->name('admin.updateSettings');
+
     $router->resource('reviews', ReviewController::class);
 
     $router->resource('homepage-sections-arrival', HomeNewArrivalController::class);
@@ -32,5 +38,18 @@ Route::group([
     $router->resource('service', ServiceController::class);
 
     $router->resource('attribute-values', ColorController::class);
+
+    $router->resource('governorates', GovernorateController::class);
+    $router->resource('areas', AreaController::class);
+    $router->resource('delivery-charges', CoverageAreaController::class);
+
+    $router->get('/newsletter', 'NewsLetterController@index')->name('admin.newsletter');
+    $router->post('/newsletter/send', 'NewsLetterController@sendMails')->name('admin.newsletter.send');
+
+    $router->get('/excel', 'ImportExcelController@import')->name('admin.import.products');
+    $router->post('/excel/store', 'ImportExcelController@store')->name('admin.import.products.store');
+
+    $router->get('/excel/images', 'ImportExcelController@uploadImages')->name('admin.import.images');
+    $router->post('/excel/images/store', 'ImportExcelController@storeImages')->name('admin.import.images.store');
 
 });

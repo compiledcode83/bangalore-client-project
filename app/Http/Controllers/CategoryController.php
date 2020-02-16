@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller {
 
@@ -16,44 +17,48 @@ class CategoryController extends Controller {
         return $categories;
     }
 
-    public function categoryProducts( $slug )
+    public function categoryProducts( $slug, Request $request )
     {
-        $category = Category::with( 'products' , 'products.reviews')
-                            ->where( 'slug', $slug )
-                            ->first();
+        $category = Category::where( 'slug', $slug )->first();
 
-        $products = $category->products()->orderBy( 'created_at', 'desc' )->paginate(9);
+        $filterOptions = $request->query();
+        if(isset($filterOptions['cat']))
+        {
+            $filterCategories = explode(',',$filterOptions['cat']);
+            $categoriesIds = Category::whereIn( 'slug', $filterCategories )->pluck('id');
+
+        }
+
+        if(!isset($filterOptions['cat']))
+        {
+            $categoriesIds = $category->subCategories()
+                ->pluck('id');
+            $categoriesIds->push($category->id);
+        }
+
+        $query = Product::whereHas('categories', function ($query) use ($categoriesIds){
+            $query->whereIn('id', $categoriesIds->toArray());
+        });
+
+        if(isset($filterOptions['color']))
+        {
+            $filterColors = explode(',',$filterOptions['color']);
+
+            $query->whereHas('productAttributeValues', function ($query) use ($filterColors){
+                $query->whereIn('attribute_value_id', $filterColors);
+            });
+        }
+
+        $products = $query->orderBy( 'created_at', 'desc' )->paginate(9);
+
 
         if ( $category )
         {
-            foreach ($products as $product)
-            {
-                //add ratings
-                if ( $product->reviews->first() )
-                {
-                    $reviews = $product->reviews;
-                    $count = $reviews->count();
-                    if ( $count )
-                    {
-                        $product->rating = ceil( $reviews->sum( 'rating' ) / $count );
-                    }
-                }
-                //add colors
-                $colors = [];
-                if($product->productAttributeValues->first())
-                {
-                    foreach ($product->productAttributeValues as $productAttributeValue)
-                    {
-                        if(isset($productAttributeValue->attributeValue->other_value))
-                        {
-                            $colors [] = $productAttributeValue->attributeValue->other_value;
-                        }
-                    }
+            $productModel = new Product();
 
-                }
+            $filterAttributes = $productModel->getProductsFilterAttributes($products);
 
-                $product->colors = $colors;
-            }
+            $products = $productModel->getProductsRatingColors($products);
 
             $response = [
                 'category' => [
@@ -63,11 +68,33 @@ class CategoryController extends Controller {
                     'image'          => $category->image,
                     'slug'           => $category->slug,
                 ],
-                'products' => $products
+                'products' => $products,
+                'filterAttributes' => $filterAttributes
             ];
             return response()->json( $response );
         }
 
         return [];
+    }
+
+    public function listFilterCategories($slug)
+    {
+        if($slug)
+        {
+            $category = Category::where( 'slug', $slug )->first();
+
+            $children = $category->subCategories;
+
+            return [
+              'singleCategories' => $children
+            ];
+
+        }
+
+        $categories = Category::all();
+
+        return [
+            'singleCategories' => $categories
+        ];
     }
 }

@@ -50,7 +50,7 @@ class ProductController extends AdminController {
     {
         return $content
             ->header('Detail')
-            // ->title('title')
+             ->title('Product Details')
             ->body($this->detail($id));
     }
 
@@ -104,18 +104,76 @@ class ProductController extends AdminController {
     {
         $show = new Show( Product::findOrFail( $id ) );
 
-        $show->field( 'id', __( 'Id' ) );
         $show->field( 'name_en', __( 'Name en' ) );
         $show->field( 'name_ar', __( 'Name ar' ) );
-        $show->field( 'description_en', __( 'Description en' ) );
-        $show->field( 'description_ar', __( 'Description ar' ) );
+        $show->field( 'description_en', __( 'Description en' ) )->as(function($content){
+            return strip_tags($content);
+        });
+        $show->field( 'description_ar', __( 'Description ar' ) )->as(function($content){
+            return strip_tags($content);
+        });
         $show->field( 'sku', __( 'Sku' ) );
-        $show->field( 'main_image', __( 'Main image' ) );
-        $show->field( 'slug', __( 'Slug' ) );
-        $show->field( 'is_active', __( 'Is active' ) );
+        $show->field( 'main_image', __( 'Main image' ) )->image();
+        $show->is_active(__('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active']);
         $show->field( 'created_at', __( 'Created at' ) );
-        $show->field( 'updated_at', __( 'Updated at' ) );
-        $show->field( 'deleted_at', __( 'Deleted at' ) );
+
+        $show->panel()
+            ->tools(function ($tools) {
+                $tools->disableDelete();
+            });
+
+        $show->categories(__('Categories'), function ($category) {
+
+            $category->setResource('/admin/categories');
+            $category->name_en();
+            $category->created_at();
+
+            $category->disableActions();
+            $category->disableCreateButton();
+            $category->disableExport();
+            $category->filter(function ($filter) {
+                $filter->like('name_en');
+            });
+        });
+
+        $show->prices(__('Product Prices'), function ($category) {
+
+            $category->setResource('/admin/prices');
+            $category->supplier_price(__('Supplier Price'));
+            $category->max_qty(__('Max Quantity'));
+            $category->individual_unit_price(__('Individual Unit Price'));
+            $category->individual_discounted_unit_price(__('Discount Individual Unit Price'));
+            $category->corporate_unit_price(__('Corporate Unit Price'));
+            $category->corporate_discounted_unit_price(__('Discount Corporate Unit Price'));
+            $category->created_at();
+
+            $category->disableActions();
+            $category->disableCreateButton();
+            $category->disableExport();
+            $category->filter(function ($filter) {
+                $filter->like('max_qty');
+            });
+        });
+
+        $show->productAttributeValues(__('Product Attribute'), function ($attribute) {
+
+            $attribute->setResource('/admin/productAttributeValues');
+            $attribute->attributeValue()->value_en(__('Color Name'));
+            $attribute->main_images(__('Main imagess'))->image( '', 100, 50 );
+            $attribute->sku(__('SKU'));
+            $attribute->stock(__('Stock'));
+            $attribute->is_active(__('Status'))
+                ->using(['0' => 'Not-Active', '1' => 'Active']);
+            $attribute->created_at();
+
+            $attribute->disableActions();
+            $attribute->disableCreateButton();
+            $attribute->disableExport();
+            $attribute->filter(function ($filter) {
+                $filter->like('name_en');
+            });
+        });
 
         return $show;
     }
@@ -157,28 +215,32 @@ class ProductController extends AdminController {
             $products = Product::all()->pluck('name_en', 'id');
             $form->multipleSelect('related', 'Related Products')->options($products);
 
-        } )->tab( 'Product Attributes', function ( $form ) {
-
-            // z-song name convention
-            $form->hasMany( 'productattributevalues', 'Product Attributes', function ( $form ) {
-
-                $form->select( 'attribute_value_id', 'Color' )->options( function ( $id ) {
-                    return AttributeValue::options($id);
-                } );
-                $form->text( 'sku', 'sku' )->rules( 'required' );
-                $form->text( 'stock', 'stock' )->rules( 'required' );
-                $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
-                $form->multipleImage( 'main_imagess' , 'asasdasda images');
-            } );
+//        } )->tab( 'Product Attributes', function ( $form ) {
+//
+//            // z-song name convention
+//            $form->hasMany( 'productattributevalues', 'Product Attributes', function ( $form ) {
+//
+//                $form->select( 'attribute_value_id', 'Color' )->options( function ( $id ) {
+//                    return AttributeValue::options($id);
+//                } );
+//                $form->text( 'sku', 'sku' )->rules( 'required' );
+//                $form->text( 'stock', 'stock' )->rules( 'required' );
+//                $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
+//                $form->multipleImage( 'main_imagess' , 'asasdasda images');
+//            } );
 
         } )->tab( 'Prices', function ( $form ) {
 
             $form->hasMany( 'prices', 'Prices', function ( $form ) {
                 $form->text( 'max_qty', 'qty' )->rules( 'required' );
                 $form->text( 'individual_unit_price', 'Individual Unit Price' )->rules( 'required' );
-                $form->text( 'individual_discounted_unit_price', 'Individual Discounted Unit Price' )->rules( 'required' );
+                $form->text( 'individual_discounted_unit_price', 'Individual Discounted Unit Price' )
+                        ->rules( 'required' )
+                        ->help( 'Add 0 for No discount' );
                 $form->text( 'corporate_unit_price', 'Corporate Unit Price' )->rules( 'required' );
-                $form->text( 'corporate_discounted_unit_price', 'Corporate Discounted Unit Price' )->rules( 'required' );
+                $form->text( 'corporate_discounted_unit_price', 'Corporate Discounted Unit Price' )
+                    ->rules( 'required' )
+                    ->help( 'Add 0 for No discount' );
             } );
 
         } );

@@ -15,7 +15,7 @@ class ReviewController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Review';
+    protected $title = 'Manage Reviews';
 
     /**
      * Make a grid builder.
@@ -27,39 +27,26 @@ class ReviewController extends AdminController
         $grid = new Grid(new Review);
 
         $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('product_id', __('Product id'));
+        $grid->user()->first_name('By user');
+        $grid->product()->name_en('Product');
         $grid->column('order_id', __('Order id'));
+
+        $grid->column('abuses')->display(function ($abuses) {
+            return "<span style='color:red'> ".count($abuses)." </span>";
+        });
+
         $grid->column('rating', __('Rating'));
         $grid->column('review', __('Review'));
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
+
+        $grid->disableBatchActions();
+        $grid->disableCreateButton();
+        $grid->actions(function (Grid\Displayers\Actions $actions) {
+            $actions->disableView();
+        });
+        $grid->disableExport();
 
         return $grid;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(Review::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
-        $show->field('product_id', __('Product id'));
-        $show->field('order_id', __('Order id'));
-        $show->field('rating', __('Rating'));
-        $show->field('review', __('Review'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
-
-        return $show;
     }
 
     /**
@@ -71,11 +58,13 @@ class ReviewController extends AdminController
     {
         $form = new Form(new Review);
 
-        $form->number('user_id', __('User id'));
-        $form->number('product_id', __('Product id'));
-        $form->number('order_id', __('Order id'));
-        $form->number('rating', __('Rating'));
-        $form->text('review', __('Review'));
+        $form->number('rating', __('Rating'))->updateRules('integer|between:1,5');
+        $form->textarea('review', __('Review'));
+
+        $form->tools(function (Form\Tools $tools) {
+            // Disable `Veiw` btn.
+            $tools->disableView();
+        });
 
         return $form;
     }

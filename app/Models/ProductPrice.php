@@ -9,7 +9,7 @@ class ProductPrice extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'product_id'];
+    protected $guarded = ['id'];
 
     public function product()
     {

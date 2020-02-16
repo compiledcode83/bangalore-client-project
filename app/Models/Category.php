@@ -59,7 +59,6 @@ class Category extends Model
         return $query->where('parent_id', '!=',  0);
     }
 
-
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

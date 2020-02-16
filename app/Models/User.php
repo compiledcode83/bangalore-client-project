@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     const TYPE_USER = 1;
     const TYPE_CORPORATE = 2;
@@ -19,9 +20,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -75,5 +74,46 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get Related reviews for the user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get Related reviews abuses for the user.
+     */
+    public function reviewsAbuses()
+    {
+        return $this->hasMany(ReviewAbuse::class);
+    }
+
+    /**
+     * Get cart for the User.
+     */
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public static function subscribedUsers()
+    {
+        return User::where('type', Self::TYPE_USER)
+            ->where('is_subscribed', '1')
+            ->where('is_active', '1')
+            ->get(['id', 'first_name', 'last_name']);
+    }
+
+    public static function subscribedCompanies()
+    {
+        return User::where('type', Self::TYPE_CORPORATE)
+            ->where('is_subscribed', '1')
+            ->where('is_active', '1')
+            ->where('is_corporate_accepted', '1')
+            ->get(['id', 'company']);
     }
 }

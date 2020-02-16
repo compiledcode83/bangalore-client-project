@@ -74,17 +74,12 @@ class ProductAttributeImagesController extends AdminController
     protected function detail($id)
     {
         $show = new Show(ProductAttributeValue::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('product_id', __('Product id'));
-        $show->field('attribute_value_id', __('Attribute value id'));
+        
         $show->field('sku', __('Sku'));
         $show->field('stock', __('Stock'));
         $show->field('is_active', __('Is active'));
         $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
-        $show->field('main_images', __('Main imagess'));
+        $show->field('main_images', __('Main imagess'))->image( '', 100, 50 );
 
         return $show;
     }

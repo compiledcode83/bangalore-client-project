@@ -76,7 +76,11 @@
                         </div>
                     </li><!--/li-->
                 </ul><!--/ul-->
-                <div class="text-center fullwidth"><a href="#" class="view-all">view all best sellers</a></div>
+                <div class="text-center fullwidth">
+                    <router-link :to="'/products-best'" class="view-all">
+                        view all best sellers
+                    </router-link>
+                </div>
             </div><!--/.container-->
         </div><!--/.best-sellers-->
 

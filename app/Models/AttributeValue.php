@@ -20,7 +20,7 @@ class AttributeValue extends Model {
      * The attributes that must be protected from mass assignment.
      * @var array
      */
-    protected $guarded = ['id', 'attribute_id'];
+    protected $guarded = ['id'];
 
 
     /**

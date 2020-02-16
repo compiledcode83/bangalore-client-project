@@ -119,18 +119,18 @@ $(document).on('click', function (e) {
 	}
 });
 
-$(".bannerSlider").slick({
-	dots: true,
-	autoplay: false,
-	infinite: true,
-	slidesToShow: 1,
-	slideswToScroll: 1,
-	arrows: false,
-	fade: true,
-	cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
-	speed: 900,
-	touchThreshold: 100
-});
+// $(".bannerSlider").slick({
+// 	dots: true,
+// 	autoplay: false,
+// 	infinite: true,
+// 	slidesToShow: 1,
+// 	slideswToScroll: 1,
+// 	arrows: false,
+// 	fade: true,
+// 	cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+// 	speed: 900,
+// 	touchThreshold: 100
+// });
 
 $(".subsi-slides").slick({
 	dots: false,
@@ -158,31 +158,31 @@ $(".subsi-slides").slick({
 	  ]
 });
 
-$(".relatedprod-slide").slick({
-	dots: false,
-	autoplay: false,
-	infinite: true,
-	slidesToShow: 4,
-	slideswToScroll: 1,
-	arrows: true,
-	responsive: [
-		{
-		  breakpoint: 768,
-		  settings: {
-			slidesToShow: 2
-		  }
-		},
-	    {
-	      breakpoint: 480,
-	      settings: {
-	        arrows: false,
-	        centerMode: true,
-	        centerPadding: '40px',
-	        slidesToShow: 1
-	      }
-	    }
-	  ]
-});
+// $(".relatedprod-slide").slick({
+// 	dots: false,
+// 	autoplay: false,
+// 	infinite: true,
+// 	slidesToShow: 4,
+// 	slideswToScroll: 1,
+// 	arrows: true,
+// 	responsive: [
+// 		{
+// 		  breakpoint: 768,
+// 		  settings: {
+// 			slidesToShow: 2
+// 		  }
+// 		},
+// 	    {
+// 	      breakpoint: 480,
+// 	      settings: {
+// 	        arrows: false,
+// 	        centerMode: true,
+// 	        centerPadding: '40px',
+// 	        slidesToShow: 1
+// 	      }
+// 	    }
+// 	  ]
+// });
 
 
 $(".brands-slid").slick({
@@ -287,24 +287,6 @@ $('.sec-checkout .shipping-tab').click(function(){
 	$('.sec-checkout .btn-place-oreder').addClass('hidden');
 });
 
-// Item slider inner details page
-	$('.slider-for').slick({
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			arrows: true,
-			fade: true,
-			centerMode: true,
-			asNavFor: '.slider-nav'
-	});
-	$('.slider-nav').slick({
-			slidesToShow: 4,
-			slidesToScroll: 1,
-			asNavFor: '.slider-for',
-			dots: false,
-			arrows: false,
-			centerMode: false,
-			focusOnSelect: true,
-	});
 
 
 $(".remove-disabled").click(function (q) {
@@ -338,9 +320,9 @@ $('#myTab li').click(function (e) {
 
 //###############################File Upload#################################
 
-document.getElementById("uploadBtn").onchange = function () {
-    document.getElementById("uploadFile").value = this.value.substring(12);
-};
+// document.getElementById("uploadBtn").onchange = function () {
+//     document.getElementById("uploadFile").value = this.value.substring(12);
+// };
 
 
 
@@ -358,10 +340,3 @@ $('#search, #search button.close').on('click keyup', function(event) {
       $(this).removeClass('open');
   }
 });
-
-
-//Do not include! This prevents the form from submitting for DEMO purposes only!
-$('form').submit(function(event) {
-  event.preventDefault();
-  return false;
-})
