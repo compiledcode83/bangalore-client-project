@@ -12,6 +12,7 @@ import AccountAddresses from "./components/account/Addresses";
 import AccountInformation from "./components/account/Information";
 import AccountNewsLetter from "./components/account/NewsLetter";
 import AccountOrders from "./components/account/Orders";
+import AccountViewOrder from "./components/account/ViewOrder";
 import AccountReviews from "./components/account/Reviews";
 import AccountTrackOrders from "./components/account/TrackOrders";
 import AccountTrackOrderStatus from "./components/account/TrackOrderStatus";
@@ -107,6 +108,11 @@ export default {
             path: '/account/orders',
             name: 'account.orders',
             component: AccountOrders,
+        },
+        {
+            path: '/account/order/details',
+            name: 'account.order.details',
+            component: AccountViewOrder,
         },
         {
             path: '/account/reviews',

@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix'=>'v1'], function(){
 
+    //admin statistics
+    Route::get('/admin/statistics/sales/{month}', '\App\Admin\Controllers\HomeController@totalSales');
+    Route::get('/admin/statistics/orders/{month}', '\App\Admin\Controllers\HomeController@totalOrders');
+
     Route::get('home-categories','CategoryController@homeCategories');
     Route::get('home-sliders','SliderController@homeSlides');
     Route::get('home-arrivals','NewArrivalController@homeNewArrivals');
@@ -50,10 +54,14 @@ Route::group(['prefix'=>'v1'], function(){
         Route::post('order','OrderController@store');
         Route::get('receipt/{code}','OrderController@getUserReceipt');
 
-        Route::get('products/{slug}/prices','CategoryController@productPrices');
+        Route::get('products/{slug}/prices','ProductController@productPrices');
         Route::get('user/reviews-list','UserController@userReviews');
         Route::get('user-ability/review/{id}','UserController@userAbleToReview');
         Route::post('/user/review','UserController@reviewStore');
+
+        Route::get('account/wishlist','UserController@accountWishlist');
+        Route::get('account/info','UserController@accountInfo');
+        Route::post('account/info','UserController@updateAccountInfo');
 
     });
 });

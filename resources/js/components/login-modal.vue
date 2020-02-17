@@ -5,7 +5,7 @@
             <div class="modal-content rounded-0">
                 <div class="modal-header">Sign In
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="images/close.png">
+                        <img src="/images/close.png">
                     </button>
                 </div>
                 <div class="modal-body row text-center clearfix">

@@ -55,7 +55,7 @@
                 </li>
 
                 <!-- Price collapsed menu -->
-                <li class="main-cat">
+                <li class="main-cat" v-if="isAuth">
                     <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#price">Price</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="price">
                         <li class="pad-15">
@@ -78,7 +78,7 @@
                 </li>
 
                 <!-- Size collapsed menu -->
-                <li class="main-cat">
+                <li class="main-cat" v-if="isAuth">
                     <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#Discount">Discount</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="Discount">
                         <li v-if="discounts.upTo30">
@@ -150,6 +150,11 @@
             this.processStyle = {
                 backgroundColor: '#be1522'
             };
+        },
+        computed: {
+            isAuth() {
+                return this.$store.getters['authModule/isAuthenticated'];
+            }
         },
         methods: {
             priceChanged(){

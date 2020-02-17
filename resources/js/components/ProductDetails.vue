@@ -66,7 +66,7 @@
                                     <strong v-else>{{$t('pages.starting_from')}} {{pricesForMinQty.price}} {{$t('pages.kd')}}</strong>
                                     <u v-if="pricesForMinQtyDiscount">{{$t('pages.starting_from')}} {{pricesForMinQty.price}} {{$t('pages.kd')}}</u>
                                 </div>
-                                <b v-else> {{$t('pages.price_based_on_request')}} </b>
+                                <b v-else> {{$t('pages.price_based_on_select')}} </b>
                                 <p style="line-height: 0;font-size:12px;margin-top:5px;cursor: pointer;"
                                     v-if="min_price" @click="togglePrices"> view prices </p>
                             </div>

@@ -35,20 +35,11 @@ class HomeController extends Controller {
                 $salesPie = view( 'admin.charts.pie', ['dataset' => $totalSales] );
                 $row->column( 2 / 4, new Box( 'Total Sales', $salesPie ) );
 
-                // event chart
+                //Orders by month
+                $totalOrders = $this->totalOrders( 1 );
 
-//                $count_event_type = Event::where( 'type', Event::TYPE_EVENT )->get()->count();
-//                $count_activity_type = Event::where( 'type', Event::TYPE_ACTIVITY )->get()->count();
-//                $count_service_type = Event::where( 'type', Event::TYPE_SERVICE )->get()->count();
-//                $events_count = [
-//                    'events'   => $count_event_type,
-//                    'activity' => $count_activity_type,
-//                    'service'  => $count_service_type,
-//
-//                ];
-//
-//                $bar = view( 'admin.chartjs.bar', ['events_count' => $events_count] );
-//                $row->column( 2 / 6, new Box( 'Events', $bar ) );
+                $ordersPie = view( 'admin.charts.pieOrders', ['dataset' => $totalOrders] );
+                $row->column( 2 / 4, new Box( 'Total Orders', $ordersPie ) );
 
             } );
 
@@ -80,6 +71,35 @@ class HomeController extends Controller {
         $dataset = [
             'individuals' => $individualSales,
             'corporates'  => $corporateSales
+        ];
+
+        return $dataset;
+
+    }
+
+    public function totalOrders( $month )
+    {
+        $now = Carbon::now();
+
+        $individualOrders= Order::with('user')
+            ->whereHas('user', function($query){
+                $query->where('type', User::TYPE_USER);
+            })
+            ->whereYear( 'created_at', $now->year )
+            ->whereMonth( 'created_at', $month )
+            ->count();
+
+        $corporateOrders= Order::with('user')
+            ->whereHas('user', function($query){
+                $query->where('type', User::TYPE_CORPORATE);
+            })
+            ->whereYear( 'created_at', $now->year )
+            ->whereMonth( 'created_at', $month )
+            ->count();
+
+        $dataset = [
+            'individualsOrder' => $individualOrders,
+            'corporatesOrder'  => $corporateOrders
         ];
 
         return $dataset;

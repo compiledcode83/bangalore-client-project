@@ -26,7 +26,13 @@
                                 <td>11/23/18</td>
                                 <td>KD 175.00</td>
                                 <td>Pending</td>
-                                <td><a href="#">View Order</a> / <a href="#">Reorder</a></td>
+                                <td>
+                                    <router-link to="/account/order/details">
+                                        {{$t('pages.view_order')}}
+                                    </router-link>
+                                    /
+                                    <a href="#">Reorder</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>9938374</td>

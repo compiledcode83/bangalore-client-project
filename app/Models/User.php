@@ -116,4 +116,20 @@ class User extends Authenticatable
             ->where('is_corporate_accepted', '1')
             ->get(['id', 'company']);
     }
+
+    public function updateUserAccount($id, $fields)
+    {
+        $user = Self::find($id);
+
+        if($user)
+        {
+            //update Account
+            $user->update($fields);
+
+            return true;
+        }
+
+        return false;
+
+    }
 }

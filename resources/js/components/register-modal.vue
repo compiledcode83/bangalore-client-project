@@ -15,18 +15,18 @@
                         </div>
                         <div class="col-sm-8 mt-10 mb-10">
                             <ul class="nav nav-tabs row" id="myTab">
-                                <li class="active col-sm-5 col-xs-6">
-                                    <a href="#Individual">
+                                <li class="active col-sm-5 col-xs-6" v-if="userRegisterEnabled">
+                                    <a href="#individual">
                                         <label class="checkbox">individual
-                                            <input type="checkbox" value="" checked="checked">
+                                            <input type="checkbox" :checked="userRegister" @click="togglePanel">
                                             <span class="checkmark"></span>
                                         </label>
                                     </a>
                                 </li>
                                 <li class="col-sm-5 col-xs-6">
-                                    <a href="#Corporate">
+                                    <a href="#corporate">
                                         <label class="checkbox">Corporate
-                                            <input type="checkbox" value="" >
+                                            <input type="checkbox" :checked="corporateRegister" @click="togglePanel">
                                             <span class="checkmark"></span>
                                         </label>
                                     </a>
@@ -36,11 +36,11 @@
                     </div>
 
                     <div id='content' class="tab-content">
-                        <div v-if="userErrors" style="text-align: left;padding-top: 5%;">
+                        <div v-if="userErrors && userRegister" style="text-align: left;padding-top: 5%;">
                             <b>Please correct the following error(s):</b>
                             <span style="color: red;">{{ userErrors }}</span>
                         </div>
-                        <div class="tab-pane active" id="Individual">
+                        <div :class="individualRegisterClass" id="individual" v-if="userRegister">
                             <form class="row" @submit.prevent="registerUserForm">
                                 <div class="col-sm-6 mt-10 mb-10">
                                     <input type="text" class="form-control" placeholder="First Name *" v-model="userData.first_name" style="text-transform: none;">
@@ -79,7 +79,8 @@
                                 </div>
                             </form><!--/form-->
                         </div><!--/.tab-pane-->
-                        <div class="tab-pane" id="Corporate">
+                        <div :class="corporateRegisterClass" id="corporate">
+<!--                        <div :class="'tab-pane ' + { active: userRegister }" id="Corporate">-->
                             <div v-if="corporateErrors" style="text-align: left;padding-top: 5%;">
                                 <b>Please correct the following error(s):</b>
                                 <span style="color: red;">{{ corporateErrors }}</span>
@@ -172,13 +173,45 @@
                     newsLetter: 0
                 },
                 userErrors: null,
-                corporateErrors: null
+                corporateErrors: null,
+                userRegister: 0,
+                userRegisterEnabled: 0,
+                corporateRegister: 1,
+                corporateRegisterClass: '',
+                individualRegisterClass: ''
             };
+        },
+        mounted() {
+            axios.get(
+                '/api/v1/settings'
+            ).then((response) => {
+                if(response.data.individual_can_register){
+                    this.userRegister = 1;
+                    this.userRegisterEnabled = 1;
+                    this.corporateRegister = 0;
+                }
+
+                this.loadRegister();
+            });
+
         },
         methods:  {
             ...mapActions('authModule', [
                 'registerUser', 'registerCorporate'
             ]),
+            loadRegister(){
+                if(!this.userRegister){
+                    this.corporateRegisterClass = 'tab-pane active';
+                    this.individualRegisterClass = 'tab-pane';
+                }else{
+                    this.corporateRegisterClass = 'tab-pane';
+                    this.individualRegisterClass = 'tab-pane active';
+                }
+            },
+            togglePanel(){
+                this.userRegister = !this.userRegister;
+                this.corporateRegister = !this.corporateRegister;
+            },
             registerUserForm() {
                 if(!this.userData.agree_terms){
                     this.userErrors = this.$t("accept_terms_conditions");

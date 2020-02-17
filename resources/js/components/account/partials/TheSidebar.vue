@@ -34,23 +34,17 @@
             <section>
                 <div class="flex">
                     <img src="/images/bag-thumb.jpg">
-                    <span>
-                                  <p>Glittered mini<br> backpacks</p>
-                                  <strong>75.00 KD</strong>
-                                </span>
+                    <span><p>Glittered mini<br> backpacks</p></span>
                 </div>
-                <button class="btn btn-danger">Add To Cart</button>
+                <button class="btn btn-danger">View Item</button>
                 <a class="close"><img src="/images/close.jpg"></a>
             </section><!--/section-->
             <section>
                 <div class="flex">
                     <img src="/images/bag-thumb.jpg">
-                    <span>
-                                    <p>Glittered mini<br> backpacks</p>
-                                    <strong>75.00 KD</strong>
-                                </span>
+                    <span><p>Glittered mini<br> backpacks</p><strong>75.00 KD</strong></span>
                 </div>
-                <button class="btn btn-danger">Add To Cart</button>
+                <button class="btn btn-danger">View Item</button>
                 <a class="close" id="close"><img src="/images/close.jpg"></a>
             </section><!--/section-->
         </div><!--/.side-wishlist-->

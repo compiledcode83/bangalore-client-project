@@ -215,7 +215,7 @@
 .form-control{
 	height: 45px;
 	border: 3px solid #efefef;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	box-shadow: none;
 	border-radius: 0;
 }
@@ -306,12 +306,12 @@ select.form-control{
     content: '★ ';
 }
 .rate > input:checked ~ label {
-    color: #e01b22;  
+    color: #e01b22;
     -webkit-text-stroke: 1px #e01b22;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #e01b22;  
+    color: #e01b22;
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
@@ -347,12 +347,12 @@ select.form-control{
     content: '★ ';
 }
 .rate-big > input:checked ~ label {
-    color: #e01b22;   
-    -webkit-text-stroke: 1px #e01b22; 
+    color: #e01b22;
+    -webkit-text-stroke: 1px #e01b22;
 }
 .rate-big:not(:checked) > label:hover,
 .rate-big:not(:checked) > label:hover ~ label {
-    color: #e01b22;  
+    color: #e01b22;
 }
 .rate-big > input:checked + label:hover,
 .rate-big > input:checked + label:hover ~ label,

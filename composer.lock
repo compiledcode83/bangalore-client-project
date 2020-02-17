@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "489d86bc8fbd76dff102982d3421ee2a",
-    "content-hash": "4313be153b9996b2ef307e726e94dbc9",
+    "hash": "b7a0aa7b38bfa43a52733320b856dc8a",
+    "content-hash": "c09a41f389ed54a92f409cc6d7cd73a8",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -6069,19 +6069,21 @@
         },
         {
             "name": "martinlindhe/laravel-vue-i18n-generator",
-            "version": "0.1.42",
+            "version": "0.1.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/martinlindhe/laravel-vue-i18n-generator.git",
-                "reference": "f546c3f520d085f508b73933000da95ad528e1f1"
+                "reference": "fc4e344747b485124b822eb271d0be6c8a581de6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martinlindhe/laravel-vue-i18n-generator/zipball/f546c3f520d085f508b73933000da95ad528e1f1",
-                "reference": "f546c3f520d085f508b73933000da95ad528e1f1",
+                "url": "https://api.github.com/repos/martinlindhe/laravel-vue-i18n-generator/zipball/fc4e344747b485124b822eb271d0be6c8a581de6",
+                "reference": "fc4e344747b485124b822eb271d0be6c8a581de6",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
                 "illuminate/console": "~5.1.0|~5.2.0|~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|~6.0",
                 "illuminate/support": "~5.1.0|~5.2.0|~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0|~6.0",
                 "php": ">=5.5.0"
@@ -6118,7 +6120,7 @@
                 "laravel",
                 "vue-i18n"
             ],
-            "time": "2019-10-22 05:26:37"
+            "time": "2020-02-13 09:36:58"
         },
         {
             "name": "maximebf/debugbar",

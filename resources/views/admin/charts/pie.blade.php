@@ -17,18 +17,7 @@
 <canvas id="pie" style="width: 100%;"></canvas>
 <script>
     $(function () {
-        $('#month').on('change', function(){
-            var monthValue = $(this).val;
 
-            $.ajax({
-                url: "/admin/statistics/sales/"+ monthValue,
-                type: 'GET',
-                dataType: 'json', // added data type
-                success: function(res) {
-                    console.log(res);
-                }
-            });
-        });
     function randomScalingFactor() {
         return Math.floor(Math.random() * 100)
     }
@@ -41,9 +30,8 @@
         data: {
             datasets: [{
                 data: [
-                   $('#individuals').val ,
-                    $('#corporates').val
-
+                    $('#individuals').val() ,
+                    $('#corporates').val()
                 ],
                 backgroundColor: [
                     window.chartColors.yellow,
@@ -74,6 +62,59 @@
     };
     var html_element = document.getElementById('pie').getContext('2d');
     new Chart(html_element, config);
+
+        $('#month').on('change', function(){
+            var monthValue = $(this).val();
+
+            $.ajax({
+                url: "/api/v1/admin/statistics/sales/"+ monthValue,
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(result) {
+                    $('#individuals').val(result.individuals);
+                    $('#corporates').val(result.corporates);
+                    var html_element = document.getElementById('pie').getContext('2d');
+
+                    var config = {
+                        type: 'pie',
+                        data: {
+                            datasets: [{
+                                data: [
+                                    result.individuals ,
+                                    result.corporates
+                                ],
+                                backgroundColor: [
+                                    window.chartColors.yellow,
+                                    window.chartColors.green
+                                ],
+                                label: 'Dataset 1'
+                            }],
+                            labels: [
+                                'Individuals',
+                                'Corporates'
+
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'By Type'
+                            },
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true
+                            }
+                        }
+                    };
+
+                    new Chart(html_element, config);
+                }
+            });
+        });
 });
 
 </script>

@@ -24,7 +24,6 @@ import search from "./components/search";
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-
 window.axios = require('axios');
 
 const options = {
@@ -62,6 +61,7 @@ Vue.use(VueProgressBar, options);
 let app = new Vue({
     el: '#app',
     i18n,
+    store,
     components: {
         cartBox, accountMenu, search
     },
@@ -97,8 +97,7 @@ let app = new Vue({
         categories: null,
     },
 
-    router: new VueRouter(routes),
-    store
+    router: new VueRouter(routes)
 });
 
 
@@ -120,6 +119,7 @@ axios.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             // Clear token and redirect
+            console.log('asdasds');
             store.commit('authModule/setAccessToken', null);
             window.location.replace(`${window.location.origin}/login`);
         }

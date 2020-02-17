@@ -8,83 +8,13 @@
 
                 <!--/ Content Here-->
                 <div class="col-sm-9 wishlist">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="prod-bx-cvr">
-                                <div class="prod-bx">
-                                    <div class="img">
-                                        <img src="/images/prod1.jpg">
-                                    </div>
-                                    <div class="data clearfix">
-                                        <h4>Drawstring bag</h4>
-                                        <div class="price">
-                                            24.00 KD
-                                        </div>
-                                        <div class="more-data">
-                                            <div class="qty">
-                                                <div class="flex">
-                                                    <button class="btn btn-danger">View Item</button>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="remove">REMOVE</a>
-                                        </div>
-                                    </div><!--/.data-->
-                                </div><!--/.prod-bx-->
-                            </div>
-                        </div>
-<!--                        <div class="col-sm-4">-->
-<!--                            <div class="prod-bx-cvr">-->
-<!--                                <div class="prod-bx">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="/images/prod2.jpg">-->
-<!--                                    </div>-->
-<!--                                    <div class="data clearfix">-->
-<!--                                        <h4>Drawstring bag</h4>-->
-<!--                                        <div class="price">-->
-<!--                                            24.00 KD-->
-<!--                                        </div>-->
-<!--                                        <div class="more-data">-->
-<!--                                            <textarea class="form-control" placeholder="Comment"></textarea>-->
-<!--                                            <div class="qty">-->
-<!--                                                <h5>Qty</h5>-->
-<!--                                                <div class="flex">-->
-<!--                                                    <input type="" style="width: 70px;" class="form-control" name="" value="1">-->
-<!--                                                    <button class="btn btn-danger">Add To Cart</button>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <a href="#" class="edit">EDIT</a> | <a href="#" class="remove">REMOVE</a>-->
-<!--                                        </div>-->
-<!--                                    </div>&lt;!&ndash;/.data&ndash;&gt;-->
-<!--                                </div>&lt;!&ndash;/.prod-bx&ndash;&gt;-->
-<!--                            </div>-->
+<!--                    <div class="row" v-for="chunk in productChunks">-->
+<!--                        <div class="col-sm-4" v-for="product in chunk">-->
+<!--                            <ProductBox v-bind:product="product"></ProductBox>-->
+<!--                            &lt;!&ndash;/.prod-bx&ndash;&gt;-->
 <!--                        </div>-->
-<!--                        <div class="col-sm-4">-->
-<!--                            <div class="prod-bx-cvr">-->
-<!--                                <div class="prod-bx">-->
-<!--                                    <div class="img">-->
-<!--                                        <img src="/images/prod3.jpg">-->
-<!--                                    </div>-->
-<!--                                    <div class="data clearfix">-->
-<!--                                        <h4>Drawstring bag</h4>-->
-<!--                                        <div class="price">-->
-<!--                                            24.00 KD-->
-<!--                                        </div>-->
-<!--                                        <div class="more-data">-->
-<!--                                            <textarea class="form-control" placeholder="Comment"></textarea>-->
-<!--                                            <div class="qty">-->
-<!--                                                <h5>Qty</h5>-->
-<!--                                                <div class="flex">-->
-<!--                                                    <input type="" style="width: 70px;" class="form-control" name="" value="1">-->
-<!--                                                    <button class="btn btn-danger">Add To Cart</button>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <a href="#" class="edit">EDIT</a> | <a href="#" class="remove">REMOVE</a>-->
-<!--                                        </div>-->
-<!--                                    </div>&lt;!&ndash;/.data&ndash;&gt;-->
-<!--                                </div>&lt;!&ndash;/.prod-bx&ndash;&gt;-->
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div><!--/.row-->
+<!--                        &lt;!&ndash;/.col-sm-4&ndash;&gt;-->
+<!--                    </div>-->
                 </div><!--/.col-sm-9-->
                 <!--/.col-sm-9-->
             </div>
@@ -95,15 +25,36 @@
 <script>
     import myAccountSidebar from "./partials/TheSidebar";
     import myAccountBanner from "./partials/TheBanner";
+    import ProductBox from "../Product-box";
+    import _ from 'lodash';
+
     export default {
-        components: {myAccountSidebar, myAccountBanner},
+        components: {myAccountSidebar, myAccountBanner, ProductBox},
         data(){
             return {
+                products: {}
             }
         },
         mounted() {
+            if (this.$store.getters['authModule/isAuthenticated']) {
+                axios.get(
+                    '/api/v1/account/wishlist',
+                    {headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.products = response.data;
+                });
+            }else{
+                console.log('No authorization');
+            }
+
         },
-        methods: {
+        computed: {
+            productChunks(){
+                return _.chunk(Object.values(this.products), 3);
+            }
         }
     }
 </script>

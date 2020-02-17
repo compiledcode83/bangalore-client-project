@@ -6,10 +6,20 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Intervention\Image\File;
 
 class UserController extends Controller {
+
+    protected $userModel;
+
+    public function __construct( User $userModel)
+    {
+        $this->userModel = $userModel;
+    }
 
     public function userReviews()
     {
@@ -80,5 +90,58 @@ class UserController extends Controller {
         }
 
         return ['error' => 'Error review#255'];
+    }
+
+    public function accountInfo()
+    {
+        $account = Auth::user();
+
+        return $account;
+    }
+
+    public function updateAccountInfo(Request $request)
+    {
+        $user = Auth::user();
+        $license = $request->only('file');
+
+        $licensePdf = '';
+        if($request->hasFile('file'))
+        {
+            //save $license
+            $licenseName = str_random(15);
+            $licensePdf = $licenseName . '.pdf';
+
+            $request->file('file')->move(public_path('/uploads/accounts/'), $licensePdf);
+        }
+
+        $attributes = $request->only( [
+            'first_name',
+            'last_name',
+            'company',
+            'job_title',
+            'contact_person',
+            'phone',
+            'email',
+        ] );
+
+        if($request->hasFile('file'))
+        {
+            $attributes['company_license'] = 'uploads/accounts/'.$licensePdf;
+        }
+
+        if($this->userModel->updateUserAccount($user->id, $attributes))
+        {
+            return ['message' => 'Information updated'];
+        }
+
+        return ['error' => 'Server Error'];
+    }
+
+    public function accountWishlist()
+    {
+        $user = Auth::user();
+
+        dd($user->wishLists);
+        dd($user->wishLists->pluck('product_id'));
     }
 }

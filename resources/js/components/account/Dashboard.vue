@@ -14,7 +14,7 @@
                         <div class="col-sm-6">
                             <div class="box">
                                 <h5>Account Details</h5>
-                                <a class="edit" href="#">EDIT</a>
+                                <router-link :to="{name: 'account.info'}" class="edit">EDIT</router-link>
                                 <ul class="row">
                                     <li class="col-lg-6">
                                         <small>First Name</small>
@@ -38,7 +38,7 @@
                         <div class="col-sm-6">
                             <div class="box">
                                 <h5>Newsletters</h5>
-                                <a class="edit" href="#">EDIT</a>
+                                <router-link :to="{name: 'account.newsletter'}" class="edit">EDIT</router-link>
                                 <span>You don't subscribe to our newsletter</span>
                             </div>
                         </div><!--/.col-sm-6-->
@@ -53,7 +53,7 @@
                         <div class="col-sm-6">
                             <div class="box">
                                 <h5>Default Billing Address </h5>
-                                <a class="edit" href="address-edit.html">EDIT</a>
+                                <router-link :to="{name: 'account.addresses'}" class="edit">EDIT</router-link>
                                 <span>
                                   AL SALEM STREET<br>
                                   BLOCK #12<br>
@@ -65,7 +65,7 @@
                         <div class="col-sm-6">
                             <div class="box">
                                 <h5>Default Shipping Address</h5>
-                                <a class="edit" href="address-edit.html">EDIT</a>
+                                <router-link :to="{name: 'account.addresses'}" class="edit">EDIT</router-link>
                                 <span>
                                   AL SALEM STREET<br>
                                   BLOCK #12<br>
@@ -76,7 +76,7 @@
                         </div><!--/.col-sm-6-->
 
                     </div><!--/.row-->
-                    <button class="btn btn-default rounded-0">Add New Address</button>
+                    <router-link :to="{name: 'account.addresses'}" class="btn btn-default rounded-0">Add New Address</router-link>
 
                 </div><!--/.col-sm-9-->
             </div>
