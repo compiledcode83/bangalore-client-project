@@ -1,5 +1,4 @@
 import Home from './components/Home';
-import About from './components/About';
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
 import Login  from "./components/Login";
@@ -20,6 +19,12 @@ import AccountWishList from "./components/account/WishList";
 import ProductSearch from "./components/ProductSearch";
 import NotFound from './components/NotFound';
 
+import About from './components/pages/About';
+import Contact from "./components/pages/Contact";
+import Services from "./components/pages/Services";
+import Media from "./components/pages/Media";
+import Pages from "./components/pages/Pages";
+
 export default {
     mode: 'history',
 
@@ -34,10 +39,6 @@ export default {
             path: '/',
             name: 'home',
             component: Home
-        },
-        {
-            path: '/about',
-            component: About
         },
         {
             path: '/categories/:slug',
@@ -133,6 +134,32 @@ export default {
             path: '/account/wishlist',
             name: 'account.wishlist',
             component: AccountWishList,
-        }
+        },
+        //static pages
+        {
+            path: '/about',
+            name: 'pages.about',
+            component: About
+        },
+        {
+            path: '/contact',
+            name: 'pages.contact',
+            component: Contact
+        },
+        {
+            path: '/services',
+            name: 'pages.services',
+            component: Services
+        },
+        {
+            path: '/media',
+            name: 'pages.media',
+            component: Media
+        },
+        {
+            path: '/pages/:slug',
+            name: 'pages',
+            component: Pages
+        },
     ]
 }
