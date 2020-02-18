@@ -54,13 +54,36 @@ class SettingController extends AdminController
                 $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
                 $form->text('header_phone', __('Header Phone'));
             })->tab('Banners', function ($form) {
-            $form->image('contact_us_banner', __('Contact us banner'));
-            $form->image('faq_banner', __('Faq banner'));
-            $form->image('sitemap_banner', __('Sitemap banner'));
-            $form->image('media_banner', __('Media banner'));
-            $form->image('services_banner', __('Services banner'));
-            $form->image('special_offers_banner', __('Special offers banner'));
-        });
+                $form->image('contact_us_banner', __('Contact us banner'));
+                $form->image('faq_banner', __('Faq banner'));
+                $form->image('sitemap_banner', __('Sitemap banner'));
+                $form->image('media_banner', __('Media banner'));
+                $form->image('services_banner', __('Services banner'));
+                $form->image('special_offers_banner', __('Special offers banner'));
+            })->tab('Contact', function ($form) {
+                $form->email('email', __('Contact Email'));
+                $form->text('tel', __('Contact Phone'))->icon('fa-phone');
+                $form->text('fax', __('Contact Fax'))->icon('fa-fax');
+                $form->text('cantry_en', __('Contact Cantry en'));
+                $form->text('cantry_ar', __('Contact Cantry ar'));
+                $form->text('city_en', __('Contact City en'));
+                $form->text('city_ar', __('Contact City ar'));
+                $form->text('area_en', __('Contact Area en'));
+                $form->text('area_ar', __('Contact Area ar'));
+                $form->text('street_en', __('Contact Street en'));
+                $form->text('street_ar', __('Contact Street ar'));
+                $form->text('building_en', __('Contact Building en'));
+                $form->text('building_ar', __('Contact Building ar'));
+                $form->latlong('lat', 'lng', 'Position');
+            })->tab('About', function ($form) {
+                $form->image('about_img', __('Header Phone'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->ckeditor('about_description_en', __('Body en'))->rules( 'required' );
+                $form->ckeditor('about_description_ar', __('Body ar'))->rules( 'required' );
+            })->tab('Our Client', function ($form) {
+                $form->image('client_img', __('Header Phone'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->ckeditor('client_description_en', __('Body en'))->rules( 'required' );
+                $form->ckeditor('client_description_ar', __('Body ar'))->rules( 'required' );
+            });
 
         $form->tools(function (Form\Tools $tools) {
             $tools->disableList();
