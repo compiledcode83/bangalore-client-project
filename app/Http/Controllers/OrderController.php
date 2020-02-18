@@ -64,4 +64,44 @@ class OrderController extends Controller {
 
         return $orderResponse;
     }
+
+    public function getUserOrders()
+    {
+        $user = Auth::user();
+        return $user->orders->sortByDesc('created_at')->values()->all();
+    }
+
+    public function getUserOrderDetails($id)
+    {
+        $user = Auth::user();
+        $order = Order::with('orderItems', 'orderItems.productAttributeValue', 'orderItems.productAttributeValue.product', 'orderItems.productAttributeValue.attributeValue')
+                        ->where('id', $id)
+                        ->where('user_id', $user->id)
+                        ->first();
+
+        if(!$order)
+        {
+            return ['error' => 'Not Authorized 291!'];
+        }
+
+        return $order;
+    }
+
+    public function tryToReorder(Request $request)
+    {
+        $attribute = $request->only('orderId');
+        dd($attribute);
+
+        //return these to store
+//        item_name: this.product.name_en,
+//        product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
+//        product_image: colorObjectInput.images[0],
+//        product_print_image: '',
+//        product_qty: parseInt(this.qtyInputs[key]),
+//        product_color_name: colorObjectInput.name,
+//        product_price: 0,
+//        base_product_prices: this.productPrices,
+//        total: 0,
+//        status: false
+    }
 }

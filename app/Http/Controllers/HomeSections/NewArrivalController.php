@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HomeSections;
 
+use App\Http\Controllers\Controller;
 use App\Models\HomepageSection;
-use Illuminate\Http\Request;
 
 class NewArrivalController extends Controller
 {

@@ -79,39 +79,37 @@
                             </div>
 
                             <div class="prices" v-if="show_prices">
-                                <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
+                                <table style="margin-top: 20%;margin-bottom: 5%;">
+                                    <tr>
+                                        <th scope="row" style="color: #e11b22;">Quantity</th>
+                                        <th scope="col" style="padding-left: 25px;" v-for="(priceElementValue, priceElementKey) in productPrices">{{priceElementKey}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="color: #e11b22;">KD</th>
+                                        <td style="padding-left: 25px;" v-for="(priceElementValue, priceElementKey) in productPrices">{{priceElementValue}}</td>
+                                    </tr>
+                                </table>
+<!--                                <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>-->
 
-                                    <title>SVG Table</title>
+<!--                                    <title>Prices Table</title>-->
 
-                                    <g id='columnGroup'>
-                                        <rect x='65' y='10' width='75' height='80' fill='gainsboro'/>
-                                        <rect x='265' y='10' width='75' height='80' fill='gainsboro'/>
+<!--                                    <g id='rowGroup'>-->
+<!--                                        <rect x='30' y='10' width='75' height='70' fill='gainsboro'/>-->
+<!--&lt;!&ndash;                                        <rect x='265' y='10' width='75' height='80' fill='gainsboro'/>&ndash;&gt;-->
 
-                                        <text x='30' y='30' font-size='18px' font-weight='bold' fill='crimson'>
-                                            <tspan x='30' dy='1.5em'>Q1</tspan>
-                                            <tspan x='30' dy='1em'>Q2</tspan>
-                                        </text>
+<!--                                        <text x='30' y='30' font-size='18px' font-weight='bold' fill='crimson'>-->
+<!--                                            <tspan x='30'>Quantity</tspan>-->
+<!--                                            <tspan x='30' dy='2.5em'>KD</tspan>-->
+<!--                                        </text>-->
 
-                                        <text x='100' y='30' font-size='18px' text-anchor='middle'>
-                                            <tspan x='100' font-weight='bold' fill='crimson'>Sales</tspan>
-                                            <tspan x='100' dy='1.5em'>$ 223</tspan>
-                                            <tspan x='100' dy='1em'>$ 183</tspan>
-                                        </text>
-
-                                        <text x='200' y='30' font-size='18px' text-anchor='middle'>
-                                            <tspan x='200' font-weight='bold' fill='crimson'>Expenses</tspan>
-                                            <tspan x='200' dy='1.5em'>$ 195</tspan>
-                                            <tspan x='200' dy='1em'>$ 70</tspan>
-                                        </text>
-
-                                        <text x='300' y='30' font-size='18px' text-anchor='middle'>
-                                            <tspan x='300' font-weight='bold' fill='crimson'>Net</tspan>
-                                            <tspan x='300' dy='1.5em'>$ 28</tspan>
-                                            <tspan x='300' dy='1em'>$ 113</tspan>
-                                        </text>
-                                    </g>
-
-                                </svg>
+<!--                                        <div v-for="(priceElementValue, priceElementKey) in productPrices">-->
+<!--                                            <text :x="xAxisRow" y='30' font-size='18px' text-anchor='middle' :key="xAxisRow">-->
+<!--                                                <tspan :x="xAxisRow"> 1 </tspan>-->
+<!--                                                <tspan :x="xAxisRow" dy='2.3em'> 70</tspan>-->
+<!--                                            </text>-->
+<!--                                        </div>-->
+<!--                                    </g>-->
+<!--                                </svg>-->
                             </div>
                         </div>
                         <p v-html="product.short_description_en"> </p>
@@ -184,7 +182,8 @@
                                         <select class="js-example-basic-single color-select form-control"
                                                 name="colorSelectedByIds[]"
                                                 v-model="colorInputs[index]"
-                                                @change="validateInput($event)">
+                                                @change="validateInput($event)"
+                                        required>
                                             <option value="null">Choose Color</option>
                                             <option
                                                 v-for="(color, index) in product.colors"
@@ -193,7 +192,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]">
+                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]" required>
                                     </div>
                                 </li><!--/li-->
                             </ul>
@@ -431,6 +430,14 @@
                     formData.append('product_color_name', colorObjectInput.name);
                     formData.append('product_price', '0');
                     formData.append('total', '0');
+
+                    // console.log(this.cartItem);
+                    // this.$store
+                    //     .dispatch('calcItemPrice', this.cartItem)
+                    //     .then(() => {
+                    //
+                    //     });
+
                     /*
                       Make the request to the POST /single-file URL
                     */

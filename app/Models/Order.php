@@ -73,6 +73,7 @@ class Order extends Model
         $user->orders()->save($order);
 
         $items = [];
+        $itemsTotal = 0;
         foreach($cart->cartItems as $item)
         {
             $items[] = new OrderItem([
@@ -81,9 +82,14 @@ class Order extends Model
                 'qty' => $item->qty,
                 'print_image'    => $item->print_image ?? '',
             ]);
+
+            $itemsTotal += $item->unit_price * $item->qty;
         }
         $saveItems = $order->orderItems()->saveMany($items);
 
+        $order->update([
+            'total' => $itemsTotal,
+        ]);
         if($saveItems)
         {
             return $order;

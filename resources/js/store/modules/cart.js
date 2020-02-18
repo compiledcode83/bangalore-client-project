@@ -110,7 +110,9 @@ export const actions = {
         //check item is already in cart
         let savedCartItem = this.getters.getCartItemById(item.product_attribute_id);
         if(savedCartItem){
-            commit('REMOVE_ITEM', item);
+            CartService.removeCartItem(item).then(() => {
+                commit('REMOVE_ITEM', item);
+            });
         }else{
             console.log('item already deleted');
         }

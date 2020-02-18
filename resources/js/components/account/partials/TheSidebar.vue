@@ -30,22 +30,15 @@
             </ul>
         </div><!--/.side-navigation-->
         <div class="side-wishlist">
-            <h5>My Wish List <span>2 items</span> </h5>
-            <section>
+            <h5>My Wish List <span>{{products.length}} items</span> </h5>
+            <section v-for="product in products">
                 <div class="flex">
-                    <img src="/images/bag-thumb.jpg">
-                    <span><p>Glittered mini<br> backpacks</p></span>
+                    <img :src="'/uploads/' + product.main_image"
+                         @error="onImageLoadFailure($event, '80x100')" style="max-width: 80px">
+                    <span><p>{{product.name_en}}</p></span>
                 </div>
-                <button class="btn btn-danger">View Item</button>
+                <router-link class="btn btn-danger" :to="'/products/'+product.slug"> View Item </router-link>
                 <a class="close"><img src="/images/close.jpg"></a>
-            </section><!--/section-->
-            <section>
-                <div class="flex">
-                    <img src="/images/bag-thumb.jpg">
-                    <span><p>Glittered mini<br> backpacks</p><strong>75.00 KD</strong></span>
-                </div>
-                <button class="btn btn-danger">View Item</button>
-                <a class="close" id="close"><img src="/images/close.jpg"></a>
             </section><!--/section-->
         </div><!--/.side-wishlist-->
 
@@ -57,11 +50,29 @@
         name: 'myAccountSidebar',
         data(){
             return {
+                products: {}
             }
         },
         mounted() {
+            if (this.$store.getters['authModule/isAuthenticated']) {
+                axios.get(
+                    '/api/v1/account/wishlist',
+                    {headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.products = response.data;
+                });
+            }else{
+                console.log('No authorization');
+            }
+
         },
         methods: {
+            onImageLoadFailure(event, size) {
+                event.target.src = 'https://via.placeholder.com/' + size;
+            }
         }
     }
 </script>

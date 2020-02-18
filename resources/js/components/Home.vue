@@ -61,19 +61,17 @@
                 <p class="spl">get the best of itc promotions from this section</p>
                 <ul class="bestseller-slide">
                     <li class="slide" v-for="product in products">
-                        <div class="sellerbox">
-                            <div class="img">
+                        <router-link :to="'/products/'+product.slug">
+                            <div class="sellerbox">
                                 <img :src="'/uploads/' + product.main_image"
                                      @error="onImageLoadFailure($event)" style="width: 370px;height: 360px;">
-                                <a href="#" class="quick-view" data-toggle="modal" data-target="#QuickView" tabindex="-1">Quick View</a>
+                                <h3>{{product.name_en}}</h3>
+                                <p>{{product.short_description}}</p>
+                                <div class="price clearfix">
+                                    <div class="pull-right new">KD {{product.individual_unit_price}}</div>
+                                </div>
                             </div>
-                            <h3>{{product.name_en}}</h3>
-                            <p>{{product.short_description}}</p>
-                            <div class="price clearfix">
-<!--                                <div class="pull-left old">KD.420.000</div>-->
-                                <div class="pull-right new">KD {{product.individual_unit_price}}</div>
-                            </div>
-                        </div>
+                        </router-link>
                     </li><!--/li-->
                 </ul><!--/ul-->
                 <div class="text-center fullwidth">
@@ -134,45 +132,6 @@
                 </div><!--/.col-sm-4-->
             </div><!--/.register-home-->
         </div><!--/.container-->
-
-        <!-- Modal For Quick View-->
-        <div class="modal fade login-model" id="QuickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog quick-view-model" role="document">
-                <div class="modal-content rounded-0">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <img src="/images/close.png">
-                        </button>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <img src="/images/seller1.jpg">
-                            </div>
-                            <div class="col-sm-6 data">
-                                <h3>Johnson's Face</h3>
-                                <p class="price">50.00 KD</p>
-                                <h5>Available Colors</h5>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn selct-clr" style="background: #d1bda1;">
-                                        <input type="radio" name="options" id="option1" autocomplete="off" chacked="">
-                                    </label>
-                                    <label class="btn selct-clr" style="background: #232323;">
-                                        <input type="radio" name="options1" id="option2" autocomplete="off">
-                                    </label>
-                                    <label class="btn selct-clr" style="background: #506cbb;">
-                                        <input type="radio" name="options2" id="option3" autocomplete="off">
-                                    </label>
-                                    <label class="btn selct-clr active" style="background: #b5b5b5;">
-                                        <input type="radio" name="options3" id="option4" autocomplete="off">
-                                    </label>
-
-                                </div>
-                                <button class="btn-lg btn-success full-width">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div><!--/.modal-body-->
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 

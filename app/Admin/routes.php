@@ -51,4 +51,6 @@ Route::group([
     $router->get('/excel/images', 'ImportExcelController@uploadImages')->name('admin.import.images');
     $router->post('/excel/images/store', 'ImportExcelController@storeImages')->name('admin.import.images.store');
 
+    $router->resource('/reports/sales', 'Reports\SalesReportController');
+
 });
