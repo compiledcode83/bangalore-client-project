@@ -61,6 +61,7 @@ class SettingController extends AdminController
                 $form->image('services_banner', __('Services banner'));
                 $form->image('special_offers_banner', __('Special offers banner'));
             })->tab('Contact', function ($form) {
+                $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' );
                 $form->email('email', __('Contact Email'));
                 $form->text('tel', __('Contact Phone'))->icon('fa-phone');
                 $form->text('fax', __('Contact Fax'))->icon('fa-fax');
@@ -76,11 +77,11 @@ class SettingController extends AdminController
                 $form->text('building_ar', __('Contact Building ar'));
                 $form->latlong('lat', 'lng', 'Position');
             })->tab('About', function ($form) {
-                $form->image('about_img', __('Header Phone'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->image('about_img', __('About Banner'))->move('pages')->uniqueName()->rules( 'required' );
                 $form->ckeditor('about_description_en', __('Body en'))->rules( 'required' );
                 $form->ckeditor('about_description_ar', __('Body ar'))->rules( 'required' );
             })->tab('Our Client', function ($form) {
-                $form->image('client_img', __('Header Phone'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->image('client_img', __('Client Banner'))->move('pages')->uniqueName()->rules( 'required' );
                 $form->ckeditor('client_description_en', __('Body en'))->rules( 'required' );
                 $form->ckeditor('client_description_ar', __('Body ar'))->rules( 'required' );
             });

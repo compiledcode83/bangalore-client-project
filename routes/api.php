@@ -32,6 +32,12 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('products/{slug}','ProductController@productDetails');
     Route::get('search/{term}','ProductController@searchProducts');
     Route::get('settings','SettingController@getSettings');
+    Route::get('static/about','AboutController@getInformations');
+    Route::get('static/contact','ContactController@getInformations');
+    Route::post('static/contact','ContactController@sentMail');
+    Route::get('static/media','MediaServiceController@getMedias');
+    Route::get('static/service','MediaServiceController@getServices');
+    Route::get('static/page/{slug}','PageController@getPage');
 
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
