@@ -7,18 +7,17 @@
                     <ul class="ft-links col-sm-6">
 
                         <li><router-link to="/about">About Us</router-link></li>
-
-                        <li><a href="services.html">Our Services </a></li>
-                        <li><a href="special-offers.html">Special Offers </a></li>
-                        <li><a href="our-clients.html">Our Clients </a></li>
-                        <li><a href="media.html">Media </a></li>
+                        <li><router-link to="/services">Our Services</router-link></li>
+                        <li><router-link to="/offers">Special Offers</router-link></li>
+                        <li><router-link to="/pages/clients">Our Clients</router-link></li>
+                        <li><router-link to="/media">Media</router-link></li>
                     </ul>
                     <ul class="ft-links col-sm-6">
-                        <li><a href="contact-us.html">Contact Us</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy </a></li>
-                        <li><a href="terms.html">Terms & Conditions </a></li>
-                        <li><a href="FAQ.html">FAQs </a></li>
-                        <li><a href="sitemap.html">Sitemap </a></li>
+                        <li><router-link to="/contact">Contact Us</router-link></li>
+                        <li><router-link to="/pages/privacy">Privacy Policy</router-link></li>
+                        <li><router-link to="/pages/terms">Terms & Conditions</router-link></li>
+                        <li><router-link to="/pages/faqs">FAQs</router-link></li>
+                        <li><router-link to="/pages/sitemap">Sitemap</router-link></li>
                     </ul>
                 </div><!--/.row-->
             </div><!--/.col-sm-4-->

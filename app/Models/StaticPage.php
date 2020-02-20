@@ -11,6 +11,7 @@ class StaticPage extends Model
 
     const TYPE_ABOUT_US = 'about_us';
     const TYPE_CONTACT_US = 'contact_us';
+    const TYPE_General = 'general';
 
     protected $guarded = ['id'];
 }
