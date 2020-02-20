@@ -47,6 +47,7 @@ export default {
             props: (route) => ({
                 filterCategories: route.query.cat,
                 filterColor: route.query.color,
+                filterPrice: route.query.price,
             })
         },
         {

@@ -64,7 +64,11 @@ class CategoryController extends Controller {
         {
             $productModel = new Product();
 
-            $filterAttributes = $productModel->getProductsFilterAttributes($products);
+            // make sure filter attributes not changed after apply any of filters on category
+            if(empty($filterOptions))
+            {
+                $filterAttributes = $productModel->getProductsFilterAttributes($products);
+            }
 
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
@@ -78,8 +82,12 @@ class CategoryController extends Controller {
                     'slug'           => $category->slug,
                 ],
                 'products' => $products,
-                'filterAttributes' => $filterAttributes
             ];
+
+            if(empty($filterOptions))
+            {
+                $response['filterAttributes'] = $filterAttributes;
+            }
             return response()->json( $response );
         }
 

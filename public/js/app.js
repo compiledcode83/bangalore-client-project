@@ -4247,6 +4247,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       filterCategory: [],
       filterColor: [],
+      filterPrice: [],
       priceSliderValue: [parseInt(this.minPrice), parseInt(this.maxPrice)]
     };
   },
@@ -4272,9 +4273,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    priceChanged: function priceChanged() {
-      console.log(this.priceSliderValue);
-    },
     colorActive: function colorActive(id) {
       if (this.filterColor == id) {
         return 'active';
@@ -4362,6 +4360,48 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }
+      }
+
+      if (filterType === 'price') {
+        var queryStringPrice = "min=" + this.priceSliderValue[0] + "&max=" + this.priceSliderValue[1];
+        this.filterPrice.min = this.priceSliderValue[0];
+        this.filterPrice.max = this.priceSliderValue[1];
+        return this.$router.push({
+          name: 'productList',
+          query: {
+            color: this.filterColor,
+            cat: this.filterCategory,
+            price: this.queryStringPrice
+          }
+        }); // if(this.filterColor.includes(filterValue))
+        // {
+        //     //delete this element
+        //     this.filterColor = [];
+        //
+        //     return this.$router.push({ name: 'productList', query: {
+        //             color: this.filterColor,
+        //             cat: this.filterCategory
+        //         }});
+        // }else{
+        //     //add this element to  array
+        //     if(this.filterColor[0] !== filterValue){
+        //         this.filterColor[0] = filterValue;
+        //     }else {
+        //         this.filterColor = [];
+        //
+        //         return this.$router.push({
+        //             name: 'productList', query: {
+        //                 cat: this.filterCategory,
+        //                 color: this.filterColor
+        //             }
+        //         });
+        //     }
+        //     //rebuild query string
+        //     return this.$router.push({ name: 'productList', query: {
+        //             color: this.filterColor,
+        //             cat: this.filterCategory
+        //         }});
+        // }
       }
     }
   }
@@ -4488,7 +4528,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     ProductBox: _Product_box__WEBPACK_IMPORTED_MODULE_1__["default"],
     VueContentLoading: vue_content_loading__WEBPACK_IMPORTED_MODULE_2___default.a
   },
-  props: ['filterCategories', 'filterColor'],
+  props: ['filterCategories', 'filterColor', 'filterPrice'],
   mounted: function mounted() {
     this.slug = this.$route.params.slug;
     this.loadFilterCategoriesList();
@@ -4530,17 +4570,31 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         filterQueryString += 'color=' + this.filterColor;
       }
 
+      if (this.filterPrice && this.filterPrice.length >= 1) {
+        if (filterQueryString !== '') {
+          filterQueryString += '&';
+        }
+
+        filterQueryString += this.filterPrice; // filterQueryString += 'min='+this.filterPrice.min;
+        // filterQueryString += '&';
+        // filterQueryString += 'max='+this.filterPrice.max;
+      }
+
       if (filterQueryString !== '') {
         filterQueryString = '?' + filterQueryString;
       }
 
+      console.log(filterQueryString);
       this.products = [];
       axios.all([axios.get('/api/v1/category-products/' + this.slug + filterQueryString)]).then(axios.spread(function (categoryResponse) {
         console.log(categoryResponse);
         _this.products = categoryResponse.data.products.data;
         _this.pagination = categoryResponse.data.products;
         _this.category = categoryResponse.data.category;
-        _this.productsFilterAttributes = categoryResponse.data.filterAttributes;
+
+        if (categoryResponse.data.filterAttributes) {
+          _this.productsFilterAttributes = categoryResponse.data.filterAttributes;
+        }
       })).then(function () {
         _this.loading = false;
       });
@@ -34568,7 +34622,11 @@ var render = function() {
                             "tooltip-style": _vm.tooltipStyle,
                             "process-style": _vm.processStyle
                           },
-                          on: { "drag-end": _vm.priceChanged },
+                          on: {
+                            "drag-end": function($event) {
+                              return _vm.toggleQueryString("price", 0)
+                            }
+                          },
                           model: {
                             value: _vm.priceSliderValue,
                             callback: function($$v) {
@@ -59391,7 +59449,8 @@ __webpack_require__.r(__webpack_exports__);
     props: function props(route) {
       return {
         filterCategories: route.query.cat,
-        filterColor: route.query.color
+        filterColor: route.query.color,
+        filterPrice: route.query.price
       };
     }
   }, {

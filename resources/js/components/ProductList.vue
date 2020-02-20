@@ -92,7 +92,7 @@
 
     export default {
         components: {ProductFilter, ProductBox, VueContentLoading},
-        props: ['filterCategories', 'filterColor'],
+        props: ['filterCategories', 'filterColor', 'filterPrice'],
         mounted() {
             this.slug = this.$route.params.slug;
             this.loadFilterCategoriesList();
@@ -128,10 +128,20 @@
                     }
                     filterQueryString += 'color='+this.filterColor
                 }
+                if(this.filterPrice && this.filterPrice.length >= 1){
+                    if(filterQueryString !== ''){
+                        filterQueryString += '&';
+                    }
+                    filterQueryString += this.filterPrice;
+                    // filterQueryString += 'min='+this.filterPrice.min;
+                    // filterQueryString += '&';
+                    // filterQueryString += 'max='+this.filterPrice.max;
+                }
                 if(filterQueryString !== ''){
                     filterQueryString = '?'+filterQueryString;
                 }
 
+                console.log(filterQueryString);
                 this.products = [];
                 axios.all([
                     axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
@@ -140,7 +150,9 @@
                     this.products = categoryResponse.data.products.data;
                     this.pagination = categoryResponse.data.products;
                     this.category   = categoryResponse.data.category;
-                    this.productsFilterAttributes = categoryResponse.data.filterAttributes
+                    if(categoryResponse.data.filterAttributes){
+                        this.productsFilterAttributes = categoryResponse.data.filterAttributes
+                    }
                 })).then(() => {
                     this.loading = false;
                 });
