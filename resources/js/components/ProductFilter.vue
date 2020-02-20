@@ -68,7 +68,7 @@
                                 :enable-cross="enableCross"
                                 :tooltip-style="tooltipStyle"
                                 :process-style="processStyle"
-                                @drag-end="priceChanged">
+                                @drag-end="toggleQueryString('price',0)">
                             </vue-range-slider>
 
                             <input class="rangedprice pull-left" type="text"id="amountfrm" readonly style="text-align:left;">
@@ -132,6 +132,7 @@
             return {
                 filterCategory: [],
                 filterColor: [],
+                filterPrice: [],
                 priceSliderValue: [parseInt(this.minPrice),parseInt(this.maxPrice)]
             }
         },
@@ -157,9 +158,7 @@
             }
         },
         methods: {
-            priceChanged(){
-                console.log(this.priceSliderValue);
-            },
+
             colorActive(id){
                 if(this.filterColor == id){
                     return 'active';
@@ -239,6 +238,48 @@
                                 cat: this.filterCategory
                             }});
                     }
+                }
+
+                if(filterType === 'price') {
+                    let queryStringPrice = "min="+this.priceSliderValue[0]+"&max="+this.priceSliderValue[1];
+                    this.filterPrice.min = this.priceSliderValue[0];
+                    this.filterPrice.max = this.priceSliderValue[1];
+
+                    return this.$router.push({ name: 'productList', query: {
+                            color: this.filterColor,
+                            cat: this.filterCategory,
+                            price: this.queryStringPrice
+                        }});
+
+                    // if(this.filterColor.includes(filterValue))
+                    // {
+                    //     //delete this element
+                    //     this.filterColor = [];
+                    //
+                    //     return this.$router.push({ name: 'productList', query: {
+                    //             color: this.filterColor,
+                    //             cat: this.filterCategory
+                    //         }});
+                    // }else{
+                    //     //add this element to  array
+                    //     if(this.filterColor[0] !== filterValue){
+                    //         this.filterColor[0] = filterValue;
+                    //     }else {
+                    //         this.filterColor = [];
+                    //
+                    //         return this.$router.push({
+                    //             name: 'productList', query: {
+                    //                 cat: this.filterCategory,
+                    //                 color: this.filterColor
+                    //             }
+                    //         });
+                    //     }
+                    //     //rebuild query string
+                    //     return this.$router.push({ name: 'productList', query: {
+                    //             color: this.filterColor,
+                    //             cat: this.filterCategory
+                    //         }});
+                    // }
                 }
             }
         }

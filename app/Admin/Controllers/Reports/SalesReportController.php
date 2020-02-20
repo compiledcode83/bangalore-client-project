@@ -45,55 +45,52 @@ class SalesReportController extends AdminController
             ]);
 
             // Add User filter
-            $filter->where(function ($query) {
-
-                $query->where('user_id', 'like', "%{$this->input}%")
-                    ->orWhere('user_id', 'like', "%{$this->input}%");
-
-            }, 'Text');
 //            $filter->equal('user_id', 'Account Type')->radio([
 //                ''   => 'All',
 //                ['1', '2']    => 'Individual',
 //                '1'    => 'Corporate'
 //            ]);
 
-//            $filter->user_id()->where(function ($query) {
-//                switch ($this->input) {
-//                    case 'Individual':
-//                        // custom complex query if the 'yes' option is selected
-//                        $query->has('user', funnction(){
-//
-//                        });
-//                        break;
-//                    case 'Corporate':
-//                        $query->doesntHave('user');
-//                        break;
-//                }
-//            }, 'User Types', 'name_for_url_shortcut')->radio([
-//                '' => 'All',
-//                'Individual' => 'Only with relationship',
-//                'Corporate' => 'Only without relationship',
-//            ]);
+            $filter->where(function ($query) {
+                switch ($this->input) {
+                    case 'individual':
+                        // custom complex query if the 'yes' option is selected
+                        $query->whereHas('user', function ($query) {
+                            $query->where('type', '1');
+                        });
+                        break;
+                    case 'corporate':
+                        $query->whereHas('user', function ($query) {
+                            $query->where('type', '2');
+                        });
+                }
+            }, 'Account Type', 'accounts')->radio([
+                '' => 'All',
+                'individual' => 'Only Individual',
+                'corporate' => 'Only corporate',
+            ]);
 
 
         });
 
 
         $grid->column('id', __('Id'));
-        $grid->user()->type('Account Type')->display(function () {
-            if($this->user->type == '1')
+
+        $grid->user()->type('Account Type')->display(function ($type) {
+            if($type == '1')
             {
                 return 'Individual';
             }
             return 'Corporate';
         });
-        $grid->user()->type('Account Name')->display(function () {
-            if($this->user->type == '1')
-            {
-                return $this->user->first_name . ' ' . $this->user->last_name;
-            }
-            return $this->user->company;
-        });
+//        $grid->user()->type('Account Name')->display(function ($ttype) {
+//            if($ttype == '1')
+//            {
+//                return $this->user->first_name . ' ' . $this->user->last_name;
+//            }
+//            return $this->user->company;
+//        });
+
         $grid->column('order_code', __('Order code'));
         $grid->column('final_status', __('Status'));
         $grid->column('address', __('Address'));
