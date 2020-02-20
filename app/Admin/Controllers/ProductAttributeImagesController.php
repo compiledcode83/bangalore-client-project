@@ -60,8 +60,6 @@ class ProductAttributeImagesController extends AdminController
         $grid->column('main_images', __('Main imagess'))->image( '', 100, 50 );
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
-//        $grid->disableActions();
-
         return $grid;
     }
 
@@ -74,7 +72,7 @@ class ProductAttributeImagesController extends AdminController
     protected function detail($id)
     {
         $show = new Show(ProductAttributeValue::findOrFail($id));
-        
+
         $show->field('sku', __('Sku'));
         $show->field('stock', __('Stock'));
         $show->field('is_active', __('Is active'));

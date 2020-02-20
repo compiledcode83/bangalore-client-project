@@ -8,8 +8,8 @@
                 <!--                                    </a>-->
             </router-link>
             <span class="new" v-if="product.newIcon"></span>
-            <div class="hover">
-                <a href="#"><img src="/images/favourite.png"></a>
+            <div class="hover" :style="'opacity:'+ product.whishlisted">
+                <img src="/images/favourite.png" style="cursor: pointer;">
             </div>
         </div>
         <div class="data clearfix">

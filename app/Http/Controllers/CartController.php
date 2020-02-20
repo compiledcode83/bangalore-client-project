@@ -86,4 +86,20 @@ class CartController extends Controller
         $this->cartItemModel->updateItemQty($user->cart->id, $attributesCartItem);
     }
 
+    public function removeItem(Request $request)
+    {
+        $user = Auth::user();
+
+        if(!$user->cart->id)
+        {
+            return 'Cart not created yet!';
+        }
+
+        $attributesCartItem = $request->only( [
+            'product_attribute_id',
+        ] );
+
+        $this->cartItemModel->removeItem($user->cart->id, $attributesCartItem['product_attribute_id']);
+    }
+
 }

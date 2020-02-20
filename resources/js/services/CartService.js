@@ -13,6 +13,9 @@ export default {
     updateCartItemQty(item){
         return axios.post('/api/v1/cart/item/edit', item)
     },
+    removeCartItem(item){
+        return axios.post('/api/v1/cart/item/remove', item)
+    },
     placeOrder(){
         return axios.post('/api/v1/order')
     }

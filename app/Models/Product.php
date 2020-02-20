@@ -124,6 +124,11 @@ class Product extends Model
 
     public function search($term)
     {
+        //save meaningless search with 1 or 2 characters
+        if(strlen($term) < 3)
+        {
+            return [];
+        }
         $products = Self::where('name_en', 'like', "%".$term."%")
                         ->orWhere('name_ar', 'like', "%".$term."%")
                         ->orWhere('sku', 'like', "%".$term."%")

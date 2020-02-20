@@ -19,6 +19,14 @@ class CategoryController extends Controller {
 
     public function categoryProducts( $slug, Request $request )
     {
+        $wishList = [];
+        $user = Auth::guard('api')->user();
+        if($user)
+        {
+            //get user wishList
+            $wishList = $user->wishLists->pluck('product_id')->toArray();
+        }
+
         $category = Category::where( 'slug', $slug )->first();
 
         $filterOptions = $request->query();
@@ -59,6 +67,7 @@ class CategoryController extends Controller {
             $filterAttributes = $productModel->getProductsFilterAttributes($products);
 
             $products = $productModel->getProductsRatingColors($products);
+            $products = $this->addWishListedProducts($products, $wishList);
 
             $response = [
                 'category' => [
@@ -75,6 +84,23 @@ class CategoryController extends Controller {
         }
 
         return [];
+    }
+
+    public function addWishListedProducts($products, $wishList)
+    {
+        foreach ($products as $product)
+        {
+            if(in_array($product->id, $wishList))
+            {
+                $product->whishlisted = 1;
+            }
+            else
+            {
+                $product->whishlisted = 0;
+            }
+        }
+
+        return $products;
     }
 
     public function listFilterCategories($slug)

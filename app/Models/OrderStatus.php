@@ -22,5 +22,5 @@ class OrderStatus extends Model
      * The attributes that must be protected from mass assignment.
      * @var array
      */
-    protected $guarded = ['id', 'order_id', 'status_id'];
+    protected $guarded = ['id'];
 }
