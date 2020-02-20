@@ -103,7 +103,6 @@ export const actions = {
             qtyIndexSelected = searchQtyDefined;
         }
         qtyPriceSelected = basePrices[qtyIndexSelected];
-        console.log(item.product_price);
         item.product_price = parseInt(qtyPriceSelected);
     },
     removeItemFromCart({ commit }, item) {

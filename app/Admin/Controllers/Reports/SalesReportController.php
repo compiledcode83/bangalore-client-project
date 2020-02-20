@@ -36,6 +36,26 @@ class SalesReportController extends AdminController
             // Add date between filter
             $filter->between('created_at', 'Date')->date();
 
+            // Add payment filter
+            $filter->equal('payment_method', 'Payment Method')->radio([
+                ''   => 'All',
+                'cash'    => 'CASH',
+                'knet'    => 'KNET',
+                'visa'   => 'VISA & MASTER'
+            ]);
+
+            // Add User filter
+            $filter->where(function ($query) {
+
+                $query->where('user_id', 'like', "%{$this->input}%")
+                    ->orWhere('user_id', 'like', "%{$this->input}%");
+
+            }, 'Text');
+//            $filter->equal('user_id', 'Account Type')->radio([
+//                ''   => 'All',
+//                ['1', '2']    => 'Individual',
+//                '1'    => 'Corporate'
+//            ]);
 
 //            $filter->user_id()->where(function ($query) {
 //                switch ($this->input) {

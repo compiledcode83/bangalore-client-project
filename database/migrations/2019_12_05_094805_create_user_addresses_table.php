@@ -22,13 +22,13 @@ class CreateUserAddressesTable extends Migration
 
             $table->string('country');
             $table->string('city');
+            $table->string('avenue')->nullable();
+            $table->string('apartment')->nullable();
             $table->string('area')->nullable();
             $table->string('block');
-            $table->string('avenue')->nullable();
             $table->string('street');
             $table->string('building');
             $table->string('floor')->nullable();
-            $table->string('apartment')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

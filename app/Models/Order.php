@@ -36,7 +36,7 @@ class Order extends Model
      */
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     /**
@@ -76,6 +76,11 @@ class Order extends Model
         $itemsTotal = 0;
         foreach($cart->cartItems as $item)
         {
+            $check = $this->checkStock($item);
+            if(!$check)
+            {
+                return ['error' => 'order has item out-stock'];
+            }
             $items[] = new OrderItem([
                 'product_attribute_value_id' => $item->product_attribute_value_id,
                 'unit_price' => $item->unit_price,
@@ -92,10 +97,33 @@ class Order extends Model
         ]);
         if($saveItems)
         {
+            $this->updateStock($cart->cartItems);
             return $order;
         }
 
         return false;
+    }
+
+    protected function checkStock($item)
+    {
+        $productAttribute = ProductAttributeValue::find($item->product_attribute_value_id);
+        if($productAttribute-> stock >= $item->qty)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function updateStock($items)
+    {
+        foreach($items as $item)
+        {
+            $productAttribute = ProductAttributeValue::find($item->product_attribute_value_id);
+            $productAttribute->update([
+                'stock' => $productAttribute->stock - $item->qty
+            ]);
+        }
     }
 
     public function getUserOrder($user, $orderCode)

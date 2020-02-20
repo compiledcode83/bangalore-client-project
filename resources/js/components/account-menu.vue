@@ -55,7 +55,7 @@
                 </a>
             </li><!--/li-->
             <li>
-                <a class="main" href="#search" >
+                <a class="main" href="#search">
                     <span class=""><img src="/images/search.png" alt=""></span>
                 </a>
             </li><!--/li-->

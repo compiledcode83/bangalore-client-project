@@ -44,7 +44,7 @@ Route::group(['prefix'=>'v1'], function(){
 Route::group(['prefix'=>'v1'], function(){
 
     Route::get('home-categories','CategoryController@homeCategories');
-    Route::get('products-best-list','BestSellerController@bestSeller');
+    Route::get('products-best-list','HomeSections\BestSellerController@bestSeller');
     Route::get('category-products/{slug}','CategoryController@categoryProducts');
     Route::get('filter-categories/{slug?}','CategoryController@listFilterCategories');
     Route::get('filter-colors','AttributeController@listFilterColors');

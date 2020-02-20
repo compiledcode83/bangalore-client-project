@@ -3856,6 +3856,7 @@ __webpack_require__.r(__webpack_exports__);
           total: 0,
           status: false
         };
+        this.cartItem = this.calcItemPrice(this.cartItem);
         this.addToCart(colorObjectInput, key);
       }
     },
@@ -3873,14 +3874,8 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('product_image', colorObjectInput.images[0]);
         formData.append('product_qty', this.qtyInputs[key]);
         formData.append('product_color_name', colorObjectInput.name);
-        formData.append('product_price', '0');
-        formData.append('total', '0'); // console.log(this.cartItem);
-        // this.$store
-        //     .dispatch('calcItemPrice', this.cartItem)
-        //     .then(() => {
-        //
-        //     });
-
+        formData.append('product_price', this.cartItem.product_price);
+        formData.append('total', '0');
         /*
           Make the request to the POST /single-file URL
         */
@@ -4072,6 +4067,34 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    calcItemPrice: function calcItemPrice(item) {
+      //same in store ===> URGENT refactor
+      // get base prices defined by admin
+      // search for max_qty based on user enter qty
+      // calc item price
+      // dispatch create item
+      var basePrices = item.base_product_prices;
+      var qtyIndexSelected = null;
+      var itemTotalQty = item.product_qty;
+      var qtyPriceSelected = null;
+      var searchQtyDefined = null;
+      var definedQty = Object.keys(basePrices);
+      definedQty.forEach(function (value) {
+        if (parseInt(itemTotalQty) >= value) {
+          searchQtyDefined = value;
+        }
+      });
+
+      if (!searchQtyDefined) {
+        qtyIndexSelected = Math.max.apply(null, definedQty);
+      } else {
+        qtyIndexSelected = searchQtyDefined;
+      }
+
+      qtyPriceSelected = basePrices[qtyIndexSelected];
+      item.product_price = parseInt(qtyPriceSelected);
+      return item;
     }
   },
   updated: function updated() {
@@ -6587,7 +6610,7 @@ __webpack_require__.r(__webpack_exports__);
     loadProducts: function loadProducts() {
       var _this = this;
 
-      axios.get('api/v1/search/' + this.term).then(function (responseProducts) {
+      axios.get('/api/v1/search/' + this.term).then(function (responseProducts) {
         console.log(responseProducts.data);
         $('#search').removeClass('open');
         return _this.$router.push({
@@ -33072,7 +33095,16 @@ var render = function() {
         _vm._v(" "),
         _vm.product.newIcon ? _c("span", { staticClass: "new" }) : _vm._e(),
         _vm._v(" "),
-        _vm._m(0)
+        _c(
+          "div",
+          { staticClass: "hover", style: "opacity:" + _vm.product.whishlisted },
+          [
+            _c("img", {
+              staticStyle: { cursor: "pointer" },
+              attrs: { src: "/images/favourite.png" }
+            })
+          ]
+        )
       ],
       1
     ),
@@ -33130,18 +33162,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "hover" }, [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("img", { attrs: { src: "/images/favourite.png" } })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -58754,7 +58775,6 @@ var actions = {
     }
 
     qtyPriceSelected = basePrices[qtyIndexSelected];
-    console.log(item.product_price);
     item.product_price = parseInt(qtyPriceSelected);
   },
   removeItemFromCart: function removeItemFromCart(_ref6, item) {

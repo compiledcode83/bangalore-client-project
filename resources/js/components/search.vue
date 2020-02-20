@@ -17,7 +17,8 @@
         },
         methods: {
             loadProducts(){
-                axios.get('api/v1/search/'+this.term)
+
+                axios.get('/api/v1/search/'+this.term)
                     .then((responseProducts) => {
                         console.log(responseProducts.data);
                         $('#search').removeClass('open');

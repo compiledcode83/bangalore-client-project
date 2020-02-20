@@ -408,6 +408,8 @@
                         status: false
                     };
 
+                    this.cartItem = this.calcItemPrice(this.cartItem);
+
                     this.addToCart(colorObjectInput, key);
                 }
             },
@@ -428,15 +430,8 @@
                     formData.append('product_image', colorObjectInput.images[0]);
                     formData.append('product_qty', this.qtyInputs[key]);
                     formData.append('product_color_name', colorObjectInput.name);
-                    formData.append('product_price', '0');
+                    formData.append('product_price', this.cartItem.product_price);
                     formData.append('total', '0');
-
-                    // console.log(this.cartItem);
-                    // this.$store
-                    //     .dispatch('calcItemPrice', this.cartItem)
-                    //     .then(() => {
-                    //
-                    //     });
 
                     /*
                       Make the request to the POST /single-file URL
@@ -631,7 +626,36 @@
                         }
                     });
 
-            }
+            },
+            calcItemPrice(item){
+                //same in store ===> URGENT refactor
+                // get base prices defined by admin
+                // search for max_qty based on user enter qty
+                // calc item price
+                // dispatch create item
+                let basePrices = item.base_product_prices;
+                let qtyIndexSelected = null;
+                let itemTotalQty = item.product_qty;
+                let qtyPriceSelected = null;
+                let searchQtyDefined = null;
+                let definedQty  = Object.keys(basePrices);
+
+                definedQty.forEach(function(value){
+                    if(parseInt(itemTotalQty) >= value){
+                        searchQtyDefined = value;
+                    }
+                });
+
+                if(!searchQtyDefined){
+                    qtyIndexSelected = Math.max.apply(null, definedQty);
+                }else{
+                    qtyIndexSelected = searchQtyDefined;
+                }
+                qtyPriceSelected = basePrices[qtyIndexSelected];
+                item.product_price = parseInt(qtyPriceSelected);
+
+                return item;
+            },
 
         },
         updated: function () {

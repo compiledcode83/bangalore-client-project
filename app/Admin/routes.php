@@ -52,5 +52,11 @@ Route::group([
     $router->post('/excel/images/store', 'ImportExcelController@storeImages')->name('admin.import.images.store');
 
     $router->resource('/reports/sales', 'Reports\SalesReportController');
+    $router->resource('/reports/orders', 'Reports\OrdersReportController');
+    $router->resource('/reports/delivery', 'Reports\DeliveryReportController');
+    $router->resource('/reports/products', 'Reports\ProductsReportController');
+    $router->resource('/reports/users', 'Reports\UsersReportController');
+
+    $router->post('/order/update-details', 'OrderController@updateDetails')->name('admin.order.updateDetails');
 
 });
