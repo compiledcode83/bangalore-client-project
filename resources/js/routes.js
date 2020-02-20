@@ -110,9 +110,10 @@ export default {
             component: AccountOrders,
         },
         {
-            path: '/account/order/details',
+            path: '/account/order/details/:id',
             name: 'account.order.details',
             component: AccountViewOrder,
+            props: true
         },
         {
             path: '/account/reviews',

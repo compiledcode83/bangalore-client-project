@@ -103,14 +103,15 @@ export const actions = {
             qtyIndexSelected = searchQtyDefined;
         }
         qtyPriceSelected = basePrices[qtyIndexSelected];
-        console.log(item.product_price);
         item.product_price = parseInt(qtyPriceSelected);
     },
     removeItemFromCart({ commit }, item) {
         //check item is already in cart
         let savedCartItem = this.getters.getCartItemById(item.product_attribute_id);
         if(savedCartItem){
-            commit('REMOVE_ITEM', item);
+            CartService.removeCartItem(item).then(() => {
+                commit('REMOVE_ITEM', item);
+            });
         }else{
             console.log('item already deleted');
         }

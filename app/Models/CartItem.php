@@ -84,4 +84,11 @@ class CartItem extends Model
 
         return 'Server Error CI2202!';
     }
+
+    public function removeItem($cartId, $productAttributeId)
+    {
+        return CartItem::where('cart_id', $cartId)
+                        ->where('product_attribute_value_id', $productAttributeId)
+                        ->forceDelete();
+    }
 }

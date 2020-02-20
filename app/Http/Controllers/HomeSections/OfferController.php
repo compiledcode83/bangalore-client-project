@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HomeSections;
 
+use App\Http\Controllers\Controller;
 use App\Models\HomepageSection;
 
 class OfferController extends Controller

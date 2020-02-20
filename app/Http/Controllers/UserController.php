@@ -141,7 +141,10 @@ class UserController extends Controller {
     {
         $user = Auth::user();
 
-        dd($user->wishLists);
-        dd($user->wishLists->pluck('product_id'));
+        $productsIds = $user->wishLists->pluck('product_id');
+        $productModel = new Product();
+        $products = $productModel->whereIn('id', $productsIds)->get();
+
+        return $productModel->getProductsRatingColors($products);
     }
 }

@@ -13,19 +13,38 @@ use Illuminate\Http\Request;
 |
 */
 
-
-Route::group(['prefix'=>'v1'], function(){
-
-    //admin statistics
-    Route::get('/admin/statistics/sales/{month}', '\App\Admin\Controllers\HomeController@totalSales');
-    Route::get('/admin/statistics/orders/{month}', '\App\Admin\Controllers\HomeController@totalOrders');
-
-    Route::get('home-categories','CategoryController@homeCategories');
+/***************************************************************************************************
+ * â–‚ â–ƒ â–… â–† â–ˆ  Home Sections â–ˆ â–† â–… â–ƒ â–‚
+ ***************************************************************************************************/
+Route::group(['prefix'=>'v1', "namespace"=>"HomeSections"], function(){
+    // Controllers Within The "App\Http\Controllers\HomeSections" Namespace
     Route::get('home-sliders','SliderController@homeSlides');
     Route::get('home-arrivals','NewArrivalController@homeNewArrivals');
     Route::get('home-offers','OfferController@homeOffers');
     Route::get('home-best-sellers','BestSellerController@homeBestSeller');
-    Route::get('products-best-list','BestSellerController@bestSeller');
+});
+
+/***************************************************************************************************
+ * â–‚ â–ƒ â–… â–† â–ˆ  Admin Statistics  â–ˆ â–† â–… â–ƒ â–‚
+ ***************************************************************************************************/
+Route::group(['prefix'=>'v1'], function(){
+    Route::get('/admin/statistics/sales/{month}', '\App\Admin\Controllers\HomeController@totalSales');
+    Route::get('/admin/statistics/orders/{month}', '\App\Admin\Controllers\HomeController@totalOrders');
+});
+
+/***************************************************************************************************
+ * â–‚ â–ƒ â–… â–† â–ˆ  Authentication  â–ˆ â–† â–… â–ƒ â–‚
+ ***************************************************************************************************/
+Route::group(['prefix'=>'v1'], function(){
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::post('register/corporate', 'AuthController@registerCorporate');
+});
+
+Route::group(['prefix'=>'v1'], function(){
+
+    Route::get('home-categories','CategoryController@homeCategories');
+    Route::get('products-best-list','HomeSections\BestSellerController@bestSeller');
     Route::get('category-products/{slug}','CategoryController@categoryProducts');
     Route::get('filter-categories/{slug?}','CategoryController@listFilterCategories');
     Route::get('filter-colors','AttributeController@listFilterColors');
@@ -33,24 +52,13 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('search/{term}','ProductController@searchProducts');
     Route::get('settings','SettingController@getSettings');
 
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
-    Route::post('register/corporate', 'AuthController@registerCorporate');
-
-    Route::get('auth',function(){
-        Auth::loginUsingId(3, true);
-    });
-
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
 
         Route::post('cart/item','CartController@storeItem');
         Route::post('cart/item/edit','CartController@updateItem');
+        Route::post('cart/item/remove','CartController@removeItem');
         Route::post('order','OrderController@store');
         Route::get('receipt/{code}','OrderController@getUserReceipt');
 
@@ -59,9 +67,12 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('user-ability/review/{id}','UserController@userAbleToReview');
         Route::post('/user/review','UserController@reviewStore');
 
+        Route::get('account/orders','OrderController@getUserOrders');
+        Route::get('account/orders/{id}','OrderController@getUserOrderDetails');
         Route::get('account/wishlist','UserController@accountWishlist');
         Route::get('account/info','UserController@accountInfo');
         Route::post('account/info','UserController@updateAccountInfo');
+        Route::post('account/reorder','OrderController@tryToReorder');
 
     });
 });
