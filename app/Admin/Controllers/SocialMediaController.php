@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\models\SocialMedia;
+use App\Models\SocialMedia;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
