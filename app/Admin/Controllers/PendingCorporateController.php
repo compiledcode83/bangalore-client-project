@@ -4,7 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Mail\ApproveCorporateAccountMail;
 use App\Mail\RejectCorporateAccountMail;
-use App\models\User;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
