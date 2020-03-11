@@ -15,7 +15,7 @@
         <div class="data clearfix">
             <h4>{{product.name_en}}</h4>
             <div class="price">
-                Price on request
+                {{$t('pages.priceOnRequest')}}
             </div>
             <div class="rate-cvr clearfix">
                 <div class="rate">
@@ -28,7 +28,6 @@
                         read-only>
                     </star-rating>
                 </div>
-
             </div>
             <div class="btn-group" data-toggle="buttons" v-if="product.colors">
                 <label class="btn selct-clr" v-for="color in product.colors" :style="'background:' + color">

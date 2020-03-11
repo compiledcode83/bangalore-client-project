@@ -51,8 +51,9 @@ class SettingController extends AdminController
         $form = new Form(new Setting);
 
         $form->tab('General', function ($form) {
-                $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
-                $form->text('header_phone', __('Header Phone'));
+            $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
+            $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
+            $form->text('header_phone', __('Header Phone'));
             })->tab('Banners', function ($form) {
                 $form->image('contact_us_banner', __('Contact us banner'));
                 $form->image('faq_banner', __('Faq banner'));

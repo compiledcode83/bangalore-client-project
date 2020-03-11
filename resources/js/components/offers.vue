@@ -32,7 +32,7 @@
                     <span class="input-group-addon rounded-0">
               <button type="submit" class="btn btn-success rounded-0" >
                   <span class="glyphicon glyphicon-search"></span>
-                  SEARCH
+                  {{$t('pages.search')}}
               </button>
           </span>
                 </div><!--/.big-searchbox-->
@@ -49,13 +49,13 @@
                         <div class="row">
                             <div class="col-sm-12 filtering">
                                 <div class="pull-left" v-if="pagination">
-                                    {{pagination.total}} items
+                                    {{pagination.total}} {{$t('pages.items')}}
                                 </div>
 
                                 <div class="pull-right">
-                                    <span> SORT BY : </span>
+                                    <span> {{$t('pages.sortBy')}} : </span>
                                     <select>
-                                        <option>PRICE - HIGH TO LOW</option>
+                                        <option>{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>
                                     </select>
                                 </div>
                             </div><!--/.filtering-->
@@ -69,7 +69,7 @@
                         </div>
                         <!--/.row-->
                         <div class="text-center d-block" v-if="pagination.total >= 9 && pagination.last_page > pagination.current_page">
-                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >View More</a>
+                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >{{$t('pages.viewMore')}}</a>
                         </div>
                     </div><!--/.col-sm-9-->
                 </div>
@@ -100,8 +100,19 @@
                 pagination: {}
             }
         },
+        created(){
+            axios.get('/api/v1/settings/')
+                .then((response) =>{
+                    alert(response.data.enable_offers_page);
+                    // console.log(response.data.enable_offers_page);
+                    if(!response.data.enable_offers_page){
+                        return this.$router.push({ name: 'home'});
+                    }
+                });
+        },
         mounted() {
-            this.loadOffers();
+
+            // this.loadOffers();
             this.loading = false;
             // this.slug = this.$route.params.slug;
             // this.loadFilterCategoriesList();
@@ -121,63 +132,63 @@
             }
         },
         methods: {
-            loadOffers(){
-
-                let filterQueryString = '';
-                if(this.filterCategories && this.filterCategories.length >= 1){
-                    if(filterQueryString !== ''){
-                        filterQueryString = '?'+filterQueryString;
-                    }
-                    filterQueryString = 'cat='+this.filterCategories;
-                }
-                if(this.filterColor && this.filterColor.length >= 1){
-                    if(filterQueryString !== ''){
-                        filterQueryString += '&';
-                    }
-                    filterQueryString += 'color='+this.filterColor
-                }
-                if(filterQueryString !== ''){
-                    filterQueryString = '?'+filterQueryString;
-                }
-
-                this.products = [];
-                axios.all([
-                    axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
-                ]).then(axios.spread((categoryResponse) => {
-                    this.products = categoryResponse.data.products.data;
-                    this.pagination = categoryResponse.data.products;
-                    this.category   = categoryResponse.data.category;
-                })).then(() => {
-                    this.loading = false;
-                });
-            },
-            loadMoreProducts(){
-                let next_page = this.pagination.current_page + 1;
-                axios.all([
-                    axios.get('/api/v1/category-products/'+this.slug+'?page='+ next_page)
-                ]).then(axios.spread((categoryResponse) => {
-                    this.products.push(...categoryResponse.data.products.data);
-                    this.pagination = categoryResponse.data.products;
-                    this.category   = categoryResponse.data.category;
-                }));
-            },
-            onImageLoadFailure (event, size) {
-                event.target.src = 'https://via.placeholder.com/'+size;
-            },
-            loadFilterCategoriesList(){
-                this.filterCategoriesList = {};
-                axios.get('/api/v1/filter-categories/'+this.slug)
-                    .then((response) => {
-                        this.filterCategoriesList = response.data;
-                    });
-            },
-            loadFilterColorsList(){
-                this.filterColorsList = {};
-                axios.get('/api/v1/filter-colors')
-                    .then((response) => {
-                        this.filterColorsList = response.data;
-                    });
-            }
+            // loadOffers(){
+            //
+            //     let filterQueryString = '';
+            //     if(this.filterCategories && this.filterCategories.length >= 1){
+            //         if(filterQueryString !== ''){
+            //             filterQueryString = '?'+filterQueryString;
+            //         }
+            //         filterQueryString = 'cat='+this.filterCategories;
+            //     }
+            //     if(this.filterColor && this.filterColor.length >= 1){
+            //         if(filterQueryString !== ''){
+            //             filterQueryString += '&';
+            //         }
+            //         filterQueryString += 'color='+this.filterColor
+            //     }
+            //     if(filterQueryString !== ''){
+            //         filterQueryString = '?'+filterQueryString;
+            //     }
+            //
+            //     this.products = [];
+            //     axios.all([
+            //         axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
+            //     ]).then(axios.spread((categoryResponse) => {
+            //         this.products = categoryResponse.data.products.data;
+            //         this.pagination = categoryResponse.data.products;
+            //         this.category   = categoryResponse.data.category;
+            //     })).then(() => {
+            //         this.loading = false;
+            //     });
+            // },
+            // loadMoreProducts(){
+            //     let next_page = this.pagination.current_page + 1;
+            //     axios.all([
+            //         axios.get('/api/v1/category-products/'+this.slug+'?page='+ next_page)
+            //     ]).then(axios.spread((categoryResponse) => {
+            //         this.products.push(...categoryResponse.data.products.data);
+            //         this.pagination = categoryResponse.data.products;
+            //         this.category   = categoryResponse.data.category;
+            //     }));
+            // },
+            // onImageLoadFailure (event, size) {
+            //     event.target.src = 'https://via.placeholder.com/'+size;
+            // },
+            // loadFilterCategoriesList(){
+            //     this.filterCategoriesList = {};
+            //     axios.get('/api/v1/filter-categories/'+this.slug)
+            //         .then((response) => {
+            //             this.filterCategoriesList = response.data;
+            //         });
+            // },
+            // loadFilterColorsList(){
+            //     this.filterColorsList = {};
+            //     axios.get('/api/v1/filter-colors')
+            //         .then((response) => {
+            //             this.filterColorsList = response.data;
+            //         });
+            // }
 
         }
     }

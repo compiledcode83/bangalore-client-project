@@ -3,10 +3,10 @@
         <div class="innr-banner fullwidth">
             <img src="images/wishlist-banner.jpg">
             <div class="heading">
-                <h2>Checkout</h2>
+                <h2>{{$t('pages.checkout')}}</h2>
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Checkout</li>
+                    <li><a href="index.html">{{$t('pages.home')}}</a></li>
+                    <li class="active">{{$t('pages.checkout')}}</li>
                 </ul>
             </div>
         </div><!--/.banner-->
@@ -16,69 +16,55 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" :class="statusFirstPanel" @click.prevent="togglePanel"><a href="#Step1" aria-controls="home" role="tab" data-toggle="tab">
                         <span class="number">01</span><br>
-                        Shipping
+                        {{$t('pages.shipping')}}
                     </a></li>
                     <li role="presentation" :class="statusSecondPanel" @click.prevent="togglePanel"><a href="#Step2" aria-controls="profile" role="tab" data-toggle="tab">
                         <span class="number">02</span><br>
-                        Payment
+                        {{$t('pages.payment')}}
                     </a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" :class="'tab-pane ' + statusFirstPanel" id="Step1">
-                        <h4>SHIPPING Address</h4>
-                        <div class="row">
-                            <div class="col-sm-6">
+                        <h4>{{$t('pages.shippingAddress')}}</h4>
+                        <div class="row" v-for="chunk in addressesChunks">
+                            <div class="col-sm-6" v-for="address in chunk">
                                 <div class="box">
                                     <label class="radio-btn">
-                                        <input type="radio" name="shippingAddress" value="1" v-model="shippingAddress" >
+                                        <input type="radio" name="shippingAddress" :value="address.id" v-model="shippingAddress" >
                                         <span class="checkmark"></span>
                                     </label>
                                     <span class="data">
-                                      MOHAMMED AL BAWi<br>
-                                      AL SALEM STREET<br>
-                                      BLOCK #12<br>
-                                      BUILDING NO. 23<br>
-                                      SALMIYA<br>
-                                    </span>
-                                </div>
-                            </div><!--/.col-sm-6-->
-                            <div class="col-sm-6">
-                                <div class="box">
-                                    <label class="radio-btn">
-                                        <input type="radio" name="shippingAddress" value="2" v-model="shippingAddress" >
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <span class="data">
-                                      MOHAMMED AL BAWi<br>
-                                      AL SALEM STREET<br>
-                                      BLOCK #12<br>
-                                      BUILDING NO. 23<br>
-                                      SALMIYA<br>
+                                      {{address.governorate}}, {{address.area}}<br>
+                                      {{$t('pages.block')}}: {{address.block}}, {{$t('pages.street')}}: {{address.street}}<br>
+                                      {{$t('pages.building')}}: {{address.building}}, {{$t('pages.floor')}}: {{address.floorNo}}<br>
+                                        <p v-if="address.userType == '1'"> {{$t('pages.home')}}: {{address.house_number}}</p>
+                                        <p v-else> {{$t('pages.office')}}: {{address.office_number}}, {{$t('pages.officeAddress')}}: {{address.office_address}}</p>
                                     </span>
                                 </div>
                             </div><!--/.col-sm-6-->
                             <div class="col-sm-12">
-                                <button class="btn btn-default rounded-0">Add New Address</button>
+                                <router-link to="/account/addresses" class="btn btn-default rounded-0" exact>{{$t('pages.addNewAddress')}}</router-link>
                             </div>
                         </div>
                         <br>
-                        <h4>SHIPPING Address</h4>
+                        <h4>{{$t('pages.shippingAddress')}}</h4>
                         <div class="mt-10">
-                            <label class="checkbox-sml">Use as Billing Address<br>9AM to 5PM, Monday - Friday
+                            <label class="checkbox-sml">{{$t('pages.useAsBillingAddress')}}<br>{{$t('pages.workingHoursAndDays')}}
                                 <input type="checkbox" name="billingShipping" value="1" checked v-model="billingShipping">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="mt-30">
-                            <h5>Estimated Time</h5>
-                            <span class="text-light">3 - 4 Working Dayss</span>
+                            <h5>{{$t('pages.estimatedTime')}}</h5>
+                            <span class="text-light" v-if="isPrinting">{{$t('pages.printingShippingDays')}}</span>
+                            <span class="text-light" v-else>{{$t('pages.withoutPrintingShippingDays')}} </span>
                         </div>
-                        <button class="btn btn-primary rounded-0 pull-right" @click.prevent="togglePanel">NEXT</button>
+                        <button class="btn btn-primary rounded-0 pull-right" @click.prevent="togglePanel">{{$t('pages.next')}}</button>
                     </div>
                     <div role="tabpanel" :class="'tab-pane ' + statusSecondPanel" id="Step2">
-                        <h4>CHOOSE A PAYMENT METHOD</h4>
+                        <h4>{{$t('pages.choosePaymentMethod')}}</h4>
                         <div class="row payment-mthd">
                             <div class="col-xs-6 col-sm-6 col-md-3">
                                 <div class="bx">
@@ -114,30 +100,30 @@
                             </div>
                         </div>
 
-                        <h4 class="mt-30">BILLING ADDRESS</h4>
+                        <h4 class="mt-30">{{$t('pages.billingAddress')}}</h4>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="box">
-                                    <span class="data">
+                                     <span class="data">
                                       MOHAMMED AL BAWi<br>
                                       AL SALEM STREET<br>
                                       BLOCK #12<br>
                                       BUILDING NO. 23<br>
                                       SALMIYA<br>
                                     </span>
-                                    <a href="#" class="pull-right edit" v-if="!billingShipping">Edit Address</a>
+                                    <a href="#" class="pull-right edit" v-if="!billingShipping">{{$t('pages.editAddress')}}</a>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary rounded-0 pull-right" @click.prevent="placeOrder"> Place Order </button>
+                        <button class="btn btn-primary rounded-0 pull-right" @click.prevent="placeOrder" :disabled="hasPlacedOrder"> {{$t('pages.placeOrder')}} </button>
                     </div>
                 </div>
             </div><!--/.col-sm-8-->
 
             <div class="col-sm-4">
                 <div class="side-summary">
-                    <h3>SUMMARY</h3>
-                    <a class="heading" data-toggle="collapse" data-parent="#stacked-menu" href="#summary" aria-expanded="true">{{itemsCount}} Items in Cart</a>
+                    <h3>{{$t('pages.summery')}}</h3>
+                    <a class="heading" data-toggle="collapse" data-parent="#stacked-menu" href="#summary" aria-expanded="true">{{itemsCount}} {{$t('pages.itemsInCart')}}</a>
                     <ul class="collapse in listing" id="summary" aria-expanded="true" style="">
                         <li class="row" v-for="cartItem in cart.items">
                             <div class="col-sm-4 img">
@@ -145,26 +131,26 @@
                             </div>
                             <div class="col-sm-5 pl-0 data">
                                 {{cartItem.item_name}}
-                                Qty: {{cartItem.product_qty}}<br>
-                                <span><strong>Color:</strong> {{cartItem.product_color_name}} </span>
+                                {{$t('pages.qty')}}: {{cartItem.product_qty}}<br>
+                                <span><strong>{{$t('pages.color')}}:</strong> {{cartItem.product_color_name}} </span>
                             </div>
                             <div class="col-sm-3 price">
-                                {{cartItem.product_price}} KD
+                                {{cartItem.product_price}} {{$t('pages.kd')}}
                             </div>
                         </li><!--/li-->
                     </ul><!--/nav-->
 
                     <div class="col-xs-6 list">
-                        SUBTOTAL
+                        {{$t('pages.subtotal')}}
                     </div>
                     <div class="col-xs-6 list text-right">
-                        KD {{subTotalCart}}
+                        {{$t('pages.kd')}} {{subTotalCart}}
                     </div>
                     <div class="col-xs-6 list" v-if="discount">
-                        Discount
+                        {{$t('pages.discount')}}
                     </div>
                     <div class="col-xs-6 list text-right" v-if="discount">
-                        KD {{cart.discount}}
+                        {{$t('pages.kd')}} {{cart.discount}}
                     </div>
                     <!--                                <div class="col-xs-6 list">-->
                     <!--                                    Delivery-->
@@ -175,10 +161,10 @@
 
                     <div class="total clearfix">
                         <div class="col-xs-6">
-                            TOTAL
+                            {{$t('pages.total')}}
                         </div>
                         <div class="col-xs-6 text-right">
-                            KD {{subTotalCart}}
+                            {{$t('pages.kd')}} {{subTotalCart}}
                         </div>
                     </div>
                 </div>
@@ -191,6 +177,7 @@
 </template>
 
 <script>
+    import _ from 'lodash';
     import CartService from "../services/CartService";
     export default {
 
@@ -198,17 +185,30 @@
             return {
                 cart: this.$store.state.cartModule.cart,
                 discount: 0,
+                userAddresses: {},
                 shippingAddress: 0,
                 billingShipping: false,
                 paymentMethod: 'cash',
                 statusFirstPanel: 'active',
                 statusSecondPanel: '',
-                placeOrderResponse: null
+                placeOrderResponse: null,
+                hasPlacedOrder: false
             }
         },
         mounted(){
             // User MUST BE authenticated
             this.checkUserAuth();
+
+            axios.get(
+                '/api/v1/account/checkout/addresses',
+                {
+                    headers: {
+                        "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                    }
+                }
+            ).then((response) => {
+                this.userAddresses = response.data;
+            });
         },
         methods: {
             checkUserAuth(){
@@ -241,7 +241,7 @@
                 }
             },
             placeOrder(){
-
+                this.hasPlacedOrder = true;
                 CartService.placeOrder()
                     .then((response) => {
                         this.placeOrderResponse = response.data;
@@ -269,6 +269,7 @@
                 return this.cart.items.length;
             },
             subTotalCart(){
+                console.log(this.cart);
                 let total = 0;
                 if(this.cart.items.length > 0 ){
                     this.cart.items.forEach(function(item){
@@ -278,6 +279,21 @@
 
                 return total;
             },
+            isPrinting(){
+                let printing = 0;
+                if(this.cart.items.length > 0 ){
+                    this.cart.items.forEach(function(item){
+                        if(item.product_print_image !== ''){
+                            printing = 1;
+                        }
+                    });
+                }
+
+                return printing;
+            },
+            addressesChunks(){
+                return _.chunk(Object.values(this.userAddresses), 2);
+            }
         }
     }
 </script>

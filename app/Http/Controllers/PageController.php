@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SocialMedia;
 use App\Models\StaticPage;
 use Illuminate\Http\Request;
 use App\Http\Resources\Page as PageResource;
@@ -17,5 +18,10 @@ class PageController extends Controller
             'page' => new PageResource($page)
         ];
 
+    }
+
+    public function getSocial()
+    {
+        return SocialMedia::all();
     }
 }

@@ -4,41 +4,43 @@
         <div class="side-navigation">
             <ul>
                 <li>
-                    <router-link :to="{ name: 'account.dashboard'}">Account Dashboard</router-link>
+                    <router-link :to="{ name: 'account.dashboard'}">{{$t('pages.accountDashboard')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.info'}">Account Information</router-link>
+                    <router-link :to="{ name: 'account.info'}">{{$t('pages.accountInformation')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.addresses'}">Address Book</router-link>
+                    <router-link :to="{ name: 'account.addresses'}">{{$t('pages.addressBook')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.orders'}">My Orders</router-link>
+                    <router-link :to="{ name: 'account.orders'}">{{$t('pages.myOrders')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.track'}">Track My Order</router-link>
+                    <router-link :to="{ name: 'account.track'}">{{$t('pages.trackMyOrders')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.newsletter'}">Newsletter Subscriptions</router-link>
+                    <router-link :to="{ name: 'account.newsletter'}">{{$t('pages.newsletterSubscriptions')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.reviews'}">My Product Reviews</router-link>
+                    <router-link :to="{ name: 'account.reviews'}">{{$t('pages.myProductReviews')}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'account.wishlist'}">My Wish List</router-link>
+                    <router-link :to="{ name: 'account.wishlist'}">{{$t('pages.myWishList')}}</router-link>
                 </li>
             </ul>
         </div><!--/.side-navigation-->
         <div class="side-wishlist">
-            <h5>My Wish List <span>{{products.length}} items</span> </h5>
+            <h5>{{$t('pages.myWishList')}} <span>{{products.length}} {{$t('pages.items')}}</span> </h5>
             <section v-for="product in products">
                 <div class="flex">
                     <img :src="'/uploads/' + product.main_image"
                          @error="onImageLoadFailure($event, '80x100')" style="max-width: 80px">
                     <span><p>{{product.name_en}}</p></span>
                 </div>
-                <router-link class="btn btn-danger" :to="'/products/'+product.slug"> View Item </router-link>
-                <a class="close"><img src="/images/close.jpg"></a>
+                <router-link class="btn btn-danger" :to="'/products/'+product.slug"> {{$t('pages.viewItem')}} </router-link>
+                <a class="close">
+                    <img src="/images/close.jpg" @click.prevent="removeWishItem(product.id)">
+                </a>
             </section><!--/section-->
         </div><!--/.side-wishlist-->
 
@@ -72,6 +74,39 @@
         methods: {
             onImageLoadFailure(event, size) {
                 event.target.src = 'https://via.placeholder.com/' + size;
+            },
+            removeWishItem(productId){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        //delete item
+                        if (this.$store.getters['authModule/isAuthenticated']) {
+                            axios.get(
+                                '/api/v1/account/wishlist/remove/'+productId,
+                                {headers: {
+                                        "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                                    }
+                                }
+                            ).then((response) => {
+                                this.$swal({
+                                    title: 'Deleted!',
+                                    text: "Your item has been deleted successfully!",
+                                    icon: 'success'
+                                });
+                                this.products = response.data;
+                            });
+                        }else{
+                            console.log('No authorization');
+                        }
+                    }
+                });
             }
         }
     }

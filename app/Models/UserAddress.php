@@ -9,7 +9,7 @@ class UserAddress extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'user_id'];
+    protected $guarded = ['id'];
 
     /**
      * Get the user owns this address

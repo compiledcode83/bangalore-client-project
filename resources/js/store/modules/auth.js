@@ -59,7 +59,25 @@ export const actions = {
      * @param corporateData.file {string} company license
      */
     registerCorporate(context, corporateData) {
-        return axios.post('/api/v1/register/corporate', corporateData)
+        const submitData = new FormData();
+        submitData.append('email', corporateData.email);
+        submitData.append('password', corporateData.password);
+        submitData.append('password_confirmation', corporateData.password_confirmation);
+        submitData.append('company', corporateData.company);
+        submitData.append('job_title', corporateData.job_title);
+        submitData.append('contact', corporateData.contact);
+        submitData.append('company_license', corporateData.company_license);
+        submitData.append('phone', corporateData.phone);
+        submitData.append('agree_terms', corporateData.agree_terms);
+        submitData.append('newsLetter', corporateData.newsLetter);
+
+        return axios.post('/api/v1/register/corporate',
+            submitData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then(() => {
                 return Promise.resolve();
             })

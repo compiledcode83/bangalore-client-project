@@ -1,6 +1,8 @@
 <template>
     <div>
-        <my-account-banner></my-account-banner>
+        <my-account-banner
+            :bannerTitle="$t('pages.myReviews')"
+        ></my-account-banner>
 
         <div class="container innr-cont-area">
             <div class="row">
@@ -63,7 +65,9 @@
         components: {myAccountSidebar, myAccountBanner, StarRating},
         data(){
             return {
-                reviews: {}
+                reviews: {
+
+                }
             }
         },
         mounted() {

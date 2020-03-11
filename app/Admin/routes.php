@@ -62,4 +62,6 @@ Route::group([
 
     $router->post('/order/update-details', 'OrderController@updateDetails')->name('admin.order.updateDetails');
 
+    $router->resource('social-media', SocialMediaController::class);
+
 });

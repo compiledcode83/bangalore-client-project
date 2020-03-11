@@ -3,9 +3,9 @@
 
         <div class="product-detail-bnr fullwidth text-center">
             <ul class="breadcrumb">
-                <li><a href="http://www.mawaqaa.com/clients/demos/itc/html3/index.html">Home</a></li>
-                <li><a href="http://www.mawaqaa.com/clients/demos/itc/html3/bags.html">Product Listing</a></li>
-                <li class="active">Product Name</li>
+                <li><a href="/">{{$t('pages.home')}}</a></li>
+                <li><a href="#">{{$t('pages.productListing')}}</a></li>
+                <li class="active">{{product.name_en}}</li>
             </ul>
         </div><!--/.banner-->
 
@@ -40,7 +40,7 @@
                                         <label
                                             class="btn active selct-clr"
                                             @click="loadDefaultImages()">
-                                            D
+                                            {{$t('pages.d')}}
                                             <input type="radio" name="Default" class="options" autocomplete="off">
                                         </label>
                                         <label
@@ -58,7 +58,7 @@
                         </div>
                     </div><!--/.col-sm-6-->
                     <div class="col-md-6 data">
-                        <h2> {{product.name_en}} <span v-if="product.show_left_qty && selected_attribute.stock">( Only {{selected_attribute.stock}} left )</span></h2>
+                        <h2> {{product.name_en}} <span v-if="product.show_left_qty && selected_attribute.stock">( {{$t('pages.only')}} {{selected_attribute.stock}} {{$t('pages.left')}} )</span></h2>
                         <div class="price clearfix">
                             <div class="pull-left" v-if="isAuth">
                                 <div v-if="min_price">
@@ -68,48 +68,27 @@
                                 </div>
                                 <b v-else> {{$t('pages.price_based_on_select')}} </b>
                                 <p style="line-height: 0;font-size:12px;margin-top:5px;cursor: pointer;"
-                                    v-if="min_price" @click="togglePrices"> view prices </p>
+                                    v-if="min_price" @click="togglePrices"> {{$t('pages.viewPrices')}} </p>
                             </div>
                             <div class="pull-left" v-else>
                                <strong> {{$t('pages.login_to_check_price')}} </strong>
                             </div>
                             <div class="pull-right stock">
-                                <span v-if="selected_attribute.stock > 0">In stock</span>
+                                <span v-if="selected_attribute.stock > 0">{{$t('pages.inStock')}}</span>
                                 <strong> {{selected_attribute.sku}} </strong>
                             </div>
 
                             <div class="prices" v-if="show_prices">
                                 <table style="margin-top: 20%;margin-bottom: 5%;">
                                     <tr>
-                                        <th scope="row" style="color: #e11b22;">Quantity</th>
+                                        <th scope="row" style="color: #e11b22;">{{$t('pages.quantity')}}</th>
                                         <th scope="col" style="padding-left: 25px;" v-for="(priceElementValue, priceElementKey) in productPrices">{{priceElementKey}}</th>
                                     </tr>
                                     <tr>
-                                        <th scope="row" style="color: #e11b22;">KD</th>
+                                        <th scope="row" style="color: #e11b22;">{{$t('pages.kd')}}</th>
                                         <td style="padding-left: 25px;" v-for="(priceElementValue, priceElementKey) in productPrices">{{priceElementValue}}</td>
                                     </tr>
                                 </table>
-<!--                                <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>-->
-
-<!--                                    <title>Prices Table</title>-->
-
-<!--                                    <g id='rowGroup'>-->
-<!--                                        <rect x='30' y='10' width='75' height='70' fill='gainsboro'/>-->
-<!--&lt;!&ndash;                                        <rect x='265' y='10' width='75' height='80' fill='gainsboro'/>&ndash;&gt;-->
-
-<!--                                        <text x='30' y='30' font-size='18px' font-weight='bold' fill='crimson'>-->
-<!--                                            <tspan x='30'>Quantity</tspan>-->
-<!--                                            <tspan x='30' dy='2.5em'>KD</tspan>-->
-<!--                                        </text>-->
-
-<!--                                        <div v-for="(priceElementValue, priceElementKey) in productPrices">-->
-<!--                                            <text :x="xAxisRow" y='30' font-size='18px' text-anchor='middle' :key="xAxisRow">-->
-<!--                                                <tspan :x="xAxisRow"> 1 </tspan>-->
-<!--                                                <tspan :x="xAxisRow" dy='2.3em'> 70</tspan>-->
-<!--                                            </text>-->
-<!--                                        </div>-->
-<!--                                    </g>-->
-<!--                                </svg>-->
                             </div>
                         </div>
                         <p v-html="product.short_description_en"> </p>
@@ -121,15 +100,15 @@
 
                             </div>
                             <div class="reviews col-sm-6 col-lg-7">
-                                <a href="#"><span class="red">10</span>  Review(s)</a>   /
-                                <a href="#" @click.prevent="checkUserAbilityToReview">Add Your Review</a>
+                                <a href="#"><span class="red">10</span>  {{$t('pages.reviews')}}</a>   /
+                                <a href="#" @click.prevent="checkUserAbilityToReview">{{$t('pages.addYourReview')}}</a>
                             </div>
                         </div><!--/.row-->
 
                         <div class="modal fade login-model" id="addReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content rounded-0">
-                                    <div class="modal-header">Add Your Review
+                                    <div class="modal-header">{{$t('pages.addYourReview')}}
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <img src="/images/close.png">
                                         </button>
@@ -147,29 +126,30 @@
                                         </div>
                                         <form class="col-lg-10 col-lg-offset-1">
                                             <div class="form-group mt-10 mb-10 fullwidth">
-                                                <label for="nickname">Nickname</label>
-                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" placeholder="Enter your nickname" v-model="reviewNickname">
+                                                <label for="nickname">{{$t('pages.nickName')}}</label>
+                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" :placeholder="$t('pages.enterYourNickName')" v-model="reviewNickname">
                                             </div>
                                             <div class="form-group mt-10 mb-10 fullwidth">
-                                                <label >Review Details</label>
+                                                <label >{{$t('pages.reviewDetails')}}</label>
                                                 <textarea class="form-control" name="review" v-model="reviewText"></textarea>
                                             </div>
                                             <br>
-                                            <button type="submit" class="btn btn-danger rounded-0"  @click.prevent="submitReview">Submit</button>
+                                            <button type="submit" class="btn btn-danger rounded-0"  @click.prevent="submitReview">{{$t('pages.submit')}}</button>
                                         </form>
                                     </div><!--/.modal-body-->
                                 </div>
                             </div>
                         </div>
-                        <div v-if="isAuth && selected_attribute.stock > 0">
+<!--                        <div v-if="isAuth && selected_attribute.stock > 0">-->
+                        <div v-if="isAuth">
                             <ul class="file-upload">
                                 <li class="row quantity">
-                                    <div class="col-sm-3">Uploads -</div>
+                                    <div class="col-sm-3">{{$t('pages.uploads')}} </div>
                                     <div class="col-sm-9">
                                         <div class="form-group user-register">
-                                            <input id="uploadFile" class="normal-text-box" placeholder="CLICK TO UPLOAD IMAGE(JPG OR PNG)" disabled="disabled" :value="file.name">
+                                            <input id="uploadFile" class="normal-text-box" :placeholder="$t('pages.uploadOnlyImage')" disabled="disabled" :value="file.name">
                                             <div class="fileUpload">
-                                                <span>Browse</span>
+                                                <span>{{$t('pages.browse')}}</span>
                                                 <input class="upload" type="file" id="file" ref="file" @change="handleFileUpload($event)"/>
                                             </div>
                                         </div>
@@ -177,30 +157,57 @@
                                 </li><!--/li-->
                             </ul>
                             <ul class="color-load">
-                                <li class="row quantity" v-for="(colorInput, index) in colorInputsCount">
+                                    <li class="row quantity" v-for="(colorInput, index) in colorInputsCount">
+                                        <a v-if="index != 0" class="close" @click.prevent="removeColorInput(index)">X</a>
                                     <div class="col-sm-3">
-                                        <select class="js-example-basic-single color-select form-control"
+<!--                                        <select class="select-colors-product1 color-select form-control"-->
+<!--                                                name="colorSelectedByIds[]"-->
+<!--                                                v-model="colorInputs[index]"-->
+<!--                                                @change="validateInput($event)"-->
+<!--                                        required>-->
+<!--                                            <option value="null">Choose Color</option>-->
+<!--                                            <option-->
+<!--                                                v-for="(color, index) in product.colors"-->
+<!--                                                :value="index"-->
+<!--                                            > {{color.name}}  </option>-->
+<!--                                        </select>-->
+                                        <select :class="'select-colors-product-'+index+' color-select form-control'"
                                                 name="colorSelectedByIds[]"
                                                 v-model="colorInputs[index]"
-                                                @change="validateInput($event)"
-                                        required>
-                                            <option value="null">Choose Color</option>
+                                                required>
                                             <option
                                                 v-for="(color, index) in product.colors"
-                                                :value="index"
-                                            > {{color.name}}  </option>
+                                                :value="index+'-'+color.color_code"
+                                            >  </option>
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]" required>
+                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]" @keypress="isNumber($event)" required>
                                     </div>
                                 </li><!--/li-->
+<!--                                <li class="row quantity">-->
+<!--                                    <a class="close" @click.prevent="removeColorInput">X</a>-->
+<!--                                    <div class="col-sm-3 col-xs-6">-->
+<!--                                        <select class="select-colors-product color-select form-control"-->
+<!--                                                name="colorSelectedByIds[]"-->
+<!--                                                v-model="colorInputs[index]"-->
+<!--                                                @change="validateInput($event)"-->
+<!--                                                required>-->
+<!--                                            <option-->
+<!--                                                v-for="(color, index) in product.colors"-->
+<!--                                                :value="color.color_code"-->
+<!--                                                :name="index"-->
+<!--                                            >  </option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-3 col-xs-6"><input type="" class="form-control rounded-0" name="" value="1"></div>-->
+<!--                                </li>&lt;!&ndash;/li&ndash;&gt;-->
                             </ul>
-                            <button class="more add" @click="addColorInput">Add More Colors</button>
+                            <button class="more add" @click="addColorInput">{{$t('pages.addMoreColors')}}</button>
 
                             <div class="row">
-                                <div class="col-sm-6"><button class="btn-lg btn-success full-width" @click="submitCart()">ADD TO CART</button></div>
-                                <div class="col-sm-6"><button class="btn-lg btn-primary full-width">ADD TO WISHLIST</button></div>
+                                <div class="col-sm-6"><button class="btn-lg btn-success full-width" @click="submitCart()">{{$t('pages.addToCart')}}</button></div>
+                                <div class="col-sm-6"><button class="btn-lg btn-primary full-width" @click="addToWishList(product.id)">{{$t('pages.addToWishList')}}</button></div>
                             </div>
                         </div>
                         <span class="out-stock" v-if="selected_attribute.id && selected_attribute.stock == 0"></span>
@@ -209,9 +216,9 @@
 
                 <div class="tab-cvr">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Details" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">Details</a></li>
-                        <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Info" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">More Information</a></li>
-                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">Reviews (6)</a></li>
+                        <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Details" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">{{$t('pages.details')}}</a></li>
+                        <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Info" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">moreInformation</a></li>
+                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">{{$t('pages.reviews')}} (6)</a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -223,45 +230,24 @@
                             <p v-html="product.more_information_en"> </p>
                         </div>
                         <div role="tabpanel" class="tab-pane active" id="Reviews">
-                            <div class="row">
+                            <div class="row" v-for="review in product.reviews">
                                 <div class="col-sm-6 col-md-7">
-                                    <h4>Cheri of Goleta,&amp;sp CA</h4>
+                                    <h4>{{review.nickname}}</h4>
                                 </div>
                                 <div class="col-sm-6 col-md-5">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-5">
                                             <div class="rate">
-                                                <star-rating active-color="#e01b22" :show-rating="false" :rating=2 :item-size=20 border-color="#fff" read-only></star-rating>
+                                                <star-rating active-color="#e01b22" :show-rating="false" :rating=review.rating :item-size=20 border-color="#fff" read-only></star-rating>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-7">
-                                            <p class="date-rate">12 Jan 2018 ( 10 days ago )</p>
+                                            <p class="date-rate">{{review.created_at}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p>I ordered a costume in children's small and was sent an extra small. I asked for a refund and was sent another extra small costume.<br>ShopDisney has me dealing with UPS returns over and over and no refund...</p>
-                                </div>
-                            </div><!--/.row-->
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-7">
-                                    <h4>Cheri of Goleta,&amp;sp CA</h4>
-                                </div>
-                                <div class="col-sm-6 col-md-5">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-5">
-                                            <div class="rate">
-                                                <star-rating active-color="#e01b22" :show-rating="false" :rating=2 :item-size=20 border-color="#fff" read-only></star-rating>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-7">
-                                            <p class="date-rate">12 Jan 2018 ( 10 days ago )</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <p>I ordered a costume in children's small and was sent an extra small. I asked for a refund and was sent another extra small costume.<br>ShopDisney has me dealing with UPS returns over and over and no refund...</p>
+                                    <p>{{review.review}}</p>
                                 </div>
                             </div><!--/.row-->
                         </div>
@@ -272,7 +258,7 @@
 
         <div class="related-products">
             <div class="container">
-                <h2>Related <span>Products</span></h2>
+                <h2>{{$t('pages.related')}} <span>{{$t('pages.products')}}</span></h2>
                 <ul class="relatedprod-slide">
                     <li class="slide" v-for="product in product.relatedProductsDetails">
                         <ProductBox v-bind:product="product"></ProductBox>
@@ -284,6 +270,31 @@
 </template>
 
 <script>
+    $(document).ready(function() {
+
+        // $(document).ready(function() {
+
+        // });
+
+            // tags: "true",
+            // allowClear: true,
+            // placeholder: 'Select an option',
+            // templateResult: formatState,
+            // templateSelection: formatState
+        // );
+    });
+    function formatState (state) {
+        if (!state.id) {
+            return state.text;
+        }
+        // var baseUrl = "img";
+        var $state = $(
+            // '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+            '<span><div style="background-color:' + state.element.value.toLowerCase() + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>'
+
+        );
+        return $state;
+    }
 
     import ProductBox from "./Product-box";
     import {StarRating} from 'vue-rate-it';
@@ -300,6 +311,76 @@
             next();
         },
         methods: {
+            addToWishList(productId){
+                if (this.$store.getters['authModule/isAuthenticated']) {
+                    axios.post(
+                        '/api/v1/account/wishlist', {'productId': productId},
+                        {headers: {
+                                "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        }
+                    ).then((response) => {
+                        this.$swal({
+                            title: 'Success!',
+                            text: "item Added to wishList successfully!",
+                            icon: 'success',
+                        });
+                    });
+                }else{
+                    console.log('No authorization');
+                }
+
+            },
+            isNumber: function(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 && charCode !== '') {
+                    evt.preventDefault();
+                } else {
+                    return true;
+                }
+            },
+            runSelect2(){
+                let selectIndex = 0;
+                let _this = this;
+                if(this.colorInputsCount){
+                    selectIndex = this.colorInputsCount - 1;
+                }
+                console.log('color run Select '+ selectIndex);
+                let jqueryColorSelector = $('.select-colors-product-' + selectIndex);
+                if (!jqueryColorSelector.hasClass("select2-hidden-accessible")) {
+                    // Select2 has been initialized
+                    jqueryColorSelector.select2({
+                        // tags: "true",
+                        // allowClear: true,
+                        // placeholder: 'Select an option',
+                        templateResult: this.formatState,
+                        templateSelection: this.formatState
+                    });
+
+                    jqueryColorSelector.on('select2:select', function (e) {
+                        var value = e.params.data.element.value;
+                        var colorValue = value.split("-");
+
+                        _this.validateInput(value, selectIndex);
+                    });
+                }
+            },
+            formatState (state) {
+
+
+                if (!state.id) {
+                    return state.text;
+                }
+                var colorValue = state.element.value.split("-");
+                // var baseUrl = "img";
+                var $state = $(
+                    // '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+                    '<span><div style="background-color:' + colorValue[1] + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>'
+
+                );
+                return $state;
+            },
             loadProductDetails(){
                 axios.all([
                     axios.get('/api/v1/products/'+this.slug)
@@ -358,6 +439,9 @@
                     this.selected_attribute.stock = attribute.stock;
                     this.selected_attribute.color_name = colorName;
                 }
+
+                this.runSelect2();
+                console.log(this.product.colors);
             },
             loadDefaultImages(){
                 if(this.defaultMainGallery !== this.product.main_gallery) {
@@ -395,22 +479,24 @@
                 for(let key in this.colorInputs){
 
                     let colorObjectInput = this.getColorObject(this.colorInputs[key]);
-                    this.cartItem = {
-                        item_name: this.product.name_en,
-                        product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
-                        product_image: colorObjectInput.images[0],
-                        product_print_image: '',
-                        product_qty: parseInt(this.qtyInputs[key]),
-                        product_color_name: colorObjectInput.name,
-                        product_price: 0,
-                        base_product_prices: this.productPrices,
-                        total: 0,
-                        status: false
-                    };
+                    if(parseInt(this.qtyInputs[key]) > 0) {
+                        this.cartItem = {
+                            item_name: this.product.name_en,
+                            product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
+                            product_image: colorObjectInput.images[0],
+                            product_print_image: '',
+                            product_qty: parseInt(this.qtyInputs[key]),
+                            product_color_name: colorObjectInput.name,
+                            product_price: 0,
+                            base_product_prices: this.productPrices,
+                            total: 0,
+                            status: false
+                        };
 
-                    this.cartItem = this.calcItemPrice(this.cartItem);
+                        this.cartItem = this.calcItemPrice(this.cartItem);
 
-                    this.addToCart(colorObjectInput, key);
+                        this.addToCart(colorObjectInput, key);
+                    }
                 }
             },
             addToCart(colorObjectInput, key) {
@@ -442,7 +528,7 @@
                         formData,
                         {
                             headers: {
-                                'Content-Type': 'multipart/form-data'
+                                'Content-Type': "multipart/form-data"
                             }
                         }
                     ).then(function (response) {
@@ -470,12 +556,16 @@
                         //clean form
                         _this.colorInputs = [];
                         _this.qtyInputs  = [];
+                        _this.resetAddToCartInputs();
                         //delete file from input
                         _this.$refs.file.value = null;
                     })
                     .catch(() => {
                         console.log('There was a problem creating your cart')
                     });
+            },
+            resetAddToCartInputs(){
+                this.colorInputsCount = 0;
             },
             // Handles a change on the file upload
             handleFileUpload(event){
@@ -512,39 +602,30 @@
                 event.target.src = '/images/defaule-p.jpg';
             },
             addColorInput(){
-                // this.colorInputs.push({ id: '', qty: 0 });
                 this.colorInputsCount += 1;
             },
-            validateInput(event){
+            validateInput(idAndColor, selectIndex){
 
-                // @ToDo when add delete elements will fix delete redundancy
-                // let colorId = event.target.value;
-                // console.log(this.colorInputs);
-                // console.log(this.qtyInputs);
-                // // if color input is already added
-                // let checkColorAdded = this.colorInputs.filter(function(value){
-                //     return value === colorId;
-                // });
-                //
-                // if(checkColorAdded.length > 1){
-                //     this.$swal({
-                //         icon: 'error',
-                //         title: 'Oops...',
-                //         text: 'Color is already added!',
-                //     });
-                //
-                //     let indexToRemove = this.colorInputs.length - 1;
-                //     console.log(indexToRemove);
-                //     delete this.colorInputs[indexToRemove];
-                //     delete this.qtyInputs[indexToRemove];
-                //
-                //     console.log(this.colorInputs);
-                //     console.log(this.qtyInputs);
-                //
-                //     return;
-                // }
-
-                this.loadColorImages(null, event.target.value );
+                //id and color concatenated
+                var colorValue = idAndColor.split("-");
+                // load attribute images by attribute ID
+                this.loadColorImages(null, colorValue[0] );
+                // select color value by setting select2 input
+                $('.select-colors-product-'+selectIndex).val(idAndColor);
+                // delete color & quantity inputs if color already selected
+                if(this.colorInputs.includes(colorValue[0])){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Color is already added!',
+                    }).then(() => {
+                        // delete inputs
+                        this.colorInputsCount = this.colorInputsCount - 1;
+                    });
+                }else{
+                    // add new attribute color to cart
+                    this.colorInputs.push(colorValue[0]);
+                }
             },
             getColorObject(index){
                 //color object contains name, code, images ...
@@ -628,7 +709,7 @@
 
             },
             calcItemPrice(item){
-                //same in store ===> URGENT refactor
+                //same in store.js ===> URGENT refactor
                 // get base prices defined by admin
                 // search for max_qty based on user enter qty
                 // calc item price
@@ -656,12 +737,22 @@
 
                 return item;
             },
+            removeColorInput(index){
+                this.colorInputsCount = this.colorInputsCount -  1;
+            }
 
         },
         updated: function () {
+            let _this = this;
+            let selectIndex = 0;
+            if(_this.colorInputsCount){
+                selectIndex = _this.colorInputsCount - 1;
+            }
             this.$nextTick(function () {
                 // Code that will run only after the
                 // entire view has been re-rendered
+                _this.runSelect2();
+
                 // Item slider inner details page
                 if(!this.sliderFor){
                     $('.slider-for').slick({
@@ -769,7 +860,6 @@
                 reviewRating: 0,
                 reviewNickname: '',
                 reviewText: ''
-
             }
         }
     }

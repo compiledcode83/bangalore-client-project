@@ -61,7 +61,9 @@ class PendingCorporateController extends AdminController
         $show->field('email', __('Email'));
         $show->field('job_title', __('Job Title'));
         $show->field('contact_person', __('Contact Person'));
-        $show->field('company_license', __('Company License'))->file();
+        $show->company_license()->as(function ($company_license) {
+            return '/uploads/corporates/'.$company_license;
+        })->link();
         $show->type(__('Account Type'))
             ->using([User::TYPE_USER => 'USER', User::TYPE_CORPORATE => 'CORPORATE']);
         $show->is_subscribed(__('Is subscribed'))
