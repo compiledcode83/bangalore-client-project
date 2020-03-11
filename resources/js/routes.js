@@ -17,20 +17,50 @@ import AccountTrackOrders from "./components/account/TrackOrders";
 import AccountTrackOrderStatus from "./components/account/TrackOrderStatus";
 import AccountWishList from "./components/account/WishList";
 import ProductSearch from "./components/ProductSearch";
-import NotFound from './components/NotFound';
+import NotFound from './components/partials/NotFound';
 
 import About from './components/pages/About';
 import Contact from "./components/pages/Contact";
 import Services from "./components/pages/Services";
 import Media from "./components/pages/Media";
 import Pages from "./components/pages/Pages";
+import SpecialOffers from "./components/SpecialOffers";
 
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPasswordForm from "./components/ResetPasswordForm";
+import Layout from "./components/partials/Layout";
+import Router from 'vue-router'
+import Vue from "vue";
+
+// const routes = new Router({
 export default {
     mode: 'history',
 
     linkActiveClass: 'link-active',
 
     routes: [
+        // {
+        //     path: "/:locale",
+        //     name: "localezzz",
+        //     children: [
+        //         {
+        //             path: '/products-best',
+        //             name: 'best-sellers',
+        //             component: BestProductList,
+        //         },
+        //         {
+        //             path: "/categories/:slug",
+        //             name: "productListLocale",
+        //             component: ProductList,
+        //             props: (route) => ({
+        //                 filterCategories: route.query.cat,
+        //                 filterColor: route.query.color,
+        //                 filterMinPrice: route.query.min,
+        //                 filterMaxPrice: route.query.max,
+        //             })
+        //         }
+        //     ]
+        // },
         {
             path: '*',
             component: NotFound
@@ -47,7 +77,9 @@ export default {
             props: (route) => ({
                 filterCategories: route.query.cat,
                 filterColor: route.query.color,
-                filterPrice: route.query.price,
+                filterMinPrice: route.query.min,
+                filterMaxPrice: route.query.max,
+                filterDiscounts: route.query.discount,
             })
         },
         {
@@ -128,9 +160,10 @@ export default {
             component: AccountTrackOrders,
         },
         {
-            path: '/account/track/status',
+            path: '/account/track/status/:id',
             name: 'account.track.status',
             component: AccountTrackOrderStatus,
+            props: true
         },
         {
             path: '/account/wishlist',
@@ -163,5 +196,59 @@ export default {
             name: 'pages',
             component: Pages
         },
+        // { path: '/parent/:id', component: Media,
+        //     children: [
+        //         {
+        //             // UserProfile will be rendered inside User's <router-view>
+        //             // when /user/:id/profile is matched
+        //             path: 'tt',
+        //             component: SpecialOffers
+        //         },
+        //         {
+        //             // UserPosts will be rendered inside User's <router-view>
+        //             // when /user/:id/posts is matched
+        //             path: 'rr',
+        //             component: ForgotPassword
+        //         }
+        //     ]
+        // },
+        {
+            path: '/offers',
+            name: 'offers',
+            component: SpecialOffers
+        },
+        {
+            path: '/reset-password',
+            name: 'reset-password',
+            component: ForgotPassword,
+            meta: {
+                auth:false
+            }
+        },
+        {
+            path: '/reset-password/:token',
+            name: 'reset-password-form',
+            component: ResetPasswordForm,
+            meta: {
+                auth:false
+            }
+        }
     ]
 }
+
+// router.beforeEach((to, from, next) => {
+//
+//     // use the language from the routing param or default language
+//     let language = to.params.lang;
+//     if (!language) {
+//         language = 'en';
+//     }
+//
+//     // set the current language for vuex-i18n. note that translation data
+//     // for the language might need to be loaded first
+//     Vue.i18n.set(language);
+//     next();
+//
+// });
+
+// export default routes

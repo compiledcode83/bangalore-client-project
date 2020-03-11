@@ -3,10 +3,10 @@
         <div class="innr-banner fullwidth">
             <img :src="'/uploads/'+responseData.informations[0].services_banner">
             <div class="heading">
-                <h2>Serices</h2>
+                <h2>{{$t('pages.services')}}</h2>
                 <ul class="breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li class="active">Services</li>
+                    <li><a href="/">{{$t('pages.home')}}</a></li>
+                    <li class="active">{{$t('pages.services')}}</li>
                 </ul>
             </div>
         </div><!--/.banner-->
@@ -23,12 +23,12 @@
                             <h4>{{ service.title_en }}</h4>
                             <p v-html='service.short_description_en'>{{ service.short_description_en }}</p>
 
-                            <a :href="'services-details/'+service.id">View More</a>
+                            <a :href="'services-details/'+service.id">{{$t('pages.viewMore')}}</a>
                         </div>
                         </div>
                     </section><!--/section-->
                     <div class="text-center d-block">
-                        <a class="viewmore-spl" href="#">View More</a>
+                        <a class="viewmore-spl" href="#">{{$t('pages.viewMore')}}</a>
                     </div>
                 </div><!--/.col-sm-12-->
             </div>

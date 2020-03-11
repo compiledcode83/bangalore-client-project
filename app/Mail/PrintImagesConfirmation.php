@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,7 +31,9 @@ class PrintImagesConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->subject('Print Confirmation -- Mail from ITC-PROMOTIONS.com')
+        $adminSettings = Setting::find(1);
+        return $this->subject('Printing Confirmation -- ITC-PROMOTIONS.com')
+            ->from($adminSettings->email)
             ->view('emails.printConfirmation');
     }
 }

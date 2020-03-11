@@ -1,6 +1,8 @@
 <template>
     <div>
-        <my-account-banner></my-account-banner>
+        <my-account-banner
+            :bannerTitle="$t('pages.orders')"
+        ></my-account-banner>
 
         <div class="container innr-cont-area">
             <div class="row">
@@ -8,18 +10,18 @@
 
                 <!--/ Content Here-->
                 <div class="col-sm-9 my-order">
-                    <div class="heading">Recent Orders
+                    <div class="heading">{{$t('pages.recentOrders')}}
 <!--                        <a href="#" class="pull-right">View All</a>-->
                     </div>
                     <div class="table-cvr">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th width="15%" scope="col">Order #</th>
-                                <th width="15%" scope="col">Date</th>
-                                <th width="15%" scope="col">Order Total</th>
-                                <th width="15%" scope="col">Status</th>
-                                <th width="25%" scope="col">Action</th>
+                                <th width="15%" scope="col">{{$t('pages.orderNumber')}}</th>
+                                <th width="15%" scope="col">{{$t('pages.date')}}</th>
+                                <th width="15%" scope="col">{{$t('pages.orderTotal')}}</th>
+                                <th width="15%" scope="col">{{$t('pages.status')}}</th>
+                                <th width="25%" scope="col">{{$t('pages.action')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -31,7 +33,7 @@
                                 <td>
                                     <router-link :to="'/account/order/details/' + order.id" >
                                         {{$t('pages.view_order')}}
-                                    </router-link> / <a href="#" @click.prevent="tryToReorder(order.id)">Reorder</a>
+                                    </router-link> / <a style="cursor: pointer;" @click.prevent="tryToReorder(order.id)">{{$t('pages.reorder')}}</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -74,6 +76,7 @@
         },
         methods: {
             tryToReorder($orderId){
+                let _this = this;
                 axios.post(
                     '/api/v1/account/reorder',
                     {
@@ -81,27 +84,24 @@
                     }
                 ).then((response) => {
                     console.log(response.data);
-
-                    //call persistCartItem with response.data
-                });
+                    let items = response.data.items;
+                    let addedItems = false;
+                    items.forEach(function(item){
+                        addedItems = _this.persistCartItem(item);
+                    });
+                }).then(() => {
+                    this.$swal({
+                        title: 'Your cart is ready!',
+                        text: "Items added to cart successfully!",
+                        icon: 'success'
+                    });
+                })
             },
-            persistCartItem(){
-                let  _this = this;
+            persistCartItem(item){
                 this.$store
-                    .dispatch('createCalculatedItemPrice', this.cartItem)
+                    .dispatch('createCartItem', item)
                     .then(() => {
-                        // this.cart = this.$store.state.cart;
-                        this.$swal({
-                            title: 'New Item in cart!',
-                            text: "Item added to cart successfully!",
-                            icon: 'success'
-                        });
-
-                        //clean form
-                        _this.colorInputs = [];
-                        _this.qtyInputs  = [];
-                        //delete file from input
-                        _this.$refs.file.value = null;
+                        return true;
                     })
                     .catch(() => {
                         console.log('There was a problem creating your cart')

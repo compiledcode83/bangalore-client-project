@@ -16,6 +16,6 @@ Route::get('/{any}', function () {
 })->where('any', '.*');
 
 //Route::get('emails', function(){
-//    return view('emails.newsletters');
+//    return view('emails.orderConfirmation');
 //});
 

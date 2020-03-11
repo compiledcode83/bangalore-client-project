@@ -18,10 +18,10 @@
                  @error="onImageLoadFailure($event, '1400x250')"
                  style="max-height: 315px;" />
             <div class="heading">
-                <h2> Best Sellers </h2>
+                <h2> {{$t('pages.bestSellers')}} </h2>
                 <ul class="breadcrumb">
-                    <li><router-link to="/" exact>Home</router-link></li>
-                    <li class="active"> Best Sellers</li>
+                    <li><router-link to="/" exact>{{$t('pages.home')}}</router-link></li>
+                    <li class="active"> {{$t('pages.bestSellers')}}</li>
                 </ul>
             </div>
         </div><!--/.banner-->
@@ -31,7 +31,7 @@
                 <span class="input-group-addon rounded-0">
               <button type="submit" class="btn btn-success rounded-0">
                   <span class="glyphicon glyphicon-search"></span>
-                  SEARCH
+                  {{$t('pages.search')}}
               </button>
           </span>
             </div><!--/.big-searchbox-->
@@ -42,15 +42,15 @@
                         <ul class="nav nav-pills nav-stacked" id="stacked-menu">
                             <!-- Category collapsed menu -->
                             <li class="main-cat">
-                                <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#categories">Categories</a>
+                                <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#categories">{{$t('pages.categories')}}</a>
                                 <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="categories">
                                     <!-- Home Link -->
                                     <li>
-                                        <a class="single-category">Home </a>
+                                        <a class="single-category">{{$t('pages.home')}} </a>
                                     </li>
                                     <!-- Technologies Link -->
                                     <li class="nav-sub-container" data-toggle="collapse" data-parent="#p1" href="#Tech">
-                                        <a>Technologies</a>
+                                        <a>{{$t('pages.technologies')}}</a>
                                     </li>
                                     <ul class="nav nav-pills nav-stacked collapse in" id="Tech">
                                         <li><a href="#">Technologies Sub Cat1</a></li>

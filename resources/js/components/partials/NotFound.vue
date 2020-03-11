@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 style="text-align: center;padding: 15%;"> 404 Page Not Found!</h1>
+        <h1 style="text-align: center;padding: 15%;"> {{$t('pages.NotFoundPage404')}}!</h1>
     </div>
 </template>
 

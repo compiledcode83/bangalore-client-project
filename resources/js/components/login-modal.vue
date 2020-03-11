@@ -3,7 +3,7 @@
     <div class="modal fade login-model" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-0">
-                <div class="modal-header">Sign In
+                <div class="modal-header">{{$t('pages.login')}}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="/images/close.png">
                     </button>
@@ -11,26 +11,26 @@
                 <div class="modal-body row text-center clearfix">
                     <form class="col-lg-10 col-lg-offset-1" @submit.prevent="submit">
                         <div class="form-group mt-10 mb-10 fullwidth">
-                            <label for="exampleInputEmail1"> {{$t('login.user_id')}} </label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="credentials.email">
+                            <label for="exampleInputEmail1"> {{$t('login.emailAddress')}} </label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" :placeholder="$t('pages.email')" v-model="credentials.email">
                         </div>
                         <div class="form-group mt-10 mb-10 fullwidth">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="credentials.password">
+                            <label for="exampleInputPassword1">{{$t('pages.password')}}</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" :placeholder="$t('pages.password')" v-model="credentials.password">
                         </div>
                         <div class="form-check clearfix mt-10 mb-10">
                             <div class="pull-left">
-                                <label class="checkbox-sml">Stay Signed In
+                                <label class="checkbox-sml">{{$t('pages.stayLoggedIn')}}
                                     <input type="checkbox" id="product" value="">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="pull-right">
-                                <a href="forgot-password.html" class="forgot-pswrd">Forgot Password</a>
+                                <a href="#" class="forgot-pswrd" @click.prevent="forgotPassword">{{$t('pages.forgotPassword')}}</a>
                             </div>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-danger rounded-0">Log In</button>
+                        <button type="submit" class="btn btn-danger rounded-0">{{$t('pages.login')}}</button>
                     </form>
                 </div><!--/.modal-body-->
             </div>
@@ -74,6 +74,10 @@
             },
             hideModal(){
                 $('#login_modal').modal('hide');
+            },
+            forgotPassword(){
+                $('#login_modal').modal('hide');
+                this.$router.push({name: 'reset-password'});
             }
         }
     }

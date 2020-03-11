@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Mail\OrderConfirmation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class Order extends Model
@@ -73,6 +75,7 @@ class Order extends Model
         $user->orders()->save($order);
 
         $items = [];
+        $emailConfirmationData = [];
         $itemsTotal = 0;
         foreach($cart->cartItems as $item)
         {
@@ -89,7 +92,21 @@ class Order extends Model
             ]);
 
             $itemsTotal += $item->unit_price * $item->qty;
+
+            $emailConfirmationData['items'][] = [
+                'name' => $item->item_name,
+                'image' => $item->item_image,
+                'print_image'    => $item->print_image ?? '',
+                'unit_price' => $item->unit_price,
+                'qty' => $item->qty,
+                'total_price'   => $item->qty * $item->unit_price
+            ];
         }
+        $emailConfirmationData['subtotal'] = $itemsTotal;
+        $emailConfirmationData['order_code'] = $order->order_code;
+        $emailConfirmationData['order_date'] = $order->created_at;
+        $emailConfirmationData['payment_method'] = $order->payment_method;
+        $emailConfirmationData['email'] = $user->email;
         $saveItems = $order->orderItems()->saveMany($items);
 
         $order->update([
@@ -98,10 +115,19 @@ class Order extends Model
         if($saveItems)
         {
             $this->updateStock($cart->cartItems);
+            $this->deleteCart($cart);
+            Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
             return $order;
         }
 
         return false;
+    }
+
+    protected function deleteCart($userCart)
+    {
+        $cart = Cart::find($userCart->id);
+        $cartItems = CartItem::where('cart_id', $cart->id)->delete();
+        $cart->delete();
     }
 
     protected function checkStock($item)

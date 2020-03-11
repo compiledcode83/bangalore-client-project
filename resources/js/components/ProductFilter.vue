@@ -4,7 +4,7 @@
             <ul class="nav nav-pills nav-stacked" id="stacked-menu">
                 <!-- Category collapsed menu -->
                 <li class="main-cat" v-if="(singleCategories && singleCategories.length >= 1) || (multipleCategories && multipleCategories.length >= 1)">
-                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#categories">Categories</a>
+                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#categories">{{$t('pages.categories')}}</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="categories">
                         <!-- Home Link -->
 
@@ -34,7 +34,7 @@
 
                 <!-- Color collapsed menu -->
                 <li class="main-cat">
-                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#Color">Color</a>
+                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#Color">{{$t('pages.color')}}</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="Color">
                         <div class="btn-group" data-toggle="buttons">
 
@@ -56,7 +56,7 @@
 
                 <!-- Price collapsed menu -->
                 <li class="main-cat" v-if="isAuth">
-                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#price">Price</a>
+                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#price">{{$t('pages.price')}}</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="price">
                         <li class="pad-15">
                             <div id="slider-range"></div>
@@ -71,43 +71,48 @@
                                 @drag-end="toggleQueryString('price',0)">
                             </vue-range-slider>
 
-                            <input class="rangedprice pull-left" type="text"id="amountfrm" readonly style="text-align:left;">
-                            <input class="rangedprice pull-right" type="text"id="amountto" readonly >
+                            <input class="rangedprice pull-left" type="text" id="amountfrm" readonly style="text-align:left;">
+                            <input class="rangedprice pull-right" type="text" id="amountto" readonly >
                         </li>
                     </ul>
                 </li>
 
                 <!-- Size collapsed menu -->
                 <li class="main-cat" v-if="isAuth">
-                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#Discount">Discount</a>
+                    <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#Discount">{{$t('pages.discount')}}</a>
                     <ul class="nav nav-pills nav-stacked collapse in hide-mob" id="Discount">
                         <li v-if="discounts.upTo30">
                             <label class="discount-chk">Up to 30%
-                                <input type="checkbox" checked="checked">
+                                <input type="checkbox" id="upTo30" value="upTo30" v-model="filterBoxes" :disabled="disabledBoxes"
+                                       :checked="toggleQueryString('discount','upTo30')">
                                 <span class="checkmark"></span>
                             </label>
                         </li>
                         <li v-if="discounts.upTo50">
                             <label class="discount-chk">30% - 50%
-                                <input type="checkbox">
+                                <input type="checkbox" id="upTo50" value="upTo50" v-model="filterBoxes" :disabled="disabledBoxes"
+                                       :checked="toggleQueryString('discount','upTo50')">
                                 <span class="checkmark"></span>
                             </label>
                         </li>
                         <li v-if="discounts.upTo60">
                             <label class="discount-chk">50% - 60%
-                                <input type="checkbox">
+                                <input type="checkbox" id="upTo60" value="upTo60" v-model="filterBoxes" :disabled="disabledBoxes"
+                                       :checked="toggleQueryString('discount','upTo60')">
                                 <span class="checkmark"></span>
                             </label>
                         </li>
                         <li v-if="discounts.moreThan60">
                             <label class="discount-chk">+ 60%
-                                <input type="checkbox">
+                                <input type="checkbox" id="moreThan60" value="moreThan60" v-model="filterBoxes" :disabled="disabledBoxes"
+                                       :checked="toggleQueryString('discount','moreThan60')">
                                 <span class="checkmark"></span>
                             </label>
                         </li>
                         <li>
-                            <label class="discount-chk">Full Price
-                                <input type="checkbox">
+                            <label class="discount-chk">{{$t('pages.fullPrice')}}
+                                <input type="checkbox"  v-model="fullPrice"
+                                       :checked="toggleQueryString('discount','0')">
                                 <span class="checkmark"></span>
                             </label>
                         </li>
@@ -130,13 +135,27 @@
         components: {VueRangeSlider},
         data: function () {
             return {
+                fullPrice: null,
+                disabledBoxes: false,
+                filterBoxes: [],
                 filterCategory: [],
                 filterColor: [],
                 filterPrice: [],
                 priceSliderValue: [parseInt(this.minPrice),parseInt(this.maxPrice)]
             }
         },
+        watch: {
+            fullPrice : function(value){
+                if(value){
+                    this.filterBoxes = [];
+                    this.disabledBoxes = true;
+                }else{
+                    this.disabledBoxes = false;
+                }
+            }
+        },
         created() {
+            /* price slider */
             this.sliderPriceMin = parseInt(this.minPrice);
             this.sliderPriceMax = parseInt(this.maxPrice);
             this.enableCross = false;
@@ -151,6 +170,7 @@
             this.processStyle = {
                 backgroundColor: '#be1522'
             };
+            /* End price slider */
         },
         computed: {
             isAuth() {
@@ -228,14 +248,18 @@
                             return this.$router.push({
                                 name: 'productList', query: {
                                     cat: this.filterCategory,
-                                    color: this.filterColor
+                                    color: this.filterColor,
+                                    min: this.filterPrice.min,
+                                    max: this.filterPrice.max
                                 }
                             });
                         }
                         //rebuild query string
                         return this.$router.push({ name: 'productList', query: {
                                 color: this.filterColor,
-                                cat: this.filterCategory
+                                cat: this.filterCategory,
+                                min: this.filterPrice.min,
+                                max: this.filterPrice.max
                             }});
                     }
                 }
@@ -248,38 +272,20 @@
                     return this.$router.push({ name: 'productList', query: {
                             color: this.filterColor,
                             cat: this.filterCategory,
-                            price: this.queryStringPrice
+                            min: this.filterPrice.min,
+                            max: this.filterPrice.max
                         }});
+                }
 
-                    // if(this.filterColor.includes(filterValue))
-                    // {
-                    //     //delete this element
-                    //     this.filterColor = [];
-                    //
-                    //     return this.$router.push({ name: 'productList', query: {
-                    //             color: this.filterColor,
-                    //             cat: this.filterCategory
-                    //         }});
-                    // }else{
-                    //     //add this element to  array
-                    //     if(this.filterColor[0] !== filterValue){
-                    //         this.filterColor[0] = filterValue;
-                    //     }else {
-                    //         this.filterColor = [];
-                    //
-                    //         return this.$router.push({
-                    //             name: 'productList', query: {
-                    //                 cat: this.filterCategory,
-                    //                 color: this.filterColor
-                    //             }
-                    //         });
-                    //     }
-                    //     //rebuild query string
-                    //     return this.$router.push({ name: 'productList', query: {
-                    //             color: this.filterColor,
-                    //             cat: this.filterCategory
-                    //         }});
-                    // }
+                if( filterType === 'discount' ){
+
+                    return this.$router.push({ name: 'productList', query: {
+                            color: this.filterColor,
+                            cat: this.filterCategory,
+                            min: this.filterPrice.min,
+                            max: this.filterPrice.max,
+                            discount: this.filterBoxes
+                        }});
                 }
             }
         }

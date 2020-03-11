@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LocaleTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LocaleTrait;
 
     /**
      * The attributes that should be mutated to dates.
@@ -16,6 +17,11 @@ class Category extends Model
      */
     protected $dates = ['deleted_at', 'created_at'];
 
+    /**
+     * The attributes that should be mutated locale.
+     * @var array
+     */
+    protected $localeStrings = ['name'];
 
     /**
      * The attributes that must be protected from mass assignment.

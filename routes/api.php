@@ -46,6 +46,7 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('home-categories','CategoryController@homeCategories');
     Route::get('products-best-list','HomeSections\BestSellerController@bestSeller');
     Route::get('category-products/{slug}','CategoryController@categoryProducts');
+    Route::get('offers','ProductController@onlyOffers');
     Route::get('filter-categories/{slug?}','CategoryController@listFilterCategories');
     Route::get('filter-colors','AttributeController@listFilterColors');
     Route::get('products/{slug}','ProductController@productDetails');
@@ -57,6 +58,12 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('static/media','MediaServiceController@getMedias');
     Route::get('static/service','MediaServiceController@getServices');
     Route::get('static/page/{slug}','PageController@getPage');
+    Route::get('social','PageController@getSocial');
+
+    // Send reset password mail
+    Route::post('reset-password', 'AuthController@sendPasswordResetLink');
+    // handle reset password form process
+    Route::post('reset/password', 'AuthController@callResetPassword');
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
@@ -73,9 +80,17 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('user-ability/review/{id}','UserController@userAbleToReview');
         Route::post('/user/review','UserController@reviewStore');
 
+        Route::get('account/checkout/addresses','AddressesController@getUserAddressesForCheckout');
+        Route::get('account/addresses','AddressesController@getUserAddresses');
+        Route::post('account/addresses/new','AddressesController@store');
+        Route::get('account/newsletter','NewsletterController@getUserSubscription');
+        Route::post('account/newsletter','NewsletterController@updateSubscription');
         Route::get('account/orders','OrderController@getUserOrders');
         Route::get('account/orders/{id}','OrderController@getUserOrderDetails');
+        Route::get('account/order/{id}/status','OrderController@getUserOrderStatuses');
         Route::get('account/wishlist','UserController@accountWishlist');
+        Route::post('account/wishlist','UserController@storeAccountWishlist');
+        Route::get('account/wishlist/remove/{id}','UserController@accountRemoveWishlistItem');
         Route::get('account/info','UserController@accountInfo');
         Route::post('account/info','UserController@updateAccountInfo');
         Route::post('account/reorder','OrderController@tryToReorder');

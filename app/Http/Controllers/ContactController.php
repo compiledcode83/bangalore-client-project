@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateContactUsRequest;
+use App\Mail\ContactUs;
 use App\Models\Setting;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -16,26 +17,12 @@ class ContactController extends Controller
 
     }
 
-    public function sentMail(Request $request)
+    public function sentMail(CreateContactUsRequest $request)
     {
-        $valid = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'mobile' => ['required', 'string','max:255'],
-            'subject' => ['required', 'string'],
-            'message' => ['required'],
-        ]);
+        $attributes = $request->only('name', 'email', 'mobile', 'subject', 'message');
+        $settings = Setting::find(1)->first();
 
-
-        if($valid->fails()){
-
-            return ['errors' => $valid];
-        }
-
-        if($valid->validate()){
-            $settings = Setting::find(1)->get( ['email']);
-            return ['message' => 'Email sent'];
-        }
-        return ['error' => 'Server Error'];
+        Mail::to( $settings->email )->send( new ContactUs( $attributes ) );
+        return ['message' => 'Email sent'];
     }
 }
