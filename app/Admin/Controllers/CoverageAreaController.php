@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Area;
-use App\models\DeliveryCharge;
+use App\Models\DeliveryCharge;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
