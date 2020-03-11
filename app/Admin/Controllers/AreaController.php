@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\models\Area;
+use App\Models\Area;
 use App\Models\Governorate;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
