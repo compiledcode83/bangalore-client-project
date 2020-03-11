@@ -18,8 +18,8 @@
 
         <div class="new-arrival fullwidth" v-if="arrivals">
             <div class="container">
-                <h2>NEW <span>ARRIVALS</span></h2>
-                <p class="spl">check out whats new in itc promotions</p>
+                <h2> {{$t('pages.newArrival_new')}} <span> {{$t('pages.newArrival_arrivals')}} </span></h2>
+                <p class="spl">{{$t('pages.newArrival_description')}}</p>
                 <div class="row">
                     <div class="col-sm-4" v-for="newArrival in arrivals.left">
                         <div class="newarrive-box">
@@ -57,8 +57,8 @@
 
         <div class="best-sellers fullwidth">
             <div class="container">
-                <h2>OUR BEST <span>SELLERS</span></h2>
-                <p class="spl">get the best of itc promotions from this section</p>
+                <h2> {{$t('pages.bestSellers_our_best')}} <span> {{$t('pages.bestSellers_sellers')}} </span></h2>
+                <p class="spl">{{$t('pages.bestSellers_description')}}</p>
                 <ul class="bestseller-slide">
                     <li class="slide" v-for="product in products">
                         <router-link :to="'/products/'+product.slug">
@@ -76,7 +76,7 @@
                 </ul><!--/ul-->
                 <div class="text-center fullwidth">
                     <router-link :to="'/products-best'" class="view-all">
-                        view all best sellers
+                        {{$t('pages.bestSellers_view_all')}}
                     </router-link>
                 </div>
             </div><!--/.container-->
@@ -84,8 +84,8 @@
 
         <div class="special-offr fullwidth" v-if="offers">
             <div class="container">
-                <h2>Special <span>Offers</span></h2>
-                <p class="spl">check out whats new in itc promotions</p>
+                <h2> {{$t('pages.specialOffers_special')}} <span>{{$t('pages.specialOffers_offers')}}</span></h2>
+                <p class="spl">{{$t('pages.specialOffers_description')}}</p>
                 <div class="row">
                     <div class="col-sm-4" v-for="offer in offers.left">
                         <div class="offr-box">
@@ -113,7 +113,7 @@
                                 <img :src="'/uploads/' + offer.image"></a>
                                 <div class="data">
                                     <h3>{{offer.title_en}}</h3>
-                                    <a class="more":href="offer.link">More</a>
+                                    <a class="more":href="offer.link"> {{$t('pages.specialOffers_more')}} </a>
                                 </div>
                         </div><!--/.offr-box-->
                     </div><!--/.col-sm-4-->
@@ -124,11 +124,11 @@
         <div class="container">
             <div class="register-home clearfix">
                 <div class="col-sm-8">
-                    <h3>Register NOW </h3>
-                    <p>For best experience with ITC Promotions, be our  registered customer.</p>
+                    <h3> {{$t('pages.registerNow_title')}} </h3>
+                    <p> {{$t('pages.registerNow_description')}} </p>
                 </div><!--/.col-sm-8-->
                 <div class="col-sm-4">
-                    <button class="btn register">REGISTER</button>
+                    <button class="btn register"> {{$t('pages.registerNow_register')}} </button>
                 </div><!--/.col-sm-4-->
             </div><!--/.register-home-->
         </div><!--/.container-->

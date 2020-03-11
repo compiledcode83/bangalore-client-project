@@ -5,11 +5,13 @@
     </head>
     <body>
         <div id="app">
+            <layout></layout>
+
             @include('partials.site-header')
             <router-view></router-view>
             <vue-progress-bar></vue-progress-bar>
 
-            @include('partials.site-footer')
+            <site-footer></site-footer>
         </div>
 
         @include('partials.scripts')

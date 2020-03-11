@@ -9,7 +9,7 @@ class WishList extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = ['id', 'user_id', 'product_id'];
+    protected $guarded = ['id'];
 
     /**
      * Get the user owns this wishList

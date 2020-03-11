@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -146,5 +147,33 @@ class UserController extends Controller {
         $products = $productModel->whereIn('id', $productsIds)->get();
 
         return $productModel->getProductsRatingColors($products);
+    }
+
+    public function storeAccountWishlist(Request $request)
+    {
+        $user = Auth::user();
+        $attribute = $request->only('productId');
+
+        $check = WishList::where('user_id', $user->id)
+                    ->where('product_id', $attribute['productId'])
+                    ->first();
+        if(!$check)
+        {
+            WishList::create([
+                'user_id' => $user->id,
+                'product_id' => $attribute['productId']
+            ]);
+        }
+    }
+
+    public function accountRemoveWishlistItem($id)
+    {
+        $user = Auth::user();
+
+        WishList::where('user_id', $user->id)
+                ->where('product_id', $id)
+                ->delete();
+
+        return $this->accountWishlist();
     }
 }

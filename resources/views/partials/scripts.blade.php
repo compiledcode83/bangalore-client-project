@@ -6,4 +6,6 @@
 <script src="/js/app.js"></script>
 <script src="/js/custom.js"></script>
 <script src="/js/jquery.rateit.min.js"></script>
+<script src="/js/select2.js"></script>
+
 

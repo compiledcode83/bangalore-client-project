@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Intervention\Image\Facades\Image;
+
 class AuthController extends Controller {
+
+    use ResetsPasswords, SendsPasswordResetEmails;
 
     /**
      * Create user
@@ -58,12 +68,13 @@ class AuthController extends Controller {
     public function registerCorporate( Request $request )
     {
         $validator = Validator::make( $request->all(), [
-            'company'      => 'required|string',
-            'email'        => 'required|string|email|unique:users',
-            'password'     => 'required|string|confirmed',
-            'contact'      => 'required|string',
-            'job_title'    => 'required|string',
-            'phone'        => 'required|string',
+            'company'   => 'required|string',
+            'email'     => 'required|string|email|unique:users',
+            'password'  => 'required|string|confirmed',
+            'contact'   => 'required|string',
+            'job_title' => 'required|string',
+            'company_license' => 'required|mimetypes:application/pdf|max:1000',
+            'phone'     => 'required|string',
         ] );
 
         if ( $validator->fails() )
@@ -73,6 +84,16 @@ class AuthController extends Controller {
             ], 422 );
         }
 
+        $filePdfName = '';
+        if($request->hasFile('company_license'))
+        {
+            $file = $request->file('company_license');
+            //save image
+            $fileName = str_random(15);
+            $filePdfName = $fileName . '.pdf';
+            $file->move('uploads/corporates',$filePdfName);
+        }
+
         $user = new User( [
             'company'        => $request->company,
             'contact_person' => $request->contact,
@@ -80,6 +101,7 @@ class AuthController extends Controller {
             'phone'          => $request->phone,
             'email'          => $request->email,
             'is_active'      => '0',
+            'company_license'=> $filePdfName,
             'type'           => User::TYPE_CORPORATE,
             'is_subscribed'  => $request->subscription ?? 0,
             'password'       => bcrypt( $request->password )
@@ -116,7 +138,7 @@ class AuthController extends Controller {
                 'message' => 'Unauthorized'
             ], 401 );
 
-        if($request->user()->is_active)
+        if ( $request->user()->is_active )
         {
             $user = $request->user();
             $tokenResult = $user->createToken( 'Personal Access Token' );
@@ -166,5 +188,102 @@ class AuthController extends Controller {
     public function user( Request $request )
     {
         return response()->json( $request->user() );
+    }
+
+    /**
+     * Send password reset link.
+     */
+    public function sendPasswordResetLink( Request $request )
+    {
+        return $this->sendResetLinkEmail( $request );
+    }
+
+    /**
+     * Get the response for a successful password reset link.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetLinkResponse( Request $request, $response )
+    {
+        return response()->json( [
+            'message' => 'Password reset email sent.',
+            'data'    => $response
+        ] );
+    }
+
+    /**
+     * Get the response for a failed password reset link.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function sendResetLinkFailedResponse( Request $request, $response )
+    {
+        return response()->json( ['message' => 'Email could not be sent ... please check entered email again!'] );
+    }
+
+    /**
+     * Handle reset password
+     */
+    public function callResetPassword( Request $request )
+    {
+        return $this->reset( $request );
+    }
+    /**
+     * Get the password reset credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function credentials(Request $request)
+    {
+        return $request->only(
+            'email', 'password', 'password_confirmation', 'token'
+        );
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param string                                      $password
+     * @return void
+     */
+    protected function resetPassword( $user, $password )
+    {
+        $user->password = Hash::make( $password );
+        $user->save();
+        event( new PasswordReset( $user ) );
+
+    }
+
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return response()->json(['message' => 'Password reset successfully.']);
+    }
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return response()->json(['message' => 'Failed, Invalid Token.']);
+
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker();
     }
 }

@@ -19,12 +19,15 @@
 <!-- custom input -->
 <link rel="stylesheet" href="/css/custom-input.css" />
 
+<!-- select2 -->
+<link rel="stylesheet" href="/css/select2.css">
+
 <!-- rating style -->
 <link rel="stylesheet" href="/css/rateit.css">
 
 <!-- custom style -->
 <link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/custom-dev-style.css" />
+<link rel="stylesheet" href="/css/custom-dev-style.css"/>
 
 
 

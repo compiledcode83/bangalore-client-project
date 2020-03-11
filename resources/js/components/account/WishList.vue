@@ -1,6 +1,8 @@
 <template>
     <div>
-        <my-account-banner></my-account-banner>
+        <my-account-banner
+            :bannerTitle="$t('pages.wishList')"
+        ></my-account-banner>
 
         <div class="container innr-cont-area">
             <div class="row">
@@ -19,15 +21,15 @@
                                     <div class="data clearfix">
                                         <h4>{{product.name_en}}</h4>
                                         <div class="price">
-                                            Price on request
+                                            {{$t('pages.priceOnRequest')}}
                                         </div>
                                         <div class="more-data">
                                             <div class="qty">
                                                 <div class="flex">
-                                                    <router-link class="btn btn-danger" :to="'/products/'+product.slug"> View Item </router-link>
+                                                    <router-link class="btn btn-danger" :to="'/products/'+product.slug"> {{$t('pages.viewItem')}} </router-link>
                                                 </div>
                                             </div>
-                                            <a href="#" class="remove">REMOVE</a>
+                                            <a style="cursor: pointer;" class="remove" @click.prevent="removeWishItem(product.id)"> {{$t('pages.remove')}} </a>
                                         </div>
                                     </div><!--/.data-->
                                 </div><!--/.prod-bx-->
@@ -76,6 +78,39 @@
         methods: {
             onImageLoadFailure(event, size) {
                 event.target.src = 'https://via.placeholder.com/' + size;
+            },
+            removeWishItem(productId){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        //delete item
+                        if (this.$store.getters['authModule/isAuthenticated']) {
+                            axios.get(
+                                '/api/v1/account/wishlist/remove/'+productId,
+                                {headers: {
+                                        "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                                    }
+                                }
+                            ).then((response) => {
+                                this.$swal({
+                                    title: 'Deleted!',
+                                    text: "Your item has been deleted successfully!",
+                                    icon: 'success'
+                                });
+                                this.products = response.data;
+                            });
+                        }else{
+                            console.log('No authorization');
+                        }
+                    }
+                });
             }
         }
     }

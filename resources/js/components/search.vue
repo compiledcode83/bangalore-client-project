@@ -3,7 +3,7 @@
         <button type="button" class="close">×</button>
         <form>
             <input type="search" value="" placeholder="Type Your Keywords" v-model="term" />
-            <button type="submit" class="btn btnlg" @click.prevent="loadProducts">Search</button>
+            <button type="submit" class="btn btnlg" @click.prevent="loadProducts">{{$t('pages.search')}}</button>
         </form>
     </div>
 </template>

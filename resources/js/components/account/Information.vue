@@ -1,6 +1,8 @@
 <template>
     <div>
-        <my-account-banner></my-account-banner>
+        <my-account-banner
+            :bannerTitle="$t('pages.myInfo')"
+        ></my-account-banner>
 
         <div class="container innr-cont-area">
             <div class="row">
@@ -9,55 +11,55 @@
                 <!--/ Content Here-->
                 <div class="col-sm-9 right-sec addrss-book">
 
-                    <h4>Edit Account Information</h4>
+                    <h4>{{$t('pages.editAccountInformation')}}</h4>
                     <div class="add-newaddrss">
                         <form class="row">
                             <div v-if="account.type == '1'">
                                 <div class="col-sm-6">
-                                    <div> First Name</div>
-                                    <input type="text" class="form-control rounded-0" placeholder="First Name" name="first_name" v-model="account.first_name">
+                                    <div> {{$t('pages.firstName')}} </div>
+                                    <input type="text" class="form-control rounded-0" :placeholder="$t('pages.firstName')" name="first_name" v-model="account.first_name">
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6">
-                                    <div> Last Name</div>
-                                    <input type="text" class="form-control rounded-0" placeholder="Last Name" name="last_name" v-model="account.last_name">
+                                    <div> {{$t('pages.lastName')}} </div>
+                                    <input type="text" class="form-control rounded-0" :placeholder="$t('pages.lastName')" name="last_name" v-model="account.last_name">
                                 </div><!--/.col-sm-6-->
                             </div>
                             <div v-else>
                                 <div class="col-sm-6">
-                                    <div> Company</div>
-                                    <input type="text" class="form-control rounded-0" placeholder="Company Name" name="company"v-model="account.company">
+                                    <div> {{$t('pages.company')}} </div>
+                                    <input type="text" class="form-control rounded-0" :placeholder="$t('pages.company')" name="company"v-model="account.company">
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6">
-                                    <div> Contact Person</div>
-                                    <input type="text" class="form-control rounded-0" placeholder="Contact Person" name="contact_person" v-model="account.contact_person">
+                                    <div> {{$t('pages.contactPerson')}} </div>
+                                    <input type="text" class="form-control rounded-0" :placeholder="$t('pages.contactPerson')" name="contact_person" v-model="account.contact_person">
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6">
-                                    <div> Job Title</div>
-                                    <input type="text" class="form-control rounded-0" placeholder="Job Title" name="job_title" v-model="account.job_title">
+                                    <div> {{$t('pages.jobTitle')}} </div>
+                                    <input type="text" class="form-control rounded-0" :placeholder="$t('pages.jobTitle')" name="job_title" v-model="account.job_title">
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6">
-                                    <div> Company License</div>
-                                    <a :href="'/'+account.company_license" target="_blank" v-if="account.company_license"> View File </a>
+                                    <div> {{$t('pages.companyLicense')}} </div>
+                                    <a :href="'/'+account.company_license" target="_blank" v-if="account.company_license"> {{$t('pages.viewFile')}} </a>
                                     <input type="file" class="form-control rounded-0" name="file" ref="file" @change="handleFileUpload($event)">
                                 </div><!--/.col-sm-6-->
                             </div>
                             <div class="col-sm-6">
-                                <div> E-mail Address</div>
-                                <input type="text" class="form-control rounded-0" placeholder="Email Address" name="email" v-model="account.email">
+                                <div> {{$t('pages.emailAddress')}} </div>
+                                <input type="text" class="form-control rounded-0" :placeholder="$t('pages.emailAddress')" name="email" v-model="account.email">
                             </div><!--/.col-sm-6-->
                             <div class="col-sm-6 ">
-                                <div> Telephone</div>
+                                <div> {{$t('pages.phone')}} </div>
                                 <div class="phonewithcontry">
                                     <select class="form-control contry">
                                         <option>+965</option>
                                     </select>
-                                    <input type="number" class="form-control rounded-0 phone" placeholder="Phone Number" name="phone" v-model="account.phone">
+                                    <input type="number" class="form-control rounded-0 phone" :placeholder="$t('pages.phone')" name="phone" v-model="account.phone">
                                 </div>
                             </div><!--/.col-sm-6-->
 
 
                             <div class="col-sm-12 mt-30">
-                                <button class="btn-lg btn-success rounded-0" @click.prevent="updateAccount">Update Account Info</button>
+                                <button class="btn-lg btn-success rounded-0" @click.prevent="updateAccount">{{$t('pages.updateAccountInfo')}}</button>
                             </div><!--/.col-sm-12-->
                         </form>
                     </div><!--/.row-->

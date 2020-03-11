@@ -32,7 +32,7 @@
                     <span class="input-group-addon rounded-0">
               <button type="submit" class="btn btn-success rounded-0" >
                   <span class="glyphicon glyphicon-search"></span>
-                  SEARCH
+                  {{$t('pages.search')}}
               </button>
           </span>
                 </div><!--/.big-searchbox-->
@@ -49,15 +49,15 @@
                         <div class="row">
                             <div class="col-sm-12 filtering">
                                 <div class="pull-left" v-if="pagination">
-                                    {{pagination.total}} items
+                                    {{pagination.total}} {{$t('pages.items')}}
                                 </div>
 
-                                <div class="pull-right">
-                                    <span> SORT BY : </span>
-                                    <select>
-                                        <option>PRICE - HIGH TO LOW</option>
-                                    </select>
-                                </div>
+<!--                                <div class="pull-right">-->
+<!--                                    <span> {{$t('pages.sortBy')}} : </span>-->
+<!--                                    <select>-->
+<!--                                        <option>{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
                             </div><!--/.filtering-->
                         </div><!--/.row-->
                         <div class="row" v-for="chunk in productChunks">
@@ -69,7 +69,7 @@
                         </div>
                         <!--/.row-->
                         <div class="text-center d-block" v-if="pagination.total >= 9 && pagination.last_page > pagination.current_page">
-                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >View More</a>
+                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >{{$t('pages.viewMore')}}</a>
                         </div>
                     </div><!--/.col-sm-9-->
                 </div>

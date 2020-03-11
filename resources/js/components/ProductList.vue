@@ -20,7 +20,7 @@
             <div class="heading">
                 <h2>{{category.name_en}}</h2>
                 <ul class="breadcrumb">
-                    <li><router-link to="/" exact>Home</router-link></li>
+                    <li><router-link to="/" exact>{{$t('pages.home')}}</router-link></li>
                     <li class="active">{{category.name_en}}</li>
                 </ul>
             </div>
@@ -28,11 +28,11 @@
 
             <div class="container innr-cont-area">
                 <div class="input-group big-searchbox">
-                    <input type="text" class="form-control"  placeholder="Keyword Search" >
+                    <input type="text" class="form-control"  placeholder="Keyword Search"  v-model="filterSearchTerm">
                     <span class="input-group-addon rounded-0">
-              <button type="submit" class="btn btn-success rounded-0">
+              <button type="submit" class="btn btn-success rounded-0" @click.prevent="loadProducts" >
                   <span class="glyphicon glyphicon-search"></span>
-                  SEARCH
+                  {{$t('pages.search')}}
               </button>
           </span>
                 </div><!--/.big-searchbox-->
@@ -52,13 +52,17 @@
                         <div class="row">
                             <div class="col-sm-12 filtering">
                                 <div class="pull-left" v-if="pagination">
-                                    {{pagination.total}} items
+                                    {{pagination.total}} {{$t('pages.items')}}
                                 </div>
 
                                 <div class="pull-right">
-                                    <span> SORT BY : </span>
-                                    <select>
-                                        <option>PRICE - HIGH TO LOW</option>
+                                    <span> {{$t('pages.sortBy')}} : </span>
+                                    <select v-model="filterSort" @change="loadProducts">
+                                        <option></option>
+<!--                                        <option>{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>-->
+<!--                                        <option>{{$t('pages.price')}} - {{$t('pages.lowToHigh')}}</option>-->
+                                        <option value="asc">{{$t('pages.alphabetic')}} - {{$t('pages.aToZ')}}</option>
+                                        <option value="desc">{{$t('pages.alphabetic')}} - {{$t('pages.zToA')}}</option>
                                     </select>
                                 </div>
                             </div><!--/.filtering-->
@@ -72,7 +76,7 @@
                         </div>
                         <!--/.row-->
                         <div class="text-center d-block" v-if="pagination.total >= 9 && pagination.last_page > pagination.current_page">
-                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >View More</a>
+                            <a class="viewmore" href="#" @click.prevent="loadMoreProducts()" >{{$t('pages.viewMore')}}</a>
                         </div>
                     </div><!--/.col-sm-9-->
                 </div>
@@ -92,8 +96,9 @@
 
     export default {
         components: {ProductFilter, ProductBox, VueContentLoading},
-        props: ['filterCategories', 'filterColor', 'filterPrice'],
+        props: ['filterCategories', 'filterColor', 'filterMinPrice', 'filterMaxPrice', 'filterDiscounts'],
         mounted() {
+            console.log('lang:'+ this.i18n);
             this.slug = this.$route.params.slug;
             this.loadFilterCategoriesList();
             this.loadFilterColorsList();
@@ -114,7 +119,6 @@
         },
         methods: {
             loadProducts(){
-
                 let filterQueryString = '';
                 if(this.filterCategories && this.filterCategories.length >= 1){
                     if(filterQueryString !== ''){
@@ -122,26 +126,48 @@
                     }
                     filterQueryString = 'cat='+this.filterCategories;
                 }
+                if(this.filterSearchTerm){
+                    if(filterQueryString !== ''){
+                        filterQueryString += '&';
+                    }
+                    filterQueryString += 'term='+this.filterSearchTerm
+                }
+                if(this.filterSort){
+                    if(filterQueryString !== ''){
+                        filterQueryString += '&';
+                    }
+                    filterQueryString += 'sort='+this.filterSort
+                }
                 if(this.filterColor && this.filterColor.length >= 1){
                     if(filterQueryString !== ''){
                         filterQueryString += '&';
                     }
                     filterQueryString += 'color='+this.filterColor
                 }
-                if(this.filterPrice && this.filterPrice.length >= 1){
+                if(this.filterMinPrice){
                     if(filterQueryString !== ''){
                         filterQueryString += '&';
                     }
-                    filterQueryString += this.filterPrice;
-                    // filterQueryString += 'min='+this.filterPrice.min;
-                    // filterQueryString += '&';
-                    // filterQueryString += 'max='+this.filterPrice.max;
+                    filterQueryString += 'min='+this.filterMinPrice;
+                }
+                if(this.filterMaxPrice){
+                    if(filterQueryString !== ''){
+                        filterQueryString += '&';
+                    }
+                    filterQueryString += 'max='+this.filterMaxPrice;
+                }
+                if(this.filterDiscounts && this.filterDiscounts.length >= 1){
+                    if(filterQueryString !== ''){
+                        filterQueryString += '&';
+                    }
+                    this.filterDiscounts.forEach(function(item){
+                        filterQueryString += 'discount[]='+item+'&';
+                    });
                 }
                 if(filterQueryString !== ''){
                     filterQueryString = '?'+filterQueryString;
                 }
 
-                console.log(filterQueryString);
                 this.products = [];
                 axios.all([
                     axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
@@ -191,6 +217,8 @@
             return {
                 loading: true,
                 slug: null,
+                filterSearchTerm: null,
+                filterSort: null,
                 filterCategoriesList: {},
                 filterColorsList: {},
                 current_page: 0,

@@ -15,7 +15,7 @@ class UsersReportController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\models\User';
+    protected $title = 'Users Report';
 
     /**
      * Make a grid builder.
@@ -26,6 +26,36 @@ class UsersReportController extends AdminController
     {
         $grid = new Grid(new User);
 
+        $grid->expandFilter();
+        $grid->model()->orderBy('id', 'desc');
+        $grid->filter(function($filter){
+
+            // Remove the default id filter
+            $filter->disableIdFilter();
+
+            // Add User filter
+            $filter->where(function ($query) {
+                switch ($this->input) {
+                    case 'individual':
+                        // custom complex query if the 'yes' option is selected
+                        $query->where('type', User::TYPE_USER);
+                        break;
+
+                    case 'corporate':
+                        $query->where('type', User::TYPE_CORPORATE);
+                        break;
+
+                    case 'blocked':
+                        $query->where('is_active', '0');
+                }
+            }, 'Account Type', 'accounts')->radio([
+                '' => 'All',
+                'individual' => 'Only Individual',
+                'corporate' => 'Only corporate',
+                'blocked' => 'Blocked Accounts',
+            ]);
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('first_name', __('First name'));
         $grid->column('last_name', __('Last name'));
@@ -35,16 +65,9 @@ class UsersReportController extends AdminController
         $grid->column('company_license', __('Company license'));
         $grid->column('phone', __('Phone'));
         $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
         $grid->column('type', __('Type'));
-        $grid->column('is_subscribed', __('Is subscribed'));
         $grid->column('is_active', __('Is active'));
-        $grid->column('is_corporate_accepted', __('Is corporate accepted'));
-        $grid->column('remember_token', __('Remember token'));
         $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
 
         return $grid;
     }

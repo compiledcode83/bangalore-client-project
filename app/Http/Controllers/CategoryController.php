@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,9 +13,19 @@ class CategoryController extends Controller {
     public function homeCategories()
     {
         $categories = Category::where( 'in_homepage', '!=', '0' )
-            ->get( ['name_en', 'id', 'slug'] );
+            ->get();
 
-        return $categories;
+        $response = [];
+        foreach ($categories as $category)
+        {
+            $response[] = [
+                'id'     => $category->id,
+                'name'   => $category->name,
+                'slug'   => $category->slug
+            ];
+        }
+
+        return $response;
     }
 
     public function categoryProducts( $slug, Request $request )
@@ -30,6 +41,7 @@ class CategoryController extends Controller {
         $category = Category::where( 'slug', $slug )->first();
 
         $filterOptions = $request->query();
+//        dd($filterOptions);
         if(isset($filterOptions['cat']))
         {
             $filterCategories = explode(',',$filterOptions['cat']);
@@ -48,6 +60,12 @@ class CategoryController extends Controller {
             $query->whereIn('id', $categoriesIds->toArray());
         });
 
+        if(isset($filterOptions['term']))
+        {
+            $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
+                ->orWhere('name_ar', 'LIKE', '%'. $filterOptions['term'] .'%');
+        }
+
         if(isset($filterOptions['color']))
         {
             $filterColors = explode(',',$filterOptions['color']);
@@ -57,7 +75,59 @@ class CategoryController extends Controller {
             });
         }
 
-        $products = $query->orderBy( 'created_at', 'desc' )->paginate(9);
+        if(isset($filterOptions['discount']))
+        {
+            if(in_array('upTo30',$filterOptions['discount'] )){
+                $query->whereHas('prices', function ($query) use ($filterOptions, $user){
+
+                    if($user->type == User::TYPE_CORPORATE)
+                    {
+//                        $query->where('percentage_discount', '<=',  $filterOptions['min']);
+//                        $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
+                    }
+                    else
+                    {
+//                        $query->where('individual_unit_price', '>=',  $filterOptions['min']);
+//                        $query->where('individual_unit_price', '<=',  $filterOptions['max']);
+                    }
+                });
+            }
+            if(in_array('upTo50',$filterOptions['discount'] )){
+//                dd($filterOptions['discount']);
+            }
+            if(in_array('upTo60',$filterOptions['discount'] )){
+//                dd($filterOptions['discount']);
+            }
+            if(in_array('moreThan60',$filterOptions['discount'] )){
+//                dd($filterOptions['discount']);
+            }
+        }
+
+        if(isset($filterOptions['min']) || isset($filterOptions['max']))
+        {
+            $query->whereHas('prices', function ($query) use ($filterOptions, $user){
+
+                if($user->type == User::TYPE_CORPORATE)
+                {
+                    $query->where('corporate_unit_price', '>=',  $filterOptions['min']);
+                    $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
+                }
+                else
+                {
+                    $query->where('individual_unit_price', '>=',  $filterOptions['min']);
+                    $query->where('individual_unit_price', '<=',  $filterOptions['max']);
+                }
+            });
+        }
+
+        if(isset($filterOptions['sort']))
+        {
+            $products = $query->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
+        }
+        else
+        {
+            $products = $query->orderBy( 'created_at', 'desc' )->paginate(9);
+        }
 
 
         if ( $category )

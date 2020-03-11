@@ -1,9 +1,9 @@
 <template>
     <div class="cart_box" id="cart_bx">
         <div class="cart_contents full-width">
-            <h2 v-if="subTotalCart">recently adDed to cart</h2>
-            <h2 v-else="subTotalCart"> cart is empty </h2>
-            <h1 class="ttl-crt" v-if="itemsCount"> {{itemsCount}} items </h1>
+            <h2 v-if="subTotalCart">{{$t('pages.recentlyAddedToCart')}}</h2>
+            <h2 v-else="subTotalCart"> {{$t('pages.cartIsEmpty')}} </h2>
+            <h1 class="ttl-crt" v-if="itemsCount"> {{itemsCount}} {{$t('pages.items')}} </h1>
 
             <div class="border_dashed row" v-for="item in cart">
                 <div class="col-xs-3">
@@ -13,11 +13,11 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <h1> {{item.item_name}} </h1>
-                            <span class="block">Qty : {{item.product_qty}}</span>
-                            <span class="block">Color : {{item.product_color_name}}</span>
+                            <span class="block">{{$t('pages.qty')}} : {{item.product_qty}}</span>
+                            <span class="block">{{$t('pages.color')}} : {{item.product_color_name}}</span>
                         </div>
                         <div class="col-sm-4">
-                            <h3>KD {{item.product_price}}</h3>
+                            <h3>{{$t('pages.kd')}} {{item.product_price}}</h3>
                             <h3 class="cart-btnx crt-mt-10">
                                 <a href="#" class="delete-4-cart" @click.prevent="deleteItemFromCartBox(item)">
                                     <img src="/images/dlt.png">
@@ -30,13 +30,13 @@
             <!-- /.border_dashed -->
 
             <div v-if="subTotalCart">
-                <h1 class="crt-total">Total</h1>
-                <h1 class="crt-price-ttl">KD {{subTotalCart}}</h1>
+                <h1 class="crt-total">{{$t('pages.total')}}</h1>
+                <h1 class="crt-price-ttl">{{$t('pages.kd')}} {{subTotalCart}}</h1>
             </div>
         </div>
         <!-- /.cart_contents -->
         <router-link to="/cart" class="button-crt" v-if="subTotalCart">
-            VIEW SHOPPING BAG
+            {{$t('pages.viewShoppingBag')}}
         </router-link>
     </div><!--/.cart_box-->
 </template>

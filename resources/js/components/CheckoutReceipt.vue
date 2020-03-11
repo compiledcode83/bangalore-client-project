@@ -3,52 +3,52 @@
         <div class="innr-banner fullwidth">
             <img src="/images/contact-banner.jpg">
             <div class="heading">
-                <h2>THANK YOU</h2>
+                <h2>{{$t('pages.thankYou')}}</h2>
                 <ul class="breadcrumb">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="/">{{$t('pages.home')}}</a>
                     </li>
-                    <li class="active">My Account</li>
+                    <li class="active">{{$t('pages.receipt')}}</li>
                 </ul>
             </div>
         </div><!--/.banner-->
 
         <div class="container innr-cont-area">
             <div class="get-touch">
-                <h3 style="text-align: center;">Your Order has been Placed</h3>
-                <p style="text-align: center;">Thank you for the Order. visit our Products page to
-                    <router-link to="/" exact>Shop More</router-link>
+                <h3 style="text-align: center;">{{$t('pages.yourOrderHasBeenPlaced')}}</h3>
+                <p style="text-align: center;">{{$t('pages.thankYouForYourOrderVisit')}}
+                    <router-link to="/" exact>{{$t('pages.shopMore')}}</router-link>
                 </p>
                 <div class="row">
                     <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <address>
-                                    <strong>Customer: {{order.customr}}</strong>
+                                    <strong>{{$t('pages.customer')}}: {{order.customr}}</strong>
                                     {{order.address}}
-                                    <abbr title="Phone">P:</abbr> {{order.phone}}
+                                    <abbr title="Phone">{{$t('pages.p')}}:</abbr> {{order.phone}}
                                 </address>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                                 <p>
-                                    <em>Date: {{order.created}}</em>
+                                    <em>{{$t('pages.date')}}: {{order.created}}</em>
                                 </p>
                                 <p>
-                                    <em>Receipt #: {{code}}</em>
+                                    <em>{{$t('pages.receiptNumber')}}: {{code}}</em>
                                 </p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="text-center">
-                                <h1>Receipt</h1>
+                                <h1>{{$t('pages.receipt')}}</h1>
                             </div>
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Qty</th>
-                                    <th class="text-center">Price</th>
-                                    <th class="text-center">Total</th>
+                                    <th>{{$t('pages.product')}}</th>
+                                    <th>{{$t('pages.qty')}}</th>
+                                    <th class="text-center">{{$t('pages.price')}}</th>
+                                    <th class="text-center">{{$t('pages.total')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -64,7 +64,7 @@
                                     <td>   </td>
                                     <td class="text-right">
                                         <p>
-                                            <strong>Subtotal: </strong>
+                                            <strong>{{$t('pages.subtotal')}}: </strong>
                                         </p>
 <!--                                        <p>-->
 <!--                                            <strong>Discount: </strong>-->
@@ -82,7 +82,7 @@
                                 <tr>
                                     <td>   </td>
                                     <td>   </td>
-                                    <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                                    <td class="text-right"><h4><strong>{{$t('pages.total')}}: </strong></h4></td>
                                     <td class="text-center text-danger"><h4><strong>{{order.total}}</strong></h4></td>
                                 </tr>
                                 </tbody>

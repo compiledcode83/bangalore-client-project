@@ -1,6 +1,8 @@
 <template>
     <div>
-        <my-account-banner></my-account-banner>
+        <my-account-banner
+            :bannerTitle="$t('pages.mySubscription')"
+        ></my-account-banner>
 
         <div class="container innr-cont-area">
             <div class="row">
@@ -8,11 +10,11 @@
 
                 <!--/ Content Here-->
                 <div class="col-sm-9 right-sec my-account">
-                    <h4>Subscribe to Newsletter</h4>
+                    <h4>{{$t('pages.subscribeToNewsLetter')}}</h4>
                     <div class="row">
                         <div class="col-sm-6 mt-10 mb-10">
-                            <label class="checkbox-sml mt-20">Yes. Subscribe me to Newsletter.
-                                <input type="checkbox" id="product" value="">
+                            <label class="checkbox-sml mt-20">{{$t('pages.yesSubscribeToNewsLetter')}}
+                                <input type="checkbox" id="product" v-model="newsletter" >
                                 <span class="checkmark"></span>
                             </label>
                         </div><!--/.col-sm-6-->
@@ -20,7 +22,7 @@
 
                     </div><!--/.row-->
 
-                    <button class="btn btn-default rounded-0">SAVE</button>
+                    <button class="btn btn-default rounded-0" @click.prevent="updateNewsletter">{{$t('pages.save')}}</button>
                 </div>
                 <!--/.col-sm-9-->
             </div>
@@ -35,11 +37,44 @@
         components: {myAccountSidebar, myAccountBanner},
         data(){
             return {
+                newsletter: 0
             }
         },
         mounted() {
+            if (this.$store.getters['authModule/isAuthenticated']) {
+
+                axios.get(
+                    '/api/v1/account/newsletter',
+                    {
+                        headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.newsletter = response.data;
+                });
+            }else{
+                console.log('No authorization');
+            }
         },
         methods: {
+            updateNewsletter(){
+                if (this.$store.getters['authModule/isAuthenticated']) {
+                    axios.post(
+                        '/api/v1/account/newsletter',
+                        {
+                            'newsletter': this.newsletter,
+                            headers: {
+                                "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        }
+                    ).then((response) => {
+                        this.newsletter = response.data;
+                    });
+                }else{
+                    console.log('No authorization');
+                }
+            }
         }
     }
 </script>

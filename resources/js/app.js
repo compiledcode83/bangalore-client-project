@@ -4,10 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
-//
-// window.Vue = require('vue');
-
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
@@ -19,8 +15,13 @@ import VueInternationalization from 'vue-i18n';
 import Locale from './vue-i18n-locales.generated';
 
 import cartBox from './components/Cart-Box';
-import accountMenu from './components/account-menu';
+import accountMenu from './components/partials/NavMenu';
+import Social from "./components/Social";
+import NewsletterFooter from "./components/NewsletterFooter";
 import search from "./components/search";
+import Layout from "./components/partials/Layout";
+import SiteFooter from "./components/partials/Footer";
+import TopMenu from "./components/partials/TopMenu";
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 
@@ -43,8 +44,10 @@ const options = {
 Vue.use(VueInternationalization);
 Vue.use(VueRouter);
 
-const lang = 'en';//document.documentElement.lang.substr(0, 2);
-// or however you determine your current app locale
+let lang = 'en';
+if (store.getters['langModule/currentLang']) {
+    lang = store.state.langModule.lang;
+}
 
 const i18n = new VueInternationalization({
     locale: lang,
@@ -63,12 +66,10 @@ let app = new Vue({
     i18n,
     store,
     components: {
-        cartBox, accountMenu, search
+        Layout, SiteFooter, TopMenu , cartBox, accountMenu, search, Social, NewsletterFooter
     },
     mounted: function(){
-        axios.get('/api/v1/home-categories')
-            .then(response => this.categories = response.data);
-        this.$Progress.finish();
+        // this.$Progress.finish();
     },
     created () {
         //  [App.vue specific] When App.vue is first loaded start the progress bar
@@ -93,10 +94,6 @@ let app = new Vue({
         })
     },
 
-    data: {
-        categories: null,
-    },
-
     router: new VueRouter(routes)
 });
 
@@ -104,12 +101,15 @@ let app = new Vue({
 axios.interceptors.request.use(
     (requestConfig) => {
         if (store.getters['authModule/isAuthenticated']) {
-            console.log('sending authorization');
-            console.log(store.state.authModule.accessToken);
+            // console.log('sending authorization');
+            // console.log(store.state.authModule.accessToken);
             requestConfig.headers.Authorization = `Bearer ${store.state.authModule.accessToken}`;
         }else{
             console.log('No authorization');
         }
+
+        // requestConfig.headers.xLocalization = this.$store.state.langModule.lang;
+
         return requestConfig;
     },
     (requestError) => Promise.reject(requestError),
@@ -119,7 +119,6 @@ axios.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             // Clear token and redirect
-            console.log('asdasds');
             store.commit('authModule/setAccessToken', null);
             window.location.replace(`${window.location.origin}/login`);
         }
