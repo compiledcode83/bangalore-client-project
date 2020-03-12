@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image;use Illuminate\Support\Str;
 
 class AuthController extends Controller {
 
@@ -89,7 +89,7 @@ class AuthController extends Controller {
         {
             $file = $request->file('company_license');
             //save image
-            $fileName = str_random(15);
+            $fileName = Str::random(15);
             $filePdfName = $fileName . '.pdf';
             $file->move('uploads/corporates',$filePdfName);
         }
