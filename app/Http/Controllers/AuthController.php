@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Intervention\Image\Facades\Image;use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller {
 
