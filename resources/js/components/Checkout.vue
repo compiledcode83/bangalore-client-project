@@ -152,19 +152,19 @@
                     <div class="col-xs-6 list text-right" v-if="discount">
                         {{$t('pages.kd')}} {{cart.discount}}
                     </div>
-                    <!--                                <div class="col-xs-6 list">-->
-                    <!--                                    Delivery-->
-                    <!--                                </div>-->
-                    <!--                                <div class="col-xs-6 list text-right">-->
-                    <!--                                    KD 0.000-->
-                    <!--                                </div>-->
+                    <div class="col-xs-6 list" v-if="deliveryCharges">
+                        Delivery
+                    </div>
+                    <div class="col-xs-6 list text-right" v-if="deliveryCharges">
+                        KD {{deliveryCharges}}
+                    </div>
 
                     <div class="total clearfix">
                         <div class="col-xs-6">
                             {{$t('pages.total')}}
                         </div>
                         <div class="col-xs-6 text-right">
-                            {{$t('pages.kd')}} {{subTotalCart}}
+                            {{$t('pages.kd')}} {{subTotalCart + deliveryCharges}}
                         </div>
                     </div>
                 </div>
@@ -192,7 +192,25 @@
                 statusFirstPanel: 'active',
                 statusSecondPanel: '',
                 placeOrderResponse: null,
-                hasPlacedOrder: false
+                hasPlacedOrder: false,
+                deliveryCharges: null,
+            }
+        },
+        watch: {
+            shippingAddress : function(value){
+                // User MUST BE authenticated
+                this.checkUserAuth();
+
+                axios.post(
+                    '/api/v1/checkout/delivery-charges', {id: value},
+                    {
+                        headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.deliveryCharges = response.data;
+                });
             }
         },
         mounted(){
