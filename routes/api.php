@@ -95,5 +95,8 @@ Route::group(['prefix'=>'v1'], function(){
         Route::post('account/info','UserController@updateAccountInfo');
         Route::post('account/reorder','OrderController@tryToReorder');
 
+        Route::post('checkout/delivery-charges','AddressesController@getDeliveryChargesForAddress');
+
+
     });
 });
