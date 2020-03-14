@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 
@@ -29,7 +30,7 @@ class CartController extends Controller
         if($request->hasFile('file'))
         {
             //save image
-            $imageName = str_random(15);
+            $imageName =  Str::random(15);
             $printImage = $imageName . '.jpg';
 
             Image::make($photo['file'])
