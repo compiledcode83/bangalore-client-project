@@ -12,27 +12,77 @@
                 <div class="col-sm-9 right-sec addrss-book">
                     <h4>{{$t('pages.addressBook')}}</h4>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-if="user.defaultBilling">
                             <div class="box">
                                 <h5> {{$t('pages.defaultBillingAddress')}} </h5>
-                                <a class="edit" href="address-edit.html">{{$t('pages.edit')}}</a>
-                                <span>
-                                  AL SALEM STREET<br>
-                                  BLOCK #12<br>
-                                  BUILDING NO. 23<br>
-                                  SALMIYA
+                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
+                                <span v-if="user.type == '1'">
+                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorate}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultBilling.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{user.defaultBilling.block}}<br>
+                                  {{$t('pages.street')}}: {{user.defaultBilling.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{user.defaultBilling.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{user.defaultBilling.floor}}<br>
+                                  {{$t('pages.houseNumber')}}: {{user.defaultBilling.house_number}}<br>
+                                </span>
+                                <span v-if="user.type == '2'">
+                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorate}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultBilling.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{user.defaultBilling.block}}<br>
+                                  {{$t('pages.street')}}: {{user.defaultBilling.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{user.defaultBilling.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{user.defaultBilling.floor}}<br>
+                                  {{$t('pages.officeAddress')}}: {{user.defaultBilling.office_address}}<br>
+                                  {{$t('pages.officeNumber')}}: {{user.defaultBilling.office_number}}<br>
                                 </span>
                             </div>
                         </div><!--/.col-sm-6-->
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-if="user.defaultShipping">
                             <div class="box">
                                 <h5> {{$t('pages.defaultShippingAddress')}} </h5>
-                                <a class="edit" href="address-edit.html">{{$t('pages.edit')}}</a>
-                                <span>
-                                  <br>
-                                  BLOCK #12<br>
-                                  BUILDING NO. 23<br>
-                                  SALMIYA
+                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
+                                <span v-if="user.type == '1'">
+                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorate}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultShipping.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{user.defaultShipping.block}}<br>
+                                  {{$t('pages.street')}}: {{user.defaultShipping.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{user.defaultShipping.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{user.defaultShipping.floor}}<br>
+                                  {{$t('pages.houseNumber')}}: {{user.defaultShipping.house_number}}<br>
+                                </span>
+                                <span v-if="user.type == '2'">
+                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorate}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultShipping.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{user.defaultShipping.block}}<br>
+                                  {{$t('pages.street')}}: {{user.defaultShipping.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{user.defaultShipping.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{user.defaultShipping.floor}}<br>
+                                  {{$t('pages.officeAddress')}}: {{user.defaultShipping.office_address}}<br>
+                                  {{$t('pages.officeNumber')}}: {{user.defaultShipping.office_number}}<br>
+                                </span>
+                            </div>
+                        </div><!--/.col-sm-6-->
+                        <div class="col-sm-6" v-for="address in user.addresses">
+                            <div class="box">
+                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
+                                <span v-if="user.user_type == '1'">
+                                  {{$t('pages.governotate')}}: {{address.governorate}}<br>
+                                  {{$t('pages.area')}}: {{address.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{address.block}}<br>
+                                  {{$t('pages.street')}}: {{address.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{address.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{address.floor}}<br>
+                                  {{$t('pages.houseNumber')}}: {{address.house_number}}<br>
+                                </span>
+                                <span v-if="user.user_type == '2'">
+                                  {{$t('pages.governotate')}}: {{address.governorate}}<br>
+                                  {{$t('pages.area')}}: {{address.area}}<br>
+                                  {{$t('pages.blockNumber')}}: {{address.block}}<br>
+                                  {{$t('pages.street')}}: {{address.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{address.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{address.floor}}<br>
+                                  {{$t('pages.officeAddress')}}: {{address.office_address}}<br>
+                                  {{$t('pages.officeNumber')}}: {{address.office_number}}<br>
                                 </span>
                             </div>
                         </div><!--/.col-sm-6-->
