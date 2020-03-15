@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Intervention\Image\File;
 
@@ -109,7 +110,7 @@ class UserController extends Controller {
         if($request->hasFile('file'))
         {
             //save $license
-            $licenseName = str_random(15);
+            $licenseName =  Str::random(15);
             $licensePdf = $licenseName . '.pdf';
 
             $request->file('file')->move(public_path('/uploads/accounts/'), $licensePdf);

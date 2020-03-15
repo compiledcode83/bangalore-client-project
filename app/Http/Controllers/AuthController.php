@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Intervention\Image\Facades\Image;use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller {
 
@@ -30,10 +31,10 @@ class AuthController extends Controller {
     public function register( Request $request )
     {
         $validator = Validator::make( $request->all(), [
+            'email'      => 'required|string|email|unique:users',
             'first_name' => 'required|string',
             'last_name'  => 'required|string',
             'phone'      => 'required|string',
-            'email'      => 'required|string|email|unique:users',
             'password'   => 'required|string|confirmed'
         ] );
 

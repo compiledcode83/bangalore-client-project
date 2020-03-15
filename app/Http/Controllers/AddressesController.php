@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAddressRequest;
 use App\Models\Area;
+use App\Models\DeliveryCharge;
 use App\Models\Governorate;
 use App\Models\UserAddress;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AddressesController extends Controller {
@@ -14,11 +16,25 @@ class AddressesController extends Controller {
     {
         $user = Auth::user();
         $governorates = Governorate::with( 'areas' )->get();
+        $defaultShipping = UserAddress::where( 'user_id', $user->id )
+            ->where( 'is_default_shipping', '1' )
+            ->first();
+
+        $defaultBilling = UserAddress::where( 'user_id', $user->id )
+            ->where( 'is_default_billing', '1' )
+            ->first();
+
+        $allAddresses  = UserAddress::where( 'user_id', $user->id )
+            ->where( 'is_default_shipping', null )
+            ->where( 'is_default_billing', null )
+            ->get();
 
         return [
-            'addresses'    => $user->userAddresses,
-            'user_type'    => $user->type,
-            'governorates' => $governorates,
+            'addresses'       => $allAddresses,
+            'defaultBilling'  => $defaultBilling,
+            'defaultShipping' => $defaultShipping,
+            'user_type'       => $user->type,
+            'governorates'    => $governorates,
         ];
     }
 
@@ -29,14 +45,14 @@ class AddressesController extends Controller {
 
         foreach ($addresses as $address)
         {
-            $gov = Governorate::find($address->governorate);
-            if(isset($gov->name_en))
+            $gov = Governorate::find( $address->governorate );
+            if ( isset( $gov->name_en ) )
             {
                 $address->governorate = $gov->name_en;
             }
 
-            $area = Area::find($address->area);
-            if(isset($area->name_en))
+            $area = Area::find( $address->area );
+            if ( isset( $area->name_en ) )
             {
                 $address->area = $area->name_en;
             }
@@ -71,6 +87,22 @@ class AddressesController extends Controller {
             'office_address'      => $attributes['officeAddress'] ?? '',
         ];
 
-        return UserAddress::create($addressFields);
+        return UserAddress::create( $addressFields );
+    }
+
+    public function getDeliveryChargesForAddress(Request $request)
+    {
+//        $user = Auth::user();
+        $attribute = $request->only('id');
+        $address = UserAddress::find($attribute['id']);
+        $deliveryCharges = DeliveryCharge::where('area_id', $address->area)->first();
+        if($deliveryCharges)
+        {
+            return $deliveryCharges->charges;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

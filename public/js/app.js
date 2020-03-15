@@ -1914,181 +1914,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2106,7 +1931,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     productChunks: function productChunks() {
-      return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.chunk(Object.values(this.products), 3);
+      return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.chunk(Object.values(this.products), 4);
     }
   },
   methods: {
@@ -2682,11 +2507,29 @@ __webpack_require__.r(__webpack_exports__);
       statusFirstPanel: 'active',
       statusSecondPanel: '',
       placeOrderResponse: null,
-      hasPlacedOrder: false
+      hasPlacedOrder: false,
+      deliveryCharges: null
     };
   },
+  watch: {
+    shippingAddress: function shippingAddress(value) {
+      var _this = this;
+
+      // User MUST BE authenticated
+      this.checkUserAuth();
+      axios.post('/api/v1/checkout/delivery-charges', {
+        id: value
+      }, {
+        headers: {
+          "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
+        }
+      }).then(function (response) {
+        _this.deliveryCharges = response.data;
+      });
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     // User MUST BE authenticated
     this.checkUserAuth();
@@ -2695,12 +2538,12 @@ __webpack_require__.r(__webpack_exports__);
         "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
       }
     }).then(function (response) {
-      _this.userAddresses = response.data;
+      _this2.userAddresses = response.data;
     });
   },
   methods: {
     checkUserAuth: function checkUserAuth() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!this.$store.getters['authModule/isAuthenticated']) {
         this.$swal({
@@ -2714,12 +2557,12 @@ __webpack_require__.r(__webpack_exports__);
           cancelButtonText: 'Back to cart!'
         }).then(function (result) {
           if (result.dismiss === 'cancel') {
-            return _this2.$router.push({
+            return _this3.$router.push({
               path: '/cart'
             });
           }
 
-          return _this2.$router.push({
+          return _this3.$router.push({
             path: '/login'
           });
         });
@@ -2735,21 +2578,21 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     placeOrder: function placeOrder() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.hasPlacedOrder = true;
       _services_CartService__WEBPACK_IMPORTED_MODULE_1__["default"].placeOrder().then(function (response) {
-        _this3.placeOrderResponse = response.data;
+        _this4.placeOrderResponse = response.data;
 
-        _this3.$store.dispatch('clearCart');
+        _this4.$store.dispatch('clearCart');
 
-        _this3.$swal({
+        _this4.$swal({
           title: 'Order placed!',
           text: "Your order has been placed successfully ",
           icon: 'success'
         }).then(function () {
-          _this3.$router.push({
-            path: '/thank-you/' + _this3.placeOrderResponse
+          _this4.$router.push({
+            path: '/thank-you/' + _this4.placeOrderResponse
           });
         });
       })["catch"](function (error) {
@@ -5561,6 +5404,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _partials_TheSidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./partials/TheSidebar */ "./resources/js/components/account/partials/TheSidebar.vue");
 /* harmony import */ var _partials_TheBanner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./partials/TheBanner */ "./resources/js/components/account/partials/TheBanner.vue");
 /* harmony import */ var _partials_Validation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/Validation */ "./resources/js/components/partials/Validation.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -31907,114 +31800,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-3 side-filtering" }, [
-                _c("div", { staticClass: "panel panel-default" }, [
-                  _c(
-                    "ul",
-                    {
-                      staticClass: "nav nav-pills nav-stacked",
-                      attrs: { id: "stacked-menu" }
-                    },
-                    [
-                      _c("li", { staticClass: "main-cat" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "nav-container",
-                            attrs: {
-                              "data-toggle": "collapse",
-                              "data-parent": "#stacked-menu",
-                              href: "#categories"
-                            }
-                          },
-                          [_vm._v(_vm._s(_vm.$t("pages.categories")))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          {
-                            staticClass:
-                              "nav nav-pills nav-stacked collapse in hide-mob",
-                            attrs: { id: "categories" }
-                          },
-                          [
-                            _c("li", [
-                              _c("a", { staticClass: "single-category" }, [
-                                _vm._v(_vm._s(_vm.$t("pages.home")) + " ")
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "li",
-                              {
-                                staticClass: "nav-sub-container",
-                                attrs: {
-                                  "data-toggle": "collapse",
-                                  "data-parent": "#p1",
-                                  href: "#Tech"
-                                }
-                              },
-                              [
-                                _c("a", [
-                                  _vm._v(_vm._s(_vm.$t("pages.technologies")))
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm._m(0),
-                            _vm._v(" "),
-                            _vm._m(1),
-                            _vm._v(" "),
-                            _vm._m(2),
-                            _vm._v(" "),
-                            _vm._m(3),
-                            _vm._v(" "),
-                            _vm._m(4),
-                            _vm._v(" "),
-                            _vm._m(5),
-                            _vm._v(" "),
-                            _vm._m(6),
-                            _vm._v(" "),
-                            _vm._m(7),
-                            _vm._v(" "),
-                            _vm._m(8),
-                            _vm._v(" "),
-                            _vm._m(9),
-                            _vm._v(" "),
-                            _vm._m(10),
-                            _vm._v(" "),
-                            _vm._m(11),
-                            _vm._v(" "),
-                            _vm._m(12),
-                            _vm._v(" "),
-                            _vm._m(13),
-                            _vm._v(" "),
-                            _vm._m(14),
-                            _vm._v(" "),
-                            _vm._m(15),
-                            _vm._v(" "),
-                            _vm._m(16),
-                            _vm._v(" "),
-                            _vm._m(17),
-                            _vm._v(" "),
-                            _vm._m(18)
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(19),
-                      _vm._v(" "),
-                      _vm._m(20),
-                      _vm._v(" "),
-                      _vm._m(21)
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-sm-9 product-listing" },
+                { staticClass: "col-sm-12 product-listing" },
                 [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-sm-12 filtering" }, [
@@ -32028,7 +31816,27 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm._m(22)
+                      _c("div", { staticClass: "pull-right" }, [
+                        _c("span", [_vm._v(" SORT BY : ")]),
+                        _vm._v(" "),
+                        _c("select", [
+                          _c("option", { attrs: { value: "asc" } }, [
+                            _vm._v(
+                              _vm._s(_vm.$t("pages.alphabetic")) +
+                                " - " +
+                                _vm._s(_vm.$t("pages.aToZ"))
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "desc" } }, [
+                            _vm._v(
+                              _vm._s(_vm.$t("pages.alphabetic")) +
+                                " - " +
+                                _vm._s(_vm.$t("pages.zToA"))
+                            )
+                          ])
+                        ])
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
@@ -32039,7 +31847,7 @@ var render = function() {
                       _vm._l(chunk, function(product) {
                         return _c(
                           "div",
-                          { staticClass: "col-sm-4" },
+                          { staticClass: "col-sm-3" },
                           [_c("ProductBox", { attrs: { product: product } })],
                           1
                         )
@@ -32055,654 +31863,7 @@ var render = function() {
         ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse in",
-        attrs: { id: "Tech" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Technologies Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Technologies Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Leisure"
-        }
-      },
-      [_c("a", [_vm._v("Leisure")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Leisure" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Leisure Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Leisure Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Drinkware"
-        }
-      },
-      [_c("a", [_vm._v("Drinkware")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Drinkware" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Drinkware Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Drinkware Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Kids"
-        }
-      },
-      [_c("a", [_vm._v("Kids")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Kids" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Kids Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Kids Sub Cat2")])])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Stationary"
-        }
-      },
-      [_c("a", [_vm._v("Stationary")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Stationary" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Stationary Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Stationary Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Premiums"
-        }
-      },
-      [_c("a", [_vm._v("Premiums")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Premiums" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Premiums Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Premiums Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Care"
-        }
-      },
-      [_c("a", [_vm._v("Care")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Care" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Care Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Care Sub Cat2")])])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Apparel"
-        }
-      },
-      [_c("a", [_vm._v("Apparel")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Apparel" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Apparel Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Apparel Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Themes"
-        }
-      },
-      [_c("a", [_vm._v("Themes")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Themes" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Themes Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Themes Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      {
-        staticClass: "nav-sub-container",
-        attrs: {
-          "data-toggle": "collapse",
-          "data-parent": "#p1",
-          href: "#Factory"
-        }
-      },
-      [_c("a", [_vm._v("Factory")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-pills nav-stacked collapse",
-        attrs: { id: "Factory" }
-      },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Factory Sub Cat1")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Factory Sub Cat2")])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "main-cat" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-container",
-          attrs: {
-            "data-toggle": "collapse",
-            "data-parent": "#stacked-menu",
-            href: "#Color"
-          }
-        },
-        [_vm._v("Color")]
-      ),
-      _vm._v(" "),
-      _c(
-        "ul",
-        {
-          staticClass: "nav nav-pills nav-stacked collapse in hide-mob",
-          attrs: { id: "Color" }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "btn-group", attrs: { "data-toggle": "buttons" } },
-            [
-              _c(
-                "label",
-                {
-                  staticClass: "btn active selct-clr",
-                  staticStyle: { background: "#d1bda1" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off",
-                      chacked: ""
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#232323" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option1",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#506cbb" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#b5b5b5" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#00b37d" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#eeeeee" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn selct-clr",
-                  staticStyle: { background: "#fdfa8f" }
-                },
-                [
-                  _c("input", {
-                    attrs: {
-                      type: "radio",
-                      name: "options",
-                      id: "option2",
-                      autocomplete: "off"
-                    }
-                  })
-                ]
-              )
-            ]
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "main-cat" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-container",
-          attrs: {
-            "data-toggle": "collapse",
-            "data-parent": "#stacked-menu",
-            href: "#price"
-          }
-        },
-        [_vm._v("Price")]
-      ),
-      _vm._v(" "),
-      _c(
-        "ul",
-        {
-          staticClass: "nav nav-pills nav-stacked collapse in hide-mob",
-          attrs: { id: "price" }
-        },
-        [
-          _c("li", { staticClass: "pad-15" }, [
-            _c("div", { attrs: { id: "slider-range" } }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "rangedprice pull-left",
-              staticStyle: { "text-align": "left" },
-              attrs: { type: "text", id: "amountfrm", readonly: "" }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "rangedprice pull-right",
-              attrs: { type: "text", id: "amountto", readonly: "" }
-            })
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "main-cat" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-container",
-          attrs: {
-            "data-toggle": "collapse",
-            "data-parent": "#stacked-menu",
-            href: "#Discount"
-          }
-        },
-        [_vm._v("Discount")]
-      ),
-      _vm._v(" "),
-      _c(
-        "ul",
-        {
-          staticClass: "nav nav-pills nav-stacked collapse in hide-mob",
-          attrs: { id: "Discount" }
-        },
-        [
-          _c("li", [
-            _c("label", { staticClass: "discount-chk" }, [
-              _vm._v("Up to 30%\n                                        "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "discount-chk" }, [
-              _vm._v("30% - 50%\n                                        "),
-              _c("input", { attrs: { type: "checkbox" } }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "discount-chk" }, [
-              _vm._v("50% - 60%\n                                        "),
-              _c("input", { attrs: { type: "checkbox" } }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "discount-chk" }, [
-              _vm._v("+ 60%\n                                        "),
-              _c("input", { attrs: { type: "checkbox" } }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "discount-chk" }, [
-              _vm._v("Full Price\n                                        "),
-              _c("input", { attrs: { type: "checkbox" } }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkmark" })
-            ])
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pull-right" }, [
-      _c("span", [_vm._v(" SORT BY : ")]),
-      _vm._v(" "),
-      _c("select", [_c("option", [_vm._v("PRICE - HIGH TO LOW")])])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -33854,6 +33015,22 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.deliveryCharges
+              ? _c("div", { staticClass: "col-xs-6 list" }, [
+                  _vm._v("\n                    Delivery\n                ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deliveryCharges
+              ? _c("div", { staticClass: "col-xs-6 list text-right" }, [
+                  _vm._v(
+                    "\n                    KD " +
+                      _vm._s(_vm.deliveryCharges) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("div", { staticClass: "total clearfix" }, [
               _c("div", { staticClass: "col-xs-6" }, [
                 _vm._v(
@@ -33868,7 +33045,7 @@ var render = function() {
                   "\n                        " +
                     _vm._s(_vm.$t("pages.kd")) +
                     " " +
-                    _vm._s(_vm.subTotalCart) +
+                    _vm._s(_vm.subTotalCart + _vm.deliveryCharges) +
                     "\n                    "
                 )
               ])
@@ -37635,53 +36812,417 @@ var render = function() {
             _c("div", { staticClass: "col-sm-9 right-sec addrss-book" }, [
               _c("h4", [_vm._v(_vm._s(_vm.$t("pages.addressBook")))]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-sm-6" }, [
-                  _c("div", { staticClass: "box" }, [
-                    _c("h5", [
-                      _vm._v(
-                        " " +
-                          _vm._s(_vm.$t("pages.defaultBillingAddress")) +
-                          " "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "edit",
-                        attrs: { href: "address-edit.html" }
-                      },
-                      [_vm._v(_vm._s(_vm.$t("pages.edit")))]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6" }, [
-                  _c("div", { staticClass: "box" }, [
-                    _c("h5", [
-                      _vm._v(
-                        " " +
-                          _vm._s(_vm.$t("pages.defaultShippingAddress")) +
-                          " "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "edit",
-                        attrs: { href: "address-edit.html" }
-                      },
-                      [_vm._v(_vm._s(_vm.$t("pages.edit")))]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1)
-                  ])
-                ])
-              ]),
+              _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm.user.defaultBilling
+                    ? _c("div", { staticClass: "col-sm-6" }, [
+                        _c("div", { staticClass: "box" }, [
+                          _c("h5", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.$t("pages.defaultBillingAddress")) +
+                                " "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            { staticClass: "edit", attrs: { href: "#" } },
+                            [_vm._v(_vm._s(_vm.$t("pages.edit")))]
+                          ),
+                          _vm._v(" "),
+                          _vm.user.type == "1"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.governotate")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.governorate)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.area")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.area)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.blockNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.block)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.street")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.street)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.buildingNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.building)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.floorNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.floor)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.houseNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.house_number)
+                                ),
+                                _c("br")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.user.type == "2"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.governotate")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.governorate)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.area")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.area)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.blockNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.block)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.street")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.street)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.buildingNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.building)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.floorNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultBilling.floor)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.officeAddress")) +
+                                    ": " +
+                                    _vm._s(
+                                      _vm.user.defaultBilling.office_address
+                                    )
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.officeNumber")) +
+                                    ": " +
+                                    _vm._s(
+                                      _vm.user.defaultBilling.office_number
+                                    )
+                                ),
+                                _c("br")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.user.defaultShipping
+                    ? _c("div", { staticClass: "col-sm-6" }, [
+                        _c("div", { staticClass: "box" }, [
+                          _c("h5", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.$t("pages.defaultShippingAddress")) +
+                                " "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            { staticClass: "edit", attrs: { href: "#" } },
+                            [_vm._v(_vm._s(_vm.$t("pages.edit")))]
+                          ),
+                          _vm._v(" "),
+                          _vm.user.type == "1"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.governotate")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.governorate)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.area")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.area)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.blockNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.block)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.street")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.street)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.buildingNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.building)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.floorNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.floor)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.houseNumber")) +
+                                    ": " +
+                                    _vm._s(
+                                      _vm.user.defaultShipping.house_number
+                                    )
+                                ),
+                                _c("br")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.user.type == "2"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.governotate")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.governorate)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.area")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.area)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.blockNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.block)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.street")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.street)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.buildingNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.building)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.floorNumber")) +
+                                    ": " +
+                                    _vm._s(_vm.user.defaultShipping.floor)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.officeAddress")) +
+                                    ": " +
+                                    _vm._s(
+                                      _vm.user.defaultShipping.office_address
+                                    )
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                  " +
+                                    _vm._s(_vm.$t("pages.officeNumber")) +
+                                    ": " +
+                                    _vm._s(
+                                      _vm.user.defaultShipping.office_number
+                                    )
+                                ),
+                                _c("br")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.user.addresses, function(address) {
+                    return _c("div", { staticClass: "col-sm-6" }, [
+                      _c("div", { staticClass: "box" }, [
+                        _c("a", { staticClass: "edit", attrs: { href: "#" } }, [
+                          _vm._v(_vm._s(_vm.$t("pages.edit")))
+                        ]),
+                        _vm._v(" "),
+                        _vm.user.user_type == "1"
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.governotate")) +
+                                  ": " +
+                                  _vm._s(address.governorate)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.area")) +
+                                  ": " +
+                                  _vm._s(address.area)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.blockNumber")) +
+                                  ": " +
+                                  _vm._s(address.block)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.street")) +
+                                  ": " +
+                                  _vm._s(address.street)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.buildingNumber")) +
+                                  ": " +
+                                  _vm._s(address.building)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.floorNumber")) +
+                                  ": " +
+                                  _vm._s(address.floor)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.houseNumber")) +
+                                  ": " +
+                                  _vm._s(address.house_number)
+                              ),
+                              _c("br")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.user.user_type == "2"
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.governotate")) +
+                                  ": " +
+                                  _vm._s(address.governorate)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.area")) +
+                                  ": " +
+                                  _vm._s(address.area)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.blockNumber")) +
+                                  ": " +
+                                  _vm._s(address.block)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.street")) +
+                                  ": " +
+                                  _vm._s(address.street)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.buildingNumber")) +
+                                  ": " +
+                                  _vm._s(address.building)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.floorNumber")) +
+                                  ": " +
+                                  _vm._s(address.floor)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.officeAddress")) +
+                                  ": " +
+                                  _vm._s(address.office_address)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.$t("pages.officeNumber")) +
+                                  ": " +
+                                  _vm._s(address.office_number)
+                              ),
+                              _c("br")
+                            ])
+                          : _vm._e()
+                      ])
+                    ])
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
@@ -38182,39 +37723,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _vm._v("\n                                  AL SALEM STREET"),
-      _c("br"),
-      _vm._v("\n                                  BLOCK #12"),
-      _c("br"),
-      _vm._v("\n                                  BUILDING NO. 23"),
-      _c("br"),
-      _vm._v(
-        "\n                                  SALMIYA\n                                "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("br"),
-      _vm._v("\n                                  BLOCK #12"),
-      _c("br"),
-      _vm._v("\n                                  BUILDING NO. 23"),
-      _c("br"),
-      _vm._v(
-        "\n                                  SALMIYA\n                                "
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -64412,7 +63921,7 @@ __webpack_require__.r(__webpack_exports__);
       "enterPassword": "أدخل كلمة المرور",
       "socialMedia_social": "وسائل",
       "socialMedia_media": "التواصل",
-      "socialMedia_description": "socialMedia_description",
+      "socialMedia_description": "تواصل معنا من خلال وسائل التواصل الاجتماعي وابقى دائما على معرفه باخر المنتجات ...",
       "specialOffers": "عروض خاصة",
       "search": "بحث",
       "highToLow": "من الاعلى الى الادنى",
@@ -64871,7 +64380,7 @@ __webpack_require__.r(__webpack_exports__);
       "enterPassword": "enter Password",
       "socialMedia_social": "social",
       "socialMedia_media": "media",
-      "socialMedia_description": "socialMedia_description",
+      "socialMedia_description": "Connect with us through social media and stay updated...",
       "specialOffers": "special Offers",
       "search": "search",
       "highToLow": "high To Low",
