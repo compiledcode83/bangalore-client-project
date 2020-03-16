@@ -105,4 +105,26 @@ class HomeController extends Controller {
         return $dataset;
 
     }
+
+    public function homeStatus(Content $content)
+    {
+        return $content
+            ->header('Dashboard')
+            ->description('Description...')
+            // ->row(Dashboard::title())
+            ->row(function (Row $row) {
+
+                $row->column(4, function (Column $column) {
+                    $column->append(Dashboard::environment());
+                });
+
+                // $row->column(4, function (Column $column) {
+                //     $column->append(Dashboard::extensions());
+                // });
+
+                $row->column(4, function (Column $column) {
+                    $column->append(Dashboard::dependencies());
+                });
+            });
+    }
 }
