@@ -12,6 +12,56 @@
         </div><!--/.banner-->
         <div class="container innr-cont-area">
         <div class="row">
+                        <div class="col-sm-4 smry">
+                <div class="side-summary">
+                    <h3>{{$t('pages.summery')}}</h3>
+                    <a class="heading" data-toggle="collapse" data-parent="#stacked-menu" href="#summary" aria-expanded="true">{{itemsCount}} {{$t('pages.itemsInCart')}}</a>
+                    <ul class="collapse in listing" id="summary" aria-expanded="true" style="">
+                        <li class="row" v-for="cartItem in cart.items">
+                            <div class="col-sm-4 img">
+                                <img :src="'/uploads/' + cartItem.product_image">
+                            </div>
+                            <div class="col-sm-5 pl-0 data">
+                                {{cartItem.item_name}}
+                                {{$t('pages.qty')}}: {{cartItem.product_qty}}<br>
+                                <span><strong>{{$t('pages.color')}}:</strong> {{cartItem.product_color_name}} </span>
+                            </div>
+                            <div class="col-sm-3 price">
+                                {{cartItem.product_price}} {{$t('pages.kd')}}
+                            </div>
+                        </li><!--/li-->
+                    </ul><!--/nav-->
+
+                    <div class="col-xs-6 list">
+                        {{$t('pages.subtotal')}}
+                    </div>
+                    <div class="col-xs-6 list text-right">
+                        {{$t('pages.kd')}} {{subTotalCart}}
+                    </div>
+                    <div class="col-xs-6 list" v-if="discount">
+                        {{$t('pages.discount')}}
+                    </div>
+                    <div class="col-xs-6 list text-right" v-if="discount">
+                        {{$t('pages.kd')}} {{cart.discount}}
+                    </div>
+                    <div class="col-xs-6 list" v-if="deliveryCharges">
+                        Delivery
+                    </div>
+                    <div class="col-xs-6 list text-right" v-if="deliveryCharges">
+                        KD {{deliveryCharges}}
+                    </div>
+
+                    <div class="total clearfix">
+                        <div class="col-xs-6">
+                            {{$t('pages.total')}}
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            {{$t('pages.kd')}} {{subTotalCart + deliveryCharges}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-sm-8 checkout">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" :class="statusFirstPanel" @click.prevent="togglePanel"><a href="#Step1" aria-controls="home" role="tab" data-toggle="tab">
@@ -120,55 +170,7 @@
                 </div>
             </div><!--/.col-sm-8-->
 
-            <div class="col-sm-4">
-                <div class="side-summary">
-                    <h3>{{$t('pages.summery')}}</h3>
-                    <a class="heading" data-toggle="collapse" data-parent="#stacked-menu" href="#summary" aria-expanded="true">{{itemsCount}} {{$t('pages.itemsInCart')}}</a>
-                    <ul class="collapse in listing" id="summary" aria-expanded="true" style="">
-                        <li class="row" v-for="cartItem in cart.items">
-                            <div class="col-sm-4 img">
-                                <img :src="'/uploads/' + cartItem.product_image">
-                            </div>
-                            <div class="col-sm-5 pl-0 data">
-                                {{cartItem.item_name}}
-                                {{$t('pages.qty')}}: {{cartItem.product_qty}}<br>
-                                <span><strong>{{$t('pages.color')}}:</strong> {{cartItem.product_color_name}} </span>
-                            </div>
-                            <div class="col-sm-3 price">
-                                {{cartItem.product_price}} {{$t('pages.kd')}}
-                            </div>
-                        </li><!--/li-->
-                    </ul><!--/nav-->
 
-                    <div class="col-xs-6 list">
-                        {{$t('pages.subtotal')}}
-                    </div>
-                    <div class="col-xs-6 list text-right">
-                        {{$t('pages.kd')}} {{subTotalCart}}
-                    </div>
-                    <div class="col-xs-6 list" v-if="discount">
-                        {{$t('pages.discount')}}
-                    </div>
-                    <div class="col-xs-6 list text-right" v-if="discount">
-                        {{$t('pages.kd')}} {{cart.discount}}
-                    </div>
-                    <div class="col-xs-6 list" v-if="deliveryCharges">
-                        Delivery
-                    </div>
-                    <div class="col-xs-6 list text-right" v-if="deliveryCharges">
-                        KD {{deliveryCharges}}
-                    </div>
-
-                    <div class="total clearfix">
-                        <div class="col-xs-6">
-                            {{$t('pages.total')}}
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            {{$t('pages.kd')}} {{subTotalCart + deliveryCharges}}
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
 
