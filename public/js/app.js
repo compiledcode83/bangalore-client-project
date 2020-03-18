@@ -2493,6 +2493,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6423,6 +6425,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _partials_TheSidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./partials/TheSidebar */ "./resources/js/components/account/partials/TheSidebar.vue");
 /* harmony import */ var _partials_TheBanner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./partials/TheBanner */ "./resources/js/components/account/partials/TheBanner.vue");
+//
 //
 //
 //
@@ -31922,7 +31925,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-xs-9" }, [
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-8" }, [
+                  _c("div", { staticClass: "col-sm-8 col-xs-8" }, [
                     _c("h1", [_vm._v(" " + _vm._s(item.item_name) + " ")]),
                     _vm._v(" "),
                     _c("span", { staticClass: "block" }, [
@@ -31942,7 +31945,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-4" }, [
+                  _c("div", { staticClass: "col-sm-4 col-xs-4" }, [
                     _c("h3", [
                       _vm._v(
                         _vm._s(_vm.$t("pages.kd")) +
@@ -32418,6 +32421,155 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "container innr-cont-area" }, [
       _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-4 smry" }, [
+          _c("div", { staticClass: "side-summary" }, [
+            _c("h3", [_vm._v(_vm._s(_vm.$t("pages.summery")))]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "heading",
+                attrs: {
+                  "data-toggle": "collapse",
+                  "data-parent": "#stacked-menu",
+                  href: "#summary",
+                  "aria-expanded": "true"
+                }
+              },
+              [
+                _vm._v(
+                  _vm._s(_vm.itemsCount) +
+                    " " +
+                    _vm._s(_vm.$t("pages.itemsInCart"))
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "collapse in listing",
+                attrs: { id: "summary", "aria-expanded": "true" }
+              },
+              _vm._l(_vm.cart.items, function(cartItem) {
+                return _c("li", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-4 img" }, [
+                    _c("img", {
+                      attrs: { src: "/uploads/" + cartItem.product_image }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-5 pl-0 data" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(cartItem.item_name) +
+                        "\n                            " +
+                        _vm._s(_vm.$t("pages.qty")) +
+                        ": " +
+                        _vm._s(cartItem.product_qty)
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.$t("pages.color")) + ":")
+                      ]),
+                      _vm._v(" " + _vm._s(cartItem.product_color_name) + " ")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-3 price" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(cartItem.product_price) +
+                        " " +
+                        _vm._s(_vm.$t("pages.kd")) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-xs-6 list" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.$t("pages.subtotal")) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-xs-6 list text-right" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.$t("pages.kd")) +
+                  " " +
+                  _vm._s(_vm.subTotalCart) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _vm.discount
+              ? _c("div", { staticClass: "col-xs-6 list" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.$t("pages.discount")) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.discount
+              ? _c("div", { staticClass: "col-xs-6 list text-right" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.$t("pages.kd")) +
+                      " " +
+                      _vm._s(_vm.cart.discount) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deliveryCharges
+              ? _c("div", { staticClass: "col-xs-6 list" }, [
+                  _vm._v("\n                    Delivery\n                ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deliveryCharges
+              ? _c("div", { staticClass: "col-xs-6 list text-right" }, [
+                  _vm._v(
+                    "\n                    KD " +
+                      _vm._s(_vm.deliveryCharges) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "total clearfix" }, [
+              _c("div", { staticClass: "col-xs-6" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.$t("pages.total")) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-6 text-right" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.$t("pages.kd")) +
+                    " " +
+                    _vm._s(_vm.subTotalCart + _vm.deliveryCharges) +
+                    "\n                    "
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "col-sm-8 checkout" }, [
           _c(
             "ul",
@@ -32901,155 +33053,6 @@ var render = function() {
                 )
               ]
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-4" }, [
-          _c("div", { staticClass: "side-summary" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.$t("pages.summery")))]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "heading",
-                attrs: {
-                  "data-toggle": "collapse",
-                  "data-parent": "#stacked-menu",
-                  href: "#summary",
-                  "aria-expanded": "true"
-                }
-              },
-              [
-                _vm._v(
-                  _vm._s(_vm.itemsCount) +
-                    " " +
-                    _vm._s(_vm.$t("pages.itemsInCart"))
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                staticClass: "collapse in listing",
-                attrs: { id: "summary", "aria-expanded": "true" }
-              },
-              _vm._l(_vm.cart.items, function(cartItem) {
-                return _c("li", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-4 img" }, [
-                    _c("img", {
-                      attrs: { src: "/uploads/" + cartItem.product_image }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-5 pl-0 data" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(cartItem.item_name) +
-                        "\n                            " +
-                        _vm._s(_vm.$t("pages.qty")) +
-                        ": " +
-                        _vm._s(cartItem.product_qty)
-                    ),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("span", [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.$t("pages.color")) + ":")
-                      ]),
-                      _vm._v(" " + _vm._s(cartItem.product_color_name) + " ")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-3 price" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(cartItem.product_price) +
-                        " " +
-                        _vm._s(_vm.$t("pages.kd")) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-xs-6 list" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.$t("pages.subtotal")) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-xs-6 list text-right" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.$t("pages.kd")) +
-                  " " +
-                  _vm._s(_vm.subTotalCart) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _vm.discount
-              ? _c("div", { staticClass: "col-xs-6 list" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.$t("pages.discount")) +
-                      "\n                "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.discount
-              ? _c("div", { staticClass: "col-xs-6 list text-right" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.$t("pages.kd")) +
-                      " " +
-                      _vm._s(_vm.cart.discount) +
-                      "\n                "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.deliveryCharges
-              ? _c("div", { staticClass: "col-xs-6 list" }, [
-                  _vm._v("\n                    Delivery\n                ")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.deliveryCharges
-              ? _c("div", { staticClass: "col-xs-6 list text-right" }, [
-                  _vm._v(
-                    "\n                    KD " +
-                      _vm._s(_vm.deliveryCharges) +
-                      "\n                "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "total clearfix" }, [
-              _c("div", { staticClass: "col-xs-6" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.$t("pages.total")) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-xs-6 text-right" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.$t("pages.kd")) +
-                    " " +
-                    _vm._s(_vm.subTotalCart + _vm.deliveryCharges) +
-                    "\n                    "
-                )
-              ])
-            ])
           ])
         ])
       ])
@@ -34774,7 +34777,7 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-3" }, [
+                          _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
                             _c(
                               "select",
                               {
@@ -34829,7 +34832,7 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-3" }, [
+                          _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
                             _c("input", {
                               directives: [
                                 {
@@ -38908,6 +38911,63 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
+            { staticClass: "col-sm-12 col-md-3 mt-15 view-orderspage smry" },
+            [
+              _c("div", { staticClass: "summary" }, [
+                _c("h3", [_vm._v(_vm._s(_vm.$t("pages.orderSummery")))]),
+                _vm._v(" "),
+                _c("div", { staticClass: "data clearfix" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "collapse in listing clearfix",
+                      attrs: { id: "summary", "aria-expanded": "true" }
+                    },
+                    [
+                      _c("div", { staticClass: "col-xs-12 list" }, [
+                        _c("small", [
+                          _vm._v(_vm._s(_vm.$t("pages.totalAmount")))
+                        ]),
+                        _vm._v(" "),
+                        _c("h4", [
+                          _vm._v(
+                            _vm._s(_vm.$t("pages.kd")) +
+                              " " +
+                              _vm._s(_vm.orderDetails.total)
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "summary mt-20" }, [
+                _c("h3", [_vm._v(_vm._s(_vm.$t("pages.shippingAddress")))]),
+                _vm._v(" "),
+                _c("div", { staticClass: "data clearfix" }, [
+                  _c("div", { staticClass: "col-xs-12" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.orderDetails.address) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-12 mt-20 list" }, [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.$t("pages.paymentMethod")))
+                    ]),
+                    _vm._v(" "),
+                    _c("h4", [_vm._v(_vm._s(_vm.$t("pages.cash")))])
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
             { staticClass: "col-sm-12 col-md-9 view-orderspage mt-15" },
             [
               _c("h5", [
@@ -39055,63 +39115,6 @@ var render = function() {
                     }),
                     0
                   )
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-sm-12 col-md-3 mt-15 view-orderspage" },
-            [
-              _c("div", { staticClass: "summary" }, [
-                _c("h3", [_vm._v(_vm._s(_vm.$t("pages.orderSummery")))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "data clearfix" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "collapse in listing clearfix",
-                      attrs: { id: "summary", "aria-expanded": "true" }
-                    },
-                    [
-                      _c("div", { staticClass: "col-xs-12 list" }, [
-                        _c("small", [
-                          _vm._v(_vm._s(_vm.$t("pages.totalAmount")))
-                        ]),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _vm._v(
-                            _vm._s(_vm.$t("pages.kd")) +
-                              " " +
-                              _vm._s(_vm.orderDetails.total)
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "summary mt-20" }, [
-                _c("h3", [_vm._v(_vm._s(_vm.$t("pages.shippingAddress")))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "data clearfix" }, [
-                  _c("div", { staticClass: "col-xs-12" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.orderDetails.address) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-12 mt-20 list" }, [
-                    _c("small", [
-                      _vm._v(_vm._s(_vm.$t("pages.paymentMethod")))
-                    ]),
-                    _vm._v(" "),
-                    _c("h4", [_vm._v(_vm._s(_vm.$t("pages.cash")))])
-                  ])
                 ])
               ])
             ]
