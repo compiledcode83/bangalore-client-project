@@ -11,12 +11,12 @@
                 </div>
                 <div class="col-xs-9">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 col-xs-8">
                             <h1> {{item.item_name}} </h1>
                             <span class="block">{{$t('pages.qty')}} : {{item.product_qty}}</span>
                             <span class="block">{{$t('pages.color')}} : {{item.product_color_name}}</span>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 col-xs-4">
                             <h3>{{$t('pages.kd')}} {{item.product_price}}</h3>
                             <h3 class="cart-btnx crt-mt-10">
                                 <a href="#" class="delete-4-cart" @click.prevent="deleteItemFromCartBox(item)">

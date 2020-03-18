@@ -1,12 +1,14 @@
 ﻿@charset "utf-8";
 /* CSS Document */
-
+@import url('https://fonts.googleapis.com/css?family=Cairo&display=swap');
 /*===============General Style ===============*/
-
+*{
+	font-family: 'Cairo', sans-serif;
+}
 body, html{
 	font-size:14px;
 	line-height:22px;
-	font-family: 'Helvetica';
+	font-family: 'Cairo', sans-serif;
 	color: #333333;
 	font-size: 14px;
 	direction: rtl;
@@ -615,7 +617,7 @@ p.cart-see-more::after {
 /*--Model Box Start--*/
 
 .modal-content{
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 }
 
 .modal-header{
@@ -776,7 +778,7 @@ p.cart-see-more::after {
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .new-arrival h2 span{
@@ -830,7 +832,7 @@ p.cart-see-more::after {
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 	margin-top: 0;
 	color: #fff;
 }
@@ -864,7 +866,7 @@ p.cart-see-more::after {
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .best-sellers h2 span{
@@ -948,7 +950,7 @@ p.cart-see-more::after {
 	-moz-transform: translate(50%, -50%);
 	z-index: 100;
 	opacity: 0;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-weight: bold;
 	text-align: center;
 }
@@ -961,7 +963,7 @@ p.cart-see-more::after {
 	font-size: 28px;
 	color: #e01a22;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .best-sellers .sellerbox p{
@@ -1026,7 +1028,7 @@ p.cart-see-more::after {
     font-size: 28px;
     color: #e01a22;
     font-weight: 100;
-    font-family: 'Helvetica Neue LT Std';
+    /* font-family: 'Helvetica Neue LT Std'; */
     margin-top: 5px;
 }
 
@@ -1082,7 +1084,7 @@ p.cart-see-more::after {
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .special-offr h2 span{
@@ -1136,7 +1138,7 @@ p.cart-see-more::after {
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 	margin-top: 0;
 	color: #fff;
 }
@@ -1172,7 +1174,7 @@ p.cart-see-more::after {
 	margin-top: 0;
 	text-transform: uppercase;
 	color: #e01b22;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-weight: normal;
 }
 
@@ -1181,7 +1183,7 @@ p.cart-see-more::after {
 	margin-top: 0;
 	text-transform: uppercase;
 	color: #231f20;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-weight: normal;
 	margin-bottom: 0;
 }
@@ -1195,7 +1197,7 @@ p.cart-see-more::after {
 	font-size: 21px;
 	text-align: center;
 	float: left;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-weight: 400;
 	letter-spacing: 2px;
 	border-radius: 0;
@@ -1221,7 +1223,7 @@ footer h2{
 	margin-bottom: 20px;
 	color: #fff;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 footer h2 span{
@@ -1349,13 +1351,13 @@ footer .copyright{
 	margin-bottom: 15px;
 	font-weight: bold;
   text-transform: uppercase;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .breadcrumb{
 	padding: 0;
 	background: transparent;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-size: 14px;
 	text-transform: uppercase;
 	margin-bottom: 0;
@@ -1663,7 +1665,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 .product-listing .prod-bx{
 	background: #f4f4f4;
 	padding: 5px;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	margin-top: 20px;
 	margin-bottom: 20px;
 	max-width: 350px;
@@ -1804,7 +1806,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 }
 
 .product-details{
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 }
 
 .product-details .single-item {
@@ -1858,7 +1860,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 }
 
 .product-details .data{
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 }
 
 .product-details .data h2{
@@ -1981,7 +1983,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
     font-size: 14px;
     color: #000;
     top: 0px;
-    left: 0px;
+    left: 15px;
     font-size: 14px;
     font-weight: normal;
     text-align: center;
@@ -2154,7 +2156,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 	color: #e01a22;
 	text-align: center;
 	font-weight: 100;
-	font-family: 'Helvetica Neue LT Std';
+	/* font-family: 'Helvetica Neue LT Std'; */
 }
 
 .related-products h2 span{
@@ -2164,7 +2166,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 .related-products .prod-bx{
 	background: #f4f4f4;
 	padding: 5px;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
@@ -2712,7 +2714,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 }
 
 .shopping-cart .data h4{
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	text-transform: uppercase;
 	color: #e11b22;
 	font-size: 18px;
@@ -2727,7 +2729,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 
 .shopping-cart .price{
 	text-transform: uppercase;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-size: 16px;
 	color: #706f6f;
 	line-height: 40px;
@@ -2758,7 +2760,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 
 .summary{
 	background: #efefef;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	padding: 5px;
 	padding-bottom: 30px;
 }
@@ -2922,7 +2924,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 	text-transform: uppercase;
 	font-size: 18px;
 	font-weight: 500;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	color: #ccc;
 }
 
@@ -3037,7 +3039,7 @@ box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
 
 .side-summary{
 	background: #efefef;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	padding: 5px;
 	padding: 20px;
 	padding-top: 0;
@@ -3500,7 +3502,7 @@ a.back-spl{
 
 .contact-us .address .contact span{
 	margin-top: 15px;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 	font-size: 17px;
 	display: block;
 	font-weight: 500;
@@ -3528,7 +3530,7 @@ a.back-spl{
 	height: 50px;
 	line-height: 54px;
 	font-size: 17px;
-	font-family: 'Poppins', sans-serif;
+	/* font-family: 'Poppins', sans-serif; */
 }
 
 .get-touch textarea.form-control{
@@ -3981,7 +3983,7 @@ a.back-spl{
 
 * {
   box-sizing: border-box;
-  font-family: "Arial";
+  /* font-family: "Arial"; */
 }
 .wrapper-dropdown {
     position: relative;
@@ -4048,4 +4050,54 @@ a.back-spl{
 }
 ul.bannerSlider.slick-initialized.slick-slider.slick-dotted , .slider-for , .slider-nav{
     direction: ltr;
+}
+@media (min-width:768px){
+	.smry{
+		float: left;
+	}
+}
+@media(max-width:768px){
+	.quantity .close{
+		position: absolute;
+		left: 15px;
+	} 
+	.rate-big{
+	padding: 5px 15px;
+	}
+	header .top-sec ul li span.main{
+		margin: 0px;
+	}
+
+	button.navbar-toggle {
+		position: absolute;
+		left: 0px;
+		top: -65px;
+	}
+	.navbar{
+		min-height: auto;
+	}
+	.navbrand{
+		width: auto;
+		float: right;
+	}
+	.navigation{
+		height: 0;
+	}
+	.navbar-collapse{
+		width: 100%;
+		background: rgba(255, 255, 255, 0.9);
+		z-index:9;
+		position: absolute;
+		border: 0px solid transparent !important;
+		margin-top: 10px;
+	}
+}
+.rate-big:not(:checked) > input, .rate:not(:checked) > input{
+width: auto;
+}
+.bannerSlider img {
+    width: 100% !important;
+}
+.slick-list{
+	direction: ltr;
 }

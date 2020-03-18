@@ -6,6 +6,33 @@
 
         <div class="container innr-cont-area">
             <div class="row">
+                                <div class="col-sm-12 col-md-3 mt-15 view-orderspage smry">
+                    <div class="summary">
+                        <h3>{{$t('pages.orderSummery')}}</h3>
+                        <div class="data clearfix">
+                            <div class="collapse in listing clearfix" id="summary" aria-expanded="true" style="">
+                                <div class="col-xs-12 list">
+                                    <small>{{$t('pages.totalAmount')}}</small>
+                                    <h4>{{$t('pages.kd')}} {{orderDetails.total}}</h4>
+                                </div>
+                            </div>
+                        </div><!--/.data--->
+                    </div>
+
+                    <div class="summary mt-20">
+                        <h3>{{$t('pages.shippingAddress')}}</h3>
+                        <div class="data clearfix">
+                            <div class="col-xs-12">
+                                {{orderDetails.address}}
+                            </div>
+                            <div class="col-xs-12 mt-20 list">
+                                <small>{{$t('pages.paymentMethod')}}</small>
+                                <h4>{{$t('pages.cash')}}</h4>
+                            </div>
+                        </div><!--/.data--->
+                    </div>
+
+                </div>
                 <div class="col-sm-12 col-md-9 view-orderspage mt-15">
                     <h5><small>{{$t('pages.orderId')}}:</small> # {{orderDetails.order_code}} </h5><h5><small>{{$t('pages.orderDate')}} :</small> {{orderDetails.created_at}}</h5>
 
@@ -56,33 +83,7 @@
                         </table>
                     </div>
                 </div><!--/.col-sm-9-->
-                <div class="col-sm-12 col-md-3 mt-15 view-orderspage">
-                    <div class="summary">
-                        <h3>{{$t('pages.orderSummery')}}</h3>
-                        <div class="data clearfix">
-                            <div class="collapse in listing clearfix" id="summary" aria-expanded="true" style="">
-                                <div class="col-xs-12 list">
-                                    <small>{{$t('pages.totalAmount')}}</small>
-                                    <h4>{{$t('pages.kd')}} {{orderDetails.total}}</h4>
-                                </div>
-                            </div>
-                        </div><!--/.data--->
-                    </div>
 
-                    <div class="summary mt-20">
-                        <h3>{{$t('pages.shippingAddress')}}</h3>
-                        <div class="data clearfix">
-                            <div class="col-xs-12">
-                                {{orderDetails.address}}
-                            </div>
-                            <div class="col-xs-12 mt-20 list">
-                                <small>{{$t('pages.paymentMethod')}}</small>
-                                <h4>{{$t('pages.cash')}}</h4>
-                            </div>
-                        </div><!--/.data--->
-                    </div>
-
-                </div>
             </div>
         </div><!--/.innr-cont-area-->
     </div>
