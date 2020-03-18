@@ -159,7 +159,7 @@
                             <ul class="color-load">
                                     <li class="row quantity" v-for="(colorInput, index) in colorInputsCount">
                                         <a v-if="index != 0" class="close" @click.prevent="removeColorInput(index)">X</a>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 col-xs-6">
 <!--                                        <select class="select-colors-product1 color-select form-control"-->
 <!--                                                name="colorSelectedByIds[]"-->
 <!--                                                v-model="colorInputs[index]"-->
@@ -181,7 +181,7 @@
                                             >  </option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 col-xs-6">
                                         <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]" @keypress="isNumber($event)" required>
                                     </div>
                                 </li><!--/li-->
