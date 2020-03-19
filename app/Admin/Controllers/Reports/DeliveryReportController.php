@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers\Reports;
 
 use App\Models\Area;
-use App\models\Order;
+use App\Models\Order;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
