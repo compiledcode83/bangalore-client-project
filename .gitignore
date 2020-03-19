@@ -1,5 +1,5 @@
 /node_modules
-!/node_modules/vue-range-component*
+!/node_modules/vue-range-component/*
 /public/hot
 /public/storage
 /storage/*.key
