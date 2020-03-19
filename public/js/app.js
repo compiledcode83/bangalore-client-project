@@ -43434,33 +43434,33 @@ var Slider = {
       this.focusFlag = false;
     },
     handleKeydown: function handleKeydown(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (!this.useKeyboard) {
-        return false;
-      }
-
-      var keyCode = e.which || e.keyCode;
-
-      switch (keyCode) {
-        case 37:
-        case 40:
-          this.keydownFlag = true;
-          this.flag = true;
-          this.changeFocusSlider(this.actionsKeyboard[0]);
-          break;
-
-        case 38:
-        case 39:
-          this.keydownFlag = true;
-          this.flag = true;
-          this.changeFocusSlider(this.actionsKeyboard[1]);
-          break;
-
-        default:
-          break;
-      }
+      // e.preventDefault();
+      // e.stopPropagation();
+      //
+      // if (!this.useKeyboard) {
+      //   return false;
+      // }
+      //
+      // var keyCode = e.which || e.keyCode;
+      //
+      // switch (keyCode) {
+      //   case 37:
+      //   case 40:
+      //     this.keydownFlag = true;
+      //     this.flag = true;
+      //     this.changeFocusSlider(this.actionsKeyboard[0]);
+      //     break;
+      //
+      //   case 38:
+      //   case 39:
+      //     this.keydownFlag = true;
+      //     this.flag = true;
+      //     this.changeFocusSlider(this.actionsKeyboard[1]);
+      //     break;
+      //
+      //   default:
+      //     break;
+      // }
     },
     handleKeyup: function handleKeyup() {
       if (this.keydownFlag) {
@@ -64412,8 +64412,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /websites/itc/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /websites/itc/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
