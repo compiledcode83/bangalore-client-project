@@ -17,6 +17,7 @@ import AccountTrackOrders from "./components/account/TrackOrders";
 import AccountTrackOrderStatus from "./components/account/TrackOrderStatus";
 import AccountWishList from "./components/account/WishList";
 import ProductSearch from "./components/ProductSearch";
+import ProductDetailsCheck from "./components/ProductDetailsCheck";
 import NotFound from './components/partials/NotFound';
 
 import About from './components/pages/About';
@@ -87,6 +88,11 @@ export default {
             component: ProductSearch,
             name: 'searchProducts',
             props: true
+        },
+        {
+            path: '/products-check/:slug',
+            name: 'products-check',
+            component: ProductDetailsCheck
         },
         {
             path: '/products/:slug',

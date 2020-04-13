@@ -61,7 +61,7 @@
         }
     };
     var html_element_orders = document.getElementById('pieOrders').getContext('2d');
-    new Chart(html_element_orders, configOrders);
+    var totalOrdersChart = new Chart(html_element_orders, configOrders);
 
         $('#monthOrder').on('change', function(){
             var monthValue = $(this).val();
@@ -73,45 +73,11 @@
                 success: function(result) {
                     $('#individualsOrder').val(result.individualsOrder);
                     $('#corporatesOrder').val(result.corporatesOrder);
-                    var html_element_orders = document.getElementById('pieOrders').getContext('2d');
 
-                    var configOrders = {
-                        type: 'pie',
-                        data: {
-                            datasets: [{
-                                data: [
-                                    result.individualsOrder ,
-                                    result.corporatesOrder
-                                ],
-                                backgroundColor: [
-                                    window.chartColors.yellow,
-                                    window.chartColors.green
-                                ],
-                                label: 'Dataset 1'
-                            }],
-                            labels: [
-                                'Individuals',
-                                'Corporates'
+                    totalOrdersChart.data.datasets[0].data[0] = result.individualsOrder;
+                    totalOrdersChart.data.datasets[0].data[1] = result.corporatesOrder;
 
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: 'By Type'
-                            },
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true
-                            }
-                        }
-                    };
-
-                    new Chart(html_element_orders, configOrders);
+                    totalOrdersChart.update();
                 }
             });
         });

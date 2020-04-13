@@ -31,6 +31,7 @@ class SocialMediaController extends AdminController
         $grid->column('link', __('Link'));
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableBatchActions();
         $grid->disableExport();
         return $grid;
     }

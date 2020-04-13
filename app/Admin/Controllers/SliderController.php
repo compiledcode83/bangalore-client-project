@@ -31,7 +31,7 @@ class SliderController extends AdminController
         $grid->disableExport();
 
         $grid->column('id', __('Id'));
-        $grid->column('title', __('Title'));
+        $grid->column('title_en', __('Title'));
         $grid->column('order', __('Order'));
         $grid->column('image', __('Image'))->image('', '200');
         $grid->column( 'is_active', __( 'Status' ) )
@@ -42,6 +42,8 @@ class SliderController extends AdminController
             ] )->sortable();
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -77,11 +79,13 @@ class SliderController extends AdminController
     {
         $form = new Form(new Slider);
 
-        $form->text('order', __('Order'));
-        $form->text('title', __('Title'));
-        $form->text('sub_title', __('Sub title'));
-        $form->image('image', __('Image'));
-        $form->url('link', __('Link'));
+        $form->text('order', __('Order'))->rules( 'required' );
+        $form->text('title_en', __('English Title'));
+        $form->text('sub_title_en', __('English Sub title'));
+        $form->text('title_ar', __('Arabic Title'));
+        $form->text('sub_title_ar', __('Arabic Sub title'));
+        $form->image('image', __('Image'))->rules( 'required' );
+        $form->url('link', __('Link'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

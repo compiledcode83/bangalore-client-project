@@ -28,9 +28,9 @@
                 }
                 if (this.$store.getters['authModule/isAuthenticated']) {
                     axios.post(
-                        '/api/v1/account/newsletter',
+                        '/api/v1/email/newsletter',
                         {
-                            'newsletter': 1,
+                            'newsletter': this.email,
                             headers: {
                                 "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
                             }
@@ -44,6 +44,12 @@
                             });
 
                             this.email = '';
+                        }else{
+                            this.$swal({
+                                title: 'Error!',
+                                text: "Please add your  email!",
+                                icon: 'error'
+                            });
                         }
                     });
                 }else{

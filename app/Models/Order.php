@@ -62,7 +62,7 @@ class Order extends Model
      * @param $user
      * @return
      */
-    public function store($user)
+    public function store($user, $data)
     {
         $cart = $user->cart;
         $order = new Order( [
@@ -70,6 +70,7 @@ class Order extends Model
             'final_status' => 'pending',
             'address'    => 'test address',
             'total' => $user->cart->total,
+            'payment_method' => $data['paymentMethod']
         ] );
 
         $user->orders()->save($order);

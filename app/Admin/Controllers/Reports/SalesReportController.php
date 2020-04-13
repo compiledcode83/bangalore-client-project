@@ -77,23 +77,17 @@ class SalesReportController extends AdminController
             }
             return 'Corporate';
         });
-//        $grid->user()->type('Account Name')->display(function ($ttype) {
-//            if($ttype == '1')
-//            {
-//                return $this->user->first_name . ' ' . $this->user->last_name;
-//            }
-//            return $this->user->company;
-//        });
 
         $grid->column('order_code', __('Order code'));
         $grid->column('final_status', __('Status'));
         $grid->column('address', __('Address'));
         $grid->column('total', __('Total'));
-        $grid->column('created_at', __('Created at'));
+        $grid->column('total', __('Total'));
+        $grid->column('payment_method', __('Payment Method'));
 
         $grid->disableActions();
-        $grid->disableBatchActions();
         $grid->disableCreateButton();
+        $grid->disableBatchActions();
         $grid->disableExport();
         return $grid;
     }

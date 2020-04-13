@@ -25,6 +25,9 @@
 <!-- rating style -->
 <link rel="stylesheet" href="/css/rateit.css">
 
+<!-- custom input css arabic  -->
+{{--<link rel="stylesheet" href="/css/custom-input-ar.css">--}}
+
 <!-- custom style -->
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/custom-dev-style.css"/>

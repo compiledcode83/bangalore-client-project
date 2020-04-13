@@ -1,6 +1,6 @@
 <template>
     <div class="innr-banner fullwidth">
-        <img src="/images/wishlist-banner.jpg">
+        <img :src="'/uploads/'+settings.account_banner">
         <div class="heading">
             <h2> {{bannerTitle}} </h2>
             <ul class="breadcrumb">
@@ -17,9 +17,16 @@
     export default {
         name: 'myAccountBanner',
         props: ['bannerTitle'],
-        mounted() {
+        data() {
+            return {
+                settings: {}
+            }
         },
-        methods: {
-        }
+        mounted() {
+            axios.get('/api/v1/settings/')
+                .then((response) =>{
+                    this.settings = response.data;
+                });
+        },
     }
 </script>

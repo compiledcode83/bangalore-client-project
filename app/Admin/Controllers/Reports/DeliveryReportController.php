@@ -83,49 +83,10 @@ class DeliveryReportController extends AdminController
         $grid->column('payment_method', __('Payment method'));
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableActions();
+        $grid->disableBatchActions();
+        $grid->disableCreateButton();
+        $grid->disableExport();
         return $grid;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(Order::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
-        $show->field('order_code', __('Order code'));
-        $show->field('final_status', __('Final status'));
-        $show->field('address', __('Address'));
-        $show->field('total', __('Total'));
-        $show->field('payment_method', __('Payment method'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
-
-        return $show;
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new Order);
-
-        $form->number('user_id', __('User id'));
-        $form->text('order_code', __('Order code'));
-        $form->text('final_status', __('Final status'));
-        $form->text('address', __('Address'));
-        $form->decimal('total', __('Total'));
-        $form->text('payment_method', __('Payment method'));
-
-        return $form;
     }
 }

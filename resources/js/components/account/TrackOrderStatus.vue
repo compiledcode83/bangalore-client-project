@@ -15,7 +15,7 @@
                         <thead>
                         <tr v-if="order.order_statuses.length > 0">
                             <th scope="col">{{$t('pages.status')}}</th>
-                            <th scope="col">$t('pages.date')</th>
+                            <th scope="col">{{$t('pages.date')}}</th>
                         </tr>
                         <tr v-else>
                             <th scope="col"> {{$t('pages.orderHasNoRecords')}} </th>

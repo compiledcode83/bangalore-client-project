@@ -6,6 +6,7 @@ use App\Models\Category;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
 class CategoryController extends AdminController
@@ -16,6 +17,33 @@ class CategoryController extends AdminController
      * @var string
      */
     protected $title = 'Categories';
+
+    /**
+     * Create interface.
+     *
+     * @param Content $content
+     * @return Content
+     */
+    public function create(Content $content)
+    {
+        return $content
+            ->header($this->title)
+            ->body($this->form());
+    }
+
+    /**
+     * Edit interface.
+     *
+     * @param mixed   $id
+     * @param Content $content
+     * @return Content
+     */
+    public function edit($id, Content $content)
+    {
+        return $content
+            ->header($this->title)
+            ->body($this->editForm($id)->edit($id));
+    }
 
     /**
      * Make a grid builder.
@@ -63,6 +91,8 @@ class CategoryController extends AdminController
                 1 => 'success',
             ])->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -123,13 +153,39 @@ class CategoryController extends AdminController
         $rootCategories[0] = 'Root --Top Level';
 
         $form->select('parent_id', __('Select Parent'))->options($rootCategories);
-        $form->text('name_en', __('Name en'))->required();
-        $form->text('name_ar', __('Name ar'))->required();
+        $form->text('name_en', __('Name en'))->rules( 'required' );
+        $form->text('name_ar', __('Name ar'))->rules( 'required' );
         $form->textarea('description_en', __('Description en'));
         $form->textarea('description_ar', __('Description ar'));
-//        $form->text('slug', __('Slug'));
-        $form->image('banner', __('Banner'))->required();
-        $form->image('image', __('Image'))->required();
+        $form->image('banner', __('Banner'))->rules( 'required' );
+        $form->image('image', __('Image'))->rules( 'required' );
+        $form->switch('is_active', __('Is active'))->default(1);
+        $form->switch('in_homepage', __('In HomePage Menu Header'))->default(0);
+
+        return $form;
+    }
+
+    /**
+     * Make a form builder.
+     * @param $id
+     * @return Form
+     */
+    protected function editForm($id)
+    {
+        $form = new Form(new Category);
+
+
+        $rootCategories = Category::rootParent()->pluck('name_en', 'id')->toArray();
+        unset($rootCategories[$id]);
+
+        $rootCategories[0] = 'Root --Top Level';
+        $form->select('parent_id', __('Select Parent'))->options($rootCategories);
+        $form->text('name_en', __('Name en'))->rules( 'required' );
+        $form->text('name_ar', __('Name ar'))->rules( 'required' );
+        $form->textarea('description_en', __('Description en'));
+        $form->textarea('description_ar', __('Description ar'));
+        $form->image('banner', __('Banner'))->rules( 'required' );
+        $form->image('image', __('Image'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
         $form->switch('in_homepage', __('In HomePage Menu Header'))->default(0);
 

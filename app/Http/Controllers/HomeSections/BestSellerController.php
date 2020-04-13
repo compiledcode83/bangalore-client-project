@@ -16,6 +16,7 @@ class BestSellerController extends Controller
             ->groupBy('products.id')
             ->orderBy('total','desc')
             ->take(12)
+            ->where('products.is_active', '=', '1')
             ->get();
 
         return $products;
@@ -30,6 +31,7 @@ class BestSellerController extends Controller
             ->groupBy('products.id')
             ->orderBy('total','desc')
             ->take(15)
+            ->where('products.is_active', '=', '1')
             ->get();
 
         return $products;

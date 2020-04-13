@@ -55,14 +55,15 @@ class SettingController extends AdminController
             $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
             $form->text('header_phone', __('Header Phone'));
             })->tab('Banners', function ($form) {
-                $form->image('contact_us_banner', __('Contact us banner'));
-                $form->image('faq_banner', __('Faq banner'));
-                $form->image('sitemap_banner', __('Sitemap banner'));
-                $form->image('media_banner', __('Media banner'));
-                $form->image('services_banner', __('Services banner'));
-                $form->image('special_offers_banner', __('Special offers banner'));
+                $form->image('contact_us_banner', __('Contact us banner'))->rules( 'required' )->required();
+                $form->image('faq_banner', __('Faq banner'))->rules( 'required' )->required();
+                $form->image('sitemap_banner', __('Sitemap banner'))->rules( 'required' )->required();
+                $form->image('media_banner', __('Media banner'))->required();
+                $form->image('services_banner', __('Services banner'))->rules( 'required' )->required();
+                $form->image('special_offers_banner', __('Special offers banner'))->rules( 'required' )->required();
+                $form->image('account_banner', __('User Account Banner'))->rules( 'required' )->required();
             })->tab('Contact', function ($form) {
-                $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' )->required();
                 $form->email('email', __('Contact Email'));
                 $form->text('tel', __('Contact Phone'))->icon('fa-phone');
                 $form->text('fax', __('Contact Fax'))->icon('fa-fax');

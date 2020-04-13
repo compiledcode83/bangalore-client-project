@@ -43,6 +43,8 @@ class PendingCorporateController extends AdminController
             ])->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 

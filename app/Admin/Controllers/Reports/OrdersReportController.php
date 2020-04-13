@@ -80,6 +80,10 @@ class OrdersReportController extends AdminController
         $grid->column('payment_method', __('Payment method'));
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableActions();
+        $grid->disableBatchActions();
+        $grid->disableCreateButton();
+        $grid->disableExport();
         return $grid;
     }
 }

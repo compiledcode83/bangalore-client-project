@@ -18,21 +18,25 @@
                                 <h5>{{$t('pages.accountDetails')}}</h5>
                                 <router-link :to="{name: 'account.info'}" class="edit">{{$t('pages.edit')}}</router-link>
                                 <ul class="row">
-                                    <li class="col-lg-6">
+                                    <li class="col-lg-6" v-if="accountType == '1'">
                                         <small>{{$t('pages.firstName')}}</small>
-                                        MOHAMMED AL BAWI
+                                        {{account.first_name}}
                                     </li>
-                                    <li class="col-lg-6">
+                                    <li class="col-lg-6" v-if="accountType == '1'">
                                         <small>{{$t('pages.lastName')}}</small>
-                                        AL BAWI
+                                        {{account.last_name}}
+                                    </li>
+                                    <li class="col-lg-6" v-if="accountType == '2'">
+                                        <small>{{$t('pages.company')}}</small>
+                                        {{account.company}}
                                     </li>
                                     <li class="col-lg-6">
                                         <small>{{$t('pages.emailId')}}</small>
-                                        mohammed@gmail.com
+                                        {{account.email}}
                                     </li>
                                     <li class="col-lg-6">
                                         <small>{{$t('pages.phone')}}</small>
-                                        00965 55676767
+                                        {{account.phone}}
                                     </li>
                                 </ul>
                             </div>
@@ -41,7 +45,8 @@
                             <div class="box">
                                 <h5>{{$t('pages.newsletter')}}</h5>
                                 <router-link :to="{name: 'account.newsletter'}" class="edit">{{$t('pages.edit')}}</router-link>
-                                <span>{{$t('pages.notSubscribed')}}</span>
+                                <span v-if="account.is_subscribed == '1'"> {{$t('pages.subscribed')}} </span>
+                                <span v-else>{{$t('pages.notSubscribed')}}</span>
                             </div>
                         </div><!--/.col-sm-6-->
 
@@ -51,32 +56,54 @@
 
                     <h4>{{$t('pages.addressBook')}}</h4>
                     <div class="row">
-
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-if="defaultBillingAddresses">
                             <div class="box">
-                                <h5>{{$t('pages.useAsDefaultBilling')}} </h5>
-                                <router-link :to="{name: 'account.addresses'}" class="edit">{{$t('pages.edit')}}</router-link>
-                                <span>
-                                  AL SALEM STREET<br>
-                                  BLOCK #12<br>
-                                  BUILDING NO. 23<br>
-                                  SALMIYA
+                                <h5> {{$t('pages.defaultBillingAddress')}} </h5>
+                                <span v-if="accountType == '1'">
+                                  {{$t('pages.governotate')}}: {{defaultBillingAddresses.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{defaultBillingAddresses.areaName}}<br>
+                                  {{$t('pages.blockNumber')}}: {{defaultBillingAddresses.block}}<br>
+                                  {{$t('pages.street')}}: {{defaultBillingAddresses.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{defaultBillingAddresses.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{defaultBillingAddresses.floor}}<br>
+                                  {{$t('pages.houseNumber')}}: {{defaultBillingAddresses.house_number}}<br>
+                                </span>
+                                <span v-if="accountType == '2'">
+                                  {{$t('pages.governotate')}}: {{defaultBillingAddresses.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{defaultBillingAddresses.areaName}}<br>
+                                  {{$t('pages.blockNumber')}}: {{defaultBillingAddresses.block}}<br>
+                                  {{$t('pages.street')}}: {{defaultBillingAddresses.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{defaultBillingAddresses.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{defaultBillingAddresses.floor}}<br>
+                                  {{$t('pages.officeAddress')}}: {{defaultBillingAddresses.office_address}}<br>
+                                  {{$t('pages.officeNumber')}}: {{defaultBillingAddresses.office_number}}<br>
                                 </span>
                             </div>
                         </div><!--/.col-sm-6-->
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-if="defaultShippingAddresses">
                             <div class="box">
-                                <h5>{{$t('pages.useAsDefaultShipping')}}</h5>
-                                <router-link :to="{name: 'account.addresses'}" class="edit">{{$t('pages.edit')}}</router-link>
-                                <span>
-                                  AL SALEM STREET<br>
-                                  BLOCK #12<br>
-                                  BUILDING NO. 23<br>
-                                  SALMIYA
+                                <h5> {{$t('pages.defaultShippingAddress')}} </h5>
+                                <span v-if="accountType == '1'">
+                                  {{$t('pages.governotate')}}: {{defaultShippingAddresses.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{defaultShippingAddresses.areaName}}<br>
+                                  {{$t('pages.blockNumber')}}: {{defaultShippingAddresses.block}}<br>
+                                  {{$t('pages.street')}}: {{defaultShippingAddresses.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{defaultShippingAddresses.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{defaultShippingAddresses.floor}}<br>
+                                  {{$t('pages.houseNumber')}}: {{defaultShippingAddresses.house_number}}<br>
+                                </span>
+                                <span v-if="accountType == '2'">
+                                  {{$t('pages.governotate')}}: {{defaultShippingAddresses.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{defaultShippingAddresses.areaName}}<br>
+                                  {{$t('pages.blockNumber')}}: {{defaultShippingAddresses.block}}<br>
+                                  {{$t('pages.street')}}: {{defaultShippingAddresses.street}}<br>
+                                  {{$t('pages.buildingNumber')}}: {{defaultShippingAddresses.building}}<br>
+                                  {{$t('pages.floorNumber')}}: {{defaultShippingAddresses.floor}}<br>
+                                  {{$t('pages.officeAddress')}}: {{defaultShippingAddresses.office_address}}<br>
+                                  {{$t('pages.officeNumber')}}: {{defaultShippingAddresses.office_number}}<br>
                                 </span>
                             </div>
                         </div><!--/.col-sm-6-->
-
                     </div><!--/.row-->
                     <router-link :to="{name: 'account.addresses'}" class="btn btn-default rounded-0">{{$t('pages.addNewAddress')}}</router-link>
 
@@ -93,9 +120,40 @@
         components: {myAccountSidebar, myAccountBanner},
         data(){
             return {
+                defaultBillingAddresses: {},
+                defaultShippingAddresses: {},
+                account: {},
+                accountType: null
             }
         },
         mounted() {
+            if (this.$store.getters['authModule/isAuthenticated']) {
+                axios.get(
+                    '/api/v1/account/info',
+                    {headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.account = response.data;
+                    this.accountType = response.data.type;
+                });
+
+                axios.get(
+                    '/api/v1/account/addresses',
+                    {
+                        headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }
+                ).then((response) => {
+                    this.defaultShippingAddresses = response.data.defaultShipping;
+                    this.defaultBillingAddresses = response.data.defaultBilling;
+                    console.log(response);
+                });
+            }else{
+                console.log('No authorization');
+            }
         },
         methods: {
         }

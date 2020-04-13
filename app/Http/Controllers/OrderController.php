@@ -16,11 +16,12 @@ class OrderController extends Controller {
         $this->orderModel = $orderModel;
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $user = Auth::user();
+        $attributes = $request->only('shippingAddress', 'billingShipping', 'paymentMethod');
 
-        $order = $this->orderModel->store( $user );
+        $order = $this->orderModel->store( $user, $attributes );
 
         if ( $order )
         {

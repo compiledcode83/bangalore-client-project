@@ -44,6 +44,8 @@ class ColorController extends AdminController
             ] )->sortable();
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -79,10 +81,10 @@ class ColorController extends AdminController
 
         $form->hidden( 'attribute_id', 'attribute_id' )->default( '1' );
 
-        $form->text('value_en', __('English Name'));
-        $form->text('value_ar', __('Arabic Name'));
+        $form->text('value_en', __('English Name'))->rules( 'required' );
+        $form->text('value_ar', __('Arabic Name'))->rules( 'required' );
 
-        $form->color('other_value', __('Color Code'));
+        $form->color('other_value', __('Color Code'))->rules( 'required' );
 
         $form->switch('is_active', __('Is active'))->default(1);
 

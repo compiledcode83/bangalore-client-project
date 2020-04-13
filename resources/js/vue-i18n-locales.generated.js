@@ -103,8 +103,15 @@ export default {
             "next": "التالي",
             "quick_create": "إضافة سريعة"
         },
-        "login": {"user_id": "البريد الالكتروني"},
+        "login": {
+            "user_id": "البريد الالكتروني",
+            "emailAddress": "البريد الإلكتروني"
+
+        },
         "pages": {
+            "subscribed": "مشترك",
+            "delete": "حذف",
+            "media": "وسائل الإعلام",
             "price_based_on_request": "السعر بناء على الطلب",
             "starting_from": "بداية من ",
             "kd": "د.ك",
@@ -127,7 +134,7 @@ export default {
             "defaultShippingAddress":"عنوان الشحن الافتراضي",
             "edit":"تعديل",
             "addNewAddress":"إضافة عنوان جديد",
-            "selectGovernotate":"اختر محافظة",
+            "selectGovernorate":"اختر محافظة",
             "selectArea":"اختر المنطقة",
             "blockNumber":"منع#",
             "street":"شارع",
@@ -261,7 +268,7 @@ export default {
             "receipt":"إيصال",
             "product":"المنتج",
             "forgotPassword_enterYourEmail":"أدخل بريدك الالكتروني",
-            "sendPasswordResetLink":"إرسال رابط إعادة تعيين كلمة السر",
+            "sendPasswordResetLink":"أرسل الرابط",
             "newArrival_new":"جديد",
             "newArrival_arrivals":"الوصول",
             "newArrival_description":"newArrival_description",
@@ -563,9 +570,13 @@ export default {
             "quick_create": "Quick create"
         },
         "login":{
-            "user_id": "User ID"
+            "user_id": "User ID",
+            "emailAddress": "Email Address"
         },
         "pages": {
+            "subscribed": "subscribed",
+            "delete": "Delete",
+            "media": "Media",
             "account":"Account",
             "price_based_on_request": "Price based on request",
             "starting_from": "Starting from",
@@ -589,7 +600,7 @@ export default {
             "defaultShippingAddress":"Default Shipping Address",
             "edit":"edit",
             "addNewAddress":"Add New Address",
-            "selectGovernotate"	:"Select Governotate",
+            "selectGovernorate"	:"Select Governorate",
             "selectArea":"Select Area",
             "blockNumber":"Block#",
             "street":"Street",
@@ -721,7 +732,7 @@ export default {
             "receipt":"Receipt",
             "product":"product",
             "forgotPassword_enterYourEmail":"Enter Your Email",
-            "sendPasswordResetLink":"Send Password Reset Link",
+            "sendPasswordResetLink":"Send Link",
             "newArrival_new":"New",
             "newArrival_arrivals":"Arrivals",
             "newArrival_description":"newArrival_description",

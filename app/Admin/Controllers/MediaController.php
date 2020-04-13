@@ -29,8 +29,6 @@ class MediaController extends AdminController
         $grid->model()->orderBy( 'id', 'desc' );
         $grid->model()->where( 'type', '=', MediaService::TYPE_MEDIA );
 
-        $grid->disableExport();
-
         $grid->column('id', __('Id'));
         $grid->column('title_en', __('Title'));
         $grid->column('image', __('Image'))->image( '', 200, 100 );;
@@ -42,6 +40,8 @@ class MediaController extends AdminController
             ] )->sortable();
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -81,15 +81,15 @@ class MediaController extends AdminController
 
         $form->hidden( 'type', 'Type' )->default( MediaService::TYPE_MEDIA );
 
-        $form->text('title_en', __('Title en'));
-        $form->text('title_ar', __('Title ar'));
+        $form->text('title_en', __('Title en'))->rules( 'required' );
+        $form->text('title_ar', __('Title ar'))->rules( 'required' );
 
-        $form->ckeditor('short_description_en', __('Short English Description'));
-        $form->ckeditor('short_description_ar', __('Short Arabic Description'));
-        $form->ckeditor('full_description_en', __('Full English Description'));
-        $form->ckeditor('full_description_ar', __('Full Arabic Description'));
+        $form->ckeditor('short_description_en', __('Short English Description'))->rules( 'required' );
+        $form->ckeditor('short_description_ar', __('Short Arabic Description'))->rules( 'required' );
+        $form->ckeditor('full_description_en', __('Full English Description'))->rules( 'required' );
+        $form->ckeditor('full_description_ar', __('Full Arabic Description'))->rules( 'required' );
 
-        $form->image('image', __('Image'));
+        $form->image('image', __('Image'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

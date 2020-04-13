@@ -262,7 +262,7 @@
             },
             placeOrder(){
                 this.hasPlacedOrder = true;
-                CartService.placeOrder()
+                CartService.placeOrder({'shippingAddress': this.shippingAddress, 'billingShipping': this.billingShipping, 'paymentMethod': this.paymentMethod})
                     .then((response) => {
                         this.placeOrderResponse = response.data;
 

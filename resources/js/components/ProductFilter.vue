@@ -285,7 +285,7 @@
                             min: this.filterPrice.min,
                             max: this.filterPrice.max,
                             discount: this.filterBoxes
-                        }});
+                        }}).catch(err => {});
                 }
             }
         }

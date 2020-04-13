@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAccountInfoRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
@@ -101,7 +102,7 @@ class UserController extends Controller {
         return $account;
     }
 
-    public function updateAccountInfo(Request $request)
+    public function updateAccountInfo(UpdateAccountInfoRequest $request)
     {
         $user = Auth::user();
         $license = $request->only('file');
@@ -164,6 +165,27 @@ class UserController extends Controller {
                 'user_id' => $user->id,
                 'product_id' => $attribute['productId']
             ]);
+        }
+    }
+
+    public function storeAccountWishlistFromAttribute(Request $request)
+    {
+        $user = Auth::user();
+        $attribute = $request->only('attributeId');
+
+        $getAttribute = ProductAttributeValue::find($attribute['attributeId']);
+        if($getAttribute)
+        {
+            $check = WishList::where('user_id', $user->id)
+                ->where('product_id', $getAttribute->product->id)
+                ->first();
+            if(!$check)
+            {
+                WishList::create([
+                    'user_id' => $user->id,
+                    'product_id' => $getAttribute->product->id
+                ]);
+            }
         }
     }
 

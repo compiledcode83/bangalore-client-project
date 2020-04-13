@@ -64,7 +64,7 @@
                                     </div><!--/.col-md-4-->
                                     <div class="col-md-12 mt-30">
                                         <div class="pull-left">
-                                            <a href="#" class="move">{{$t('pages.moveToWishList')}}</a>
+                                            <a href="#" class="move" @click.prevent="addToWishList(cartItem.product_attribute_id)">{{$t('pages.moveToWishList')}}</a>
                                         </div>
                                         <div class="pull-right">
                                             <a @click.prevent="activateCartQtyInput(cartItem.product_attribute_id)" class="icons" style="cursor: pointer;">
@@ -142,6 +142,26 @@
             $('.cart_box').hide(600);
         },
         methods: {
+            addToWishList(productId){
+                if (this.$store.getters['authModule/isAuthenticated']) {
+                    axios.post(
+                        '/api/v1/account/wishlist/attribute', {'attributeId': productId},
+                        {headers: {
+                                "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        }
+                    ).then((response) => {
+                        this.$swal({
+                            title: 'Success!',
+                            text: "item Added to wishList successfully!",
+                            icon: 'success',
+                        });
+                    });
+                }else{
+                    console.log('No authorization');
+                }
+
+            },
             activateCartQtyInput(itemId){
                 let item = this.cart.items.find(cart => cart.product_attribute_id == itemId);
                 //change status => input status

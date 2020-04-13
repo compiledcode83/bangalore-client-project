@@ -30,7 +30,14 @@ export const mutations = {
         state.cart.items.splice(state.cart.items.indexOf(item), 1);
     },
     SET_CART(state, cart){
-        state.cart = cart;
+
+        cart.items.forEach(function(item){
+            state.cart.items.push(item);
+        });
+
+        state.cart.subtotal = cart.subtotal;
+        state.cart.discount = cart.discount;
+        state.cart.total = cart.total;
     },
     UPDATE_CART_SUBTOTAL(state){
         state.cart.subtotal = this.getters.getCartSubTotal;
@@ -39,10 +46,14 @@ export const mutations = {
         state.cart.total = state.cart.subtotal - state.cart.discount;
     },
     CLEAR_CART(state){
+
+        state.cart.items.forEach(function(item){
+            state.cart.items.splice(state.cart.items.indexOf(item), 1);
+        });
+        
         state.cart.total = 0;
         state.cart.subtotal = 0;
         state.cart.discount = 0;
-        state.cart.items = [];
     }
 };
 
@@ -116,14 +127,17 @@ export const actions = {
             console.log('item already deleted');
         }
     },
-    fetchCart({ commit }, { id }) {
-        CartService.getUserCart(id)
+    fetchCart({ commit } ) {
+        CartService.getUserCart()
             .then(response => {
                 commit('SET_CART', response.data)
             })
             .catch(error => {
                 console.log('There was an error:', error.response)
             })
+    },
+    setCart({ commit }, cart ) {
+        commit('SET_CART', cart);
     },
     clearCart({ commit }) {
         commit('CLEAR_CART');

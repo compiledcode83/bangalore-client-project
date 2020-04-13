@@ -246,9 +246,11 @@
                 this.registerCorporate({ ...this.corporateData })
                     .then(() => {
                         this.hideModal();
-                        if(this.$router.currentRoute.name !== 'home'){
-                            this.$router.push({name: 'home'});
-                        }
+                        this.$swal({
+                            icon: 'success',
+                            title: 'You registered successfully!',
+                            text: 'Thank for registration in ITC Promotions website. Your request is under processing. We will inform you by email once it is approved',
+                        });
                     })
                     .catch((errors) => {
                         // Handle Errors

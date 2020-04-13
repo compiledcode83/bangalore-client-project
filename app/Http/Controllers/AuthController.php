@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationWelcome;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -46,14 +49,17 @@ class AuthController extends Controller {
         }
 
         $user = new User( [
-            'first_name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'phone'      => $request->phone,
-            'email'      => $request->email,
-            'password'   => bcrypt( $request->password )
+            'first_name'    => $request->first_name,
+            'last_name'     => $request->last_name,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
+            'is_subscribed' => $request->newsLetter ? 1 : 0,
+            'password'      => bcrypt( $request->password )
         ] );
 
         $user->save();
+
+        Mail::to($request->email)->queue(new RegistrationWelcome());
 
         return response()->json( [
             'message' => 'Successfully created user!'
@@ -69,13 +75,13 @@ class AuthController extends Controller {
     public function registerCorporate( Request $request )
     {
         $validator = Validator::make( $request->all(), [
-            'company'   => 'required|string',
-            'email'     => 'required|string|email|unique:users',
-            'password'  => 'required|string|confirmed',
-            'contact'   => 'required|string',
-            'job_title' => 'required|string',
+            'company'         => 'required|string',
+            'email'           => 'required|string|email|unique:users',
+            'password'        => 'required|string|confirmed',
+            'contact'         => 'required|string',
+            'job_title'       => 'required|string',
             'company_license' => 'required|mimetypes:application/pdf|max:1000',
-            'phone'     => 'required|string',
+            'phone'           => 'required|string',
         ] );
 
         if ( $validator->fails() )
@@ -86,29 +92,31 @@ class AuthController extends Controller {
         }
 
         $filePdfName = '';
-        if($request->hasFile('company_license'))
+        if ( $request->hasFile( 'company_license' ) )
         {
-            $file = $request->file('company_license');
+            $file = $request->file( 'company_license' );
             //save image
-            $fileName = Str::random(15);
+            $fileName = Str::random( 15 );
             $filePdfName = $fileName . '.pdf';
-            $file->move('uploads/corporates',$filePdfName);
+            $file->move( 'uploads/corporates', $filePdfName );
         }
 
         $user = new User( [
-            'company'        => $request->company,
-            'contact_person' => $request->contact,
-            'job_title'      => $request->job_title,
-            'phone'          => $request->phone,
-            'email'          => $request->email,
-            'is_active'      => '0',
-            'company_license'=> $filePdfName,
-            'type'           => User::TYPE_CORPORATE,
-            'is_subscribed'  => $request->subscription ?? 0,
-            'password'       => bcrypt( $request->password )
+            'company'         => $request->company,
+            'contact_person'  => $request->contact,
+            'job_title'       => $request->job_title,
+            'phone'           => $request->phone,
+            'email'           => $request->email,
+            'is_active'       => '0',
+            'company_license' => $filePdfName,
+            'type'            => User::TYPE_CORPORATE,
+            'is_subscribed'   => $request->newsLetter ? 1 : 0,
+            'password'        => bcrypt( $request->password )
         ] );
 
         $user->save();
+
+        Mail::to($request->email)->queue(new RegistrationWelcome());
 
         return response()->json( [
             'message' => 'Successfully created Corporate account!'
@@ -135,9 +143,11 @@ class AuthController extends Controller {
 
         $credentials = request( ['email', 'password'] );
         if ( !Auth::attempt( $credentials ) )
+        {
             return response()->json( [
                 'message' => 'Unauthorized'
             ], 401 );
+        }
 
         if ( $request->user()->is_active )
         {
@@ -231,15 +241,33 @@ class AuthController extends Controller {
      */
     public function callResetPassword( Request $request )
     {
+        $attributes = $request->all();
+        $email = '';
+        $resets = DB::table( 'password_resets' )->get();
+        foreach ($resets as $reset)
+        {
+            if ( Hash::check( $attributes['token'], $reset->token ) )
+            {
+                $email = $reset->email;
+            }
+        }
+
+        if ( $email === '' )
+        {
+            return response()->json( ['error' => 'Invalid Token ... please request  another email!'] );
+        }
+        $request->request->add( ['email' => $email] );
+
         return $this->reset( $request );
     }
+
     /**
      * Get the password reset credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function credentials(Request $request)
+    public function credentials( Request $request )
     {
         return $request->only(
             'email', 'password', 'password_confirmation', 'token'
@@ -255,26 +283,28 @@ class AuthController extends Controller {
      */
     protected function resetPassword( $user, $password )
     {
+//        dd($user);
         $user->password = Hash::make( $password );
         $user->save();
         event( new PasswordReset( $user ) );
 
     }
 
-    protected function sendResetResponse(Request $request, $response)
+    protected function sendResetResponse( Request $request, $response )
     {
-        return response()->json(['message' => 'Password reset successfully.']);
+        return response()->json( ['success' => 'Password reset successfully.'] );
     }
+
     /**
      * Get the response for a failed password reset.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    protected function sendResetFailedResponse(Request $request, $response)
+    protected function sendResetFailedResponse( Request $request, $response )
     {
-        return response()->json(['message' => 'Failed, Invalid Token.']);
+        return response()->json( ['message' => 'Failed, Invalid Token.'] );
 
     }
 

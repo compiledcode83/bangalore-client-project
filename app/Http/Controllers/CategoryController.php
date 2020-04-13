@@ -12,7 +12,8 @@ class CategoryController extends Controller {
 
     public function homeCategories()
     {
-        $categories = Category::where( 'in_homepage', '!=', '0' )
+        $categories = Category::where( 'is_active', '1' )
+            ->where( 'in_homepage', '!=', '0' )
             ->get();
 
         $response = [];
@@ -80,16 +81,20 @@ class CategoryController extends Controller {
             if(in_array('upTo30',$filterOptions['discount'] )){
                 $query->whereHas('prices', function ($query) use ($filterOptions, $user){
 
-                    if($user->type == User::TYPE_CORPORATE)
+                    if(isset($user->type))
                     {
+                        if($user->type == User::TYPE_CORPORATE)
+                        {
 //                        $query->where('percentage_discount', '<=',  $filterOptions['min']);
 //                        $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 //                        $query->where('individual_unit_price', '>=',  $filterOptions['min']);
 //                        $query->where('individual_unit_price', '<=',  $filterOptions['max']);
+                        }
                     }
+
                 });
             }
             if(in_array('upTo50',$filterOptions['discount'] )){
@@ -122,11 +127,11 @@ class CategoryController extends Controller {
 
         if(isset($filterOptions['sort']))
         {
-            $products = $query->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
+            $products = $query->active()->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
         }
         else
         {
-            $products = $query->orderBy( 'created_at', 'desc' )->paginate(9);
+            $products = $query->active()->orderBy( 'created_at', 'desc' )->paginate(9);
         }
 
 
@@ -135,10 +140,16 @@ class CategoryController extends Controller {
             $productModel = new Product();
 
             // make sure filter attributes not changed after apply any of filters on category
-            if(empty($filterOptions))
-            {
-                $filterAttributes = $productModel->getProductsFilterAttributes($products);
-            }
+//            if(empty($filterOptions))
+//            {
+                // get all products without applied filters and extract general filter options
+                $generalSubCats = $category->subCategories()->pluck('id');
+                $generalSubCats->push($category->id);
+                $generalProducts = Product::whereHas('categories', function ($query) use ($generalSubCats){
+                    $query->whereIn('id', $generalSubCats->toArray());
+                })->active()->get();
+                $filterAttributes = $productModel->getProductsFilterAttributes($generalProducts);
+//            }
 
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
@@ -154,10 +165,10 @@ class CategoryController extends Controller {
                 'products' => $products,
             ];
 
-            if(empty($filterOptions))
-            {
+//            if(empty($filterOptions))
+//            {
                 $response['filterAttributes'] = $filterAttributes;
-            }
+//            }
             return response()->json( $response );
         }
 

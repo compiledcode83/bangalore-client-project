@@ -32,8 +32,6 @@ class Product extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new ActiveScope());
-
         static::saving(function ($model) {
 
             $slug = str_slug($model->name_en);
@@ -41,6 +39,17 @@ class Product extends Model
 
             $model->slug = $count ? "{$slug}-{$count}" : $slug;
         });
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 
     /**
@@ -133,6 +142,7 @@ class Product extends Model
                         ->orWhere('name_ar', 'like', "%".$term."%")
                         ->orWhere('sku', 'like', "%".$term."%")
                         ->orderBy('created_at', 'desc')
+                        ->active()
                         ->get();
 
         return $products;
@@ -210,6 +220,7 @@ class Product extends Model
             }
 
             $user = Auth::guard('api')->user();
+
             if($user)
             {
                 // get prices

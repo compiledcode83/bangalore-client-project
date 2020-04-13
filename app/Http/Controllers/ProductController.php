@@ -135,8 +135,8 @@ class ProductController extends Controller {
 
             if ( $user->type == User::TYPE_USER )
             {
-                $query->where('individual_discounted_unit_price', '!==', NULL);
-                $query->orWhere('individual_discounted_unit_price', '!=', '0');
+                $query->where('individual_discounted_unit_price', '!=', NULL);
+//                $query->orWhere('individual_discounted_unit_price', '!=', '0');
                 if(isset($filterOptions['term']))
                 {
                     $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
@@ -147,7 +147,7 @@ class ProductController extends Controller {
             if ( $user->type == User::TYPE_CORPORATE )
             {
                 $query->where('corporate_discounted_unit_price', '!==', NULL);
-                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
+//                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
                 if(isset($filterOptions['term']))
                 {
                     $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
@@ -158,11 +158,11 @@ class ProductController extends Controller {
 
         if(isset($filterOptions['sort']))
         {
-            $products = $query->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
+            $products = $query->active()->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
         }
         else
         {
-            $products = $query->orderBy( 'created_at', 'desc' )->paginate(12);
+            $products = $query->active()->orderBy( 'created_at', 'desc' )->paginate(12);
         }
 
         if ( !empty($products ))

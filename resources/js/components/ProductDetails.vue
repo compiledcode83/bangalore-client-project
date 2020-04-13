@@ -256,7 +256,7 @@
             </div><!--/.product-details-->
         </div><!--/.innr-cont-area-->
 
-        <div class="related-products">
+        <div class="related-products" v-if="product.relatedProductsDetails.length >= 1">
             <div class="container">
                 <h2>{{$t('pages.related')}} <span>{{$t('pages.products')}}</span></h2>
                 <ul class="relatedprod-slide">
@@ -270,26 +270,12 @@
 </template>
 
 <script>
-    $(document).ready(function() {
 
-        // $(document).ready(function() {
-
-        // });
-
-            // tags: "true",
-            // allowClear: true,
-            // placeholder: 'Select an option',
-            // templateResult: formatState,
-            // templateSelection: formatState
-        // );
-    });
     function formatState (state) {
         if (!state.id) {
             return state.text;
         }
-        // var baseUrl = "img";
         var $state = $(
-            // '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
             '<span><div style="background-color:' + state.element.value.toLowerCase() + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>'
 
         );
@@ -301,9 +287,49 @@
 
     export default {
         components: {ProductBox, StarRating},
+        data: function () {
+            return {
+                showMainImage: true,
+                colorInputsCount: 1,
+                originalPrice: null,
+                discountFound: null,
+                productPrices: [],
+                min_price: null,
+                pricesForMinQty: [],
+                show_prices: false,
+                colorInputs: [],
+                qtyInputs: [],
+                defaultMainGallery: Object,
+                images: Object,
+                product: {
+                    main_gallery: Object,
+                    colors: Object,
+                    relatedProductsDetails: []
+                },
+                selected_attribute: {
+                    id: null,
+                    sku: 0,
+                    stock: 0,
+                    color_name: ''
+                },
+                relatedSliderOnce: false,
+                sliderFor: false,
+                sliderNav: false,
+                file: '',
+                cart_discount: 0,
+                cart_product_attributes: {},
+                cart: [],
+                cartItem: this.$store.state.cartModule.cartItem,
+                itemQty: 1,
+                reviewRating: 0,
+                reviewNickname: '',
+                reviewText: ''
+            }
+        },
         mounted() {
             this.slug = this.$route.params.slug;
             this.loadProductDetails();
+
         },
         beforeRouteUpdate(to, from, next) {
             this.slug = to.params.slug;
@@ -381,15 +407,20 @@
                 );
                 return $state;
             },
-            loadProductDetails(){
+                loadProductDetails(){
                 axios.all([
                     axios.get('/api/v1/products/'+this.slug)
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
-
+                    console.log(this.product);
                     //reset sku
                     this.selected_attribute.sku = this.product.sku;
-                    this.defaultMainGallery = productResponse.data.main_gallery;
+                    if(!productResponse.data.main_gallery){
+                        this.defaultMainGallery['0'] = productResponse.data.main_image;
+                    }else{
+                        this.defaultMainGallery = productResponse.data.main_gallery;
+                    }
+                    console.log(this.defaultMainGallery);
 
                     //get prices
                     this.loadProductPrices();
@@ -470,6 +501,19 @@
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Please select color before adding to cart ...',
+                    });
+
+                    return 0;
+                }
+
+                // show add qty msg if no  qty added or user add qty then deleted
+                var foundEmptyElement = Object.keys(this.qtyInputs).every(key => this.qtyInputs[key] === '');
+
+                if(this.qtyInputs.length == 0 || foundEmptyElement){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please add qty before adding to cart ...',
                     });
 
                     return 0;
@@ -822,44 +866,6 @@
                     return this.pricesForMinQty['discount'];
                 }
                 return null;
-            }
-        },
-        data: function () {
-            return {
-                showMainImage: true,
-                colorInputsCount: 1,
-                originalPrice: null,
-                discountFound: null,
-                productPrices: [],
-                min_price: null,
-                pricesForMinQty: [],
-                show_prices: false,
-                colorInputs: [],
-                qtyInputs: [],
-                defaultMainGallery: Object,
-                images: Object,
-                product: {
-                    main_gallery: Object,
-                    colors: Object
-                },
-                selected_attribute: {
-                    id: null,
-                    sku: 0,
-                    stock: 0,
-                    color_name: ''
-                },
-                relatedSliderOnce: false,
-                sliderFor: false,
-                sliderNav: false,
-                file: '',
-                cart_discount: 0,
-                cart_product_attributes: {},
-                cart: [],
-                cartItem: this.$store.state.cartModule.cartItem,
-                itemQty: 1,
-                reviewRating: 0,
-                reviewNickname: '',
-                reviewText: ''
             }
         }
     }

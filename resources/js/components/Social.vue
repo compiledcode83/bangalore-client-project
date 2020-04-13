@@ -5,7 +5,7 @@
         <ul class="social">
             <li v-for="social in responseData">
                 <a :href="social.link">
-                    <img :src="'/'+social.icon">
+                    <img :src="'/uploads/'+social.icon">
                 </a>
             </li>
         </ul>

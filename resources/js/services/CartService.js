@@ -2,7 +2,11 @@ import axios from 'axios'
 
 export default {
     getUserCart(id) {
-        return axios.get('/cart/' + id)
+        return axios.get('api/v1/cart/restore',{
+            headers: {
+                "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+            }
+        })
     },
     postCart(cart) {
         return axios.post('/cart/', cart)
@@ -16,7 +20,7 @@ export default {
     removeCartItem(item){
         return axios.post('/api/v1/cart/item/remove', item)
     },
-    placeOrder(){
-        return axios.post('/api/v1/order')
+    placeOrder(data){
+        return axios.post('/api/v1/order', data)
     }
 }

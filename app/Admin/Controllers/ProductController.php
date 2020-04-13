@@ -91,6 +91,8 @@ class ProductController extends AdminController {
             ] )->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -200,7 +202,10 @@ class ProductController extends AdminController {
             $form->ckeditor( 'more_information_en', 'English More Information' );
             $form->ckeditor( 'more_information_ar', 'Arabic More Information' );
 
-            $form->text( 'sku', 'SKU' )->rules( 'required' )->help( 'Product unique identifier!' );
+            $form->text( 'sku', 'SKU' )
+                ->creationRules('required|unique:product_attribute_values,sku|unique:products,sku' )
+                ->updateRules( 'required|unique:product_attribute_values,sku|unique:products,sku,{{id}}' )
+                ->help( 'Product unique identifier!' );
             $form->text( 'supplier_price', 'Supplier price' )->rules( 'required' )->help( 'Only Admin can see this price!' );
             $form->image( 'main_image', 'Main Image' )->rules( 'required' );
             $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );

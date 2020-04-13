@@ -42,6 +42,8 @@ class ServiceController extends AdminController
             ] )->sortable();
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -81,15 +83,15 @@ class ServiceController extends AdminController
 
         $form->hidden( 'type', 'Type' )->default( MediaService::TYPE_SERVICE );
 
-        $form->text('title_en', __('Title en'));
-        $form->text('title_ar', __('Title ar'));
+        $form->text('title_en', __('Title en'))->rules( 'required' );
+        $form->text('title_ar', __('Title ar'))->rules( 'required' );
 
-        $form->ckeditor('short_description_en', __('Short English Description'));
-        $form->ckeditor('short_description_ar', __('Short Arabic Description'));
-        $form->ckeditor('full_description_en', __('Full English Description'));
-        $form->ckeditor('full_description_ar', __('Full Arabic Description'));
+        $form->ckeditor('short_description_en', __('Short English Description'))->rules( 'required' );
+        $form->ckeditor('short_description_ar', __('Short Arabic Description'))->rules( 'required' );
+        $form->ckeditor('full_description_en', __('Full English Description'))->rules( 'required' );
+        $form->ckeditor('full_description_ar', __('Full Arabic Description'))->rules( 'required' );
 
-        $form->image('image', __('Image'));
+        $form->image('image', __('Image'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

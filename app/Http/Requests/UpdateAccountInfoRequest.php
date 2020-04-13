@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CreateAddressRequest extends FormRequest {
-
+class UpdateAccountInfoRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,12 +24,9 @@ class CreateAddressRequest extends FormRequest {
      */
     public function rules()
     {
+        $user = Auth::user();
         return [
-            'governorate' => 'required|not_in:0',
-            'area'        => 'required|not_in:0',
-            'street'      => 'required',
-            'block'       => 'required',
-            'building'    => 'required',
+            'email' => 'required|unique:users,email,'.$user->id
         ];
     }
 }

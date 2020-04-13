@@ -128,7 +128,7 @@
                     <p> {{$t('pages.registerNow_description')}} </p>
                 </div><!--/.col-sm-8-->
                 <div class="col-sm-4">
-                    <button class="btn register"> {{$t('pages.registerNow_register')}} </button>
+                    <button class="btn register" @click="openRegisterModel"> {{$t('pages.registerNow_register')}} </button>
                 </div><!--/.col-sm-4-->
             </div><!--/.register-home-->
         </div><!--/.container-->
@@ -139,66 +139,79 @@
 
     export default {
 
-        mounted() {
+        created() {
 
-            axios.all([
-                axios.get('/api/v1/home-sliders'),
-                axios.get('/api/v1/home-arrivals'),
-                axios.get('/api/v1/home-offers'),
-                axios.get('/api/v1/home-best-sellers')
-            ])
-            .then(axios.spread((slidersResponse, arrivalsResponse, offersResponse, bestSellersResponse) => {
+            this.loadData();
+            this.$Progress.finish();
 
-                this.slides     = slidersResponse.data;
-                this.arrivals   = arrivalsResponse.data;
-                this.offers     = offersResponse.data;
-                this.products   = bestSellersResponse.data;
+            let _this = this;
+            this.$root.$on('lang_changed', function(currentLang) {
+                //reload the component
+                console.log('lang chnaged');
+                axios.all([
+                    axios.get('/api/v1/home-sliders', {headers: {'xLocalization' : currentLang}}),
+                    axios.get('/api/v1/home-arrivals', {headers: {'xLocalization' : currentLang}}),
+                    axios.get('/api/v1/home-offers', {headers: {'xLocalization' : currentLang}}),
+                    axios.get('/api/v1/home-best-sellers', {headers: {'xLocalization' : currentLang}})
+                ]).then(axios.spread((slidersResponse, arrivalsResponse, offersResponse, bestSellersResponse) => {
 
-            }));
+                        _this.slides     = slidersResponse.data;
+                        _this.arrivals   = arrivalsResponse.data;
+                        _this.offers     = offersResponse.data;
+                        _this.products   = bestSellersResponse.data;
+
+                    }));
+            })
+
         },
 
         updated: function () {
             this.$nextTick(function () {
                 // Code that will run only after the
                 // entire view has been re-rendered
-                $(".bannerSlider").slick({
-                    dots: true,
-                    autoplay: false,
-                    infinite: true,
-                    slidesToShow: 1,
-                    slideswToScroll: 1,
-                    arrows: false,
-                    fade: true,
-                    cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
-                    speed: 900,
-                    touchThreshold: 100
-                });
+                if(!this.slidersRunning){
 
-                $(".bestseller-slide").slick({
-                    dots: false,
-                    autoplay: false,
-                    infinite: true,
-                    slidesToShow: 3,
-                    slideswToScroll: 1,
-                    arrows: true,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 2
+                    $(".bannerSlider").slick({
+                        dots: true,
+                        autoplay: false,
+                        infinite: true,
+                        slidesToShow: 1,
+                        slideswToScroll: 1,
+                        arrows: false,
+                        fade: true,
+                        cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+                        speed: 900,
+                        touchThreshold: 100
+                    });
+
+                    $(".bestseller-slide").slick({
+                        dots: false,
+                        autoplay: false,
+                        infinite: true,
+                        slidesToShow: 3,
+                        slideswToScroll: 1,
+                        arrows: true,
+                        responsive: [
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    slidesToShow: 2
+                                }
+                            },
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    arrows: false,
+                                    centerMode: true,
+                                    centerPadding: '40px',
+                                    slidesToShow: 1
+                                }
                             }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                arrows: false,
-                                centerMode: true,
-                                centerPadding: '40px',
-                                slidesToShow: 1
-                            }
-                        }
-                    ]
-                });
+                        ]
+                    });
+
+                    this.slidersRunning = true;
+                }
 
                 $('.register').click(function(){
                     $('#Register').modal('show');
@@ -207,8 +220,27 @@
         },
 
         methods: {
+            openRegisterModel() {
+                $('#register').modal('show');
+            },
             onImageLoadFailure (event) {
                 event.target.src = '/images/default-product.jpg'
+            },
+            loadData(){
+                axios.all([
+                    axios.get('/api/v1/home-sliders', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
+                    axios.get('/api/v1/home-arrivals', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
+                    axios.get('/api/v1/home-offers', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
+                    axios.get('/api/v1/home-best-sellers', {headers: {'xLocalization' : this.$store.state.langModule.lang}})
+                ])
+                    .then(axios.spread((slidersResponse, arrivalsResponse, offersResponse, bestSellersResponse) => {
+
+                        this.slides     = slidersResponse.data;
+                        this.arrivals   = arrivalsResponse.data;
+                        this.offers     = offersResponse.data;
+                        this.products   = bestSellersResponse.data;
+
+                    }));
             }
         },
 
@@ -217,7 +249,8 @@
                 slides: null,
                 arrivals: null,
                 offers: null,
-                products: null
+                products: null,
+                slidersRunning: false,
             }
         }
     }

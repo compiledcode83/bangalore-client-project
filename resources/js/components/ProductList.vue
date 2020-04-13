@@ -98,18 +98,24 @@
         components: {ProductFilter, ProductBox, VueContentLoading},
         props: ['filterCategories', 'filterColor', 'filterMinPrice', 'filterMaxPrice', 'filterDiscounts'],
         mounted() {
-            console.log('lang:'+ this.i18n);
             this.slug = this.$route.params.slug;
             this.loadFilterCategoriesList();
             this.loadFilterColorsList();
             this.loadProducts();
         },
         watch: {
-            '$route' (to, from) {
-                this.slug = to.params.slug;
+            '$route.query' (to, from) {
+
+                this.slug = this.$route.params.slug;
                 this.loadFilterCategoriesList();
                 this.loadFilterColorsList();
-                this.loadProducts();
+
+                if(this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath)
+                {
+                    this.loadProducts();
+                }
+
+                this.currentFullPath = this.$route.fullPath;
             }
         },
         computed: {
@@ -170,13 +176,18 @@
 
                 this.products = [];
                 axios.all([
-                    axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
+                    axios.get('/api/v1/category-products/' + this.slug + filterQueryString,
+                        {
+                            headers: {
+                                "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        })
                 ]).then(axios.spread((categoryResponse) => {
                     console.log(categoryResponse);
                     this.products = categoryResponse.data.products.data;
                     this.pagination = categoryResponse.data.products;
-                    this.category   = categoryResponse.data.category;
-                    if(categoryResponse.data.filterAttributes){
+                    this.category = categoryResponse.data.category;
+                    if (categoryResponse.data.filterAttributes) {
                         this.productsFilterAttributes = categoryResponse.data.filterAttributes
                     }
                 })).then(() => {
@@ -209,6 +220,9 @@
                     .then((response) => {
                         this.filterColorsList = response.data;
                     });
+            },
+            resetColorFilter(colorFromQuery){
+                this.filterColor = colorFromQuery;
             }
 
         },
@@ -225,7 +239,8 @@
                 category: {},
                 products: [],
                 productsFilterAttributes: [],
-                pagination: {}
+                pagination: {},
+                currentFullPath: null,
             }
         }
     }

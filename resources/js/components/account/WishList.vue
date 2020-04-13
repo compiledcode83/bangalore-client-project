@@ -46,6 +46,7 @@
     import myAccountSidebar from "./partials/TheSidebar";
     import myAccountBanner from "./partials/TheBanner";
     import _ from 'lodash';
+    import EventBus from './event-bus.js'
 
     export default {
         components: {myAccountSidebar, myAccountBanner},
@@ -68,6 +69,11 @@
             }else{
                 console.log('No authorization');
             }
+
+            let _this  = this;
+            EventBus.$on('update-wishList-main', function (data) {
+                _this.products = data;
+            });
 
         },
         computed: {
@@ -105,6 +111,9 @@
                                     icon: 'success'
                                 });
                                 this.products = response.data;
+
+                                //remove it also from side bar
+                                EventBus.$emit('update-wishList-sideBar', this.products)
                             });
                         }else{
                             console.log('No authorization');

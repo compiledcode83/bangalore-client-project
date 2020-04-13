@@ -11,7 +11,7 @@
            </div>
        </div><!--/.banner-->
 
-       <div class="container innr-cont-area">
+       <div class="container innr-cont-area" v-if="token">
            <div class="input-group big-searchbox">
                <input type="text" class="form-control"  placeholder="Keyword Search" v-model="filterSearchTerm">
                <span class="input-group-addon rounded-0">
@@ -89,6 +89,9 @@
            </div>
 
        </div><!--/.innr-cont-area-->
+       <div class="container innr-cont-area" v-else>
+           <p style="text-align: center;font-size: 19px;font-weight: bold;"> Please login to see content of this page ... </p>
+       </div>
    </div>
 </template>
 
@@ -204,7 +207,8 @@
                 products: [],
                 settings: {},
                 productsFilterAttributes: [],
-                pagination: {}
+                pagination: {},
+                token: this.$store.state.authModule.accessToken
             }
         }
     }

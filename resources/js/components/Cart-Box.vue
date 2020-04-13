@@ -71,10 +71,14 @@
                                     text: "Your item has been deleted.",
                                     icon: 'success'
                                 });
-                            })
-                            .catch(() => {
+                            }).then(() => {
+                                if(this.itemsCount === 1){
+                                    return this.$router.push({path: '/'});
+                                }
+                            }).catch(() => {
                                 console.log('There was a problem removing from your cart')
                             });
+
                     }
                 });
             },

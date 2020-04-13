@@ -14,7 +14,7 @@ use Encore\Admin\Layout\Row;
 use Encore\Admin\Widgets\Box;
 use Encore\Admin\Widgets\InfoBox;
 
-class HomeController extends Controller {
+class   HomeController extends Controller {
 
     public function index( Content $content )
     {
@@ -22,9 +22,14 @@ class HomeController extends Controller {
             $content->header( 'Dashboard' );
             $content->description( 'Statistics ...' );
 
-            $content->row( function ( $row ) {
-                $row->column( 6, new InfoBox( 'Individuals', 'users', 'yellow', '/admin/users', User::where( 'type', User::TYPE_USER )->count() ) );
-                $row->column( 6, new InfoBox( 'Corporates', 'users', 'yellow', '/admin/corporates', User::where( 'type', User::TYPE_CORPORATE )->count() ) );
+            $userCounts = User::where( 'type', User::TYPE_USER )
+                                ->where( 'is_active', '1' )->count();
+            $corporateCounts = User::where( 'type', User::TYPE_CORPORATE )
+                                ->where( 'is_corporate_accepted', '1' )
+                                ->where( 'is_active', '1' )->count();
+            $content->row( function ( $row ) use ($userCounts, $corporateCounts) {
+                $row->column( 6, new InfoBox( 'Active Individuals', 'users', 'yellow', '/admin/users', $userCounts ) );
+                $row->column( 6, new InfoBox( 'Active Corporates', 'users', 'yellow', '/admin/corporates', $corporateCounts ) );
             } );
 
             $content->row( function ( Row $row ) {
