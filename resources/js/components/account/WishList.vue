@@ -26,10 +26,10 @@
                                         <div class="more-data">
                                             <div class="qty">
                                                 <div class="flex">
-                                                    <router-link class="btn btn-danger" :to="'/products/'+product.slug"> {{$t('pages.viewItem')}} </router-link>
+                                                    <router-link class="btn btn-danger full-width" :to="'/products/'+product.slug"> {{$t('pages.viewItem')}} </router-link>
+                                                    <a style="cursor: pointer; margin: 0px 15px; color: #e11b22;     text-transform: uppercase; vertical-align: middle; width: 100%; text-align: center; border: 1px solid #e11b22; line-height: 36px;" class="remove" @click.prevent="removeWishItem(product.id)"> {{$t('pages.remove')}} <span style="" class="glyphicon glyphicon-trash"></span> </a>
                                                 </div>
                                             </div>
-                                            <a style="cursor: pointer;" class="remove" @click.prevent="removeWishItem(product.id)"> {{$t('pages.remove')}} </a>
                                         </div>
                                     </div><!--/.data-->
                                 </div><!--/.prod-bx-->

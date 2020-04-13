@@ -14,10 +14,14 @@
         <div class="col-xs-10 col-sm-8 clearfix top-links">
             <ul class="">
                 <li>
-                  <span class="main" href="">
+                  <!-- <span class="main" href="">
                     <span class=""><img src="/images/call.png" alt=""></span>
                     <span class="hidden-xs"> {{settings.header_phone}} </span>
-                  </span>
+                  </span> -->
+                  <a class="main" href="tel:{{settings.header_phone}}" id="cartEnable">
+                         <span class=""><img src="/images/call.png" alt=""></span>
+                    <span class="hidden-xs"> {{settings.header_phone}} </span>
+                    </a>
                 </li><!--/li-->
                 <li>
                     <router-link to="/account/wishlist" class="main" v-if="isAuthenticated">
