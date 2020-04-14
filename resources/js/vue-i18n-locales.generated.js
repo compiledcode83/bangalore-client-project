@@ -336,6 +336,10 @@ export default {
             "search":"بحث",
             "highToLow":"من الاعلى الى الادنى",
             "viewMore":"عرض المزيد",
+            "payment_id":"لاقم عملية الدفع",
+            "result":"حالة الدفع",
+            "reference":"الرقم المرجعي",
+            "track_id":"رقم التتبع",
 
         }
     },
@@ -800,6 +804,10 @@ export default {
             "search":"search",
             "highToLow":"high To Low",
             "viewMore":"view More",
+            "payment_id":"Payment Id",
+            "result":" Result",
+            "reference":"Refernece ",
+            "track_id":"Track Id ",
         }
     },
 }

@@ -5,6 +5,7 @@ import Login  from "./components/Login";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import CheckoutReceipt from "./components/CheckoutReceipt";
+import PaymentReceipt from "./components/PaymentReceipt";
 import BestProductList from "./components/BestProductList";
 import AccountDashboard from "./components/account/Dashboard";
 import AccountAddresses from "./components/account/Addresses";
@@ -117,6 +118,12 @@ export default {
             path: '/thank-you/:code',
             name: 'checkoutReceipt',
             component: CheckoutReceipt,
+            props: true,
+        },
+        {
+            path: '/paymentReturn/:code',
+            name: 'PaymentReceipt',
+            component: PaymentReceipt,
             props: true,
         },
         {

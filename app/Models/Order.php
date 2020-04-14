@@ -25,6 +25,8 @@ class Order extends Model
      */
     protected $guarded = ['id'];
 
+    const IS_PAID = 5 ; //Status in statues table
+    const NOT_PAID = 6 ; //Status in statues table
     /**
      * Get the user owns this wishList
      */
@@ -40,13 +42,20 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class, 'order_id');
     }
+    /**
+     * Get payment Transaction for the Order.
+     */
+    public function orderTransactions()
+    {
+        return $this->hasMany(OrderTransactions::class, 'order_id');
+    }
 
     /**
      * Get statuses for the Order.
      */
-    public function orderStatuses()
+    public function OrderStatus()
     {
-        return $this->belongsToMany(Status::class);
+        return $this->hasMany(OrderStatus::class);
     }
 
     /**
@@ -117,7 +126,7 @@ class Order extends Model
         {
             $this->updateStock($cart->cartItems);
             $this->deleteCart($cart);
-            Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
+//            Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
             return $order;
         }
 

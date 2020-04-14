@@ -23,4 +23,13 @@ class OrderStatus extends Model
      * @var array
      */
     protected $guarded = ['id'];
+    public function Status()
+    {
+        return $this->belongsTo(Status::class,'status_id','id');
+    }
+    public function Order()
+    {
+        return $this->belongsTo(Order::class,'order_id');
+    }
+
 }

@@ -40,6 +40,8 @@ Route::group(['prefix'=>'v1'], function(){
     Route::post('register', 'AuthController@register');
     Route::post('register/corporate', 'AuthController@registerCorporate');
     Route::get('cart/restore','CartController@restoreCart');
+    Route::get('paymentReturn/{code}','OrderController@paymentReturn')->name('paymentReturn');
+
 });
 
 Route::group(['prefix'=>'v1'], function(){
