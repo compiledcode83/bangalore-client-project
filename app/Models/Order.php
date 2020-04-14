@@ -126,7 +126,7 @@ class Order extends Model
         {
             $this->updateStock($cart->cartItems);
             $this->deleteCart($cart);
-//            Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
+            Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
             return $order;
         }
 
