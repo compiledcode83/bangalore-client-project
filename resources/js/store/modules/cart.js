@@ -15,15 +15,15 @@ export const mutations = {
         state.cart.items.push(item);
     },
     UPDATE_ITEM(state, item){
-        let currentItem = this.getters.getCartItemById(item.product_attribute_id);
+        let currentItem = this.getters.getCartItem(item);
         currentItem = item;
     },
     UPDATE_ITEM_QTY(state, item){
-        let currentItem = this.getters.getCartItemById(item.product_attribute_id);
+        let currentItem = this.getters.getCartItem(item);
         currentItem.product_qty += parseInt(item.product_qty);
     },
     UPDATE_ITEM_PRICE(state, item){
-        let currentItem = this.getters.getCartItemById(item.product_attribute_id);
+        let currentItem = this.getters.getCartItem(item);
         currentItem.product_price = parseInt(item.product_price);
     },
     REMOVE_ITEM(state, item){
@@ -50,7 +50,7 @@ export const mutations = {
         state.cart.items.forEach(function(item){
             state.cart.items.splice(state.cart.items.indexOf(item), 1);
         });
-        
+
         state.cart.total = 0;
         state.cart.subtotal = 0;
         state.cart.discount = 0;
@@ -60,7 +60,7 @@ export const mutations = {
 export const actions = {
     createCartItem({ commit }, item) {
         //check item is already in cart
-        let savedCartItem = this.getters.getCartItemById(item.product_attribute_id);
+        let savedCartItem = this.getters.getCartItem(item);
         if(savedCartItem){
             //update item qty
             let updatedQty = item.product_qty + savedCartItem.product_qty;
@@ -118,7 +118,7 @@ export const actions = {
     },
     removeItemFromCart({ commit }, item) {
         //check item is already in cart
-        let savedCartItem = this.getters.getCartItemById(item.product_attribute_id);
+        let savedCartItem = this.getters.getCartItem(item);
         if(savedCartItem){
             CartService.removeCartItem(item).then(() => {
                 commit('REMOVE_ITEM', item);
@@ -141,11 +141,31 @@ export const actions = {
     },
     clearCart({ commit }) {
         commit('CLEAR_CART');
+    },
+    getStockInCart({ commit }, id) {
+        let totalQty = this.getters.getCartItemQtyById(id);
+
+        if(totalQty){
+            return totalQty;
+        }
+
+        return 0;
     }
 };
 export const getters = {
-    getCartItemById: state => id => {
-        return state.cart.items.find(cart => cart.product_attribute_id === id)
+    getCartItem: state => item => {
+        return state.cart.items.find(cart => (cart.product_attribute_id === item.product_attribute_id && cart.product_print_image === item.product_print_image ) )
+    },
+    getCartItemQtyById: state => id => {
+        let total = 0;
+        state.cart.items.forEach(function(itemCart){
+            if(itemCart.product_attribute_id == id){
+
+                total += itemCart.product_qty
+            }
+        });
+
+        return total;
     },
     getCartSubTotal: state => {
         let subTotal = 0;

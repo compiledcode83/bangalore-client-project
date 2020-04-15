@@ -31,8 +31,8 @@ class ProductAttributeImagesController extends AdminController
 
         $grid->filter( function ( $filter ) {
 
-            // Add Name filter
-            $filter->like( 'name_en', 'Name' );
+            // Remove the default id filter
+            $filter->disableIdFilter();
 
             $filter->in('product_id', 'Product')->multipleSelect(Product::all()->pluck('name_en', 'id'));
 

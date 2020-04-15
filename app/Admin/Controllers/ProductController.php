@@ -220,20 +220,6 @@ class ProductController extends AdminController {
             $products = Product::all()->pluck('name_en', 'id');
             $form->multipleSelect('related', 'Related Products')->options($products);
 
-//        } )->tab( 'Product Attributes', function ( $form ) {
-//
-//            // z-song name convention
-//            $form->hasMany( 'productattributevalues', 'Product Attributes', function ( $form ) {
-//
-//                $form->select( 'attribute_value_id', 'Color' )->options( function ( $id ) {
-//                    return AttributeValue::options($id);
-//                } );
-//                $form->text( 'sku', 'sku' )->rules( 'required' );
-//                $form->text( 'stock', 'stock' )->rules( 'required' );
-//                $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
-//                $form->multipleImage( 'main_imagess' , 'asasdasda images');
-//            } );
-
         } )->tab( 'Prices', function ( $form ) {
 
             $form->hasMany( 'prices', 'Prices', function ( $form ) {

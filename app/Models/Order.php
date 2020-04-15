@@ -65,11 +65,51 @@ class Order extends Model
     public function store($user, $data)
     {
         $cart = $user->cart;
+
+        $shippingAddress = UserAddress::find($data['shippingAddress']);
+        $governorate = Governorate::find($shippingAddress->governorate);
+        $area = Area::find($shippingAddress->area);
+        $billingAddress = $data['defaultBillingAddress'];
+
+        $prepareShippingAddress = $governorate->name_en. ', '. $area->name_en.', block: '.
+                                  $shippingAddress->block.', street: '. $shippingAddress->street.', building: '. $shippingAddress->building.
+                                  ', floor: '. $shippingAddress->floor;
+
+        if($user->type = User::TYPE_USER)
+        {
+            $prepareShippingAddress .= ', home: '. $shippingAddress->house_number;
+        }
+        else
+        {
+            $prepareShippingAddress .= ', office: '. $shippingAddress->office_number.', office address: '. $shippingAddress->office_address;
+        }
+
+        $prepareBillingAddress = $prepareShippingAddress;
+        if(!$data['billingShipping'])
+        {
+                $prepareBillingAddress = $billingAddress['governorate']. ', '. $billingAddress['area'].', block: '.
+                $billingAddress['block'].', street: '. $billingAddress['street'].', building: '. $billingAddress['building'].
+                ', floor: '. $billingAddress['floor'];
+
+            if($user->type = User::TYPE_USER)
+            {
+                $prepareBillingAddress .= ', home: '. $shippingAddress['house_number'];
+            }
+            else
+            {
+                $prepareBillingAddress .= ', office: '. $shippingAddress['office_number'].', office address: '. $shippingAddress['office_address'];
+            }
+        }
+
         $order = new Order( [
             'order_code'  => Str::random(5),
             'final_status' => 'pending',
-            'address'    => 'test address',
-            'total' => $user->cart->total,
+            'address'    => $prepareShippingAddress,
+            'billing_address' => $prepareBillingAddress,
+            'sub_total' => $user->cart->total,
+            'total_discount' => $data['discount'] ?? 0,
+            'delivery_charges' => $data['delivery'] ?? 0,
+            'total' => ($user->cart->total - $data['discount'] + $data['delivery']),
             'payment_method' => $data['paymentMethod']
         ] );
 
@@ -111,7 +151,8 @@ class Order extends Model
         $saveItems = $order->orderItems()->saveMany($items);
 
         $order->update([
-            'total' => $itemsTotal,
+            'sub_total' => $itemsTotal,
+            'total' => ($itemsTotal - $data['discount'] + $data['delivery']),
         ]);
         if($saveItems)
         {

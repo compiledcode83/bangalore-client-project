@@ -75,8 +75,8 @@
                                             <select name="print_image_{{$item->id}}" style="display: block;"
                                                     @if($item->is_print_image_accepted) required @else required @endif>
                                                 <option>Image Approval</option>
-                                                <option value="approved" @if($item->is_print_image_accepted == 1) selected @endif>Approve Print Image</option>
-                                                <option value="rejected" @if($item->is_print_image_accepted == 2) selected @endif>Reject Print Image</option>
+                                                <option value="1" @if($item->is_print_image_accepted == 1) selected @endif>Approve Print Image</option>
+                                                <option value="2" @if($item->is_print_image_accepted == 2) selected @endif>Reject Print Image</option>
                                             </select>
                                         @else
                                             --

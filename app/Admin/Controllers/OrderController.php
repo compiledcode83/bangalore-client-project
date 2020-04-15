@@ -94,27 +94,33 @@ class OrderController extends AdminController {
                 //in case order has multiple print images if admin accepted some and rejected
                 // others will send email with all accepted and rejected prints
                 //if it's approved add it to email
-                if ( $printImageAttribute == 'approved' )
+                  
+                //check if status changed
+                if($orderItem->is_print_image_accepted != $printImageAttribute['print_image_'. $orderItem->id])
                 {
-                    $orderItem->update( [
-                        'is_print_image_accepted' => '1'
-                    ] );
-                    $sendEmailWithPrintImageStatus[] = [
-                        'item_name'   => $orderItem->productAttributeValue->product->name_en,
-                        'print_image' => $orderItem->print_image,
-                        'status'      => 'approved'
-                    ];
-                } else
-                {
-                    //if it's rejected add it to email
-                    $orderItem->update( [
-                        'is_print_image_accepted' => '2'
-                    ] );
-                    $sendEmailWithPrintImageStatus[] = [
-                        'item_name'   => $orderItem->productAttributeValue->product->name_en,
-                        'print_image' => $orderItem->print_image,
-                        'status'      => 'rejected'
-                    ];
+                    if ( $printImageAttribute['print_image_'. $orderItem->id] == '1' )
+                    {
+                        $orderItem->update( [
+                            'is_print_image_accepted' => '1'
+                        ] );
+                        $sendEmailWithPrintImageStatus[] = [
+                            'item_name'   => $orderItem->productAttributeValue->product->name_en,
+                            'print_image' => $orderItem->print_image,
+                            'status'      => 'approved'
+                        ];
+                    }
+                    else
+                    {
+                        //if it's rejected add it to email
+                        $orderItem->update( [
+                            'is_print_image_accepted' => '2'
+                        ] );
+                        $sendEmailWithPrintImageStatus[] = [
+                            'item_name'   => $orderItem->productAttributeValue->product->name_en,
+                            'print_image' => $orderItem->print_image,
+                            'status'      => 'rejected'
+                        ];
+                    }
                 }
             }
         }

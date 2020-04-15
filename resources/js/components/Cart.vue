@@ -33,6 +33,9 @@
                                         <h4> {{cartItem.item_name}} </h4>
                                         <strong>Color</strong> - {{cartItem.product_color_name}}<br>
                                         <p v-if="cartItem.description"></p>
+                                        <div v-if="cartItem.product_print_image">
+                                            <strong>Print Image</strong> - <a :href="cartItem.product_print_image" target="_blank"> Open Print Image </a><br>
+                                        </div>
                                     </div>
                                     <div class="col-lg-4 col-md-5 price">
                                         <div class="row">
@@ -180,6 +183,9 @@
             validateQty(item){
                 if(item.product_qty < this.minimumQty){
                     item.product_qty = this.minimumQty;
+                }
+                if(item.product_qty > item.stock){
+                    item.product_qty = item.stock;
                 }
                 // check if price need to update
                 this.$store

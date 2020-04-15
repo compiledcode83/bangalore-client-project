@@ -109,6 +109,14 @@ export default {
 
         },
         "pages": {
+            "subTotal": "المبلغ إجمالي",
+            "totalDiscount": "إجمالي التخفيضات",
+            "deliveryCharges": "التوصيل",
+            "printImage": "الصورة المرفقة للطباعه",
+            "openPrintImage": "اضغط لعرض الصورة",
+            "printImagePending": "لم يتم قبول الصورة بعد",
+            "printImageApproved": "تم قبول الصورة",
+            "printImageRejected": "تم رفض الصورة",
             "subscribed": "مشترك",
             "delete": "حذف",
             "media": "وسائل الإعلام",
@@ -574,6 +582,14 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "subTotal": "SubTotal",
+            "totalDiscount": "Total Discount",
+            "deliveryCharges": "Delivery Charges",
+            "printImage": "Print image",
+            "openPrintImage": "Click to view",
+            "printImagePending": "Image pending",
+            "printImageApproved": "Image Approved",
+            "printImageRejected": "Image rejected",
             "subscribed": "subscribed",
             "delete": "Delete",
             "media": "Media",

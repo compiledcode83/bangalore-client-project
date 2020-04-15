@@ -24,14 +24,17 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <address>
-                                    <strong>{{$t('pages.customer')}}: {{order.customr}}</strong>
-                                    {{order.address}}
-                                    <abbr title="Phone">{{$t('pages.p')}}:</abbr> {{order.phone}}
+                                    <strong>{{$t('pages.customer')}}: {{order.customer}}</strong>
+                                    <p>
+                                    <strong>{{$t('pages.address')}}: {{order.address}}</strong>
+                                    </p>
+
+                                    <abbr title="Phone">{{$t('pages.phone')}}:</abbr> {{order.phone}}
                                 </address>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                                 <p>
-                                    <em>{{$t('pages.date')}}: {{order.created}}</em>
+                                    <em>{{order.created}}</em>
                                 </p>
                                 <p>
                                     <em>{{$t('pages.receiptNumber')}}: {{code}}</em>
@@ -66,17 +69,23 @@
                                         <p>
                                             <strong>{{$t('pages.subtotal')}}: </strong>
                                         </p>
-<!--                                        <p>-->
-<!--                                            <strong>Discount: </strong>-->
-<!--                                        </p>-->
+                                        <p>
+                                            <strong>Discount: </strong>
+                                        </p>
+                                        <p>
+                                            <strong>Delivery: </strong>
+                                        </p>
                                     </td>
                                     <td class="text-center">
                                         <p>
-                                            <strong>{{order.total}}</strong>
+                                            <strong>{{order.subTotal}}</strong>
                                         </p>
-<!--                                        <p>-->
-<!--                                            <strong>$6.94</strong>-->
-<!--                                        </p>-->
+                                        <p>
+                                            <strong>{{order.discount}}</strong>
+                                        </p>
+                                        <p>
+                                            <strong>{{order.delivery}}</strong>
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -113,7 +122,11 @@
         },
         methods: {
             loadOrder(code){
-                axios.get('/api/v1/receipt/'+code)
+                axios.get('/api/v1/receipt/'+code,
+                    {headers: {
+                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    }   )
                     .then((response) => {
                         this.order = response.data;
                     });

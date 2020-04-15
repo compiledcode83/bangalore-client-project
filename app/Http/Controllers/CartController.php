@@ -64,8 +64,12 @@ class CartController extends Controller {
         if ( $request->hasFile( 'file' ) )
         {
             //save image
-            $imageName = Str::random( 15 );
-            $printImage = $imageName . '.jpg';
+            $imageName = $photo['file']->getClientOriginalName();
+            $filename = pathinfo($imageName, PATHINFO_FILENAME);
+            $extension = pathinfo($imageName, PATHINFO_EXTENSION);
+            $filename = Str::slug($filename, '-');
+
+            $printImage = $filename .'.'. $extension;
 
             Image::make( $photo['file'] )
                 ->encode( 'jpg' )

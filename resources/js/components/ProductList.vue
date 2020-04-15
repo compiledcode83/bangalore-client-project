@@ -189,6 +189,7 @@
                     this.category = categoryResponse.data.category;
                     if (categoryResponse.data.filterAttributes) {
                         this.productsFilterAttributes = categoryResponse.data.filterAttributes
+                        console.log(this.productsFilterAttributes);
                     }
                 })).then(() => {
                     this.loading = false;

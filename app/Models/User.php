@@ -40,6 +40,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullNameAttribute() {
+        if($this->type == User::TYPE_USER)
+        {
+            return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+        }
+
+        return ucfirst($this->company);
+    }
     /**
      * Scope a query to only include users of a given type.
      *
