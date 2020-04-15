@@ -307,9 +307,18 @@
                             text: "Your order has been placed successfully ",
                             icon: 'success',
                         }).then(() => {
-                            this.$router.push({
-                                path: '/thank-you/'+ this.placeOrderResponse
-                            });
+                            console.log(this.placeOrderResponse.cod);
+                            if(!this.placeOrderResponse.cod)
+                            {
+                                window.location.href = this.placeOrderResponse.PaymentUrl;
+                            }
+                            else
+                            {
+                                this.$router.push({
+                                    path: '/thank-you/'+ this.placeOrderResponse.orderCode
+                                });
+                            }
+
                         });
                     })
                     .catch(error => {
