@@ -94,13 +94,14 @@ class Product extends Model
         return $this->hasMany(ProductPrice::class, 'product_id');
     }
 
-    /**
-     * Get Related products for the product.
-     */
-    public function relatedProducts()
-    {
-        return $this->hasMany(RelatedProduct::class);
-    }
+    //To be deleted using related field
+//    /**
+//     * Get Related products for the product.
+//     */
+//    public function relatedProducts()
+//    {
+//        return $this->hasMany(RelatedProduct::class);
+//    }
 
     /**
      * Get Related products for the product.
@@ -177,7 +178,9 @@ class Product extends Model
             }
             $product->colors = $colors;
 
-            if($product->created_at >= Carbon::now()->subDays(14)->toDateTimeString())
+            $daysOfNewBadge = Setting::find(1);
+
+            if($product->created_at >= Carbon::now()->subDays($daysOfNewBadge->number_of_days_for_new_badge)->toDateTimeString())
             {
                 $product->newIcon = true;
             }
@@ -205,7 +208,7 @@ class Product extends Model
             $priceTable = [];
             foreach ($product->prices as $price)
             {
-                if ( $user->type == User::TYPE_USER )
+                if ( isset($user->type) AND $user->type == User::TYPE_USER )
                 {
                     $discountPrice = null;
                     if ( $price->individual_discounted_unit_price && $price->individual_discounted_unit_price != '0' )
@@ -218,7 +221,7 @@ class Product extends Model
                     ];
                 }
 
-                if ( $user->type == User::TYPE_CORPORATE )
+                if ( isset($user->type) AND $user->type == User::TYPE_CORPORATE )
                 {
                     $discountPrice = null;
                     if ( $price->corporate_discounted_unit_price && $price->corporate_discounted_unit_price != '0' )

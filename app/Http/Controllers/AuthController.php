@@ -149,6 +149,13 @@ class AuthController extends Controller {
             ], 401 );
         }
 
+        if ( $request->user()->type == User::TYPE_CORPORATE And $request->user()->is_corporate_accepted != '1')
+        {
+            return response()->json( [
+                'message' => 'Admin did not approve your account yet!'
+            ], 422 );
+        }
+
         if ( $request->user()->is_active )
         {
             $user = $request->user();

@@ -151,7 +151,7 @@
                                                             <td align="center" class="esd-block-text">
 
                                                             </td></tr><tr>
-                                                            <td align="left" style="font-size: 17px; text-transform: uppercase; border-bottom:1px solid #efefef; padding:15px 0px; font-weight: bold;" class="esd-block-text">ORDER DETAILS!</td>
+{{--                                                            <td align="left" style="font-size: 17px; text-transform: uppercase; border-bottom:1px solid #efefef; padding:15px 0px; font-weight: bold;" class="esd-block-text">ORDER DETAILS!</td>--}}
                                                         </tr>
 
 
@@ -170,7 +170,7 @@
                                                             <td align="center" class="esd-block-text">
 
                                                             </td></tr><tr>
-                                                            <td align="left" style="font-size: 16px; padding:5px 0px;" class="esd-block-text"><strong>Order Details </strong> : {{$data['order_date']}} </td>
+                                                            <td align="left" style="font-size: 16px; padding:5px 0px;" class="esd-block-text"><strong>Order Date </strong> : {{$data['order_date']}} </td>
                                                         </tr>
 
 
@@ -309,10 +309,10 @@
 
                                                                 </td></tr><tr>
                                                                 <td align="left" style="font-size: 16px;max-width: 85px;width: 200px;" class="esd-block-text">
-                                                                    <img src="{{URL($item['image'])}}" /> {{$item['name']}}
+                                                                    <img style="width: 100px;" src="{{asset('/uploads/'.$item['image'])}}" /> {{$item['name']}}
                                                                     @if($item['print_image'])
                                                                         <p>
-                                                                            <img src="{{URL($item['print_image'])}}" width="100" />
+                                                                            <img style="width: 50px;" src="{{'/uploads/'.asset($item['print_image'])}}" width="100" />
                                                                         </p>
                                                                     @endif
                                                                 </td>

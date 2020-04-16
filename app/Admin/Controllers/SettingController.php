@@ -54,6 +54,7 @@ class SettingController extends AdminController
             $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
             $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
             $form->text('header_phone', __('Header Phone'));
+            $form->number('number_of_days_for_new_badge', __('Number of Days for New badge icon'))->rules( 'required' )->required();
             })->tab('Banners', function ($form) {
                 $form->image('faq_banner', __('Faq banner'))->rules( 'required' )->required();
                 $form->image('sitemap_banner', __('Sitemap banner'))->rules( 'required' )->required();
@@ -66,8 +67,8 @@ class SettingController extends AdminController
                 $form->email('email', __('Contact Email'));
                 $form->text('tel', __('Contact Phone'))->icon('fa-phone');
                 $form->text('fax', __('Contact Fax'))->icon('fa-fax');
-                $form->text('cantry_en', __('Contact Cantry en'));
-                $form->text('cantry_ar', __('Contact Cantry ar'));
+                $form->text('cantry_en', __('Contact Country en'));
+                $form->text('cantry_ar', __('Contact Country ar'));
                 $form->text('city_en', __('Contact City en'));
                 $form->text('city_ar', __('Contact City ar'));
                 $form->text('area_en', __('Contact Area en'));

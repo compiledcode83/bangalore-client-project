@@ -95,13 +95,13 @@
                         <div class="row">
                             <div class="col-sm-6 col-lg-5">
                                 <div class="rate-cvr clearfix">
-                                    <star-rating active-color="#e01b22" :show-rating="false" :rating=2 :item-size=35 border-color="#fff" read-only></star-rating>
+                                    <star-rating active-color="#e01b22" :show-rating="false" :rating=product.rating :item-size=35 border-color="#fff" read-only></star-rating>
                                 </div>
 
                             </div>
                             <div class="reviews col-sm-6 col-lg-7">
-                                <a href="#"><span class="red"> {{product.reviews.length}} </span>  {{$t('pages.reviews')}}</a>   /
-                                <a href="#" @click.prevent="checkUserAbilityToReview">{{$t('pages.addYourReview')}}</a>
+                                <a href="#"><span class="red"> {{product.reviews.length}} </span>  {{$t('pages.reviews')}}</a>
+                                <a href="#" @click.prevent="checkUserAbilityToReview" v-if="isAuth"> / 	&nbsp;	&nbsp; {{$t('pages.addYourReview')}}</a>
                             </div>
                         </div><!--/.row-->
 
@@ -153,6 +153,7 @@
 
                                                 <input class="upload" type="file" id="file" ref="file" @change="handleFileUpload($event)"/>
                                             </div>
+<!--                                            <input class="upload" type="button"  @change="handleFileUpload($event)" value="delete image"  style="height: 45px;float: right;width: 100px;"/>-->
                                         </div>
                                     </div>
                                 </li><!--/li-->
@@ -420,6 +421,7 @@
                     })
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
+                    console.log(this.product);
                     //reset sku
                     this.selected_attribute.sku = this.product.sku;
                     if(!productResponse.data.main_gallery){

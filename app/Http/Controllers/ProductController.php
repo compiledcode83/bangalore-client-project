@@ -19,7 +19,7 @@ class ProductController extends Controller {
     public function productDetails( $slug, Request $request )
     {
         $user = Auth::guard('api')->user();
-        $product = Product::with( 'productAttributeValues', 'relatedProducts', 'reviews' )
+        $product = Product::with( 'productAttributeValues', 'reviews' )
             ->where( 'slug', $slug )
             ->first();
 
@@ -41,13 +41,24 @@ class ProductController extends Controller {
         }
         $product->colors = $colors;
 
+        //add ratings
+        if ( isset($product->reviews) && $product->reviews->first() )
+        {
+            $reviews = $product->reviews;
+            $count = $reviews->count();
+            if ( $count )
+            {
+                $product->rating = ceil( $reviews->sum( 'rating' ) / $count );
+            }
+        }
+
         $relatedProductsDetails = [];
 
         //related product details
-        foreach ($product->relatedProducts as $relatedProduct)
+        foreach ($product->related as $relatedProduct)
         {
-            $findProduct = Product::find( $relatedProduct->related_product_id );
-            if ( $findProduct )
+            $findProduct = Product::find( $relatedProduct );
+            if ( $findProduct &&  $findProduct->is_active)
             {
                 $this->productModel->addProductBasePrice($findProduct, $user);
                 $relatedProductsDetails [] = $findProduct;
@@ -138,22 +149,26 @@ class ProductController extends Controller {
             if ( $user->type == User::TYPE_USER )
             {
                 $query->where('individual_discounted_unit_price', '!=', NULL);
-//                $query->orWhere('individual_discounted_unit_price', '!=', '0');
+                $query->orWhere('individual_discounted_unit_price', '!=', '0');
                 if(isset($filterOptions['term']))
                 {
-                    $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
-                        ->orWhere('name_ar', 'LIKE', '%'. $filterOptions['term'] .'%');
+                    $query->where(function($query) use ($filterOptions){
+                        $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
+                            ->orWhere('name_ar', 'LIKE', '%'. $filterOptions['term'] .'%');
+                    });
                 }
             }
 
             if ( $user->type == User::TYPE_CORPORATE )
             {
-                $query->where('corporate_discounted_unit_price', '!==', NULL);
-                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
+                $query->where('corporate_discounted_unit_price', '!=', NULL);
+//                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
                 if(isset($filterOptions['term']))
                 {
-                    $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
-                        ->orWhere('name_ar', 'LIKE', '%'. $filterOptions['term'] .'%');
+                    $query->where(function($query) use ($filterOptions){
+                        $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
+                            ->orWhere('name_ar', 'LIKE', '%'. $filterOptions['term'] .'%');
+                    });
                 }
             }
         });
@@ -165,6 +180,7 @@ class ProductController extends Controller {
         else
         {
             $products = $query->active()->orderBy( 'created_at', 'desc' )->paginate(12);
+//            dd($products);
         }
 
         if ( !empty($products ))

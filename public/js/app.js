@@ -4010,6 +4010,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 function formatState(state) {
   if (!state.id) {
     return state.text;
@@ -4183,7 +4184,8 @@ function formatState(state) {
           "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
         }
       })]).then(axios.spread(function (productResponse) {
-        _this4.product = productResponse.data; //reset sku
+        _this4.product = productResponse.data;
+        console.log(_this4.product); //reset sku
 
         _this4.selected_attribute.sku = _this4.product.sku;
 
@@ -35882,7 +35884,7 @@ var render = function() {
                         attrs: {
                           "active-color": "#e01b22",
                           "show-rating": false,
-                          rating: 2,
+                          rating: _vm.product.rating,
                           "item-size": 35,
                           "border-color": "#fff",
                           "read-only": ""
@@ -35900,20 +35902,26 @@ var render = function() {
                     ]),
                     _vm._v("  " + _vm._s(_vm.$t("pages.reviews")))
                   ]),
-                  _vm._v("   /\n                                "),
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.checkUserAbilityToReview($event)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.$t("pages.addYourReview")))]
-                  )
+                  _vm._v(" "),
+                  _vm.isAuth
+                    ? _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.checkUserAbilityToReview($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            " / \t \t  " + _vm._s(_vm.$t("pages.addYourReview"))
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),

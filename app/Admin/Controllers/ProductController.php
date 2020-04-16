@@ -226,11 +226,9 @@ class ProductController extends AdminController {
                 $form->text( 'max_qty', 'qty' )->rules( 'required' );
                 $form->text( 'individual_unit_price', 'Individual Unit Price' )->rules( 'required' );
                 $form->text( 'individual_discounted_unit_price', 'Individual Discounted Unit Price' )
-                        ->rules( 'required' )
                         ->help( 'Add 0 for No discount' );
                 $form->text( 'corporate_unit_price', 'Corporate Unit Price' )->rules( 'required' );
                 $form->text( 'corporate_discounted_unit_price', 'Corporate Discounted Unit Price' )
-                    ->rules( 'required' )
                     ->help( 'Add 0 for No discount' );
             } );
 

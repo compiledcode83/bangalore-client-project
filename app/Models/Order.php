@@ -115,10 +115,10 @@ class Order extends Model
             'final_status' => 'pending',
             'address'    => $prepareShippingAddress,
             'billing_address' => $prepareBillingAddress,
-            'sub_total' => $user->cart->total,
+            'sub_total' => 0,
             'total_discount' => $data['discount'] ?? 0,
             'delivery_charges' => $data['delivery'] ?? 0,
-            'total' => ($user->cart->total - $data['discount'] + $data['delivery']),
+            'total' =>  0,
             'payment_method' => $data['paymentMethod']
         ] );
 
@@ -152,7 +152,10 @@ class Order extends Model
                 'total_price'   => $item->qty * $item->unit_price
             ];
         }
+        $emailConfirmationData['discount'] = $data['discount'];
+        $emailConfirmationData['delivery'] = $data['delivery'];
         $emailConfirmationData['subtotal'] = $itemsTotal;
+        $emailConfirmationData['total'] = ($itemsTotal - $data['discount'] + $data['delivery']);
         $emailConfirmationData['order_code'] = $order->order_code;
         $emailConfirmationData['order_date'] = $order->created_at;
         $emailConfirmationData['payment_method'] = $order->payment_method;
