@@ -109,6 +109,7 @@ export default {
 
         },
         "pages": {
+            "addYourReview": "اضف تقييم",
             "subTotal": "المبلغ إجمالي",
             "totalDiscount": "إجمالي التخفيضات",
             "deliveryCharges": "التوصيل",
@@ -586,6 +587,7 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "addYourReview": "Add review",
             "subTotal": "SubTotal",
             "totalDiscount": "Total Discount",
             "deliveryCharges": "Delivery Charges",

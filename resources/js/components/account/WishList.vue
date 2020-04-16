@@ -20,8 +20,16 @@
                                     </div>
                                     <div class="data clearfix">
                                         <h4>{{product.name_en}}</h4>
-                                        <div class="price">
-                                            {{$t('pages.priceOnRequest')}}
+                                        <div class="price" v-if="isAuthenticated">
+                                            <div v-if="product.price  && product.price.discount">
+                                                {{product.price.discount}} KD
+                                            </div>
+                                            <div v-else>
+                                                {{product.price.baseOriginal}} KD
+                                            </div>
+                                        </div>
+                                        <div class="price" v-else>
+                                            {{$t('pages.login_to_check_price')}}
                                         </div>
                                         <div class="more-data">
                                             <div class="qty">
@@ -47,6 +55,7 @@
     import myAccountBanner from "./partials/TheBanner";
     import _ from 'lodash';
     import EventBus from './event-bus.js'
+    import {mapGetters} from "vuex";
 
     export default {
         components: {myAccountSidebar, myAccountBanner},
@@ -77,6 +86,9 @@
 
         },
         computed: {
+            ...mapGetters('authModule', [
+                'isAuthenticated',
+            ]),
             productChunks(){
                 return _.chunk(Object.values(this.products), 3);
             }

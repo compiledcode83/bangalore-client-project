@@ -153,7 +153,7 @@ class Product extends Model
         foreach ($products as $product)
         {
             //add ratings
-            if ( $product->reviews->first() )
+            if ( isset($product->reviews) && $product->reviews->first() )
             {
                 $reviews = $product->reviews;
                 $count = $reviews->count();
@@ -186,6 +186,57 @@ class Product extends Model
 
         return $products;
     }
+
+    public function addPrices($products, $user)
+    {
+        foreach ($products as $product)
+        {
+            $this->addProductBasePrice($product, $user);
+        }
+
+        return $products;
+    }
+
+    public function addProductBasePrice($product, $user)
+    {
+        if($product->prices && $product->prices->first())
+        {
+            //load prices
+            $priceTable = [];
+            foreach ($product->prices as $price)
+            {
+                if ( $user->type == User::TYPE_USER )
+                {
+                    $discountPrice = null;
+                    if ( $price->individual_discounted_unit_price && $price->individual_discounted_unit_price != '0' )
+                    {
+                        $discountPrice = $price->individual_discounted_unit_price;
+                    }
+                    $priceTable[$price->max_qty] = [
+                        'baseOriginal'    => $price->individual_unit_price,
+                        'discount' => $price->individual_discounted_unit_price
+                    ];
+                }
+
+                if ( $user->type == User::TYPE_CORPORATE )
+                {
+                    $discountPrice = null;
+                    if ( $price->corporate_discounted_unit_price && $price->corporate_discounted_unit_price != '0' )
+                    {
+                        $discountPrice = $price->corporate_discounted_unit_price;
+                    }
+                    $priceTable[$price->max_qty] = [
+                        'baseOriginal'    => $price->corporate_unit_price,
+                        'discount' => $price->corporate_discounted_unit_price
+                    ];
+                }
+            }
+
+            $priceTable = collect($priceTable);
+            $product->price = $priceTable->first();
+        }
+    }
+
 
     public function getProductsFilterAttributes($products)
     {

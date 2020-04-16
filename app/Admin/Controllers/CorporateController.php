@@ -100,9 +100,16 @@ class CorporateController extends AdminController
     {
         $form = new Form(new User);
 
+        $form->hidden( 'type', 'Type' )->default( User::TYPE_CORPORATE );
         $form->text('company', __('Company Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->email('email', __('Email'));
+        $form->mobile('phone', __('Phone'))->options(['mask' => ''])->rules('required');
+        $form->email('email', __('Email'))
+            ->creationRules('required|unique:users,email' )
+            ->updateRules( 'required|unique:users,email,{{id}}' );
+        if($form->isCreating())
+        {
+            $form->password('password', __('Password'));
+        }
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

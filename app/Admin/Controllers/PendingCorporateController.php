@@ -45,6 +45,7 @@ class PendingCorporateController extends AdminController
 
         $grid->disableBatchActions();
         $grid->disableExport();
+        $grid->disableCreateButton();
         return $grid;
     }
 

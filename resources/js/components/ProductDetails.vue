@@ -127,11 +127,11 @@
                                         <form class="col-lg-10 col-lg-offset-1">
                                             <div class="form-group mt-10 mb-10 fullwidth">
                                                 <label for="nickname">{{$t('pages.nickName')}}</label>
-                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" :placeholder="$t('pages.enterYourNickName')" v-model="reviewNickname">
+                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" :placeholder="$t('pages.enterYourNickName')" v-model="reviewNickname" required>
                                             </div>
                                             <div class="form-group mt-10 mb-10 fullwidth">
                                                 <label >{{$t('pages.reviewDetails')}}</label>
-                                                <textarea class="form-control" name="review" v-model="reviewText"></textarea>
+                                                <textarea class="form-control" name="review" v-model="reviewText" required></textarea>
                                             </div>
                                             <br>
                                             <button type="submit" class="btn btn-danger rounded-0"  @click.prevent="submitReview">{{$t('pages.submit')}}</button>
@@ -413,7 +413,11 @@
             },
             loadProductDetails(){
                 axios.all([
-                    axios.get('/api/v1/products/'+this.slug)
+                    axios.get('/api/v1/products/'+this.slug, {
+                        headers: {
+                            "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    })
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
                     //reset sku
@@ -770,6 +774,14 @@
                     });
             },
             submitReview(){
+                if(!this.reviewRating || !this.reviewNickname || !this.reviewText){
+                    this.$swal({
+                        title: 'Error!',
+                        text: "Please fill your form before submit!",
+                        icon: 'error',
+                    });
+                    return 0;
+                }
                 let postData = {
                     'productAttributeId': this.selected_attribute.id,
                     'rate': this.reviewRating,

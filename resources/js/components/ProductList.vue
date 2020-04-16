@@ -183,13 +183,12 @@
                             }
                         })
                 ]).then(axios.spread((categoryResponse) => {
-                    console.log(categoryResponse);
                     this.products = categoryResponse.data.products.data;
+                    console.log(this.products);
                     this.pagination = categoryResponse.data.products;
                     this.category = categoryResponse.data.category;
                     if (categoryResponse.data.filterAttributes) {
-                        this.productsFilterAttributes = categoryResponse.data.filterAttributes
-                        console.log(this.productsFilterAttributes);
+                        this.productsFilterAttributes = categoryResponse.data.filterAttributes;
                     }
                 })).then(() => {
                     this.loading = false;

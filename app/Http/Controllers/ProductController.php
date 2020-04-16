@@ -18,6 +18,7 @@ class ProductController extends Controller {
 
     public function productDetails( $slug, Request $request )
     {
+        $user = Auth::guard('api')->user();
         $product = Product::with( 'productAttributeValues', 'relatedProducts', 'reviews' )
             ->where( 'slug', $slug )
             ->first();
@@ -48,6 +49,7 @@ class ProductController extends Controller {
             $findProduct = Product::find( $relatedProduct->related_product_id );
             if ( $findProduct )
             {
+                $this->productModel->addProductBasePrice($findProduct, $user);
                 $relatedProductsDetails [] = $findProduct;
             }
         }
@@ -147,7 +149,7 @@ class ProductController extends Controller {
             if ( $user->type == User::TYPE_CORPORATE )
             {
                 $query->where('corporate_discounted_unit_price', '!==', NULL);
-//                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
+                $query->orWhere('corporate_discounted_unit_price', '!=', '0');
                 if(isset($filterOptions['term']))
                 {
                     $query->where('name_en', 'LIKE', '%'. $filterOptions['term'] .'%')
@@ -172,6 +174,7 @@ class ProductController extends Controller {
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
             $products = $this->addDiscountsProducts($products, $user);
+            $products = $productModel->addPrices($products, $user);
 
             $response = [
                 'products' => $products,

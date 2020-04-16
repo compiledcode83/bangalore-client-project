@@ -14,8 +14,17 @@
         </div>
         <div class="data clearfix">
             <h4>{{product.name_en}}</h4>
-            <div class="price">
-                {{$t('pages.priceOnRequest')}}
+            <strong class="sku">sku - {{product.sku}}</strong>
+            <div class="price" v-if="isAuthenticated">
+                <div v-if="product.price  && product.price.discount">
+                    {{product.price.discount}} KD <span>{{product.price.baseOriginal}} KD</span>
+                </div>
+                <div v-else>
+                    {{product.price.baseOriginal}} KD
+                </div>
+            </div>
+            <div class="price" v-else>
+                {{$t('pages.login_to_check_price')}}
             </div>
             <div class="rate-cvr clearfix">
                 <div class="rate">
@@ -30,8 +39,8 @@
                 </div>
             </div>
             <div class="btn-group" data-toggle="buttons" v-if="product.colors">
-                <label class="btn selct-clr" v-for="color in product.colors" :style="'background:' + color">
-                    <input type="radio" name="options" autocomplete="off" chacked="">
+                <label class="btn selct-clr" v-for="color in product.colors" :style="'background:' + color + ';cursor: default;'">
+                    <input type="radio" name="options" autocomplete="off" chacked="" style="">
                 </label>
             </div>
         </div>
@@ -41,6 +50,7 @@
 
 <script>
     import {StarRating} from 'vue-rate-it';
+    import {mapGetters} from "vuex";
     export default {
         props: ['product'],
         components:{
@@ -50,6 +60,11 @@
             onImageLoadFailure(event, size) {
                 event.target.src = 'https://via.placeholder.com/' + size;
             }
+        },
+        computed: {
+            ...mapGetters('authModule', [
+                'isAuthenticated',
+            ])
         }
     }
 </script>

@@ -66,9 +66,12 @@
                                 <img :src="'/uploads/' + product.main_image"
                                      @error="onImageLoadFailure($event)" style="width: 370px;height: 360px;">
                                 <h3>{{product.name_en}}</h3>
-                                <p>{{product.short_description}}</p>
+                                <p v-if="product.short_description_en">{{product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40) + ' ...'}}</p>
                                 <div class="price clearfix">
-                                    <div class="pull-right new">KD {{product.individual_unit_price}}</div>
+                                    <div v-if="product.price  && product.price.discount">
+                                        <div class="pull-left old"> {{product.price.baseOriginal}} KD</div>
+                                        <div class="pull-right new"> {{product.price.discount}} KD</div>
+                                    </div>
                                 </div>
                             </div>
                         </router-link>
@@ -231,7 +234,11 @@
                     axios.get('/api/v1/home-sliders', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
                     axios.get('/api/v1/home-arrivals', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
                     axios.get('/api/v1/home-offers', {headers: {'xLocalization' : this.$store.state.langModule.lang}}),
-                    axios.get('/api/v1/home-best-sellers', {headers: {'xLocalization' : this.$store.state.langModule.lang}})
+                    axios.get('/api/v1/home-best-sellers', {
+                        headers: {
+                            'xLocalization' : this.$store.state.langModule.lang,
+                            "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                        }})
                 ])
                     .then(axios.spread((slidersResponse, arrivalsResponse, offersResponse, bestSellersResponse) => {
 
@@ -239,6 +246,8 @@
                         this.arrivals   = arrivalsResponse.data;
                         this.offers     = offersResponse.data;
                         this.products   = bestSellersResponse.data;
+
+                        console.log(this.products)
 
                     }));
             }

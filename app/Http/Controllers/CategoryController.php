@@ -108,22 +108,22 @@ class CategoryController extends Controller {
             }
         }
 
-        if(isset($filterOptions['min']) || isset($filterOptions['max']))
-        {
-            $query->whereHas('prices', function ($query) use ($filterOptions, $user){
-
-                if($user->type == User::TYPE_CORPORATE)
-                {
-                    $query->where('corporate_unit_price', '>=',  $filterOptions['min']);
-                    $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
-                }
-                else
-                {
-                    $query->where('individual_unit_price', '>=',  $filterOptions['min']);
-                    $query->where('individual_unit_price', '<=',  $filterOptions['max']);
-                }
-            });
-        }
+//        if(isset($filterOptions['min']) || isset($filterOptions['max']))
+//        {
+//            $query->whereHas('prices', function ($query) use ($filterOptions, $user){
+//
+//                if($user->type == User::TYPE_CORPORATE)
+//                {
+//                    $query->where('corporate_price', '>=',  $filterOptions['min']);
+//                    $query->where('corporate_price', '<=',  $filterOptions['max']);
+//                }
+//                else
+//                {
+//                    $query->where('user_price', '>=',  $filterOptions['min']);
+//                    $query->where('user_price', '<=',  $filterOptions['max']);
+//                }
+//            });
+//        }
 
         if(isset($filterOptions['sort']))
         {
@@ -153,6 +153,24 @@ class CategoryController extends Controller {
 
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
+            $products = $productModel->addPrices($products,$user);
+
+            if(isset($filterOptions['min']) || isset($filterOptions['max']))
+            {
+                foreach ($products as $product)
+                {
+                    if($product->price['discount']){
+
+                        if($product->price['discount'] < $filterOptions['min'] && $product->price['discount'] > $filterOptions['max']){
+                            $products->forget($product);
+                        }
+                    }else{
+                        if($product->price['baseOriginal'] < $filterOptions['min'] && $product->price['baseOriginal'] > $filterOptions['max']){
+                            $products->forget($product);
+                        }
+                    }
+                }
+            }
 
             $response = [
                 'category' => [
