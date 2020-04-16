@@ -118,32 +118,16 @@
                         <div class="row payment-mthd">
                             <div class="col-xs-6 col-sm-6 col-md-3">
                                 <div class="bx">
-                                    <label class="checkbox"><img src="images/visa.png">
-                                        <input type="radio" name="payment" value="visa" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/master-card.png">
-                                        <input type="radio" name="payment" value="master" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/knet.png">
-                                        <input type="radio" name="payment" value="knet" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/cod.png">
+                                    <label class="checkbox"><img :src="'/'+siteSettings.cod_logo">
                                         <input type="radio" name="payment" value="cash" v-model="paymentMethod">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-3">
+                                <div class="bx">
+                                    <label class="checkbox"><img :src="'/'+siteSettings.tab_logo">
+                                        <input type="radio" name="payment" value="tab" v-model="paymentMethod">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -204,7 +188,8 @@
                 hasPlacedOrder: false,
                 deliveryCharges: null,
                 selectedAddress: {},
-                defaultBillingAddress: {}
+                defaultBillingAddress: {},
+                siteSettings: null,
             }
         },
         watch: {
@@ -253,6 +238,11 @@
                 });
                 console.log(this.userAddresses);
             });
+
+            axios.get('/api/v1/settings/')
+                .then((response) =>{
+                    this.siteSettings = response.data;
+                });
         },
         methods: {
             checkUserAuth(){

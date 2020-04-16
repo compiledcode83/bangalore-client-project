@@ -2520,22 +2520,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2553,7 +2537,8 @@ __webpack_require__.r(__webpack_exports__);
       hasPlacedOrder: false,
       deliveryCharges: null,
       selectedAddress: {},
-      defaultBillingAddress: {}
+      defaultBillingAddress: {},
+      siteSettings: null
     };
   },
   watch: {
@@ -2602,6 +2587,9 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       console.log(_this3.userAddresses);
+    });
+    axios.get('/api/v1/settings/').then(function (response) {
+      _this3.siteSettings = response.data;
     });
   },
   methods: {
@@ -33814,109 +33802,9 @@ var render = function() {
                   _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-3" }, [
                     _c("div", { staticClass: "bx" }, [
                       _c("label", { staticClass: "checkbox" }, [
-                        _c("img", { attrs: { src: "images/visa.png" } }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.paymentMethod,
-                              expression: "paymentMethod"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "payment",
-                            value: "visa"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.paymentMethod, "visa")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.paymentMethod = "visa"
-                            }
-                          }
+                        _c("img", {
+                          attrs: { src: "/" + _vm.siteSettings.cod_logo }
                         }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "checkmark" })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-3" }, [
-                    _c("div", { staticClass: "bx" }, [
-                      _c("label", { staticClass: "checkbox" }, [
-                        _c("img", { attrs: { src: "images/master-card.png" } }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.paymentMethod,
-                              expression: "paymentMethod"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "payment",
-                            value: "master"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.paymentMethod, "master")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.paymentMethod = "master"
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "checkmark" })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-3" }, [
-                    _c("div", { staticClass: "bx" }, [
-                      _c("label", { staticClass: "checkbox" }, [
-                        _c("img", { attrs: { src: "images/knet.png" } }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.paymentMethod,
-                              expression: "paymentMethod"
-                            }
-                          ],
-                          attrs: {
-                            type: "radio",
-                            name: "payment",
-                            value: "knet"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.paymentMethod, "knet")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.paymentMethod = "knet"
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "checkmark" })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-3" }, [
-                    _c("div", { staticClass: "bx" }, [
-                      _c("label", { staticClass: "checkbox" }, [
-                        _c("img", { attrs: { src: "images/cod.png" } }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -33938,6 +33826,42 @@ var render = function() {
                           on: {
                             change: function($event) {
                               _vm.paymentMethod = "cash"
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "checkmark" })
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-3" }, [
+                    _c("div", { staticClass: "bx" }, [
+                      _c("label", { staticClass: "checkbox" }, [
+                        _c("img", {
+                          attrs: { src: "/" + _vm.siteSettings.tab_logo }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.paymentMethod,
+                              expression: "paymentMethod"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "payment",
+                            value: "tab"
+                          },
+                          domProps: {
+                            checked: _vm._q(_vm.paymentMethod, "tab")
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.paymentMethod = "tab"
                             }
                           }
                         }),

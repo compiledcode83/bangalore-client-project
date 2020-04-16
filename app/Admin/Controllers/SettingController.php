@@ -55,7 +55,6 @@ class SettingController extends AdminController
             $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
             $form->text('header_phone', __('Header Phone'));
             })->tab('Banners', function ($form) {
-                $form->image('contact_us_banner', __('Contact us banner'))->rules( 'required' )->required();
                 $form->image('faq_banner', __('Faq banner'))->rules( 'required' )->required();
                 $form->image('sitemap_banner', __('Sitemap banner'))->rules( 'required' )->required();
                 $form->image('media_banner', __('Media banner'))->required();
@@ -86,7 +85,11 @@ class SettingController extends AdminController
                 $form->image('client_img', __('Client Banner'))->move('pages')->uniqueName()->rules( 'required' );
                 $form->ckeditor('client_description_en', __('Body en'))->rules( 'required' );
                 $form->ckeditor('client_description_ar', __('Body ar'))->rules( 'required' );
-            });
+            })->tab('Payment Logos', function ($form) {
+
+                $form->image('cod_logo', __('Cash On Delivery'))->rules( 'required' );
+                $form->image('tab_logo', __('Tab'))->rules( 'required' );
+        });
 
         $form->tools(function (Form\Tools $tools) {
             $tools->disableList();
