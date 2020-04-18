@@ -70,6 +70,19 @@
                         }
                     ).then((response) => {
                         this.newsletter = response.data;
+                        if(response.data){
+                            this.$swal({
+                                title: 'Congratulations!',
+                                text: "You subscribed successfully!",
+                                icon: 'success',
+                            });
+                        }else{
+                            this.$swal({
+                                title: 'Good buy!',
+                                text: "You unsubscribed successfully!",
+                                icon: 'success',
+                            });
+                        }
                     });
                 }else{
                     console.log('No authorization');

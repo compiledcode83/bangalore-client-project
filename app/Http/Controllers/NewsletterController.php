@@ -15,13 +15,33 @@ class NewsletterController extends Controller
         return $user->is_subscribed;
     }
 
+    public function updateSubscriptionByEmail(Request $request)
+    {
+        $user = Auth::user();
+        $attribute = $request->only('newsletter');
+
+        $findUser = User::find($user->id);
+        if($findUser->email != $attribute['newsletter'])
+        {
+            return 0;
+        }
+        $findUser->update([
+            'is_subscribed' => $attribute['newsletter'] ? 1 : 0
+        ]);
+
+        return $findUser->is_subscribed;
+    }
+
     public function updateSubscription(Request $request)
     {
         $user = Auth::user();
         $attribute = $request->only('newsletter');
 
         $findUser = User::find($user->id);
-        $findUser->update(['is_subscribed' => $attribute['newsletter']]);
+            
+        $findUser->update([
+            'is_subscribed' => $attribute['newsletter'] ? 1 : 0
+        ]);
 
         return $findUser->is_subscribed;
     }

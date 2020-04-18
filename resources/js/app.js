@@ -114,13 +114,14 @@ axios.interceptors.request.use(
     },
     (requestError) => Promise.reject(requestError),
 );
+
 axios.interceptors.response.use(
     response => response,
     (error) => {
-        if (error.response.status === 401) {
+        if (error.response.status === 401 ) {
             // Clear token and redirect
             store.commit('authModule/setAccessToken', null);
-            window.location.replace(`${window.location.origin}/login`);
+            // window.location.replace(`${window.location.origin}/login`);
         }
         return Promise.reject(error);
     },

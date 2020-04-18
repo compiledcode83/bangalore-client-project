@@ -24,8 +24,8 @@ class CreateAddressRequest extends FormRequest {
     public function rules()
     {
         return [
-            'governorate' => 'required',
-            'area'        => 'required',
+            'governorate' => 'required|not_in:0',
+            'area'        => 'required|not_in:0',
             'street'      => 'required',
             'block'       => 'required',
             'building'    => 'required',

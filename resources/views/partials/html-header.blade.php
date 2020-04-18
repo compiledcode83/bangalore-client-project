@@ -25,10 +25,55 @@
 <!-- rating style -->
 <link rel="stylesheet" href="/css/rateit.css">
 
+<!-- custom input css arabic  -->
+{{--<link rel="stylesheet" href="/css/custom-input-ar.css">--}}
+
 <!-- custom style -->
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/custom-dev-style.css"/>
 
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<style>
+    .product-listing .prod-bx .data{
+        position: relative;
+        /* overflow: hidden; */
+    }
+    .product-listing .prod-bx strong.sku{
+        font-size: 12px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0;
+        background: rgba(249, 156, 28);
+        padding: 5px;
+        color: #fff;
+        box-shadow:0px -5px 10px rgba(0, 0, 0, 0.35);
+        transform: translateY(0px);
+        transition: 0.5s;
+        /* display: none; */
+        opacity: 0;
+        text-align: center;
+    }
+    .product-listing .prod-bx:hover strong.sku{
+        transform: translateY(-35px);
+        transition: 0.2s;
+        /* display: block; */
+        opacity: 1;
+    }
+</style>
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

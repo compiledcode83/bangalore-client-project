@@ -59,8 +59,8 @@
                                     <span> {{$t('pages.sortBy')}} : </span>
                                     <select v-model="filterSort" @change="loadProducts">
                                         <option></option>
-<!--                                        <option>{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>-->
-<!--                                        <option>{{$t('pages.price')}} - {{$t('pages.lowToHigh')}}</option>-->
+                                        <option value="price_asc">{{$t('pages.price')}} - {{$t('pages.lowToHigh')}}</option>
+                                        <option value="price_desc">{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>
                                         <option value="asc">{{$t('pages.alphabetic')}} - {{$t('pages.aToZ')}}</option>
                                         <option value="desc">{{$t('pages.alphabetic')}} - {{$t('pages.zToA')}}</option>
                                     </select>
@@ -98,18 +98,24 @@
         components: {ProductFilter, ProductBox, VueContentLoading},
         props: ['filterCategories', 'filterColor', 'filterMinPrice', 'filterMaxPrice', 'filterDiscounts'],
         mounted() {
-            console.log('lang:'+ this.i18n);
             this.slug = this.$route.params.slug;
             this.loadFilterCategoriesList();
             this.loadFilterColorsList();
             this.loadProducts();
         },
         watch: {
-            '$route' (to, from) {
-                this.slug = to.params.slug;
+            '$route.query' (to, from) {
+
+                this.slug = this.$route.params.slug;
                 this.loadFilterCategoriesList();
                 this.loadFilterColorsList();
-                this.loadProducts();
+
+                if(this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath)
+                {
+                    this.loadProducts();
+                }
+
+                this.currentFullPath = this.$route.fullPath;
             }
         },
         computed: {
@@ -118,7 +124,7 @@
             }
         },
         methods: {
-            loadProducts(){
+            getFilterData(){
                 let filterQueryString = '';
                 if(this.filterCategories && this.filterCategories.length >= 1){
                     if(filterQueryString !== ''){
@@ -136,7 +142,14 @@
                     if(filterQueryString !== ''){
                         filterQueryString += '&';
                     }
-                    filterQueryString += 'sort='+this.filterSort
+                    if(this.filterSort == 'price_asc'){
+                        filterQueryString += 'sort_by_price=asc';
+                    }else if(this.filterSort == 'price_desc'){{
+                        filterQueryString += 'sort_by_price=desc';
+                    }
+                    }else{
+                        filterQueryString += 'sort='+this.filterSort
+                    }
                 }
                 if(this.filterColor && this.filterColor.length >= 1){
                     if(filterQueryString !== ''){
@@ -168,27 +181,69 @@
                     filterQueryString = '?'+filterQueryString;
                 }
 
+                return filterQueryString;
+            },
+            loadProducts(){
+                let filterQueryString = this.getFilterData();
+
+
                 this.products = [];
                 axios.all([
-                    axios.get('/api/v1/category-products/'+this.slug+filterQueryString)
+                    axios.get('/api/v1/category-products/' + this.slug + filterQueryString,
+                        {
+                            headers: {
+                                "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        })
                 ]).then(axios.spread((categoryResponse) => {
-                    console.log(categoryResponse);
                     this.products = categoryResponse.data.products.data;
+                    console.log(categoryResponse.data.products.data);
                     this.pagination = categoryResponse.data.products;
-                    this.category   = categoryResponse.data.category;
-                    if(categoryResponse.data.filterAttributes){
-                        this.productsFilterAttributes = categoryResponse.data.filterAttributes
+                    this.category = categoryResponse.data.category;
+                    if (categoryResponse.data.filterAttributes) {
+                        this.productsFilterAttributes = categoryResponse.data.filterAttributes;
                     }
                 })).then(() => {
                     this.loading = false;
                 });
             },
             loadMoreProducts(){
+                let filterQueryString = this.getFilterData();
                 let next_page = this.pagination.current_page + 1;
+                let operatorQuery = '?';
+                if (filterQueryString){
+                    operatorQuery = '&';
+                }
                 axios.all([
-                    axios.get('/api/v1/category-products/'+this.slug+'?page='+ next_page)
+                    axios.get('/api/v1/category-products/'+this.slug + filterQueryString + operatorQuery + 'page='+ next_page,{
+                        headers: {
+                            "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    })
                 ]).then(axios.spread((categoryResponse) => {
-                    this.products.push(...categoryResponse.data.products.data);
+                    console.log(categoryResponse.data.products.data);
+                    if(Array.isArray(categoryResponse.data.products.data)){
+                        // console.log(categoryResponse.data.products.data);
+                        this.products.push(...categoryResponse.data.products.data);
+                    }else{
+                        // let objectArray = Object.entries(categoryResponse.data.products.data);
+
+                        let objectArray  = Object.keys(categoryResponse.data.products.data);
+
+                        objectArray.forEach(function(value){
+                            value = categoryResponse.data.products.data.value;
+
+                        });
+                        let arr = [];
+                        let objKeys = Object.keys(categoryResponse.data.products.data);
+                        let objValues = Object.values(categoryResponse.data.products.data);
+                        for (let i = 0; i < objKeys.length; i++) {
+                            arr[objKeys[i]] = objValues[i];
+                        }
+                        console.log(arr);
+                        console.log(Object.values(categoryResponse.data.products.data));
+                        this.products.push(...Object.values(categoryResponse.data.products.data));
+                    }
                     this.pagination = categoryResponse.data.products;
                     this.category   = categoryResponse.data.category;
                 }));
@@ -209,6 +264,9 @@
                     .then((response) => {
                         this.filterColorsList = response.data;
                     });
+            },
+            resetColorFilter(colorFromQuery){
+                this.filterColor = colorFromQuery;
             }
 
         },
@@ -225,7 +283,8 @@
                 category: {},
                 products: [],
                 productsFilterAttributes: [],
-                pagination: {}
+                pagination: {},
+                currentFullPath: null,
             }
         }
     }

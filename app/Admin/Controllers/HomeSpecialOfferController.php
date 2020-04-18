@@ -37,7 +37,7 @@ class HomeSpecialOfferController extends AdminController {
                 $batch->disableDelete();
             });
         });
-        $grid->disableExport();
+
 
         $grid->model()->orderBy( 'item_location', 'desc' );
         $grid->model()->where( 'type', '=', 'special_offers' );
@@ -48,6 +48,8 @@ class HomeSpecialOfferController extends AdminController {
         $grid->column( 'item_location', __( 'Item location' ) );
         $grid->column( 'created_at', __( 'Created at' ) );
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 

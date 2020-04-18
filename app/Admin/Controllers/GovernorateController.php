@@ -61,8 +61,9 @@ class GovernorateController extends AdminController
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
         });
-        $grid->disableExport();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -75,8 +76,8 @@ class GovernorateController extends AdminController
     {
         $form = new Form(new Governorate);
 
-        $form->text('name_en', __('English Name'));
-        $form->text('name_ar', __('Arabic Name'));
+        $form->text('name_en', __('English Name'))->rules( 'required' );
+        $form->text('name_ar', __('Arabic Name'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
 
         $form->tools(function (Form\Tools $tools) {

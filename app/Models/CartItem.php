@@ -42,7 +42,9 @@ class CartItem extends Model
             }
             //update Item qty
             $checkItem->update([
-                'qty' => $attributes['product_qty']
+                'qty' => $attributes['product_qty'],
+                'unit_price' => $attributes['product_price'],
+                'unit_discount' => $attributes['product_discount'],
             ]);
 
             return 'Item updated successfully!';
@@ -56,6 +58,7 @@ class CartItem extends Model
             'qty'                        => $attributes['product_qty'],
             'color_name'                 => $attributes['product_color_name'],
             'unit_price'                 => $attributes['product_price'],
+            'unit_discount'               => $attributes['product_discount'],
         ];
         if(isset($attributes['print_image']))
         {

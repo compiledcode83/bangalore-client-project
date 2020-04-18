@@ -32,7 +32,10 @@
                                     <div class="col-lg-8 col-md-7 data">
                                         <h4> {{cartItem.item_name}} </h4>
                                         <strong>Color</strong> - {{cartItem.product_color_name}}<br>
-                                        <p v-if="cartItem.description"></p>
+                                        <p v-if="cartItem.item_description">{{cartItem.item_description}}</p>
+                                        <div v-if="cartItem.product_print_image">
+                                            <strong>Print Image</strong> - <a :href="cartItem.product_print_image" target="_blank"> Open Print Image </a><br>
+                                        </div>
                                     </div>
                                     <div class="col-lg-4 col-md-5 price">
                                         <div class="row">
@@ -64,7 +67,7 @@
                                     </div><!--/.col-md-4-->
                                     <div class="col-md-12 mt-30">
                                         <div class="pull-left">
-                                            <a href="#" class="move">{{$t('pages.moveToWishList')}}</a>
+                                            <a href="#" class="move" @click.prevent="addToWishList(cartItem.product_attribute_id)">{{$t('pages.moveToWishList')}}</a>
                                         </div>
                                         <div class="pull-right">
                                             <a @click.prevent="activateCartQtyInput(cartItem.product_attribute_id)" class="icons" style="cursor: pointer;">
@@ -94,7 +97,7 @@
                                     {{$t('pages.discount')}}
                                 </div>
                                 <div class="col-xs-6 list text-right" v-if="discount">
-                                    {{$t('pages.kd')}} {{cart.discount}}
+                                    {{$t('pages.kd')}} {{calcDiscount}}
                                 </div>
 <!--                                <div class="col-xs-6 list">-->
 <!--                                    Delivery-->
@@ -140,8 +143,30 @@
         },
         mounted() {
             $('.cart_box').hide(600);
+            this.discount = this.calcDiscount;
+            console.log(this.cart);
         },
         methods: {
+            addToWishList(productId){
+                if (this.$store.getters['authModule/isAuthenticated']) {
+                    axios.post(
+                        '/api/v1/account/wishlist/attribute', {'attributeId': productId},
+                        {headers: {
+                                "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        }
+                    ).then((response) => {
+                        this.$swal({
+                            title: 'Success!',
+                            text: "item Added to wishList successfully!",
+                            icon: 'success',
+                        });
+                    });
+                }else{
+                    console.log('No authorization');
+                }
+
+            },
             activateCartQtyInput(itemId){
                 let item = this.cart.items.find(cart => cart.product_attribute_id == itemId);
                 //change status => input status
@@ -160,6 +185,9 @@
             validateQty(item){
                 if(item.product_qty < this.minimumQty){
                     item.product_qty = this.minimumQty;
+                }
+                if(item.product_qty > item.stock){
+                    item.product_qty = item.stock;
                 }
                 // check if price need to update
                 this.$store
@@ -220,9 +248,20 @@
                 return total;
             },
             totalCart(){
-
-                return this.subTotalCart - this.discount;
+                return this.subTotalCart - this.calcDiscount;
             },
+            calcDiscount(){
+
+                let discount = 0;
+                this.cart.items.forEach(function(item){
+                    if(item.product_discount > 0){
+                        discount += (item.product_discount * item.product_qty);
+                    }
+                });
+
+                return discount;
+
+            }
         }
 
     }

@@ -59,6 +59,8 @@ class CorporateController extends AdminController
             ])->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -77,7 +79,13 @@ class CorporateController extends AdminController
         $show->field('email', __('Email'));
         $show->field('job_title', __('Job Title'));
         $show->field('contact_person', __('Contact Person'));
-        $show->field('company_license', __('Company License'))->file();
+        $show->company_license()->as(function ($company_license) {
+            if($company_license)
+            {
+                return '/uploads/corporates/'.$company_license;
+            }
+            return "No uploads";
+        })->link();
         $show->type(__('Account Type'))
             ->using([User::TYPE_USER => 'USER', User::TYPE_CORPORATE => 'CORPORATE']);
         $show->is_subscribed(__('Is subscribed'))
@@ -98,9 +106,16 @@ class CorporateController extends AdminController
     {
         $form = new Form(new User);
 
+        $form->hidden( 'type', 'Type' )->default( User::TYPE_CORPORATE );
         $form->text('company', __('Company Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->email('email', __('Email'));
+        $form->mobile('phone', __('Phone'))->options(['mask' => ''])->rules('required');
+        $form->email('email', __('Email'))
+            ->creationRules('required|unique:users,email' )
+            ->updateRules( 'required|unique:users,email,{{id}}' );
+        if($form->isCreating())
+        {
+            $form->password('password', __('Password'));
+        }
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

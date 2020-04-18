@@ -83,19 +83,26 @@
                         'orderId' : $orderId
                     }
                 ).then((response) => {
-                    console.log(response.data);
-                    let items = response.data.items;
-                    let addedItems = false;
-                    items.forEach(function(item){
-                        addedItems = _this.persistCartItem(item);
-                    });
-                }).then(() => {
-                    this.$swal({
-                        title: 'Your cart is ready!',
-                        text: "Items added to cart successfully!",
-                        icon: 'success'
-                    });
-                })
+                    if(response.data.error) {
+                        this.$swal({
+                            title: 'Error!',
+                            text: response.data.error,
+                            icon: 'error'
+                        });
+                    }else{
+                        let items = response.data.items;
+                        let addedItems = false;
+                        items.forEach(function(item){
+                            addedItems = _this.persistCartItem(item);
+                        });
+
+                        this.$swal({
+                            title: 'Your cart is ready!',
+                            text: "Items added to cart successfully!",
+                            icon: 'success'
+                        });
+                    }
+                });
             },
             persistCartItem(item){
                 this.$store

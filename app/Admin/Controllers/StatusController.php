@@ -29,6 +29,8 @@ class StatusController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('name_en', __('Name'))->width(1000);
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 

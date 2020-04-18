@@ -25,15 +25,14 @@ class Governorate extends Model
     protected $guarded = ['id'];
 
     /**
-     * The "booting" method of the model.
+     * Scope a query to only include active users.
      *
-     * @return void
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected static function boot()
+    public function scopeActive($query)
     {
-        parent::boot();
-
-        static::addGlobalScope(new ActiveScope());
+        return $query->where('is_active', 1);
     }
 
     /**
@@ -41,6 +40,6 @@ class Governorate extends Model
      */
     public function areas()
     {
-        return $this->hasMany(Area::class);
+        return $this->hasMany(Area::class)->active();
     }
 }

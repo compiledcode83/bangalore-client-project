@@ -28,9 +28,9 @@
 
             <div class="container innr-cont-area">
                 <div class="input-group big-searchbox">
-                    <input type="text" class="form-control" v-model="term"  placeholder="Keyword Search" >
+                    <input type="text" class="form-control" v-model="searchTerm"  placeholder="Keyword Search" >
                     <span class="input-group-addon rounded-0">
-              <button type="submit" class="btn btn-success rounded-0" >
+              <button type="submit" class="btn btn-success rounded-0" @click.prevent="searchProducts">
                   <span class="glyphicon glyphicon-search"></span>
                   {{$t('pages.search')}}
               </button>
@@ -98,11 +98,11 @@
                 filterColorsList: {},
                 current_page: 0,
                 category: {},
-                pagination: {}
+                pagination: {},
+                searchTerm: this.term
             }
         },
         mounted() {
-            console.log(this.products);
             this.loading = false;
             // this.slug = this.$route.params.slug;
             // this.loadFilterCategoriesList();
@@ -123,6 +123,25 @@
             }
         },
         methods: {
+            searchProducts(){
+
+                if(this.searchTerm === '') {
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please add some text ...',
+                    });
+                    return;
+                }
+                axios.get('/api/v1/search/'+this.searchTerm)
+                    .then((responseProducts) => {
+                        $('#search').removeClass('open');
+                        return this.$router.push({ name: 'searchProducts', query: {
+                                term: this.searchTerm
+                            },params: { products: responseProducts.data, term: this.searchTerm }
+                        });
+                    });
+            },
             loadProducts(){
 
                 let filterQueryString = '';

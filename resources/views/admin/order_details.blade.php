@@ -1,12 +1,5 @@
 <div>
 
-    <div class="pad margin no-print">
-        <div class="callout callout-info" style="margin-bottom: 0!important;">
-            <h4><i class="fa fa-info"></i> Note:</h4>
-            This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-        </div>
-    </div>
-
     <!-- Main content -->
     <section class="invoice">
         <!-- title row -->
@@ -14,7 +7,7 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                     <i class="fa fa-globe"></i> ITC Promotions, Inc.
-                    <small class="pull-right">Date: 2/10/2014</small>
+                    <small class="pull-right">Date: {{$order->created_at}}</small>
                 </h2>
             </div>
             <!-- /.col -->
@@ -22,31 +15,25 @@
         <!-- info row -->
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
-                From
-                <address>
-                    <strong>Admin, Inc.</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
+                <strong> Shipping Address </strong>
+                <address style="width: 50%;">
+                    {{$order->address}}
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                To
-                <address>
-                    <strong>John Doe</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (555) 539-1037<br>
-                    Email: john.doe@example.com
+                <strong>Billing Address</strong>
+                <address style="width: 50%;">
+                    {{$order->billing_address}}
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                <b>Invoice #007612</b><br>
-                <br>
-                <b>Order ID:</b> 4F3S8J<br>
+{{--                <b>Invoice #007612</b><br>--}}
+                <b>Order ID:</b> {{$order->order_code}}<br>
+                <b>Customer:</b> {{$order->user->full_name}}<br>
+                <b>Customer Email:</b> {{$order->user->email}}<br>
+                <b>Customer Phone:</b> {{$order->user->phone}}<br>
             </div>
             <!-- /.col -->
         </div>
@@ -71,7 +58,8 @@
                             <td>{{$item->qty}}</td>
                             <td>{{$item->productAttributeValue->product->name_en}}</td>
                             <td>{{$item->productAttributeValue->sku}}</td>
-                            <td>{{$item->productAttributeValue->product->description_en}}</td>
+                            strip_tags($subject->body);
+                            <td>{{Str::substr(strip_tags($item->productAttributeValue->product->short_description_en), 0,20)}}</td>
                             <td>{{($item->unit_price * $item->qty)}}</td>
                         </tr>
                     @endforeach
@@ -85,26 +73,25 @@
         <div class="row">
             <!-- accepted payments column -->
             <div class="col-xs-6">
-                <p class="lead">Payment Methods:</p>
-                <img src="../../dist/img/credit/visa.png" alt="Visa">
-                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+                <p class="lead">Payment Methods: {{$order->payment_method}}</p>
 
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
-                <p class="lead"> Amount Due 2/22/2014 </p>
 
                 <div class="table-responsive">
                     <table class="table">
                         <tr>
                             <th style="width:50%">Subtotal:</th>
-                            <td>{{$order->total}} KWD</td>
+                            <td>{{$order->sub_total}} KWD</td>
                         </tr>
                         <tr>
                             <th>Shipping:</th>
-                            <td>0</td>
+                            <td>{{$order->delivery_charges}} KWD</td>
+                        </tr>
+                        <tr>
+                            <th>Discount:</th>
+                            <td>{{$order->total_discount}} KWD</td>
                         </tr>
                         <tr>
                             <th>Total:</th>

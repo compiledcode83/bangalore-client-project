@@ -14,9 +14,11 @@
         <div class="col-xs-10 col-sm-8 clearfix top-links">
             <ul class="">
                 <li>
-                  <span class="main" href="">
-                    <span class=""><img src="/images/call.png" alt=""></span>
-                    <span class="hidden-xs"> {{settings.header_phone}} </span>
+                  <span class="main">
+                      <a :href="'tel:'+settings.header_phone" style="color: #fff;">
+                        <span class=""><img src="/images/call.png" alt=""></span>
+                        <span class="hidden-xs"> {{settings.header_phone}} </span>
+                      </a>
                   </span>
                 </li><!--/li-->
                 <li>
@@ -116,6 +118,9 @@
                         if (this.href.indexOf('bootstrap.css')>=0) {
                             this.href = this.href.replace('bootstrap.css', 'bootstrap-rtl.css');
                         }
+                        if (this.href.indexOf('custom-input.css')>=0) {
+                            this.href = this.href.replace('custom-input.css', 'custom-input-ar.css');
+                        }
                     });
                 }else{
                     $('link[rel="stylesheet"]').each(function () {
@@ -124,6 +129,9 @@
                         }
                         if (this.href.indexOf('bootstrap-rtl.css')>=0) {
                             this.href = this.href.replace('bootstrap-rtl.css', 'bootstrap.css');
+                        }
+                        if (this.href.indexOf('custom-input-ar.css')>=0) {
+                            this.href = this.href.replace('custom-input-ar.css', 'custom-input.css');
                         }
                     });
                 }
@@ -141,6 +149,8 @@
             submit() {
                 this.logout()
                     .then(() => {
+                        this.$store
+                            .dispatch('clearCart');
                         this.$router.push({
                             path: '/login'
                         });

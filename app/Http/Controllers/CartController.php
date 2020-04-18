@@ -11,8 +11,8 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 
-class CartController extends Controller
-{
+class CartController extends Controller {
+
     protected $cartModel;
     protected $cartItemModel;
 
@@ -22,30 +22,68 @@ class CartController extends Controller
         $this->cartItemModel = $cartItemModel;
     }
 
-    // save cart items in DB
-    public function storeItem(Request $request)
+    public function restoreCart()
     {
-        $photo = $request->only('file');
+        $user = Auth::guard( 'api' )->user();
+
+        if($user)
+        {
+            $getCart = Cart::where( 'user_id', $user->id )->first();
+            $getItems = [];
+            foreach ($getCart->cartItems as $item)
+            {
+                $getItems[] = [
+                    'item_name'            => $item->item_name,
+                    'product_attribute_id' => $item->product_attribute_value_id,
+                    'product_image'        => $item->item_image,
+                    'product_qty'          => $item->qty,
+                    'product_color_name'   => $item->color_name,
+                    'product_price'        => $item->unit_price,
+                    'print_image'          => $item->print_image
+                ];
+            }
+
+            $cart = [
+                'items'    => $getItems,
+                'subtotal' => $getCart->subtotal,
+                'discount' => $getCart->discount,
+                'total'    => $getCart->total,
+            ];
+
+            return $cart;
+        }
+
+        return 'Unauthorized 999';
+    }
+
+    // save cart items in DB
+    public function storeItem( Request $request )
+    {
+        $photo = $request->only( 'file' );
         $printImage = '';
-        if($request->hasFile('file'))
+        if ( $request->hasFile( 'file' ) )
         {
             //save image
-            $imageName =  Str::random(15);
-            $printImage = $imageName . '.jpg';
+            $imageName = $photo['file']->getClientOriginalName();
+            $filename = pathinfo($imageName, PATHINFO_FILENAME);
+            $extension = pathinfo($imageName, PATHINFO_EXTENSION);
+            $filename = Str::slug($filename, '-');
 
-            Image::make($photo['file'])
-                ->encode('jpg')
-                    ->save('uploads/print_images/' . $printImage);
+            $printImage = $filename .'.'. $extension;
+
+            Image::make( $photo['file'] )
+                ->encode( 'jpg' )
+                ->save( 'uploads/print_images/' . $printImage );
         }
 
         $user = Auth::user();
-        if(!$user->cart)
+        if ( !$user->cart )
         {
             $attributesCart = $request->only( [
                 'total', 'discount'
             ] );
 
-            $user->cart = $this->cartModel->createNewCart($user->id, $attributesCart);
+            $user->cart = $this->cartModel->createNewCart( $user->id, $attributesCart );
         }
 
         $attributesCartItem = $request->only( [
@@ -54,27 +92,28 @@ class CartController extends Controller
             'product_image',
             'product_qty',
             'product_color_name',
-            'product_price'
+            'product_price',
+            'product_discount',
         ] );
 
-        if($request->hasFile('file'))
+        if ( $request->hasFile( 'file' ) )
         {
-            $attributesCartItem['print_image'] = 'uploads/print_images/'.$printImage;
+            $attributesCartItem['print_image'] = 'uploads/print_images/' . $printImage;
         }
 
-        $this->cartItemModel->handleCartItem($user->cart->id, $attributesCartItem);
+        $this->cartItemModel->handleCartItem( $user->cart->id, $attributesCartItem );
 
-        if($request->hasFile('file'))
+        if ( $request->hasFile( 'file' ) )
         {
             return ['fileName' => $printImage];
         }
     }
 
-    public function updateItem(Request $request)
+    public function updateItem( Request $request )
     {
         $user = Auth::user();
 
-        if(!$user->cart->id)
+        if ( !$user->cart->id )
         {
             return 'Cart not created yet!';
         }
@@ -84,14 +123,14 @@ class CartController extends Controller
             'product_price'
         ] );
 
-        $this->cartItemModel->updateItemQty($user->cart->id, $attributesCartItem);
+        $this->cartItemModel->updateItemQty( $user->cart->id, $attributesCartItem );
     }
 
-    public function removeItem(Request $request)
+    public function removeItem( Request $request )
     {
         $user = Auth::user();
 
-        if(!$user->cart->id)
+        if ( !isset( $user->cart->id ) )
         {
             return 'Cart not created yet!';
         }
@@ -100,7 +139,7 @@ class CartController extends Controller
             'product_attribute_id',
         ] );
 
-        $this->cartItemModel->removeItem($user->cart->id, $attributesCartItem['product_attribute_id']);
+        $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'] );
     }
 
 }

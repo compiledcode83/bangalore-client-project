@@ -39,7 +39,7 @@
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6">
                                     <div> {{$t('pages.companyLicense')}} </div>
-                                    <a :href="'/'+account.company_license" target="_blank" v-if="account.company_license"> {{$t('pages.viewFile')}} </a>
+                                    <a :href="'/'+account.company_license" target="_blank" v-if="account.company_license" style="color: #c80412;"> {{$t('pages.viewFile')}} </a>
                                     <input type="file" class="form-control rounded-0" name="file" ref="file" @change="handleFileUpload($event)">
                                 </div><!--/.col-sm-6-->
                             </div>
@@ -135,15 +135,15 @@
                             title: 'Account Updated!',
                             text: 'Your account information updated successfully',
                         });
-                    }else{
-                        _this.$swal({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Server error 889 ...',
-                        });
                     }
+
                 }).catch(function (errors) {
-                    // console.log(errors);
+                    console.log(errors);
+                     _this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email is already registered!',
+                    });
                 });
             }
         }

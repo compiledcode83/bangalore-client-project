@@ -74,7 +74,7 @@
                                <strong> {{$t('pages.login_to_check_price')}} </strong>
                             </div>
                             <div class="pull-right stock">
-                                <span v-if="selected_attribute.stock > 0">{{$t('pages.inStock')}}</span>
+                                <span v-if="selected_attribute.stock > 0 ">{{$t('pages.inStock')}}</span>
                                 <strong> {{selected_attribute.sku}} </strong>
                             </div>
 
@@ -95,13 +95,13 @@
                         <div class="row">
                             <div class="col-sm-6 col-lg-5">
                                 <div class="rate-cvr clearfix">
-                                    <star-rating active-color="#e01b22" :show-rating="false" :rating=2 :item-size=35 border-color="#fff" read-only></star-rating>
+                                    <star-rating active-color="#e01b22" :show-rating="false" :rating=product.rating :item-size=35 border-color="#fff" read-only></star-rating>
                                 </div>
 
                             </div>
                             <div class="reviews col-sm-6 col-lg-7">
-                                <a href="#"><span class="red">10</span>  {{$t('pages.reviews')}}</a>   /
-                                <a href="#" @click.prevent="checkUserAbilityToReview">{{$t('pages.addYourReview')}}</a>
+                                <a href="#"><span class="red"> {{product.reviews.length}} </span>  {{$t('pages.reviews')}}</a>
+                                <a href="#" @click.prevent="checkUserAbilityToReview" v-if="isAuth"> / 	&nbsp;	&nbsp; {{$t('pages.addYourReview')}}</a>
                             </div>
                         </div><!--/.row-->
 
@@ -127,11 +127,11 @@
                                         <form class="col-lg-10 col-lg-offset-1">
                                             <div class="form-group mt-10 mb-10 fullwidth">
                                                 <label for="nickname">{{$t('pages.nickName')}}</label>
-                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" :placeholder="$t('pages.enterYourNickName')" v-model="reviewNickname">
+                                                <input type="text" class="form-control" id="nickname" aria-describedby="emailHelp" :placeholder="$t('pages.enterYourNickName')" v-model="reviewNickname" required>
                                             </div>
                                             <div class="form-group mt-10 mb-10 fullwidth">
                                                 <label >{{$t('pages.reviewDetails')}}</label>
-                                                <textarea class="form-control" name="review" v-model="reviewText"></textarea>
+                                                <textarea class="form-control" name="review" v-model="reviewText" required></textarea>
                                             </div>
                                             <br>
                                             <button type="submit" class="btn btn-danger rounded-0"  @click.prevent="submitReview">{{$t('pages.submit')}}</button>
@@ -147,11 +147,13 @@
                                     <div class="col-sm-3">{{$t('pages.uploads')}} </div>
                                     <div class="col-sm-9">
                                         <div class="form-group user-register">
-                                            <input id="uploadFile" class="normal-text-box" :placeholder="$t('pages.uploadOnlyImage')" disabled="disabled" :value="file.name">
+                                            <input id="example-file" class="normal-text-box" :placeholder="$t('pages.uploadOnlyImage')" disabled="disabled" :value="file.name">
                                             <div class="fileUpload">
                                                 <span>{{$t('pages.browse')}}</span>
+
                                                 <input class="upload" type="file" id="file" ref="file" @change="handleFileUpload($event)"/>
                                             </div>
+<!--                                            <input class="upload" type="button"  @change="handleFileUpload($event)" value="delete image"  style="height: 45px;float: right;width: 100px;"/>-->
                                         </div>
                                     </div>
                                 </li><!--/li-->
@@ -160,48 +162,24 @@
                                     <li class="row quantity" v-for="(colorInput, index) in colorInputsCount">
                                         <a v-if="index != 0" class="close" @click.prevent="removeColorInput(index)">X</a>
                                     <div class="col-sm-3 col-xs-6">
-<!--                                        <select class="select-colors-product1 color-select form-control"-->
-<!--                                                name="colorSelectedByIds[]"-->
-<!--                                                v-model="colorInputs[index]"-->
-<!--                                                @change="validateInput($event)"-->
-<!--                                        required>-->
-<!--                                            <option value="null">Choose Color</option>-->
-<!--                                            <option-->
-<!--                                                v-for="(color, index) in product.colors"-->
-<!--                                                :value="index"-->
-<!--                                            > {{color.name}}  </option>-->
-<!--                                        </select>-->
+                                        <label>{{$t('pages.color')}}</label>
                                         <select :class="'select-colors-product-'+index+' color-select form-control'"
                                                 name="colorSelectedByIds[]"
-                                                v-model="colorInputs[index]"
+                                                v-model="colorInputs"
                                                 required>
                                             <option
                                                 v-for="(color, index) in product.colors"
                                                 :value="index+'-'+color.color_code"
                                             >  </option>
                                         </select>
+
                                     </div>
                                     <div class="col-sm-3 col-xs-6">
-                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" v-model="qtyInputs[index]" @keypress="isNumber($event)" required>
+                                        <label v-if="!selected_attribute.id || selected_attribute.stock != 0">{{$t('pages.qty')}}</label>
+                                        <span class="out-stock" style="margin-top: 45px;" v-if="selected_attribute.id && selected_attribute.stock == 0"></span>
+                                        <input type="text" v-else class="form-control rounded-0" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required>
                                     </div>
-                                </li><!--/li-->
-<!--                                <li class="row quantity">-->
-<!--                                    <a class="close" @click.prevent="removeColorInput">X</a>-->
-<!--                                    <div class="col-sm-3 col-xs-6">-->
-<!--                                        <select class="select-colors-product color-select form-control"-->
-<!--                                                name="colorSelectedByIds[]"-->
-<!--                                                v-model="colorInputs[index]"-->
-<!--                                                @change="validateInput($event)"-->
-<!--                                                required>-->
-<!--                                            <option-->
-<!--                                                v-for="(color, index) in product.colors"-->
-<!--                                                :value="color.color_code"-->
-<!--                                                :name="index"-->
-<!--                                            >  </option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-sm-3 col-xs-6"><input type="" class="form-control rounded-0" name="" value="1"></div>-->
-<!--                                </li>&lt;!&ndash;/li&ndash;&gt;-->
+                                </li>
                             </ul>
                             <button class="more add" @click="addColorInput">{{$t('pages.addMoreColors')}}</button>
 
@@ -210,7 +188,6 @@
                                 <div class="col-sm-6"><button class="btn-lg btn-primary full-width" @click="addToWishList(product.id)">{{$t('pages.addToWishList')}}</button></div>
                             </div>
                         </div>
-                        <span class="out-stock" v-if="selected_attribute.id && selected_attribute.stock == 0"></span>
                     </div><!--/.col-sm-6-->
                 </div><!--/.row-->
 
@@ -243,6 +220,7 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-7">
                                             <p class="date-rate">{{review.created_at}}</p>
+                                            <img :title="$t('pages.report')" src="/images/abuse.png" style="width:25px;cursor: pointer;" v-if="isAuth" @click.prevent="reportAbuse(review.id)">
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +234,7 @@
             </div><!--/.product-details-->
         </div><!--/.innr-cont-area-->
 
-        <div class="related-products">
+        <div class="related-products" v-if="product.relatedProductsDetails && product.relatedProductsDetails.length >= 1">
             <div class="container">
                 <h2>{{$t('pages.related')}} <span>{{$t('pages.products')}}</span></h2>
                 <ul class="relatedprod-slide">
@@ -270,26 +248,12 @@
 </template>
 
 <script>
-    $(document).ready(function() {
 
-        // $(document).ready(function() {
-
-        // });
-
-            // tags: "true",
-            // allowClear: true,
-            // placeholder: 'Select an option',
-            // templateResult: formatState,
-            // templateSelection: formatState
-        // );
-    });
     function formatState (state) {
         if (!state.id) {
             return state.text;
         }
-        // var baseUrl = "img";
         var $state = $(
-            // '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
             '<span><div style="background-color:' + state.element.value.toLowerCase() + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>'
 
         );
@@ -301,9 +265,51 @@
 
     export default {
         components: {ProductBox, StarRating},
+        data: function () {
+            return {
+                showMainImage: true,
+                priceTableWithDiscount: [],
+                colorInputsCount: 1,
+                originalPrice: null,
+                discountFound: null,
+                productPrices: [],
+                min_price: null,
+                pricesForMinQty: [],
+                show_prices: false,
+                colorInputs: [],
+                qtyInputs: [],
+                defaultMainGallery: Object,
+                images: Object,
+                product: {
+                    main_gallery: Object,
+                    colors: Object,
+                    relatedProductsDetails: [],
+                    reviews: {}
+                },
+                selected_attribute: {
+                    id: null,
+                    sku: 0,
+                    stock: 0,
+                    color_name: ''
+                },
+                relatedSliderOnce: false,
+                sliderFor: false,
+                sliderNav: false,
+                file: '',
+                cart_discount: 0,
+                cart_product_attributes: {},
+                cart: [],
+                cartItem: this.$store.state.cartModule.cartItem,
+                itemQty: 1,
+                reviewRating: 0,
+                reviewNickname: '',
+                reviewText: ''
+            }
+        },
         mounted() {
             this.slug = this.$route.params.slug;
             this.loadProductDetails();
+
         },
         beforeRouteUpdate(to, from, next) {
             this.slug = to.params.slug;
@@ -340,13 +346,42 @@
                     return true;
                 }
             },
+            checkStock(index, event){
+
+                let colorAttrId = this.colorInputs[index];
+                let findAttribute = this.product.product_attribute_values.find(function(element) {
+                    return element.id == colorAttrId;
+                });
+
+                let totalCurrentStock = findAttribute.stock;
+                this.$store
+                    .dispatch('getStockInCart', findAttribute.id)
+                    .then((result) => {
+                        totalCurrentStock = totalCurrentStock - result;
+
+                        if(this.qtyInputs[index] > totalCurrentStock){
+                            let msg = 'Sorry current available '+ totalCurrentStock;
+                            if(result){
+                                msg += ' plus what you have in your cart';
+                            }
+                            this.$swal({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: msg  ,
+                            });
+                            event.target.value = totalCurrentStock;
+                            this.qtyInputs[index] = totalCurrentStock;
+                        }
+                    });
+
+            },
             runSelect2(){
                 let selectIndex = 0;
                 let _this = this;
                 if(this.colorInputsCount){
                     selectIndex = this.colorInputsCount - 1;
                 }
-                console.log('color run Select '+ selectIndex);
+
                 let jqueryColorSelector = $('.select-colors-product-' + selectIndex);
                 if (!jqueryColorSelector.hasClass("select2-hidden-accessible")) {
                     // Select2 has been initialized
@@ -367,8 +402,6 @@
                 }
             },
             formatState (state) {
-
-
                 if (!state.id) {
                     return state.text;
                 }
@@ -383,14 +416,21 @@
             },
             loadProductDetails(){
                 axios.all([
-                    axios.get('/api/v1/products/'+this.slug)
+                    axios.get('/api/v1/products/'+this.slug, {
+                        headers: {
+                            "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                        }
+                    })
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
-
+                    console.log(this.product);
                     //reset sku
                     this.selected_attribute.sku = this.product.sku;
-                    this.defaultMainGallery = productResponse.data.main_gallery;
-
+                    if(!productResponse.data.main_gallery){
+                        this.defaultMainGallery['0'] = productResponse.data.main_image;
+                    }else{
+                        this.defaultMainGallery = productResponse.data.main_gallery;
+                    }
                     //get prices
                     this.loadProductPrices();
                 }));
@@ -403,6 +443,7 @@
                             this.productPrices = response.data.priceTable;
                             this.originalPrice = response.data.originalPrice;
                             this.discountFound = response.data.priceTable;
+                            this.priceTableWithDiscount = response.data.priceTableWithDiscount;
                             this.min_price = Math.min.apply( null, Object.values(this.productPrices) );
                             let pricesForMinQtyKey = Math.min.apply( null, Object.keys(response.data.priceTableWithDiscount) );
                             this.pricesForMinQty = response.data.priceTableWithDiscount[pricesForMinQtyKey];
@@ -439,9 +480,7 @@
                     this.selected_attribute.stock = attribute.stock;
                     this.selected_attribute.color_name = colorName;
                 }
-
                 this.runSelect2();
-                console.log(this.product.colors);
             },
             loadDefaultImages(){
                 if(this.defaultMainGallery !== this.product.main_gallery) {
@@ -465,13 +504,33 @@
                 $('.slider-nav').slick("unslick");
             },
             submitCart() {
-                if(!this.selected_attribute.id){
+                if(this.selected_attribute.id && this.selected_attribute.stock == 0){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Sorry this color is out-stock ...',
+                    });
+                    return 0;
+                }
+
+                if(!this.selected_attribute.id || this.colorInputs.length == 0){
                     this.$swal({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Please select color before adding to cart ...',
                     });
+                    return 0;
+                }
 
+                // show add qty msg if no  qty added or user add qty then deleted
+                var foundEmptyElement = Object.keys(this.qtyInputs).every(key => this.qtyInputs[key] === '');
+
+                if(this.qtyInputs.length == 0 || foundEmptyElement){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please add qty before adding to cart ...',
+                    });
                     return 0;
                 }
 
@@ -479,17 +538,26 @@
                 for(let key in this.colorInputs){
 
                     let colorObjectInput = this.getColorObject(this.colorInputs[key]);
+                    let _this = this;
+                    let findAttribute = this.product.product_attribute_values.find(function(element) {
+                        return element.id == _this.colorInputs[key];
+                    });
+
                     if(parseInt(this.qtyInputs[key]) > 0) {
                         this.cartItem = {
                             item_name: this.product.name_en,
+                            item_description: this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
                             product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
                             product_image: colorObjectInput.images[0],
                             product_print_image: '',
                             product_qty: parseInt(this.qtyInputs[key]),
                             product_color_name: colorObjectInput.name,
                             product_price: 0,
-                            base_product_prices: this.productPrices,
+                            product_discount: 0,
+                            // base_product_prices: this.productPrices,
+                            base_product_prices: this.priceTableWithDiscount,
                             total: 0,
+                            stock: findAttribute.stock,
                             status: false
                         };
 
@@ -517,8 +585,8 @@
                     formData.append('product_qty', this.qtyInputs[key]);
                     formData.append('product_color_name', colorObjectInput.name);
                     formData.append('product_price', this.cartItem.product_price);
+                    formData.append('product_discount', this.cartItem.product_discount);
                     formData.append('total', '0');
-
                     /*
                       Make the request to the POST /single-file URL
                     */
@@ -533,6 +601,7 @@
                         }
                     ).then(function (response) {
                         _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
+
                         return _this.persistCartItem();
                     }).catch(function (errors) {
                         console.log(errors);
@@ -557,11 +626,11 @@
                         _this.colorInputs = [];
                         _this.qtyInputs  = [];
                         _this.resetAddToCartInputs();
-                        //delete file from input
-                        _this.$refs.file.value = null;
+
                     })
-                    .catch(() => {
-                        console.log('There was a problem creating your cart')
+                    .catch((err) => {
+                        console.log(err);
+                        console.log('There was a problem creating your cart');
                     });
             },
             resetAddToCartInputs(){
@@ -569,6 +638,7 @@
             },
             // Handles a change on the file upload
             handleFileUpload(event){
+
                 if(this.validateFile()) {
                     this.file = this.$refs.file.files[0];
                 }
@@ -602,7 +672,21 @@
                 event.target.src = '/images/defaule-p.jpg';
             },
             addColorInput(){
-                this.colorInputsCount += 1;
+                console.log(this.colorInputs);
+                // check if previous input has color this will help
+                // when delete row will delete color from array
+                let indexOfColorInput = this.colorInputsCount - 1;
+
+                if(this.colorInputsCount != 0 && (!this.colorInputs[indexOfColorInput] || this.colorInputs[indexOfColorInput] == '')){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'please add color for previous selection!',
+                    })
+                }else{
+                    this.colorInputsCount += 1;
+                }
+
             },
             validateInput(idAndColor, selectIndex){
 
@@ -619,13 +703,35 @@
                         title: 'Oops...',
                         text: 'Color is already added!',
                     }).then(() => {
-                        // delete inputs
-                        this.colorInputsCount = this.colorInputsCount - 1;
+                        // delete inputs & delete color from array
+
+                        this.removeColorInput(selectIndex)
+                        // this.colorInputsCount = this.colorInputsCount - 1;
                     });
-                }else{
-                    // add new attribute color to cart
-                    this.colorInputs.push(colorValue[0]);
                 }
+                // add new attribute color to cart
+                if(this.colorInputsCount == 1){
+                    this.colorInputs.pop();
+                    this.colorInputs.push(colorValue[0]);
+                }else if(this.colorInputsCount > 1){
+
+                    if(this.colorInputsCount == this.colorInputs.length){
+
+                        let realCountOfInputs = this.colorInputsCount - 1;
+                        for(let key = 0; key <= realCountOfInputs; key++){
+                            let selectValue = $('.select-colors-product-'+key).val();
+                            if(selectValue){
+                                let valueSplit = selectValue.split("-");
+                                this.colorInputs[key] = valueSplit[0];
+                            }
+                        }
+
+                    }else{
+                        this.colorInputs.push(colorValue[0]);
+                    }
+                }
+
+                console.log(this.colorInputs);
             },
             getColorObject(index){
                 //color object contains name, code, images ...
@@ -677,6 +783,14 @@
                     });
             },
             submitReview(){
+                if(!this.reviewRating || !this.reviewNickname || !this.reviewText){
+                    this.$swal({
+                        title: 'Error!',
+                        text: "Please fill your form before submit!",
+                        icon: 'error',
+                    });
+                    return 0;
+                }
                 let postData = {
                     'productAttributeId': this.selected_attribute.id,
                     'rate': this.reviewRating,
@@ -732,13 +846,97 @@
                 }else{
                     qtyIndexSelected = searchQtyDefined;
                 }
-                qtyPriceSelected = basePrices[qtyIndexSelected];
+                qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
                 item.product_price = parseInt(qtyPriceSelected);
+                if(parseInt(basePrices[qtyIndexSelected]['discount']) > 0){
+                    item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+                }else{
+                    item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+                }
+
 
                 return item;
             },
             removeColorInput(index){
-                this.colorInputsCount = this.colorInputsCount -  1;
+                //get last index
+                let lastIndex = this.colorInputsCount -  1;
+                let lastValue = this.colorInputs[lastIndex];
+                if(this.product.colors[lastValue].color_code){
+                    let buildLastColorValue = lastValue+'-'+this.product.colors[lastValue].color_code;
+
+                    $('.select-colors-product-'+index).val(buildLastColorValue).trigger('change');
+                    this.colorInputs[index] = lastValue;
+
+                    this.colorInputsCount = this.colorInputsCount -  1;
+
+                    console.log('asddd ' + lastIndex + ' ddddd ' + index + ' ddddd ' +lastValue);
+                    this.colorInputs.pop();
+                    // if(lastIndex == index){
+                    // }else{
+                    //     this.colorInputs.splice(index, 1);
+                    // }
+
+                    console.log(this.colorInputs);
+                    // if(index == 0){
+                    //     this.colorInputs.reverse();
+                    // }
+                }
+            },
+            replaceColorInput(index){
+                //get last index
+                let lastIndex = this.colorInputsCount -  1;
+                let lastValue = this.colorInputs[lastIndex];
+                if(this.product.colors[lastValue].color_code){
+                    let buildLastColorValue = lastValue+'-'+this.product.colors[lastValue].color_code;
+
+                    $('.select-colors-product-'+index).val(buildLastColorValue).trigger('change');
+                    this.colorInputs[index] = lastValue;
+                    // this.colorInputs.splice(index, 1);
+                    this.colorInputsCount = this.colorInputsCount -  1;
+                    this.colorInputs.pop();
+
+                    // if(index == 0){
+                    //     this.colorInputs.reverse();
+                    // }
+                }
+            },
+            reportAbuse(id){
+                this.$swal({
+                    title: 'Are you sure you want to report abuse for this review?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, report it!'
+                }).then((result) => {
+                    if (result.value) {
+                        axios.post(
+                            '/api/v1/review/report', {'reviewId': id},
+                            {headers: {
+                                    "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                                }
+                            }
+                        ).then((response) => {
+                            if(response.data == 1){
+                                this.$swal({
+                                    title: 'Success!',
+                                    text: "review reported successfully!",
+                                    icon: 'success',
+                                });
+                            }
+                            if(response.data == 2){
+                                this.$swal({
+                                    title: 'Success!',
+                                    text: "this review already reported by you!",
+                                    icon: 'info',
+                                });
+                            }
+
+                        });
+
+                    }
+                });
             }
 
         },
@@ -822,44 +1020,6 @@
                     return this.pricesForMinQty['discount'];
                 }
                 return null;
-            }
-        },
-        data: function () {
-            return {
-                showMainImage: true,
-                colorInputsCount: 1,
-                originalPrice: null,
-                discountFound: null,
-                productPrices: [],
-                min_price: null,
-                pricesForMinQty: [],
-                show_prices: false,
-                colorInputs: [],
-                qtyInputs: [],
-                defaultMainGallery: Object,
-                images: Object,
-                product: {
-                    main_gallery: Object,
-                    colors: Object
-                },
-                selected_attribute: {
-                    id: null,
-                    sku: 0,
-                    stock: 0,
-                    color_name: ''
-                },
-                relatedSliderOnce: false,
-                sliderFor: false,
-                sliderNav: false,
-                file: '',
-                cart_discount: 0,
-                cart_product_attributes: {},
-                cart: [],
-                cartItem: this.$store.state.cartModule.cartItem,
-                itemQty: 1,
-                reviewRating: 0,
-                reviewNickname: '',
-                reviewText: ''
             }
         }
     }

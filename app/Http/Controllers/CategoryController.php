@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller {
 
     public function homeCategories()
     {
-        $categories = Category::where( 'in_homepage', '!=', '0' )
+        $categories = Category::where( 'is_active', '1' )
+            ->where( 'in_homepage', '!=', '0' )
             ->get();
 
         $response = [];
@@ -46,7 +51,6 @@ class CategoryController extends Controller {
         {
             $filterCategories = explode(',',$filterOptions['cat']);
             $categoriesIds = Category::whereIn( 'slug', $filterCategories )->pluck('id');
-
         }
 
         if(!isset($filterOptions['cat']))
@@ -80,16 +84,20 @@ class CategoryController extends Controller {
             if(in_array('upTo30',$filterOptions['discount'] )){
                 $query->whereHas('prices', function ($query) use ($filterOptions, $user){
 
-                    if($user->type == User::TYPE_CORPORATE)
+                    if(isset($user->type))
                     {
+                        if($user->type == User::TYPE_CORPORATE)
+                        {
 //                        $query->where('percentage_discount', '<=',  $filterOptions['min']);
 //                        $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 //                        $query->where('individual_unit_price', '>=',  $filterOptions['min']);
 //                        $query->where('individual_unit_price', '<=',  $filterOptions['max']);
+                        }
                     }
+
                 });
             }
             if(in_array('upTo50',$filterOptions['discount'] )){
@@ -103,45 +111,90 @@ class CategoryController extends Controller {
             }
         }
 
-        if(isset($filterOptions['min']) || isset($filterOptions['max']))
-        {
-            $query->whereHas('prices', function ($query) use ($filterOptions, $user){
-
-                if($user->type == User::TYPE_CORPORATE)
-                {
-                    $query->where('corporate_unit_price', '>=',  $filterOptions['min']);
-                    $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
-                }
-                else
-                {
-                    $query->where('individual_unit_price', '>=',  $filterOptions['min']);
-                    $query->where('individual_unit_price', '<=',  $filterOptions['max']);
-                }
-            });
-        }
-
         if(isset($filterOptions['sort']))
         {
-            $products = $query->orderBy( 'name_en', $filterOptions['sort'] )->paginate(9);
+            $products = $query->active()->orderBy( 'name_en', $filterOptions['sort'] )->get();
+
         }
         else
         {
-            $products = $query->orderBy( 'created_at', 'desc' )->paginate(9);
+            $products = $query->active()->orderBy( 'created_at', 'desc' )->get();
+//            $products = $products->sortByDesc('created_at')->values()->all();
+//            $products = collect($products);
         }
-
 
         if ( $category )
         {
             $productModel = new Product();
 
             // make sure filter attributes not changed after apply any of filters on category
-            if(empty($filterOptions))
-            {
-                $filterAttributes = $productModel->getProductsFilterAttributes($products);
-            }
+            // get all products without applied filters and extract general filter options
+            $generalSubCats = $category->subCategories()->pluck('id');
+            $generalSubCats->push($category->id);
+            $generalProducts = Product::whereHas('categories', function ($query) use ($generalSubCats){
+                $query->whereIn('id', $generalSubCats->toArray());
+            })->active()->get();
+            $filterAttributes = $productModel->getProductsFilterAttributes($generalProducts);
 
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
+            $products = $productModel->addPrices($products,$user);
+
+            if (isset($filterOptions['sort_by_price']))
+            {
+                $sortBy = 'SortByDesc';
+                if($filterOptions['sort_by_price'] == 'asc'){
+                    $sortBy = 'sortBy';
+                }
+                $products = $products->$sortBy(function($value) use ($user) {
+                    $setting = Setting::find(1);
+                    $discountEnabled = $setting->enable_offers_page;
+
+                    if($discountEnabled){
+                        return $value->price['discount'];
+                    } else
+                    {
+                        return $value->price['baseOriginal'];
+                    }
+                })->values()->all();
+                $products =  $this->paginate($products, $perPage = count($products), $page = null, $options = []);
+            }else{
+                // IF No SORTING  THEN PAGINATE
+                $products =  $this->paginate($products, $perPage = 9, $page = null, $options = []);
+            }
+
+//            if(is_array($products)){
+//
+//                $products = Collection::wrap($products);
+//            }
+//            $page = $request['page'] ?? 1;
+//            $perPage = 9;
+//            $pagination = new \Illuminate\Pagination\LengthAwarePaginator(
+//                $products->forPage($page, $perPage),
+//                $products->count(),
+//                $perPage,
+//                $page
+//            );
+//            $products = $pagination;
+
+//            $products = $products->take(3);
+
+            if(isset($filterOptions['min']) || isset($filterOptions['max']))
+            {
+                foreach ($products as $product)
+                {
+                    if($product->price['discount']){
+
+                        if($product->price['discount'] < $filterOptions['min'] && $product->price['discount'] > $filterOptions['max']){
+                            $products->forget($product);
+                        }
+                    }else{
+                        if($product->price['baseOriginal'] < $filterOptions['min'] && $product->price['baseOriginal'] > $filterOptions['max']){
+                            $products->forget($product);
+                        }
+                    }
+                }
+            }
 
             $response = [
                 'category' => [
@@ -151,13 +204,13 @@ class CategoryController extends Controller {
                     'image'          => $category->image,
                     'slug'           => $category->slug,
                 ],
-                'products' => $products,
+                'products' => $products->toArray(),
             ];
 
-            if(empty($filterOptions))
-            {
+//            if(empty($filterOptions))
+//            {
                 $response['filterAttributes'] = $filterAttributes;
-            }
+//            }
             return response()->json( $response );
         }
 
@@ -200,5 +253,25 @@ class CategoryController extends Controller {
         return [
             'singleCategories' => $categories
         ];
+    }
+
+    /**
+     * Gera a paginação dos itens de um array ou collection.
+     *
+     * @param array|Collection      $items
+     * @param int   $perPage
+     * @param int  $page
+     * @param array $options
+     *
+     * @return LengthAwarePaginator
+     */
+    public function paginate($items, $perPage = 9, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

@@ -11,7 +11,7 @@
            </div>
        </div><!--/.banner-->
 
-       <div class="container innr-cont-area">
+       <div class="container innr-cont-area" v-if="token">
            <div class="input-group big-searchbox">
                <input type="text" class="form-control"  placeholder="Keyword Search" v-model="filterSearchTerm">
                <span class="input-group-addon rounded-0">
@@ -57,6 +57,18 @@
                                </div>
                                <div class="data clearfix">
                                    <h4>{{product.name_en}}</h4>
+                                   <strong class="sku">sku - {{product.sku}}</strong>
+                                   <div class="price" v-if="isAuthenticated">
+                                       <div v-if="product.price  && product.price.discount">
+                                           {{product.price.discount}} KD <span>{{product.price.baseOriginal}} KD</span>
+                                       </div>
+                                       <div v-else>
+                                           {{product.price.baseOriginal}} KD
+                                       </div>
+                                   </div>
+                                   <div class="price" v-else>
+                                       {{$t('pages.login_to_check_price')}}
+                                   </div>
                                    <div class="rate-cvr clearfix">
                                        <div class="rate">
                                            <star-rating
@@ -70,7 +82,7 @@
                                        </div>
                                    </div>
                                    <div class="btn-group" data-toggle="buttons" v-if="product.colors">
-                                       <label class="btn selct-clr" v-for="color in product.colors" :style="'background:' + color">
+                                       <label class="btn selct-clr" v-for="color in product.colors" :style="'background:' + color  + ';cursor: default;'">
                                            <input type="radio" name="options" autocomplete="off" chacked="">
                                        </label>
                                    </div>
@@ -89,12 +101,16 @@
            </div>
 
        </div><!--/.innr-cont-area-->
+       <div class="container innr-cont-area" v-else>
+           <p style="text-align: center;font-size: 19px;font-weight: bold;"> Please login to see content of this page ... </p>
+       </div>
    </div>
 </template>
 
 <script>
     import _ from 'lodash';
     import VueContentLoading from 'vue-content-loading';
+    import {mapGetters} from "vuex";
     import {StarRating} from 'vue-rate-it';
 
     export default {
@@ -119,6 +135,9 @@
             }
         },
         computed: {
+            ...mapGetters('authModule', [
+                'isAuthenticated',
+            ]),
             productChunks(){
                 return _.chunk(Object.values(this.products), 4);
             }
@@ -204,7 +223,8 @@
                 products: [],
                 settings: {},
                 productsFilterAttributes: [],
-                pagination: {}
+                pagination: {},
+                token: this.$store.state.authModule.accessToken
             }
         }
     }

@@ -52,6 +52,10 @@ class ProductsReportController extends AdminController
             ] );
         $grid->column('created_at', __('Created at'));
 
+        $grid->disableActions();
+        $grid->disableBatchActions();
+        $grid->disableCreateButton();
+        $grid->disableExport();
         return $grid;
     }
 }

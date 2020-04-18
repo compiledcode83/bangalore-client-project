@@ -109,7 +109,7 @@
                                 </div><!--/.col-sm-6-->
                                 <div class="col-sm-6 mt-10 mb-10">
                                     <div class="input-group">
-                                        <input id="uploadFile" class="form-control" :placeholder="$t('pages.companyLicense')" disabled>
+                                        <input id="uploadFile" class="form-control" :placeholder="$t('pages.companyLicense')" disabled :value="this.corporateData.company_license.name">
                                         <div class="input-group-btn">
                                             <div class="fileUpload btn btn-warning rounded-0">
                                                 <span>{{$t('pages.browse')}}</span>
@@ -246,9 +246,11 @@
                 this.registerCorporate({ ...this.corporateData })
                     .then(() => {
                         this.hideModal();
-                        if(this.$router.currentRoute.name !== 'home'){
-                            this.$router.push({name: 'home'});
-                        }
+                        this.$swal({
+                            icon: 'success',
+                            title: 'You registered successfully!',
+                            text: 'Thank for registration in ITC Promotions website. Your request is under processing. We will inform you by email once it is approved',
+                        });
                     })
                     .catch((errors) => {
                         // Handle Errors

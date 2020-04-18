@@ -20,13 +20,10 @@
                     <div class="row">
 
                         <div class="col-sm-4 mt-10 mb-10">
-                        <input type="email" id="email" class="form-control" placeholder="" v-model="email" required>
+                            <input type="password" id="password" class="form-control" :placeholder="$t('pages.password')" v-model="password" required>
                         </div>
                         <div class="col-sm-4 mt-10 mb-10">
-                            <input type="password" id="password" class="form-control" placeholder="" v-model="password" required>
-                        </div>
-                        <div class="col-sm-4 mt-10 mb-10">
-                            <input type="password" id="password_confirmation" class="form-control" placeholder="" v-model="password_confirmation" required>
+                            <input type="password" id="password_confirmation" class="form-control" :placeholder="$t('pages.confirmPassword')" v-model="password_confirmation" required>
                         </div>
 
                         <div class="col-sm-12 mt-30 text-center">
@@ -44,7 +41,6 @@
         data() {
             return {
                 token: null,
-                email: null,
                 password: null,
                 password_confirmation: null,
                 has_error: false
@@ -54,12 +50,25 @@
             resetPassword() {
                 axios.post("/api/v1/reset/password/", {
                     token: this.$route.params.token,
-                    email: this.email,
                     password: this.password,
                     password_confirmation: this.password_confirmation
                 })
                     .then(result => {
-                        this.$router.push({name: 'login'})
+                        if(result.data.success){
+                            this.$swal({
+                                icon: 'success',
+                                title: 'Congratulations!',
+                                text: result.data.success + ' Now you can go to login and enter your new password.',
+                            }).then(() => {
+                                this.$router.push({name: 'login'});
+                            });
+                        }else if(result.data.message) {
+                            this.$swal({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: result.data.message,
+                            });
+                        }
                     }).catch(errors => {
 
                     if (errors.response.status == 422){

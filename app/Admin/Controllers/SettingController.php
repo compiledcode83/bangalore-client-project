@@ -52,22 +52,24 @@ class SettingController extends AdminController
 
         $form->tab('General', function ($form) {
             $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
-            $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
+            $form->switch('enable_offers_page', __('Enable Discounts & Offers Page'))->default(0);
             $form->text('header_phone', __('Header Phone'));
+            $form->number('number_of_days_for_new_badge', __('Number of Days for New badge icon'))->rules( 'required' )->required();
             })->tab('Banners', function ($form) {
-                $form->image('contact_us_banner', __('Contact us banner'));
-                $form->image('faq_banner', __('Faq banner'));
-                $form->image('sitemap_banner', __('Sitemap banner'));
-                $form->image('media_banner', __('Media banner'));
-                $form->image('services_banner', __('Services banner'));
-                $form->image('special_offers_banner', __('Special offers banner'));
+                $form->image('faq_banner', __('Faq banner'))->rules( 'required' )->required();
+                $form->image('sitemap_banner', __('Sitemap banner'))->rules( 'required' )->required();
+                $form->image('media_banner', __('Media banner'))->required();
+                $form->image('services_banner', __('Services banner'))->rules( 'required' )->required();
+                $form->image('special_offers_banner', __('Special offers banner'))->rules( 'required' )->required();
+                $form->image('best_seller_banner', __('Best Seller banner'))->rules( 'required' )->required();
+                $form->image('account_banner', __('User Account Banner'))->rules( 'required' )->required();
             })->tab('Contact', function ($form) {
-                $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' );
+                $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' )->required();
                 $form->email('email', __('Contact Email'));
                 $form->text('tel', __('Contact Phone'))->icon('fa-phone');
                 $form->text('fax', __('Contact Fax'))->icon('fa-fax');
-                $form->text('cantry_en', __('Contact Cantry en'));
-                $form->text('cantry_ar', __('Contact Cantry ar'));
+                $form->text('cantry_en', __('Contact Country en'));
+                $form->text('cantry_ar', __('Contact Country ar'));
                 $form->text('city_en', __('Contact City en'));
                 $form->text('city_ar', __('Contact City ar'));
                 $form->text('area_en', __('Contact Area en'));
@@ -85,7 +87,11 @@ class SettingController extends AdminController
                 $form->image('client_img', __('Client Banner'))->move('pages')->uniqueName()->rules( 'required' );
                 $form->ckeditor('client_description_en', __('Body en'))->rules( 'required' );
                 $form->ckeditor('client_description_ar', __('Body ar'))->rules( 'required' );
-            });
+            })->tab('Payment Logos', function ($form) {
+
+                $form->image('cod_logo', __('Cash On Delivery'))->rules( 'required' );
+                $form->image('tab_logo', __('Tab'))->rules( 'required' );
+        });
 
         $form->tools(function (Form\Tools $tools) {
             $tools->disableList();

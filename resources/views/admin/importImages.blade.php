@@ -33,6 +33,7 @@
                 <br />
                 <p class="help-block" style="font-size: 12px;line-height: 0.5;"> * Make sure all products have uniq SkU.</p>
                 <p class="help-block" style="font-size: 12px;line-height: 0.5;"> * Upload only excel file.</p>
+                <input type="checkbox" name="replaceImages" value="1"/> REPLACE OLD NAMES WITH NEW ONE
             </div>
         </div>
         <!-- /.box-body -->

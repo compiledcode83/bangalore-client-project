@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import EventBus from '../event-bus.js'
+
     export default {
         name: 'myAccountSidebar',
         data(){
@@ -69,6 +71,11 @@
             }else{
                 console.log('No authorization');
             }
+
+            let _this  = this;
+            EventBus.$on('update-wishList-sideBar', function (data) {
+                _this.products = data;
+            });
 
         },
         methods: {
@@ -101,6 +108,9 @@
                                     icon: 'success'
                                 });
                                 this.products = response.data;
+
+                                //remove it also from Main
+                                EventBus.$emit('update-wishList-main', this.products)
                             });
                         }else{
                             console.log('No authorization');

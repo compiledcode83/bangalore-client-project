@@ -140,8 +140,7 @@
                 filterBoxes: [],
                 filterCategory: [],
                 filterColor: [],
-                filterPrice: [],
-                priceSliderValue: [parseInt(this.minPrice),parseInt(this.maxPrice)]
+                filterPrice: []
             }
         },
         watch: {
@@ -156,8 +155,8 @@
         },
         created() {
             /* price slider */
-            this.sliderPriceMin = parseInt(this.minPrice);
-            this.sliderPriceMax = parseInt(this.maxPrice);
+            // this.sliderPriceMin = parseInt(this.minPrice);
+            // this.sliderPriceMax = parseInt(this.maxPrice);
             this.enableCross = false;
             this.bgStyle = {
                 backgroundColor: '#fff',
@@ -175,6 +174,20 @@
         computed: {
             isAuth() {
                 return this.$store.getters['authModule/isAuthenticated'];
+            },
+            sliderPriceMin(){
+                return parseInt(this.minPrice);
+            },
+            sliderPriceMax(){
+                return parseInt(this.maxPrice);
+            },
+            priceSliderValue:{
+                get(){
+                    return [parseInt(this.minPrice),parseInt(this.maxPrice)];
+                },
+                set(minPrice, maxPrices){
+                    return [parseInt(minPrice),parseInt(maxPrices)];
+                }
             }
         },
         methods: {
@@ -285,7 +298,7 @@
                             min: this.filterPrice.min,
                             max: this.filterPrice.max,
                             discount: this.filterBoxes
-                        }});
+                        }}).catch(err => {});
                 }
             }
         }

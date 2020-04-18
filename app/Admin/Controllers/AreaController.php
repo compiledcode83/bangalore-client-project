@@ -62,8 +62,10 @@ class AreaController extends AdminController
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
         });
-        $grid->disableExport();
 
+
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -78,9 +80,9 @@ class AreaController extends AdminController
 
         $form->select( 'governorate_id', 'Governorate' )->options( function () {
             return Governorate::all()->pluck('name_en', 'id');
-        } );
-        $form->text('name_en', __('English Name'));
-        $form->text('name_ar', __('Arabic Name'));
+        } )->rules( 'required' );
+        $form->text('name_en', __('English Name'))->rules( 'required' );
+        $form->text('name_ar', __('Arabic Name'))->rules( 'required' );
         $form->switch('is_active', __('Is active'))->default(1);
 
         $form->tools(function (Form\Tools $tools) {

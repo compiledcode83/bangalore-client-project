@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAccountInfoRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\Review;
+use App\Models\ReviewAbuse;
 use App\Models\User;
 use App\Models\WishList;
 use Illuminate\Http\Request;
@@ -18,7 +20,7 @@ class UserController extends Controller {
 
     protected $userModel;
 
-    public function __construct( User $userModel)
+    public function __construct( User $userModel )
     {
         $this->userModel = $userModel;
     }
@@ -37,11 +39,36 @@ class UserController extends Controller {
                 'productImage' => $product->main_image,
                 'rate'         => $review->rating,
                 'review'       => $review->review,
-                'created'      => $review->created_at->format('M d, Y g:i a'),
+                'created'      => $review->created_at->format( 'M d, Y g:i a' ),
             ];
         }
 
         return $responseData;
+    }
+
+    public function reportReview(Request $request)
+    {
+        $user = Auth::user();
+        $attribute = $request->only('reviewId');
+
+        $checkReview = ReviewAbuse::where('review_id', $attribute['reviewId'])
+                                ->where('report_by_user_id', $user->id)
+                                ->first();
+
+        if($checkReview)
+        {
+            return 2;
+        }
+        else
+        {
+            ReviewAbuse::create([
+                'review_id' => $attribute['reviewId'],
+                'report_by_user_id' => $user->id
+            ]);
+
+            return 1;
+        }
+
     }
 
     public function userAbleToReview( $productAttributeId )
@@ -59,6 +86,7 @@ class UserController extends Controller {
                     $productAttribute = ProductAttributeValue::find( $item->product_attribute_value_id );
                     $findReview = Review::where( 'user_id', $user->id )
                         ->where( 'product_id', $productAttribute->product->id )
+                        ->where( 'product_attribute_value_id', $item->product_attribute_value_id )
                         ->first();
                     if ( $findReview )
                     {
@@ -80,10 +108,12 @@ class UserController extends Controller {
         $productAttribute = ProductAttributeValue::find( $attributes['productAttributeId'] );
         $user = Auth::user();
         $review = Review::create( [
-            'user_id'    => $user->id,
-            'product_id' => $productAttribute->product->id,
-            'rating'     => $attributes['rate'],
-            'review'     => $attributes['review'],
+            'user_id'                    => $user->id,
+            'product_id'                 => $productAttribute->product->id,
+            'product_attribute_value_id' => $attributes['productAttributeId'],
+            'rating'                     => $attributes['rate'],
+            'review'                     => $attributes['review'],
+            'nickname'                     => $attributes['nickname'],
         ] );
 
         if ( $review )
@@ -101,19 +131,19 @@ class UserController extends Controller {
         return $account;
     }
 
-    public function updateAccountInfo(Request $request)
+    public function updateAccountInfo( UpdateAccountInfoRequest $request )
     {
         $user = Auth::user();
-        $license = $request->only('file');
+        $license = $request->only( 'file' );
 
         $licensePdf = '';
-        if($request->hasFile('file'))
+        if ( $request->hasFile( 'file' ) )
         {
             //save $license
-            $licenseName =  Str::random(15);
+            $licenseName = Str::random( 15 );
             $licensePdf = $licenseName . '.pdf';
 
-            $request->file('file')->move(public_path('/uploads/accounts/'), $licensePdf);
+            $request->file( 'file' )->move( public_path( '/uploads/accounts/' ), $licensePdf );
         }
 
         $attributes = $request->only( [
@@ -126,12 +156,12 @@ class UserController extends Controller {
             'email',
         ] );
 
-        if($request->hasFile('file'))
+        if ( $request->hasFile( 'file' ) )
         {
-            $attributes['company_license'] = 'uploads/accounts/'.$licensePdf;
+            $attributes['company_license'] = 'uploads/accounts/' . $licensePdf;
         }
 
-        if($this->userModel->updateUserAccount($user->id, $attributes))
+        if ( $this->userModel->updateUserAccount( $user->id, $attributes ) )
         {
             return ['message' => 'Information updated'];
         }
@@ -143,37 +173,59 @@ class UserController extends Controller {
     {
         $user = Auth::user();
 
-        $productsIds = $user->wishLists->pluck('product_id');
+        $productsIds = $user->wishLists->pluck( 'product_id' );
         $productModel = new Product();
-        $products = $productModel->whereIn('id', $productsIds)->get();
+        $products = $productModel->whereIn( 'id', $productsIds )->get();
+        $products = $productModel->addPrices( $products, $user );
 
-        return $productModel->getProductsRatingColors($products);
+        return $productModel->getProductsRatingColors( $products );
     }
 
-    public function storeAccountWishlist(Request $request)
+    public function storeAccountWishlist( Request $request )
     {
         $user = Auth::user();
-        $attribute = $request->only('productId');
+        $attribute = $request->only( 'productId' );
 
-        $check = WishList::where('user_id', $user->id)
-                    ->where('product_id', $attribute['productId'])
-                    ->first();
-        if(!$check)
+        $check = WishList::where( 'user_id', $user->id )
+            ->where( 'product_id', $attribute['productId'] )
+            ->first();
+        if ( !$check )
         {
-            WishList::create([
-                'user_id' => $user->id,
+            WishList::create( [
+                'user_id'    => $user->id,
                 'product_id' => $attribute['productId']
-            ]);
+            ] );
         }
     }
 
-    public function accountRemoveWishlistItem($id)
+    public function storeAccountWishlistFromAttribute( Request $request )
+    {
+        $user = Auth::user();
+        $attribute = $request->only( 'attributeId' );
+
+        $getAttribute = ProductAttributeValue::find( $attribute['attributeId'] );
+        if ( $getAttribute )
+        {
+            $check = WishList::where( 'user_id', $user->id )
+                ->where( 'product_id', $getAttribute->product->id )
+                ->first();
+            if ( !$check )
+            {
+                WishList::create( [
+                    'user_id'    => $user->id,
+                    'product_id' => $getAttribute->product->id
+                ] );
+            }
+        }
+    }
+
+    public function accountRemoveWishlistItem( $id )
     {
         $user = Auth::user();
 
-        WishList::where('user_id', $user->id)
-                ->where('product_id', $id)
-                ->delete();
+        WishList::where( 'user_id', $user->id )
+            ->where( 'product_id', $id )
+            ->delete();
 
         return $this->accountWishlist();
     }

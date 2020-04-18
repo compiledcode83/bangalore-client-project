@@ -15,19 +15,20 @@
                         <div class="col-sm-6" v-if="user.defaultBilling">
                             <div class="box">
                                 <h5> {{$t('pages.defaultBillingAddress')}} </h5>
-                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
-                                <span v-if="user.type == '1'">
-                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorate}}<br>
-                                  {{$t('pages.area')}}: {{user.defaultBilling.area}}<br>
+                                <a class="edit" href="#" @click.prevent="editAddress(user.defaultBilling)">{{$t('pages.edit')}}</a>
+                                <a class="edit" href="#" style="top: 50px;" @click.prevent="deleteAddress(user.defaultBilling.id)">{{$t('pages.delete')}}</a>
+                                <span v-if="user.user_type == '1'">
+                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultBilling.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{user.defaultBilling.block}}<br>
                                   {{$t('pages.street')}}: {{user.defaultBilling.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{user.defaultBilling.building}}<br>
                                   {{$t('pages.floorNumber')}}: {{user.defaultBilling.floor}}<br>
                                   {{$t('pages.houseNumber')}}: {{user.defaultBilling.house_number}}<br>
                                 </span>
-                                <span v-if="user.type == '2'">
-                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorate}}<br>
-                                  {{$t('pages.area')}}: {{user.defaultBilling.area}}<br>
+                                <span v-if="user.user_type == '2'">
+                                  {{$t('pages.governotate')}}: {{user.defaultBilling.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultBilling.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{user.defaultBilling.block}}<br>
                                   {{$t('pages.street')}}: {{user.defaultBilling.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{user.defaultBilling.building}}<br>
@@ -40,19 +41,20 @@
                         <div class="col-sm-6" v-if="user.defaultShipping">
                             <div class="box">
                                 <h5> {{$t('pages.defaultShippingAddress')}} </h5>
-                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
-                                <span v-if="user.type == '1'">
-                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorate}}<br>
-                                  {{$t('pages.area')}}: {{user.defaultShipping.area}}<br>
+                                <a class="edit" href="#" @click.prevent="editAddress(user.defaultShipping)">{{$t('pages.edit')}}</a>
+                                <a class="edit" href="#" style="top: 50px;" @click.prevent="deleteAddress(user.defaultShipping.id)">{{$t('pages.delete')}}</a>
+                                <span v-if="user.user_type == '1'">
+                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultShipping.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{user.defaultShipping.block}}<br>
                                   {{$t('pages.street')}}: {{user.defaultShipping.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{user.defaultShipping.building}}<br>
                                   {{$t('pages.floorNumber')}}: {{user.defaultShipping.floor}}<br>
                                   {{$t('pages.houseNumber')}}: {{user.defaultShipping.house_number}}<br>
                                 </span>
-                                <span v-if="user.type == '2'">
-                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorate}}<br>
-                                  {{$t('pages.area')}}: {{user.defaultShipping.area}}<br>
+                                <span v-if="user.user_type == '2'">
+                                  {{$t('pages.governotate')}}: {{user.defaultShipping.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{user.defaultShipping.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{user.defaultShipping.block}}<br>
                                   {{$t('pages.street')}}: {{user.defaultShipping.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{user.defaultShipping.building}}<br>
@@ -64,10 +66,12 @@
                         </div><!--/.col-sm-6-->
                         <div class="col-sm-6" v-for="address in user.addresses">
                             <div class="box">
-                                <a class="edit" href="#">{{$t('pages.edit')}}</a>
+                                <div style="padding: 27px;"></div>
+                                <a class="edit" href="#" @click.prevent="editAddress(address)">{{$t('pages.edit')}}</a>
+                                <a class="edit" href="#" style="top: 50px;" @click.prevent="deleteAddress(address.id)">{{$t('pages.delete')}}</a>
                                 <span v-if="user.user_type == '1'">
-                                  {{$t('pages.governotate')}}: {{address.governorate}}<br>
-                                  {{$t('pages.area')}}: {{address.area}}<br>
+                                  {{$t('pages.governotate')}}: {{address.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{address.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{address.block}}<br>
                                   {{$t('pages.street')}}: {{address.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{address.building}}<br>
@@ -75,8 +79,8 @@
                                   {{$t('pages.houseNumber')}}: {{address.house_number}}<br>
                                 </span>
                                 <span v-if="user.user_type == '2'">
-                                  {{$t('pages.governotate')}}: {{address.governorate}}<br>
-                                  {{$t('pages.area')}}: {{address.area}}<br>
+                                  {{$t('pages.governotate')}}: {{address.governorateName}}<br>
+                                  {{$t('pages.area')}}: {{address.areaName}}<br>
                                   {{$t('pages.blockNumber')}}: {{address.block}}<br>
                                   {{$t('pages.street')}}: {{address.street}}<br>
                                   {{$t('pages.buildingNumber')}}: {{address.building}}<br>
@@ -97,14 +101,14 @@
                         <form class="row">
                             <div class="col-sm-6">
 <!--                                <span class="alert alert-danger" >@{{ value }}</span>-->
-                                <select class="form-control" v-model="address.governorate" @change="updateAreas($event)">
-                                    <option> {{$t('pages.selectGovernotate')}}</option>
+                                        <select class="form-control" v-model="address.governorate" @change="updateAreas($event)">
+                                    <option value="0" disabled> {{$t('pages.selectGovernorate')}} </option>
                                     <option v-for="governorate in user.governorates" :value="governorate.id">{{governorate.name_en}}</option>
                                 </select>
                             </div><!--/.col-sm-6-->
                             <div class="col-sm-6">
                                 <select class="form-control" v-model="address.area">
-                                    <option> {{$t('pages.selectArea')}}</option>
+                                    <option value="0" disabled> {{$t('pages.selectArea')}}</option>
                                     <option v-for="area in selectedAreas" :value="area.id"> {{area.name_en}}</option>
 
                                 </select>
@@ -171,31 +175,34 @@
         data(){
             return {
                 user: {},
-                address: {},
+                address: {
+                    governorate: 0,
+                    area: 0
+                },
                 selectedAreas: {},
                 validationErrors: {}
             }
         },
         mounted() {
-            if (this.$store.getters['authModule/isAuthenticated']) {
-
-                axios.get(
-                    '/api/v1/account/addresses',
-                    {
-                        headers: {
-                            "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
-                        }
-                    }
-                ).then((response) => {
-                    this.user = response.data;
-                });
-            }else{
-                console.log('No authorization');
+            this.loadAddresses();
+        },
+        watch: {
+            'address.governorate' : function(value){
+                this.updateArea(value);
             }
         },
         methods: {
             updateAreas(event){
                 let value = event.target.value;
+                let currentGov = {};
+                this.user.governorates.forEach(function(gov){
+                    if(gov.id == value){
+                        currentGov = gov;
+                    }
+                });
+                this.selectedAreas = currentGov.areas;
+            },
+            updateArea(value){
                 let currentGov = {};
                 this.user.governorates.forEach(function(gov){
                     if(gov.id == value){
@@ -224,7 +231,12 @@
                                 icon: 'success'
                             });
                             this.address = {};
+                            this.address = {
+                                governorate: 0,
+                                area: 0
+                            };
                             this.validationErrors = {};
+                            this.loadAddresses();
                         }else{
                             this.$swal({
                                 title: 'error!',
@@ -241,6 +253,84 @@
                 }else{
                     console.log('No authorization');
                 }
+            },
+            loadAddresses(){
+                if (this.$store.getters['authModule/isAuthenticated']) {
+
+                    axios.get(
+                        '/api/v1/account/addresses',
+                        {
+                            headers: {
+                                "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                            }
+                        }
+                    ).then((response) => {
+                        this.user = response.data;
+                        console.log(this.user);
+                    });
+                }else{
+                    console.log('No authorization');
+                }
+            },
+            editAddress(addressToBeUpdated){
+                console.log('clicked');
+                console.log(addressToBeUpdated);
+                this.address.governorate = addressToBeUpdated.governorate;
+                this.address.area = addressToBeUpdated.area;
+                this.address.block = addressToBeUpdated.block;
+                this.address.street = addressToBeUpdated.street;
+                this.address.building = addressToBeUpdated.building;
+                this.address.floorNo = addressToBeUpdated.floor;
+                this.address.house = addressToBeUpdated.house_number;
+                this.address.officeAddress = addressToBeUpdated.office_address;
+                this.address.officeNo = addressToBeUpdated.office_number;
+                this.address.defaultBilling = addressToBeUpdated.is_default_billing;
+                this.address.defaultShipping = addressToBeUpdated.is_default_shipping;
+                this.address.id = addressToBeUpdated.id;
+            },
+            deleteAddress(addressId){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        //delete item
+                        axios.post(
+                            '/api/v1/account/addresses/delete',
+                            {id: addressId},
+                            {
+                                headers: {
+                                    "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                                }
+                            }
+                        ).then((response) => {
+                            if(response.data){
+                                this.$swal({
+                                    title: 'success!',
+                                    text: "Your Address has been deleted successfully!",
+                                    icon: 'success'
+                                });
+                                this.address = {};
+                                this.validationErrors = {};
+                                this.loadAddresses();
+                            }else{
+                                this.$swal({
+                                    title: 'error!',
+                                    text: "Server error ... couldn't delete your address, please try again later!",
+                                    icon: 'error'
+                                });
+                            }
+                        }).catch(() => {
+                            console.log('There was a problem removing from your cart')
+                        });
+
+                    }
+                });
             }
         }
     }

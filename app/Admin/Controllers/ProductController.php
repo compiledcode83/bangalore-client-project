@@ -91,6 +91,8 @@ class ProductController extends AdminController {
             ] )->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -200,7 +202,10 @@ class ProductController extends AdminController {
             $form->ckeditor( 'more_information_en', 'English More Information' );
             $form->ckeditor( 'more_information_ar', 'Arabic More Information' );
 
-            $form->text( 'sku', 'SKU' )->rules( 'required' )->help( 'Product unique identifier!' );
+            $form->text( 'sku', 'SKU' )
+                ->creationRules('required|unique:product_attribute_values,sku|unique:products,sku' )
+                ->updateRules( 'required|unique:product_attribute_values,sku|unique:products,sku,{{id}}' )
+                ->help( 'Product unique identifier!' );
             $form->text( 'supplier_price', 'Supplier price' )->rules( 'required' )->help( 'Only Admin can see this price!' );
             $form->image( 'main_image', 'Main Image' )->rules( 'required' );
             $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
@@ -215,31 +220,15 @@ class ProductController extends AdminController {
             $products = Product::all()->pluck('name_en', 'id');
             $form->multipleSelect('related', 'Related Products')->options($products);
 
-//        } )->tab( 'Product Attributes', function ( $form ) {
-//
-//            // z-song name convention
-//            $form->hasMany( 'productattributevalues', 'Product Attributes', function ( $form ) {
-//
-//                $form->select( 'attribute_value_id', 'Color' )->options( function ( $id ) {
-//                    return AttributeValue::options($id);
-//                } );
-//                $form->text( 'sku', 'sku' )->rules( 'required' );
-//                $form->text( 'stock', 'stock' )->rules( 'required' );
-//                $form->switch( 'is_active', __( 'Is active' ) )->default( 1 );
-//                $form->multipleImage( 'main_imagess' , 'asasdasda images');
-//            } );
-
         } )->tab( 'Prices', function ( $form ) {
 
             $form->hasMany( 'prices', 'Prices', function ( $form ) {
                 $form->text( 'max_qty', 'qty' )->rules( 'required' );
                 $form->text( 'individual_unit_price', 'Individual Unit Price' )->rules( 'required' );
                 $form->text( 'individual_discounted_unit_price', 'Individual Discounted Unit Price' )
-                        ->rules( 'required' )
                         ->help( 'Add 0 for No discount' );
                 $form->text( 'corporate_unit_price', 'Corporate Unit Price' )->rules( 'required' );
                 $form->text( 'corporate_discounted_unit_price', 'Corporate Discounted Unit Price' )
-                    ->rules( 'required' )
                     ->help( 'Add 0 for No discount' );
             } );
 

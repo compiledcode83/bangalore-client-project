@@ -61,7 +61,7 @@
         }
     };
     var html_element = document.getElementById('pie').getContext('2d');
-    new Chart(html_element, config);
+    var totalSalesChart = new Chart(html_element, config);
 
         $('#month').on('change', function(){
             var monthValue = $(this).val();
@@ -73,45 +73,11 @@
                 success: function(result) {
                     $('#individuals').val(result.individuals);
                     $('#corporates').val(result.corporates);
-                    var html_element = document.getElementById('pie').getContext('2d');
 
-                    var config = {
-                        type: 'pie',
-                        data: {
-                            datasets: [{
-                                data: [
-                                    result.individuals ,
-                                    result.corporates
-                                ],
-                                backgroundColor: [
-                                    window.chartColors.yellow,
-                                    window.chartColors.green
-                                ],
-                                label: 'Dataset 1'
-                            }],
-                            labels: [
-                                'Individuals',
-                                'Corporates'
+                    totalSalesChart.data.datasets[0].data[0] = result.individuals;
+                    totalSalesChart.data.datasets[0].data[1] = result.corporates;
 
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: 'By Type'
-                            },
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true
-                            }
-                        }
-                    };
-
-                    new Chart(html_element, config);
+                    totalSalesChart.update();
                 }
             });
         });

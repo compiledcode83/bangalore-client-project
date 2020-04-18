@@ -44,6 +44,8 @@ class UserController extends AdminController
             ])->sortable();
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -84,8 +86,14 @@ class UserController extends AdminController
 
         $form->text('first_name', __('First name'));
         $form->text('last_name', __('Last name'));
-        $form->mobile('phone', __('Phone'))->options(['mask' => '']);
-        $form->email('email', __('Email'));
+        $form->mobile('phone', __('Phone'))->options(['mask' => ''])->rules('required');
+        $form->email('email', __('Email'))
+            ->creationRules('required|unique:users,email' )
+            ->updateRules( 'required|unique:users,email,{{id}}' );
+        if($form->isCreating())
+        {
+            $form->password('password', __('Password'));
+        }
         $form->switch('is_active', __('Is active'))->default(1);
 
         return $form;

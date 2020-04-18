@@ -64,7 +64,7 @@
                     })
                     .catch((errors) => {
                         // Handle Errors
-                        this.hideModal();
+                        // this.hideModal();
                         this.$swal({
                             icon: 'error',
                             title: 'Oops...',

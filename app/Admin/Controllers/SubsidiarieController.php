@@ -46,6 +46,8 @@ class SubsidiarieController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -82,8 +84,8 @@ class SubsidiarieController extends AdminController
         $form = new Form(new Subsidiarie);
 
         $form->image('logo', __('Logo'))->move('subsidiaries')->uniqueName()->rules( 'required' );
-        $form->textarea('description_en', __('Description en'));
-        $form->textarea('description_ar', __('Description ar'));
+        $form->textarea('description_en', __('Description en'))->rules( 'required' );
+        $form->textarea('description_ar', __('Description ar'))->rules( 'required' );
         $form->url('url', __('Url'));
         $form->switch('is_active', __('Is active'))->default(1);
 

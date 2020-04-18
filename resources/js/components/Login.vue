@@ -61,9 +61,19 @@
             submit() {
                 this.login({ ...this.credentials })
                     .then(() => {
-                        if(this.$router.currentRoute.name !== 'home'){
-                            this.$router.push({name: 'home'});
-                        }
+
+                        axios.get('api/v1/cart/restore',
+                            {
+                                headers: {
+                                    "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                                }
+                            }).then((cartResponse) => {
+                            console.log(cartResponse);
+                            this.$store
+                                .dispatch('setCart', cartResponse.data);
+                        });
+
+                        this.$router.push({name: 'home'});
                     })
                     .catch((errors) => {
                         // Handle Errors

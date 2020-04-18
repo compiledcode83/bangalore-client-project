@@ -20,8 +20,16 @@
                                     </div>
                                     <div class="data clearfix">
                                         <h4>{{product.name_en}}</h4>
-                                        <div class="price">
-                                            {{$t('pages.priceOnRequest')}}
+                                        <div class="price" v-if="isAuthenticated">
+                                            <div v-if="product.price  && product.price.discount">
+                                                {{product.price.discount}} KD
+                                            </div>
+                                            <div v-else>
+                                                {{product.price.baseOriginal}} KD
+                                            </div>
+                                        </div>
+                                        <div class="price" v-else>
+                                            {{$t('pages.login_to_check_price')}}
                                         </div>
                                         <div class="more-data">
                                             <div class="qty">
@@ -46,6 +54,8 @@
     import myAccountSidebar from "./partials/TheSidebar";
     import myAccountBanner from "./partials/TheBanner";
     import _ from 'lodash';
+    import EventBus from './event-bus.js'
+    import {mapGetters} from "vuex";
 
     export default {
         components: {myAccountSidebar, myAccountBanner},
@@ -69,8 +79,16 @@
                 console.log('No authorization');
             }
 
+            let _this  = this;
+            EventBus.$on('update-wishList-main', function (data) {
+                _this.products = data;
+            });
+
         },
         computed: {
+            ...mapGetters('authModule', [
+                'isAuthenticated',
+            ]),
             productChunks(){
                 return _.chunk(Object.values(this.products), 3);
             }
@@ -105,6 +123,9 @@
                                     icon: 'success'
                                 });
                                 this.products = response.data;
+
+                                //remove it also from side bar
+                                EventBus.$emit('update-wishList-sideBar', this.products)
                             });
                         }else{
                             console.log('No authorization');

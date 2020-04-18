@@ -98,8 +98,10 @@ class CoverageAreaController extends AdminController
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
         });
-        $grid->disableExport();
 
+
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -114,7 +116,7 @@ class CoverageAreaController extends AdminController
 
         $areas = Area::all()->pluck('name_en', 'id');
 
-        $form->multipleSelect('area_id', 'Areas')->options($areas);
+        $form->multipleSelect('area_id', 'Areas')->options($areas)->rules( 'required' );
 
         $form->saving(function (Form $form) {
 
@@ -150,7 +152,7 @@ class CoverageAreaController extends AdminController
             return redirect()->route('delivery-charges.index')->with(compact('success'));
         });
 
-        $form->decimal('charges', __('Charges in KD'));
+        $form->decimal('charges', __('Charges in KD'))->rules( 'required' );
 
         return $form;
     }
@@ -166,8 +168,8 @@ class CoverageAreaController extends AdminController
 
         $areas = Area::all()->pluck('name_en', 'id');
 
-        $form->select('area_id', 'Areas')->options($areas);
-        $form->decimal('charges', __('Charges in KD'));
+        $form->select('area_id', 'Areas')->options($areas)->rules( 'required' );
+        $form->decimal('charges', __('Charges in KD'))->rules( 'required' );
 
         $form->tools(function (Form\Tools $tools) {
             // Disable `Veiw` btn.

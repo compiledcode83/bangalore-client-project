@@ -42,7 +42,7 @@
                         {{$t('pages.discount')}}
                     </div>
                     <div class="col-xs-6 list text-right" v-if="discount">
-                        {{$t('pages.kd')}} {{cart.discount}}
+                        {{$t('pages.kd')}} {{discount}}
                     </div>
                     <div class="col-xs-6 list" v-if="deliveryCharges">
                         Delivery
@@ -56,7 +56,7 @@
                             {{$t('pages.total')}}
                         </div>
                         <div class="col-xs-6 text-right">
-                            {{$t('pages.kd')}} {{subTotalCart + deliveryCharges}}
+                            {{$t('pages.kd')}} {{calcTotal}}
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                             <div class="col-sm-6" v-for="address in chunk">
                                 <div class="box">
                                     <label class="radio-btn">
-                                        <input type="radio" name="shippingAddress" :value="address.id" v-model="shippingAddress" >
+                                        <input type="radio" checked="checked" :value="address.id" v-model="shippingAddress">
                                         <span class="checkmark"></span>
                                     </label>
                                     <span class="data">
@@ -94,15 +94,15 @@
                                     </span>
                                 </div>
                             </div><!--/.col-sm-6-->
-                            <div class="col-sm-12">
-                                <router-link to="/account/addresses" class="btn btn-default rounded-0" exact>{{$t('pages.addNewAddress')}}</router-link>
-                            </div>
+                        </div>
+                        <div class="col-sm-12" style="padding-left: 0px;padding-bottom: 10px;">
+                            <router-link to="/account/addresses" class="btn btn-default rounded-0" exact>{{$t('pages.addNewAddress')}}</router-link>
                         </div>
                         <br>
                         <h4>{{$t('pages.shippingAddress')}}</h4>
                         <div class="mt-10">
                             <label class="checkbox-sml">{{$t('pages.useAsBillingAddress')}}<br>{{$t('pages.workingHoursAndDays')}}
-                                <input type="checkbox" name="billingShipping" value="1" checked v-model="billingShipping">
+                                <input type="checkbox" name="billingShipping" :value='shippingAddress' checked v-model="billingShipping">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -118,32 +118,16 @@
                         <div class="row payment-mthd">
                             <div class="col-xs-6 col-sm-6 col-md-3">
                                 <div class="bx">
-                                    <label class="checkbox"><img src="images/visa.png">
-                                        <input type="radio" name="payment" value="visa" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/master-card.png">
-                                        <input type="radio" name="payment" value="master" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/knet.png">
-                                        <input type="radio" name="payment" value="knet" v-model="paymentMethod">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-3">
-                                <div class="bx">
-                                    <label class="checkbox"><img src="images/cod.png">
+                                    <label class="checkbox"><img :src="'/'+siteSettings.cod_logo">
                                         <input type="radio" name="payment" value="cash" v-model="paymentMethod">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-3">
+                                <div class="bx">
+                                    <label class="checkbox"><img :src="'/'+siteSettings.tab_logo">
+                                        <input type="radio" name="payment" value="tab" v-model="paymentMethod">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -154,14 +138,21 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="box">
-                                     <span class="data">
-                                      MOHAMMED AL BAWi<br>
-                                      AL SALEM STREET<br>
-                                      BLOCK #12<br>
-                                      BUILDING NO. 23<br>
-                                      SALMIYA<br>
+                                    <span class="data" v-if="billingShipping">
+                                      {{selectedAddress.governorate}}, {{selectedAddress.area}}<br>
+                                      {{$t('pages.block')}}: {{selectedAddress.block}}, {{$t('pages.street')}}: {{selectedAddress.street}}<br>
+                                      {{$t('pages.building')}}: {{selectedAddress.building}}, {{$t('pages.floor')}}: {{selectedAddress.floorNo}}<br>
+                                        <p v-if="selectedAddress.userType == '1'"> {{$t('pages.home')}}: {{selectedAddress.house_number}}</p>
+                                        <p v-else> {{$t('pages.office')}}: {{selectedAddress.office_number}}, {{$t('pages.officeAddress')}}: {{selectedAddress.office_address}}</p>
                                     </span>
-                                    <a href="#" class="pull-right edit" v-if="!billingShipping">{{$t('pages.editAddress')}}</a>
+                                    <span class="data" v-else>
+                                      {{defaultBillingAddress.governorate}}, {{defaultBillingAddress.area}}<br>
+                                      {{$t('pages.block')}}: {{defaultBillingAddress.block}}, {{$t('pages.street')}}: {{defaultBillingAddress.street}}<br>
+                                      {{$t('pages.building')}}: {{defaultBillingAddress.building}}, {{$t('pages.floor')}}: {{defaultBillingAddress.floorNo}}<br>
+                                        <p v-if="defaultBillingAddress.userType == '1'"> {{$t('pages.home')}}: {{defaultBillingAddress.house_number}}</p>
+                                        <p v-else> {{$t('pages.office')}}: {{defaultBillingAddress.office_number}}, {{$t('pages.officeAddress')}}: {{defaultBillingAddress.office_address}}</p>
+                                    </span>
+                                    <router-link to="/account/addresses" class="pull-right edit" v-if="!billingShipping" exact>{{$t('pages.editAddress')}}</router-link>
                                 </div>
                             </div>
                         </div>
@@ -196,10 +187,17 @@
                 placeOrderResponse: null,
                 hasPlacedOrder: false,
                 deliveryCharges: null,
+                selectedAddress: {},
+                defaultBillingAddress: {},
+                siteSettings: {},
             }
         },
         watch: {
             shippingAddress : function(value){
+                let _this = this;
+                this.selectedAddress = this.userAddresses.find(function(element) {
+                    return element.id == _this.shippingAddress;
+                });
                 // User MUST BE authenticated
                 this.checkUserAuth();
 
@@ -216,6 +214,7 @@
             }
         },
         mounted(){
+            this.discount = this.calcDiscount;
             // User MUST BE authenticated
             this.checkUserAuth();
 
@@ -228,7 +227,23 @@
                 }
             ).then((response) => {
                 this.userAddresses = response.data;
+                let _this = this;
+                this.userAddresses.find(function(element) {
+                    if(element.is_default_shipping){
+                        _this.shippingAddress = element.id;
+                    }
+
+                    if(element.is_default_billing){
+                        _this.defaultBillingAddress = element;
+                    }
+                });
+                console.log(this.userAddresses);
             });
+
+            axios.get('/api/v1/settings/')
+                .then((response) =>{
+                    this.siteSettings = response.data;
+                });
         },
         methods: {
             checkUserAuth(){
@@ -252,17 +267,26 @@
                 }
             },
             togglePanel(){
-                if(this.statusFirstPanel !== ''){
-                    this.statusFirstPanel = '';
-                    this.statusSecondPanel = 'active';
+                if(this.shippingAddress){
+                    if(this.statusFirstPanel !== ''){
+                        this.statusFirstPanel = '';
+                        this.statusSecondPanel = 'active';
+                    }else{
+                        this.statusFirstPanel = 'active';
+                        this.statusSecondPanel = '';
+                    }
                 }else{
-                    this.statusFirstPanel = 'active';
-                    this.statusSecondPanel = '';
+                    this.$swal({
+                        title: 'Address missing!',
+                        text: "please select address ",
+                        icon: 'error',
+                    })
                 }
+
             },
             placeOrder(){
                 this.hasPlacedOrder = true;
-                CartService.placeOrder()
+                CartService.placeOrder({'discount':this.cart.discount,'delivery': this.deliveryCharges,'defaultBillingAddress': this.defaultBillingAddress,'shippingAddress': this.shippingAddress, 'billingShipping': this.billingShipping, 'paymentMethod': this.paymentMethod})
                     .then((response) => {
                         this.placeOrderResponse = response.data;
 
@@ -274,9 +298,18 @@
                             text: "Your order has been placed successfully ",
                             icon: 'success',
                         }).then(() => {
-                            this.$router.push({
-                                path: '/thank-you/'+ this.placeOrderResponse
-                            });
+                            console.log(this.placeOrderResponse.cod);
+                            if(!this.placeOrderResponse.cod)
+                            {
+                                window.location.href = this.placeOrderResponse.PaymentUrl;
+                            }
+                            else
+                            {
+                                this.$router.push({
+                                    path: '/thank-you/'+ this.placeOrderResponse.orderCode
+                                });
+                            }
+
                         });
                     })
                     .catch(error => {
@@ -313,7 +346,29 @@
             },
             addressesChunks(){
                 return _.chunk(Object.values(this.userAddresses), 2);
+            },
+            calcDiscount(){
+
+                let discount = 0;
+                this.cart.items.forEach(function(item){
+                    if(item.product_discount > 0){
+                        discount += (item.product_discount * item.product_qty);
+                    }
+                });
+
+                return discount;
+
+            },
+            calcTotal(){
+                return this.subTotalCart + this.deliveryCharges - this.discount;
             }
         }
     }
+
+    $(document).ready(function () {
+        $('.radio-btn input').click(function () {
+            $('.radio-btn input:not(:checked)').parent().parent().css("border", "3px solid #efefef");
+            $('.radio-btn input:checked').parent().parent().css("border", "3px solid #f99d1c");
+        });
+    });
 </script>

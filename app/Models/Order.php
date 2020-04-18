@@ -25,6 +25,8 @@ class Order extends Model
      */
     protected $guarded = ['id'];
 
+    const IS_PAID = 5 ; //Status in statues table
+    const NOT_PAID = 6 ; //Status in statues table
     /**
      * Get the user owns this wishList
      */
@@ -40,13 +42,20 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class, 'order_id');
     }
+    /**
+     * Get payment Transaction for the Order.
+     */
+    public function orderTransactions()
+    {
+        return $this->hasMany(OrderTransactions::class, 'order_id');
+    }
 
     /**
      * Get statuses for the Order.
      */
-    public function orderStatuses()
+    public function OrderStatus()
     {
-        return $this->belongsToMany(Status::class);
+        return $this->hasMany(OrderStatus::class);
     }
 
     /**
@@ -62,14 +71,55 @@ class Order extends Model
      * @param $user
      * @return
      */
-    public function store($user)
+    public function store($user, $data)
     {
         $cart = $user->cart;
+
+        $shippingAddress = UserAddress::find($data['shippingAddress']);
+        $governorate = Governorate::find($shippingAddress->governorate);
+        $area = Area::find($shippingAddress->area);
+        $billingAddress = $data['defaultBillingAddress'];
+
+        $prepareShippingAddress = $governorate->name_en. ', '. $area->name_en.', block: '.
+                                  $shippingAddress->block.', street: '. $shippingAddress->street.', building: '. $shippingAddress->building.
+                                  ', floor: '. $shippingAddress->floor;
+
+        if($user->type == User::TYPE_USER)
+        {
+            $prepareShippingAddress .= ', home: '. $shippingAddress->house_number;
+        }
+        else
+        {
+            $prepareShippingAddress .= ', office: '. $shippingAddress->office_number.', office address: '. $shippingAddress->office_address;
+        }
+
+        $prepareBillingAddress = $prepareShippingAddress;
+        if(!$data['billingShipping'])
+        {
+                $prepareBillingAddress = $billingAddress['governorate']. ', '. $billingAddress['area'].', block: '.
+                $billingAddress['block'].', street: '. $billingAddress['street'].', building: '. $billingAddress['building'].
+                ', floor: '. $billingAddress['floor'];
+
+            if($user->type == User::TYPE_USER)
+            {
+                $prepareBillingAddress .= ', home: '. $shippingAddress['house_number'];
+            }
+            else
+            {
+                $prepareBillingAddress .= ', office: '. $shippingAddress['office_number'].', office address: '. $shippingAddress['office_address'];
+            }
+        }
+
         $order = new Order( [
             'order_code'  => Str::random(5),
             'final_status' => 'pending',
-            'address'    => 'test address',
-            'total' => $user->cart->total,
+            'address'    => $prepareShippingAddress,
+            'billing_address' => $prepareBillingAddress,
+            'sub_total' => 0,
+            'total_discount' => $data['discount'] ?? 0,
+            'delivery_charges' => $data['delivery'] ?? 0,
+            'total' =>  0,
+            'payment_method' => $data['paymentMethod']
         ] );
 
         $user->orders()->save($order);
@@ -84,25 +134,32 @@ class Order extends Model
             {
                 return ['error' => 'order has item out-stock'];
             }
+            $itemPrice = $this->calculateItemPriceBasedOnQty($item->product_attribute_value_id, $item->qty, $user->type);
             $items[] = new OrderItem([
                 'product_attribute_value_id' => $item->product_attribute_value_id,
-                'unit_price' => $item->unit_price,
+                'unit_price' => $itemPrice,
                 'qty' => $item->qty,
                 'print_image'    => $item->print_image ?? '',
             ]);
 
-            $itemsTotal += $item->unit_price * $item->qty;
+            if(!$itemPrice){
+                return ['error' => 'prices not set correctly please contact Admin!'];
+            }
+            $itemsTotal += $itemPrice * $item->qty;
 
             $emailConfirmationData['items'][] = [
                 'name' => $item->item_name,
                 'image' => $item->item_image,
                 'print_image'    => $item->print_image ?? '',
-                'unit_price' => $item->unit_price,
+                'unit_price' => $itemPrice,
                 'qty' => $item->qty,
-                'total_price'   => $item->qty * $item->unit_price
+                'total_price'   => $item->qty * $itemPrice
             ];
         }
+        $emailConfirmationData['discount'] = $data['discount'];
+        $emailConfirmationData['delivery'] = $data['delivery'];
         $emailConfirmationData['subtotal'] = $itemsTotal;
+        $emailConfirmationData['total'] = ($itemsTotal - $data['discount'] + $data['delivery']);
         $emailConfirmationData['order_code'] = $order->order_code;
         $emailConfirmationData['order_date'] = $order->created_at;
         $emailConfirmationData['payment_method'] = $order->payment_method;
@@ -110,7 +167,8 @@ class Order extends Model
         $saveItems = $order->orderItems()->saveMany($items);
 
         $order->update([
-            'total' => $itemsTotal,
+            'sub_total' => $itemsTotal,
+            'total' => ($itemsTotal - $data['discount'] + $data['delivery']),
         ]);
         if($saveItems)
         {
@@ -121,6 +179,63 @@ class Order extends Model
         }
 
         return false;
+    }
+
+    public function calculateItemPriceBasedOnQty($productAttributeId, $itemQty,  $userType)
+    {
+        $productAttribute = ProductAttributeValue::find($productAttributeId);
+        $product = Product::with( 'prices' )
+            ->where( 'id', $productAttribute->product->id )
+            ->first();
+
+        //load prices
+        $basePrice = null;
+
+        $discountEnabled = Setting::find(1);
+        $checkDiscountEnabled = $discountEnabled->enable_offers_page;
+        foreach ($product->prices as $price)
+        {
+            if ( $userType == User::TYPE_USER )
+            {
+                if(!$checkDiscountEnabled)
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->individual_unit_price;
+                    }
+                }
+                else
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->individual_discounted_unit_price ?? $price->individual_unit_price;
+                    }
+                }
+
+            }
+
+            if ( $userType == User::TYPE_CORPORATE )
+            {
+
+                if(!$checkDiscountEnabled)
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->corporate_unit_price;
+                    }
+                }
+                else
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->corporate_discounted_unit_price ?? $price->corporate_unit_price;
+                    }
+                }
+
+            }
+        }
+
+        return $basePrice ;
     }
 
     protected function deleteCart($userCart)

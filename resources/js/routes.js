@@ -5,6 +5,7 @@ import Login  from "./components/Login";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import CheckoutReceipt from "./components/CheckoutReceipt";
+import PaymentReceipt from "./components/PaymentReceipt";
 import BestProductList from "./components/BestProductList";
 import AccountDashboard from "./components/account/Dashboard";
 import AccountAddresses from "./components/account/Addresses";
@@ -17,6 +18,7 @@ import AccountTrackOrders from "./components/account/TrackOrders";
 import AccountTrackOrderStatus from "./components/account/TrackOrderStatus";
 import AccountWishList from "./components/account/WishList";
 import ProductSearch from "./components/ProductSearch";
+import ProductDetailsCheck from "./components/ProductDetailsCheck";
 import NotFound from './components/partials/NotFound';
 
 import About from './components/pages/About';
@@ -89,6 +91,11 @@ export default {
             props: true
         },
         {
+            path: '/products-check/:slug',
+            name: 'products-check',
+            component: ProductDetailsCheck
+        },
+        {
             path: '/products/:slug',
             name: 'products',
             component: ProductDetails
@@ -111,6 +118,12 @@ export default {
             path: '/thank-you/:code',
             name: 'checkoutReceipt',
             component: CheckoutReceipt,
+            props: true,
+        },
+        {
+            path: '/paymentReturn/:code',
+            name: 'PaymentReceipt',
+            component: PaymentReceipt,
             props: true,
         },
         {

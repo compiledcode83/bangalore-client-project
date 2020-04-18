@@ -15,4 +15,22 @@ class ProductPrice extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function getUserPriceAttribute()
+    {
+        if($this->individual_discounted_unit_price > 0){
+            return $this->individual_discounted_unit_price;
+        }else{
+            return $this->individual_unit_price;
+        }
+    }
+
+    public function getCorporatePriceAttribute()
+    {
+        if($this->corporate_discounted_unit_price > 0){
+            return $this->corporate_discounted_unit_price;
+        }else{
+            return $this->corporate_unit_price;
+        }
+    }
 }

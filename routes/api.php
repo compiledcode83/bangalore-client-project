@@ -39,6 +39,9 @@ Route::group(['prefix'=>'v1'], function(){
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
     Route::post('register/corporate', 'AuthController@registerCorporate');
+    Route::get('cart/restore','CartController@restoreCart');
+    Route::get('paymentReturn/{code}','OrderController@paymentReturn')->name('paymentReturn');
+
 });
 
 Route::group(['prefix'=>'v1'], function(){
@@ -79,17 +82,21 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('user/reviews-list','UserController@userReviews');
         Route::get('user-ability/review/{id}','UserController@userAbleToReview');
         Route::post('/user/review','UserController@reviewStore');
+        Route::post('/review/report','UserController@reportReview');
 
         Route::get('account/checkout/addresses','AddressesController@getUserAddressesForCheckout');
         Route::get('account/addresses','AddressesController@getUserAddresses');
         Route::post('account/addresses/new','AddressesController@store');
+        Route::post('account/addresses/delete','AddressesController@deleteAddress');
         Route::get('account/newsletter','NewsletterController@getUserSubscription');
         Route::post('account/newsletter','NewsletterController@updateSubscription');
+        Route::post('email/newsletter','NewsletterController@updateSubscriptionByEmail');
         Route::get('account/orders','OrderController@getUserOrders');
         Route::get('account/orders/{id}','OrderController@getUserOrderDetails');
         Route::get('account/order/{id}/status','OrderController@getUserOrderStatuses');
         Route::get('account/wishlist','UserController@accountWishlist');
         Route::post('account/wishlist','UserController@storeAccountWishlist');
+        Route::post('account/wishlist/attribute','UserController@storeAccountWishlistFromAttribute');
         Route::get('account/wishlist/remove/{id}','UserController@accountRemoveWishlistItem');
         Route::get('account/info','UserController@accountInfo');
         Route::post('account/info','UserController@updateAccountInfo');

@@ -32,8 +32,6 @@ class Product extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new ActiveScope());
-
         static::saving(function ($model) {
 
             $slug = str_slug($model->name_en);
@@ -41,6 +39,17 @@ class Product extends Model
 
             $model->slug = $count ? "{$slug}-{$count}" : $slug;
         });
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 
     /**
@@ -85,13 +94,14 @@ class Product extends Model
         return $this->hasMany(ProductPrice::class, 'product_id');
     }
 
-    /**
-     * Get Related products for the product.
-     */
-    public function relatedProducts()
-    {
-        return $this->hasMany(RelatedProduct::class);
-    }
+    //To be deleted using related field
+//    /**
+//     * Get Related products for the product.
+//     */
+//    public function relatedProducts()
+//    {
+//        return $this->hasMany(RelatedProduct::class);
+//    }
 
     /**
      * Get Related products for the product.
@@ -129,10 +139,18 @@ class Product extends Model
         {
             return [];
         }
-        $products = Self::where('name_en', 'like', "%".$term."%")
-                        ->orWhere('name_ar', 'like', "%".$term."%")
-                        ->orWhere('sku', 'like', "%".$term."%")
+
+        $query = Self::whereHas('productAttributeValues', function ($query) use ($term) {
+
+                $query->where(function($query) use ($term){
+                    $query->where('name_en', 'LIKE', '%'. $term .'%')
+                        ->orWhere('name_ar', 'LIKE', '%'. $term .'%');
+                });
+        });
+
+        $products = $query->orWhere('sku', 'LIKE', '%'. $term .'%')
                         ->orderBy('created_at', 'desc')
+                        ->active()
                         ->get();
 
         return $products;
@@ -143,7 +161,7 @@ class Product extends Model
         foreach ($products as $product)
         {
             //add ratings
-            if ( $product->reviews->first() )
+            if ( isset($product->reviews) && $product->reviews->first() )
             {
                 $reviews = $product->reviews;
                 $count = $reviews->count();
@@ -167,7 +185,9 @@ class Product extends Model
             }
             $product->colors = $colors;
 
-            if($product->created_at >= Carbon::now()->subDays(14)->toDateTimeString())
+            $daysOfNewBadge = Setting::find(1);
+
+            if($product->created_at >= Carbon::now()->subDays($daysOfNewBadge->number_of_days_for_new_badge)->toDateTimeString())
             {
                 $product->newIcon = true;
             }
@@ -176,6 +196,80 @@ class Product extends Model
 
         return $products;
     }
+
+    public function addPrices($products, $user)
+    {
+        foreach ($products as $product)
+        {
+            $this->addProductBasePrice($product, $user);
+        }
+
+        return $products;
+    }
+
+    public function addProductBasePrice($product, $user)
+    {
+        if($product->prices && $product->prices->first())
+        {
+            //load prices
+            $priceTable = [];
+            $discountEnabled = Setting::find(1);
+            $checkDiscountEnabled = $discountEnabled->enable_offers_page;
+            foreach ($product->prices as $price)
+            {
+                if ( isset($user->type) AND $user->type == User::TYPE_USER )
+                {
+                    $discountPrice = null;
+                    if ( $price->individual_discounted_unit_price && $price->individual_discounted_unit_price != '0' )
+                    {
+                        $discountPrice = $price->individual_discounted_unit_price;
+                    }
+
+                    if(!$checkDiscountEnabled)
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => $price->individual_unit_price,
+                            'discount' => 0
+                        ];
+                    }
+                    else
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => $price->individual_unit_price,
+                            'discount' => $price->individual_discounted_unit_price
+                        ];
+                    }
+                }
+
+                if ( isset($user->type) AND $user->type == User::TYPE_CORPORATE )
+                {
+                    $discountPrice = null;
+                    if ( $price->corporate_discounted_unit_price && $price->corporate_discounted_unit_price != '0' )
+                    {
+                        $discountPrice = $price->corporate_discounted_unit_price;
+                    }
+                    if(!$checkDiscountEnabled)
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => (float) $price->corporate_unit_price,
+                            'discount' => 0
+                        ];
+                    }
+                    else
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => (float)$price->corporate_unit_price,
+                            'discount' => (float)$price->corporate_discounted_unit_price
+                        ];
+                    }
+                }
+            }
+
+            $priceTable = collect($priceTable);
+            $product->price = $priceTable->first();
+        }
+    }
+
 
     public function getProductsFilterAttributes($products)
     {
@@ -210,6 +304,7 @@ class Product extends Model
             }
 
             $user = Auth::guard('api')->user();
+
             if($user)
             {
                 // get prices

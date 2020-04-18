@@ -94,27 +94,33 @@ class OrderController extends AdminController {
                 //in case order has multiple print images if admin accepted some and rejected
                 // others will send email with all accepted and rejected prints
                 //if it's approved add it to email
-                if ( $printImageAttribute == 'approved' )
+                  
+                //check if status changed
+                if($orderItem->is_print_image_accepted != $printImageAttribute['print_image_'. $orderItem->id])
                 {
-                    $orderItem->update( [
-                        'is_print_image_accepted' => '1'
-                    ] );
-                    $sendEmailWithPrintImageStatus[] = [
-                        'item_name'   => $orderItem->productAttributeValue->product->name_en,
-                        'print_image' => $orderItem->print_image,
-                        'status'      => 'approved'
-                    ];
-                } else
-                {
-                    //if it's rejected add it to email
-                    $orderItem->update( [
-                        'is_print_image_accepted' => '2'
-                    ] );
-                    $sendEmailWithPrintImageStatus[] = [
-                        'item_name'   => $orderItem->productAttributeValue->product->name_en,
-                        'print_image' => $orderItem->print_image,
-                        'status'      => 'rejected'
-                    ];
+                    if ( $printImageAttribute['print_image_'. $orderItem->id] == '1' )
+                    {
+                        $orderItem->update( [
+                            'is_print_image_accepted' => '1'
+                        ] );
+                        $sendEmailWithPrintImageStatus[] = [
+                            'item_name'   => $orderItem->productAttributeValue->product->name_en,
+                            'print_image' => $orderItem->print_image,
+                            'status'      => 'approved'
+                        ];
+                    }
+                    else
+                    {
+                        //if it's rejected add it to email
+                        $orderItem->update( [
+                            'is_print_image_accepted' => '2'
+                        ] );
+                        $sendEmailWithPrintImageStatus[] = [
+                            'item_name'   => $orderItem->productAttributeValue->product->name_en,
+                            'print_image' => $orderItem->print_image,
+                            'status'      => 'rejected'
+                        ];
+                    }
                 }
             }
         }
@@ -160,7 +166,12 @@ class OrderController extends AdminController {
 
             $user = User::find( $this->user_id );
 
-            return $user->first_name . $user->last_name;
+            if($user->type == User::TYPE_USER)
+            {
+                return $user->first_name .' '. $user->last_name;
+            }
+
+            return $user->company;
         } )->sortable();
 
         $grid->column( 'final_status', __( 'Status' ) )->sortable();
@@ -168,6 +179,8 @@ class OrderController extends AdminController {
 
         $grid->column( 'created_at', __( 'Created' ) )->date( 'M d Y H:i' )->width( 150 )->sortable();
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
         return $grid;
     }
 
@@ -233,21 +246,11 @@ class OrderController extends AdminController {
 
             $form->hasMany( 'orderItems', 'Order Items', function ( $form ) {
                 $form->text( 'id', 'id' );
-//            $form->text( 'individual_unit_price', 'Individual Unit Price' )->rules( 'required' );
-//            $form->text( 'individual_discounted_unit_price', 'Individual Discounted Unit Price' )
-//                ->rules( 'required' )
-//                ->help( 'Add 0 for No discount' );
-//            $form->text( 'corporate_unit_price', 'Corporate Unit Price' )->rules( 'required' );
-//            $form->text( 'corporate_discounted_unit_price', 'Corporate Discounted Unit Price' )
-//                ->rules( 'required' )
-//                ->help( 'Add 0 for No discount' );
             } );
         } );
 
         $form->saving( function ( $form ) {
-            // update order status
-            // send email
-//            dd([$form->final_status]);
+
         } );
 
         return $form;

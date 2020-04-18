@@ -30,6 +30,7 @@ class StaticPageController extends AdminController
 
         $grid->actions(function ($actions) {
             $actions->disableView();
+            $actions->disableDelete();
         });
 
         $grid->model()->orderBy( 'id', 'desc' );
@@ -42,31 +43,10 @@ class StaticPageController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
+        $grid->disableBatchActions();
+        $grid->disableExport();
+        $grid->disableCreateButton();
         return $grid;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(StaticPage::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('type', __('Type'));
-        $show->field('title_en', __('Title en'));
-        $show->field('title_ar', __('Title ar'));
-        $show->field('body_en', __('Body en'));
-        $show->field('body_ar', __('Body ar'));
-        $show->field('banner', __('Banner'))->image();
-        $show->field('slug', __('Slug'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-
-        return $show;
     }
 
     /**
@@ -87,6 +67,16 @@ class StaticPageController extends AdminController
         $form->text('slug', __('Slug'))
         ->creationRules(['required', "unique:static_pages"])
         ->updateRules(['required', "unique:static_pages,id,{{id}}"]);
+
+        $form->tools(function (Form\Tools $tools) {
+
+            // Disable `Delete` btn.
+            $tools->disableDelete();
+
+            // Disable `Veiw` btn.
+            $tools->disableView();
+
+        });
 
         return $form;
     }

@@ -63,6 +63,8 @@ class ImportExcelController extends AdminController
 
     public function storeImages()
     {
+        $attribute = request()->only('replaceImages');
+
         if(request()->hasFile('files'))
         {
             //validation
@@ -74,6 +76,26 @@ class ImportExcelController extends AdminController
             request()->validate($rules);
 
             $uploadPhotos = request()->file('files');
+
+            // if admin need to check names
+            if(!isset($attribute['replaceImages']))
+            {
+                $namesFound = [];
+                foreach ($uploadPhotos as $photo)
+                {
+                    //check if image name found
+                    if(is_file(public_path('uploads/images/' . $photo->getClientOriginalName())))
+                    {
+                        $namesFound[] = 'This name '. $photo->getClientOriginalName() .' already found';
+                    }
+                }
+
+                if(!empty($namesFound))
+                {
+                    $namesFound[] =  'Check box below upload button to replace old names with the new one';
+                    return back()->withErrors($namesFound);
+                }
+            }
 
             foreach ($uploadPhotos as $photo)
             {

@@ -38,7 +38,7 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td align="center" class="esd-block-image">
-                                                                    <a href="#" target="_blank"><img src="/images/logo.png" alt="" width="" style="display: block;"></a>
+                                                                    <a href="#" target="_blank"><img src="{{asset('/images/logo.png')}}" alt="" width="" style="display: block;"></a>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -145,11 +145,11 @@
                                                                 <td class="esd-block-image es-infoblock" align="center" style="color: #000; font-size: 18px; font-weight: bold;     margin-bottom: 20px; display: block;">SOCIAL MEDIA</td>
                                                             </tr><tr>
                                                                 <td class="esd-block-image es-infoblock" align="center" style="color: #fff; font-size: 18px; font-weight: bold;">
-                                                                    <a style="width: 30px; display: inline-table;" href="#"><img src="/images/mail/fb.png" alt=""></a>
-                                                                    <a style="width: 50px; text-align: center ; display: inline-table;" href="#"><img src="/images/mail/twit.png" alt=""></a>
-                                                                    <a style="width: 50px; text-align: center ; display: inline-table;" href="#"><img src="/images/mail/insta.png" alt=""></a>
-                                                                    <a style="width: 50px; text-align: center ; display: inline-table;" href="#"><img src="/images/mail/pin.png" alt=""></a>
-                                                                    <a style="width: 50px; text-align: center ; display: inline-table;" href="#"><img src="/images/mail/in.png" alt=""></a>
+                                                                @foreach($socialAccounts as $media)
+                                                                        <a style="width: 30px; display: inline-table;" href="{{$media->link}}">
+                                                                            <img src="{{asset($media->icon)}}" alt="">
+                                                                        </a>
+                                                                @endforeach
                                                                 </td>
                                                             </tr>
 
@@ -189,7 +189,7 @@
                                                                 </td></tr><tr>                                                                                                       <td class="esd-block-image es-infoblock" align="center" style="height: 1px; display: block; background-color: #dcdcdc;"></td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-image es-infoblock" align="center" style="color: #000;    padding: 15px; padding-bottom: 0px; font-size: 14px; margin-bottom: 0px; display: block;">© Copyright 2018 ITC Promotions. All right Reserved</td>
+                                                                <td class="esd-block-image es-infoblock" align="center" style="color: #000;    padding: 15px; padding-bottom: 0px; font-size: 14px; margin-bottom: 0px; display: block;">© Copyright 2020 ITC Promotions. All right Reserved</td>
 
                                                             </tr>
 

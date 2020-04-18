@@ -11,8 +11,9 @@ class RelatedProduct extends Model
 
     protected $guarded = ['id', 'product_id'];
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    //To be deleted
+//    public function product()
+//    {
+//        return $this->belongsTo(Product::class);
+//    }
 }
