@@ -31,10 +31,8 @@ class ContactUs extends Mailable
      */
     public function build()
     {
-        $adminSettings = Setting::find(1);
-        return $this->subject('Contact Us -- ITC-PROMOTIONS.com')
-            ->from($adminSettings->email)
-            ->to($adminSettings->email)
+        return $this->subject('Contact Us -- ITC-PROMOTIONS.com -- '. $this->data['subject'])
+            ->from($this->data['email'])
             ->view('emails.contactUs');
     }
 }

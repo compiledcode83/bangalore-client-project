@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,6 @@ class ProductController extends Controller {
         }
         $product->colors = $colors;
 
-        //add ratings
         if ( isset($product->reviews) && $product->reviews->first() )
         {
             $reviews = $product->reviews;
@@ -80,6 +80,9 @@ class ProductController extends Controller {
         $priceTableWithDiscounts = [];
         $originalPrice = 0;
         $discountFound = false;
+
+        $discountEnabled = Setting::find(1);
+        $checkDiscountEnabled = $discountEnabled->enable_offers_page;
         foreach ($product->prices as $price)
         {
             if ( Auth::user()->type == User::TYPE_USER )
@@ -92,11 +95,26 @@ class ProductController extends Controller {
                 $basePrice = $discountPrice ?? $price->individual_unit_price;
                 $originalPrice = $price->individual_unit_price;
                 $discountFound = $discountPrice ? true : false;
+
+                if(!$checkDiscountEnabled)
+                {
+                    $basePrice = $price->individual_unit_price;
+                    $discountPrice = null;
+                    $discountFound = false;
+                    $priceTableWithDiscounts[$price->max_qty] = [
+                        'price'    => $price->individual_unit_price,
+                        'discount' => 0
+                    ];
+                }
+                else
+                {
+                    $priceTableWithDiscounts[$price->max_qty] = [
+                        'price'    => $price->individual_unit_price,
+                        'discount' => $price->individual_discounted_unit_price
+                    ];
+                }
                 $priceTable [$price->max_qty] = $basePrice;
-                $priceTableWithDiscounts[$price->max_qty] = [
-                    'price'    => $price->individual_unit_price,
-                    'discount' => $price->individual_discounted_unit_price
-                ];
+
             }
 
             if ( Auth::user()->type == User::TYPE_CORPORATE )
@@ -109,11 +127,26 @@ class ProductController extends Controller {
                 $basePrice = $discountPrice ?? $price->corporate_unit_price;
                 $originalPrice = $price->corporate_unit_price;
                 $discountFound = $discountPrice ? true : false;
+
+                if(!$checkDiscountEnabled)
+                {
+                    $basePrice = $price->corporate_unit_price;
+                    $discountPrice = null;
+                    $discountFound = false;
+                    $priceTableWithDiscounts[$price->max_qty] = [
+                        'price'    => $price->corporate_unit_price,
+                        'discount' => 0
+                    ];
+                }
+                else
+                {
+                    $priceTableWithDiscounts[$price->max_qty] = [
+                        'price'    => $price->corporate_unit_price,
+                        'discount' => $price->corporate_discounted_unit_price
+                    ];
+                }
                 $priceTable [$price->max_qty] = $basePrice;
-                $priceTableWithDiscounts[$price->max_qty] = [
-                    'price'    => $price->corporate_unit_price,
-                    'discount' => $price->corporate_discounted_unit_price
-                ];
+
             }
         }
 
@@ -127,7 +160,10 @@ class ProductController extends Controller {
 
     public function searchProducts( $term )
     {
+        $user = Auth::guard('api')->user();
         $products = $this->productModel->search( $term );
+        $products = $this->productModel->addPrices($products, $user);
+
 
         return $this->productModel->getProductsRatingColors( $products );
     }

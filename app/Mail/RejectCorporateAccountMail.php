@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\SocialMedia;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,6 +13,7 @@ class RejectCorporateAccountMail extends Mailable
     use Queueable, SerializesModels;
 
     public $accountName;
+    public $socialAccounts;
 
     /**
      * Create a new message instance.
@@ -21,6 +23,7 @@ class RejectCorporateAccountMail extends Mailable
     public function __construct($accountName)
     {
         $this->accountName = $accountName;
+        $this->socialAccounts = SocialMedia::all();
     }
 
     /**

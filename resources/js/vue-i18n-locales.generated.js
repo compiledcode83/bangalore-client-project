@@ -109,6 +109,10 @@ export default {
 
         },
         "pages": {
+            "bestSellers": "اعلى المبيعات",
+            "name": "الاسم",
+            "subject": "الموضوع",
+            "message": "الرساله",
             "addYourReview": "اضف تقييم",
             "subTotal": "المبلغ إجمالي",
             "totalDiscount": "إجمالي التخفيضات",
@@ -587,6 +591,10 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "bestSellers": "best seller",
+            "name": "name",
+            "subject": "subject",
+            "message": "message",
             "addYourReview": "Add review",
             "subTotal": "SubTotal",
             "totalDiscount": "Total Discount",

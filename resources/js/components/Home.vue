@@ -72,6 +72,9 @@
                                         <div class="pull-left old"> {{product.price.baseOriginal}} KD</div>
                                         <div class="pull-right new"> {{product.price.discount}} KD</div>
                                     </div>
+                                    <div v-if="product.price  && !product.price.discount">
+                                        <div class="pull-right new"> {{product.price.baseOriginal}} KD</div>
+                                    </div>
                                 </div>
                             </div>
                         </router-link>
@@ -85,7 +88,7 @@
             </div><!--/.container-->
         </div><!--/.best-sellers-->
 
-        <div class="special-offr fullwidth" v-if="offers">
+        <div class="special-offr fullwidth" v-if="offers && siteSettings.enable_offers_page">
             <div class="container">
                 <h2> {{$t('pages.specialOffers_special')}} <span>{{$t('pages.specialOffers_offers')}}</span></h2>
                 <p class="spl">{{$t('pages.specialOffers_description')}}</p>
@@ -143,6 +146,11 @@
     export default {
 
         created() {
+
+            axios.get('/api/v1/settings/')
+            .then((response) =>{
+                this.siteSettings = response.data;
+            });
 
             this.loadData();
             this.$Progress.finish();
@@ -260,6 +268,7 @@
                 offers: null,
                 products: null,
                 slidersRunning: false,
+                siteSettings: {}
             }
         }
     }

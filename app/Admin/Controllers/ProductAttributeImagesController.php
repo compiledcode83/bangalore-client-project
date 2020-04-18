@@ -78,7 +78,8 @@ class ProductAttributeImagesController extends AdminController
 
         $show->field('sku', __('Sku'));
         $show->field('stock', __('Stock'));
-        $show->field('is_active', __('Is active'));
+        $show->is_active(__('Status'))
+            ->using(['0' => 'Not-Active', '1' => 'Active']);
         $show->field('created_at', __('Created at'));
         $show->field('main_images', __('Main imagess'))->image( '', 100, 50 );
 

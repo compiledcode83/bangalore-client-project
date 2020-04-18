@@ -42,7 +42,7 @@
                         {{$t('pages.discount')}}
                     </div>
                     <div class="col-xs-6 list text-right" v-if="discount">
-                        {{$t('pages.kd')}} {{cart.discount}}
+                        {{$t('pages.kd')}} {{discount}}
                     </div>
                     <div class="col-xs-6 list" v-if="deliveryCharges">
                         Delivery
@@ -56,7 +56,7 @@
                             {{$t('pages.total')}}
                         </div>
                         <div class="col-xs-6 text-right">
-                            {{$t('pages.kd')}} {{subTotalCart + deliveryCharges}}
+                            {{$t('pages.kd')}} {{calcTotal}}
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                 deliveryCharges: null,
                 selectedAddress: {},
                 defaultBillingAddress: {},
-                siteSettings: null,
+                siteSettings: {},
             }
         },
         watch: {
@@ -214,6 +214,7 @@
             }
         },
         mounted(){
+            this.discount = this.calcDiscount;
             // User MUST BE authenticated
             this.checkUserAuth();
 
@@ -345,6 +346,21 @@
             },
             addressesChunks(){
                 return _.chunk(Object.values(this.userAddresses), 2);
+            },
+            calcDiscount(){
+
+                let discount = 0;
+                this.cart.items.forEach(function(item){
+                    if(item.product_discount > 0){
+                        discount += (item.product_discount * item.product_qty);
+                    }
+                });
+
+                return discount;
+
+            },
+            calcTotal(){
+                return this.subTotalCart + this.deliveryCharges - this.discount;
             }
         }
     }

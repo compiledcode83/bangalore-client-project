@@ -1925,6 +1925,19 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.loadProducts();
   },
+  beforeCreate: function beforeCreate() {
+    var _this = this;
+
+    axios.get('/api/v1/settings/').then(function (response) {
+      if (!response.data.enable_offers_page) {
+        return _this.$router.push({
+          name: 'home'
+        });
+      }
+
+      _this.settings = response.data;
+    });
+  },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
     this.loadProducts();
     next();
@@ -1936,12 +1949,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadProducts: function loadProducts() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.all([axios.get('/api/v1/products-best-list/')]).then(axios.spread(function (productResponse) {
-        _this.products = productResponse.data;
+      axios.all([axios.get('/api/v1/products-best-list/', {
+        headers: {
+          'xLocalization': this.$store.state.langModule.lang,
+          "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
+        }
+      })]).then(axios.spread(function (productResponse) {
+        _this2.products = productResponse.data;
       })).then(function () {
-        _this.loading = false;
+        _this2.loading = false;
       });
     },
     onImageLoadFailure: function onImageLoadFailure(event, size) {
@@ -1951,6 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
+      settings: {},
       products: []
     };
   }
@@ -2224,6 +2243,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     $('.cart_box').hide(600);
+    this.discount = this.calcDiscount;
+    console.log(this.cart);
   },
   methods: {
     addToWishList: function addToWishList(productId) {
@@ -2330,7 +2351,16 @@ __webpack_require__.r(__webpack_exports__);
       return total;
     },
     totalCart: function totalCart() {
-      return this.subTotalCart - this.discount;
+      return this.subTotalCart - this.calcDiscount;
+    },
+    calcDiscount: function calcDiscount() {
+      var discount = 0;
+      this.cart.items.forEach(function (item) {
+        if (item.product_discount > 0) {
+          discount += item.product_discount * item.product_qty;
+        }
+      });
+      return discount;
     }
   }
 });
@@ -2538,7 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
       deliveryCharges: null,
       selectedAddress: {},
       defaultBillingAddress: {},
-      siteSettings: null
+      siteSettings: {}
     };
   },
   watch: {
@@ -2566,7 +2596,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this3 = this;
 
-    // User MUST BE authenticated
+    this.discount = this.calcDiscount; // User MUST BE authenticated
+
     this.checkUserAuth();
     axios.get('/api/v1/account/checkout/addresses', {
       headers: {
@@ -2703,6 +2734,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     addressesChunks: function addressesChunks() {
       return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.chunk(Object.values(this.userAddresses), 2);
+    },
+    calcDiscount: function calcDiscount() {
+      var discount = 0;
+      this.cart.items.forEach(function (item) {
+        if (item.product_discount > 0) {
+          discount += item.product_discount * item.product_qty;
+        }
+      });
+      return discount;
+    },
+    calcTotal: function calcTotal() {
+      return this.subTotalCart + this.deliveryCharges - this.discount;
     }
   }
 });
@@ -3122,8 +3165,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
+    var _this2 = this;
+
+    axios.get('/api/v1/settings/').then(function (response) {
+      _this2.siteSettings = response.data;
+    });
     this.loadData();
     this.$Progress.finish();
 
@@ -3211,7 +3262,7 @@ __webpack_require__.r(__webpack_exports__);
       event.target.src = '/images/default-product.jpg';
     },
     loadData: function loadData() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.all([axios.get('/api/v1/home-sliders', {
         headers: {
@@ -3231,11 +3282,11 @@ __webpack_require__.r(__webpack_exports__);
           "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
         }
       })]).then(axios.spread(function (slidersResponse, arrivalsResponse, offersResponse, bestSellersResponse) {
-        _this2.slides = slidersResponse.data;
-        _this2.arrivals = arrivalsResponse.data;
-        _this2.offers = offersResponse.data;
-        _this2.products = bestSellersResponse.data;
-        console.log(_this2.products);
+        _this3.slides = slidersResponse.data;
+        _this3.arrivals = arrivalsResponse.data;
+        _this3.offers = offersResponse.data;
+        _this3.products = bestSellersResponse.data;
+        console.log(_this3.products);
       }));
     }
   },
@@ -3245,7 +3296,8 @@ __webpack_require__.r(__webpack_exports__);
       arrivals: null,
       offers: null,
       products: null,
-      slidersRunning: false
+      slidersRunning: false,
+      siteSettings: {}
     };
   }
 });
@@ -4011,6 +4063,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 function formatState(state) {
   if (!state.id) {
     return state.text;
@@ -4030,6 +4083,7 @@ function formatState(state) {
   data: function data() {
     return {
       showMainImage: true,
+      priceTableWithDiscount: [],
       colorInputsCount: 1,
       originalPrice: null,
       discountFound: null,
@@ -4207,6 +4261,7 @@ function formatState(state) {
           _this5.productPrices = response.data.priceTable;
           _this5.originalPrice = response.data.originalPrice;
           _this5.discountFound = response.data.priceTable;
+          _this5.priceTableWithDiscount = response.data.priceTableWithDiscount;
           _this5.min_price = Math.min.apply(null, Object.values(_this5.productPrices));
           var pricesForMinQtyKey = Math.min.apply(null, Object.keys(response.data.priceTableWithDiscount));
           _this5.pricesForMinQty = response.data.priceTableWithDiscount[pricesForMinQtyKey];
@@ -4315,6 +4370,7 @@ function formatState(state) {
         if (parseInt(_this6.qtyInputs[key]) > 0) {
           _this6.cartItem = {
             item_name: _this6.product.name_en,
+            item_description: _this6.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
             product_attribute_id: _this6.colorInputs[key],
             //this.selected_attribute.id,
             product_image: colorObjectInput.images[0],
@@ -4322,7 +4378,9 @@ function formatState(state) {
             product_qty: parseInt(_this6.qtyInputs[key]),
             product_color_name: colorObjectInput.name,
             product_price: 0,
-            base_product_prices: _this6.productPrices,
+            product_discount: 0,
+            // base_product_prices: this.productPrices,
+            base_product_prices: _this6.priceTableWithDiscount,
             total: 0,
             stock: findAttribute.stock,
             status: false
@@ -4352,6 +4410,7 @@ function formatState(state) {
         formData.append('product_qty', this.qtyInputs[key]);
         formData.append('product_color_name', colorObjectInput.name);
         formData.append('product_price', this.cartItem.product_price);
+        formData.append('product_discount', this.cartItem.product_discount);
         formData.append('total', '0');
         /*
           Make the request to the POST /single-file URL
@@ -4610,8 +4669,15 @@ function formatState(state) {
         qtyIndexSelected = searchQtyDefined;
       }
 
-      qtyPriceSelected = basePrices[qtyIndexSelected];
+      qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
       item.product_price = parseInt(qtyPriceSelected);
+
+      if (parseInt(basePrices[qtyIndexSelected]['discount']) > 0) {
+        item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+      } else {
+        item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+      }
+
       return item;
     },
     removeColorInput: function removeColorInput(index) {
@@ -4650,6 +4716,45 @@ function formatState(state) {
         //     this.colorInputs.reverse();
         // }
       }
+    },
+    reportAbuse: function reportAbuse(id) {
+      var _this11 = this;
+
+      this.$swal({
+        title: 'Are you sure you want to report abuse for this review?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, report it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.post('/api/v1/review/report', {
+            'reviewId': id
+          }, {
+            headers: {
+              "Authorization": "Bearer ".concat(_this11.$store.state.authModule.accessToken)
+            }
+          }).then(function (response) {
+            if (response.data == 1) {
+              _this11.$swal({
+                title: 'Success!',
+                text: "review reported successfully!",
+                icon: 'success'
+              });
+            }
+
+            if (response.data == 2) {
+              _this11.$swal({
+                title: 'Success!',
+                text: "this review already reported by you!",
+                icon: 'info'
+              });
+            }
+          });
+        }
+      });
     }
   },
   updated: function updated() {
@@ -5235,9 +5340,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   methods: {
-    loadProducts: function loadProducts() {
-      var _this = this;
-
+    getFilterData: function getFilterData() {
       var filterQueryString = '';
 
       if (this.filterCategories && this.filterCategories.length >= 1) {
@@ -5261,7 +5364,15 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           filterQueryString += '&';
         }
 
-        filterQueryString += 'sort=' + this.filterSort;
+        if (this.filterSort == 'price_asc') {
+          filterQueryString += 'sort_by_price=asc';
+        } else if (this.filterSort == 'price_desc') {
+          {
+            filterQueryString += 'sort_by_price=desc';
+          }
+        } else {
+          filterQueryString += 'sort=' + this.filterSort;
+        }
       }
 
       if (this.filterColor && this.filterColor.length >= 1) {
@@ -5302,6 +5413,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         filterQueryString = '?' + filterQueryString;
       }
 
+      return filterQueryString;
+    },
+    loadProducts: function loadProducts() {
+      var _this = this;
+
+      var filterQueryString = this.getFilterData();
       this.products = [];
       axios.all([axios.get('/api/v1/category-products/' + this.slug + filterQueryString, {
         headers: {
@@ -5309,7 +5426,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         }
       })]).then(axios.spread(function (categoryResponse) {
         _this.products = categoryResponse.data.products.data;
-        console.log(_this.products);
+        console.log(categoryResponse.data.products.data);
         _this.pagination = categoryResponse.data.products;
         _this.category = categoryResponse.data.category;
 
@@ -5323,11 +5440,47 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     loadMoreProducts: function loadMoreProducts() {
       var _this2 = this;
 
+      var filterQueryString = this.getFilterData();
       var next_page = this.pagination.current_page + 1;
-      axios.all([axios.get('/api/v1/category-products/' + this.slug + '?page=' + next_page)]).then(axios.spread(function (categoryResponse) {
-        var _this2$products;
+      var operatorQuery = '?';
 
-        (_this2$products = _this2.products).push.apply(_this2$products, _toConsumableArray(categoryResponse.data.products.data));
+      if (filterQueryString) {
+        operatorQuery = '&';
+      }
+
+      axios.all([axios.get('/api/v1/category-products/' + this.slug + filterQueryString + operatorQuery + 'page=' + next_page, {
+        headers: {
+          "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
+        }
+      })]).then(axios.spread(function (categoryResponse) {
+        console.log(categoryResponse.data.products.data);
+
+        if (Array.isArray(categoryResponse.data.products.data)) {
+          var _this2$products;
+
+          // console.log(categoryResponse.data.products.data);
+          (_this2$products = _this2.products).push.apply(_this2$products, _toConsumableArray(categoryResponse.data.products.data));
+        } else {
+          var _this2$products2;
+
+          // let objectArray = Object.entries(categoryResponse.data.products.data);
+          var objectArray = Object.keys(categoryResponse.data.products.data);
+          objectArray.forEach(function (value) {
+            value = categoryResponse.data.products.data.value;
+          });
+          var arr = [];
+          var objKeys = Object.keys(categoryResponse.data.products.data);
+          var objValues = Object.values(categoryResponse.data.products.data);
+
+          for (var i = 0; i < objKeys.length; i++) {
+            arr[objKeys[i]] = objValues[i];
+          }
+
+          console.log(arr);
+          console.log(Object.values(categoryResponse.data.products.data));
+
+          (_this2$products2 = _this2.products).push.apply(_this2$products2, _toConsumableArray(Object.values(categoryResponse.data.products.data)));
+        }
 
         _this2.pagination = categoryResponse.data.products;
         _this2.category = categoryResponse.data.category;
@@ -5501,11 +5654,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       filterColorsList: {},
       current_page: 0,
       category: {},
-      pagination: {}
+      pagination: {},
+      searchTerm: this.term
     };
   },
   mounted: function mounted() {
-    console.log(this.products);
     this.loading = false; // this.slug = this.$route.params.slug;
     // this.loadFilterCategoriesList();
     // this.loadFilterColorsList();
@@ -5524,8 +5677,34 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   methods: {
-    loadProducts: function loadProducts() {
+    searchProducts: function searchProducts() {
       var _this = this;
+
+      if (this.searchTerm === '') {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please add some text ...'
+        });
+        return;
+      }
+
+      axios.get('/api/v1/search/' + this.searchTerm).then(function (responseProducts) {
+        $('#search').removeClass('open');
+        return _this.$router.push({
+          name: 'searchProducts',
+          query: {
+            term: _this.searchTerm
+          },
+          params: {
+            products: responseProducts.data,
+            term: _this.searchTerm
+          }
+        });
+      });
+    },
+    loadProducts: function loadProducts() {
+      var _this2 = this;
 
       var filterQueryString = '';
 
@@ -5551,43 +5730,43 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       this.products = [];
       axios.all([axios.get('/api/v1/category-products/' + this.slug + filterQueryString)]).then(axios.spread(function (categoryResponse) {
-        _this.products = categoryResponse.data.products.data;
-        _this.pagination = categoryResponse.data.products;
-        _this.category = categoryResponse.data.category;
+        _this2.products = categoryResponse.data.products.data;
+        _this2.pagination = categoryResponse.data.products;
+        _this2.category = categoryResponse.data.category;
       })).then(function () {
-        _this.loading = false;
+        _this2.loading = false;
       });
     },
     loadMoreProducts: function loadMoreProducts() {
-      var _this2 = this;
+      var _this3 = this;
 
       var next_page = this.pagination.current_page + 1;
       axios.all([axios.get('/api/v1/category-products/' + this.slug + '?page=' + next_page)]).then(axios.spread(function (categoryResponse) {
-        var _this2$products;
+        var _this3$products;
 
-        (_this2$products = _this2.products).push.apply(_this2$products, _toConsumableArray(categoryResponse.data.products.data));
+        (_this3$products = _this3.products).push.apply(_this3$products, _toConsumableArray(categoryResponse.data.products.data));
 
-        _this2.pagination = categoryResponse.data.products;
-        _this2.category = categoryResponse.data.category;
+        _this3.pagination = categoryResponse.data.products;
+        _this3.category = categoryResponse.data.category;
       }));
     },
     onImageLoadFailure: function onImageLoadFailure(event, size) {
       event.target.src = 'https://via.placeholder.com/' + size;
     },
     loadFilterCategoriesList: function loadFilterCategoriesList() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.filterCategoriesList = {};
       axios.get('/api/v1/filter-categories/' + this.slug).then(function (response) {
-        _this3.filterCategoriesList = response.data;
+        _this4.filterCategoriesList = response.data;
       });
     },
     loadFilterColorsList: function loadFilterColorsList() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.filterColorsList = {};
       axios.get('/api/v1/filter-colors').then(function (response) {
-        _this4.filterColorsList = response.data;
+        _this5.filterColorsList = response.data;
       });
     }
   }
@@ -32639,7 +32818,7 @@ var render = function() {
           _c("div", { staticClass: "innr-banner fullwidth" }, [
             _c("img", {
               staticStyle: { "max-height": "315px" },
-              attrs: { src: "/uploads/" },
+              attrs: { src: "/uploads/" + _vm.settings.best_seller_banner },
               on: {
                 error: function($event) {
                   return _vm.onImageLoadFailure($event, "1400x250")
@@ -32986,7 +33165,9 @@ var render = function() {
                       _vm._v(" - " + _vm._s(cartItem.product_color_name)),
                       _c("br"),
                       _vm._v(" "),
-                      cartItem.description ? _c("p") : _vm._e(),
+                      cartItem.item_description
+                        ? _c("p", [_vm._v(_vm._s(cartItem.item_description))])
+                        : _vm._e(),
                       _vm._v(" "),
                       cartItem.product_print_image
                         ? _c("div", [
@@ -33230,7 +33411,7 @@ var render = function() {
                           "\n                                    " +
                             _vm._s(_vm.$t("pages.kd")) +
                             " " +
-                            _vm._s(_vm.cart.discount) +
+                            _vm._s(_vm.calcDiscount) +
                             "\n                                "
                         )
                       ])
@@ -33451,7 +33632,7 @@ var render = function() {
                     "\n                    " +
                       _vm._s(_vm.$t("pages.kd")) +
                       " " +
-                      _vm._s(_vm.cart.discount) +
+                      _vm._s(_vm.discount) +
                       "\n                "
                   )
                 ])
@@ -33487,7 +33668,7 @@ var render = function() {
                   "\n                        " +
                     _vm._s(_vm.$t("pages.kd")) +
                     " " +
-                    _vm._s(_vm.subTotalCart + _vm.deliveryCharges) +
+                    _vm._s(_vm.calcTotal) +
                     "\n                    "
                 )
               ])
@@ -34636,6 +34817,18 @@ var render = function() {
                                 )
                               ])
                             ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        product.price && !product.price.discount
+                          ? _c("div", [
+                              _c("div", { staticClass: "pull-right new" }, [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(product.price.baseOriginal) +
+                                    " KD"
+                                )
+                              ])
+                            ])
                           : _vm._e()
                       ])
                     ])
@@ -34669,7 +34862,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm.offers
+    _vm.offers && _vm.siteSettings.enable_offers_page
       ? _c("div", { staticClass: "special-offr fullwidth" }, [
           _c("div", { staticClass: "container" }, [
             _c("h2", [
@@ -36435,7 +36628,26 @@ var render = function() {
                         _c("div", { staticClass: "col-xs-12 col-sm-7" }, [
                           _c("p", { staticClass: "date-rate" }, [
                             _vm._v(_vm._s(review.created_at))
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.isAuth
+                            ? _c("img", {
+                                staticStyle: {
+                                  width: "25px",
+                                  cursor: "pointer"
+                                },
+                                attrs: {
+                                  title: _vm.$t("pages.report"),
+                                  src: "/images/abuse.png"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.reportAbuse(review.id)
+                                  }
+                                }
+                              })
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -36453,6 +36665,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _vm.product.relatedProductsDetails &&
     _vm.product.relatedProductsDetails.length >= 1
       ? _c("div", { staticClass: "related-products" }, [
           _c("div", { staticClass: "container" }, [
@@ -37311,9 +37524,9 @@ var render = function() {
                   [
                     _c("span", { staticClass: "glyphicon glyphicon-search" }),
                     _vm._v(
-                      "\n                  " +
+                      "\n              " +
                         _vm._s(_vm.$t("pages.search")) +
-                        "\n              "
+                        "\n          "
                     )
                   ]
                 )
@@ -37345,11 +37558,11 @@ var render = function() {
                         _vm.pagination
                           ? _c("div", { staticClass: "pull-left" }, [
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                " +
                                   _vm._s(_vm.pagination.total) +
                                   " " +
                                   _vm._s(_vm.$t("pages.items")) +
-                                  "\n                                "
+                                  "\n                            "
                               )
                             ])
                           : _vm._e(),
@@ -37392,6 +37605,22 @@ var render = function() {
                             },
                             [
                               _c("option"),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "price_asc" } }, [
+                                _vm._v(
+                                  _vm._s(_vm.$t("pages.price")) +
+                                    " - " +
+                                    _vm._s(_vm.$t("pages.lowToHigh"))
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "price_desc" } }, [
+                                _vm._v(
+                                  _vm._s(_vm.$t("pages.price")) +
+                                    " - " +
+                                    _vm._s(_vm.$t("pages.highToLow"))
+                                )
+                              ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "asc" } }, [
                                 _vm._v(
@@ -37586,19 +37815,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.term,
-                    expression: "term"
+                    value: _vm.searchTerm,
+                    expression: "searchTerm"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", placeholder: "Keyword Search" },
-                domProps: { value: _vm.term },
+                domProps: { value: _vm.searchTerm },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.term = $event.target.value
+                    _vm.searchTerm = $event.target.value
                   }
                 }
               }),
@@ -37608,7 +37837,13 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success rounded-0",
-                    attrs: { type: "submit" }
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.searchProducts($event)
+                      }
+                    }
                   },
                   [
                     _c("span", { staticClass: "glyphicon glyphicon-search" }),
@@ -43781,6 +44016,9 @@ var render = function() {
                                   id: "uploadFile",
                                   placeholder: _vm.$t("pages.companyLicense"),
                                   disabled: ""
+                                },
+                                domProps: {
+                                  value: this.corporateData.company_license.name
                                 }
                               }),
                               _vm._v(" "),
@@ -65613,8 +65851,14 @@ var actions = {
       qtyIndexSelected = searchQtyDefined;
     }
 
-    qtyPriceSelected = basePrices[qtyIndexSelected];
+    qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
     item.product_price = parseInt(qtyPriceSelected);
+
+    if (parseInt(basePrices[qtyIndexSelected]['discount']) > 0) {
+      item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+    } else {
+      item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+    }
   },
   removeItemFromCart: function removeItemFromCart(_ref6, item) {
     var commit = _ref6.commit;
@@ -65841,6 +66085,10 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "البريد الإلكتروني"
     },
     "pages": {
+      "bestSellers": "اعلى المبيعات",
+      "name": "الاسم",
+      "subject": "الموضوع",
+      "message": "الرساله",
       "addYourReview": "اضف تقييم",
       "subTotal": "المبلغ إجمالي",
       "totalDiscount": "إجمالي التخفيضات",
@@ -66317,6 +66565,10 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "Email Address"
     },
     "pages": {
+      "bestSellers": "best seller",
+      "name": "name",
+      "subject": "subject",
+      "message": "message",
       "addYourReview": "Add review",
       "subTotal": "SubTotal",
       "totalDiscount": "Total Discount",

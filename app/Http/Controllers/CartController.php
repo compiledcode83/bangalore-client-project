@@ -92,7 +92,8 @@ class CartController extends Controller {
             'product_image',
             'product_qty',
             'product_color_name',
-            'product_price'
+            'product_price',
+            'product_discount',
         ] );
 
         if ( $request->hasFile( 'file' ) )

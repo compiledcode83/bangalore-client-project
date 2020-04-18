@@ -139,9 +139,16 @@ class Product extends Model
         {
             return [];
         }
-        $products = Self::where('name_en', 'like', "%".$term."%")
-                        ->orWhere('name_ar', 'like', "%".$term."%")
-                        ->orWhere('sku', 'like', "%".$term."%")
+
+        $query = Self::whereHas('productAttributeValues', function ($query) use ($term) {
+
+                $query->where(function($query) use ($term){
+                    $query->where('name_en', 'LIKE', '%'. $term .'%')
+                        ->orWhere('name_ar', 'LIKE', '%'. $term .'%');
+                });
+        });
+
+        $products = $query->orWhere('sku', 'LIKE', '%'. $term .'%')
                         ->orderBy('created_at', 'desc')
                         ->active()
                         ->get();
@@ -206,6 +213,8 @@ class Product extends Model
         {
             //load prices
             $priceTable = [];
+            $discountEnabled = Setting::find(1);
+            $checkDiscountEnabled = $discountEnabled->enable_offers_page;
             foreach ($product->prices as $price)
             {
                 if ( isset($user->type) AND $user->type == User::TYPE_USER )
@@ -215,10 +224,21 @@ class Product extends Model
                     {
                         $discountPrice = $price->individual_discounted_unit_price;
                     }
-                    $priceTable[$price->max_qty] = [
-                        'baseOriginal'    => $price->individual_unit_price,
-                        'discount' => $price->individual_discounted_unit_price
-                    ];
+
+                    if(!$checkDiscountEnabled)
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => $price->individual_unit_price,
+                            'discount' => 0
+                        ];
+                    }
+                    else
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => $price->individual_unit_price,
+                            'discount' => $price->individual_discounted_unit_price
+                        ];
+                    }
                 }
 
                 if ( isset($user->type) AND $user->type == User::TYPE_CORPORATE )
@@ -228,10 +248,20 @@ class Product extends Model
                     {
                         $discountPrice = $price->corporate_discounted_unit_price;
                     }
-                    $priceTable[$price->max_qty] = [
-                        'baseOriginal'    => $price->corporate_unit_price,
-                        'discount' => $price->corporate_discounted_unit_price
-                    ];
+                    if(!$checkDiscountEnabled)
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => (float) $price->corporate_unit_price,
+                            'discount' => 0
+                        ];
+                    }
+                    else
+                    {
+                        $priceTable[$price->max_qty] = [
+                            'baseOriginal'    => (float)$price->corporate_unit_price,
+                            'discount' => (float)$price->corporate_discounted_unit_price
+                        ];
+                    }
                 }
             }
 

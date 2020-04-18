@@ -84,7 +84,7 @@ class Order extends Model
                                   $shippingAddress->block.', street: '. $shippingAddress->street.', building: '. $shippingAddress->building.
                                   ', floor: '. $shippingAddress->floor;
 
-        if($user->type = User::TYPE_USER)
+        if($user->type == User::TYPE_USER)
         {
             $prepareShippingAddress .= ', home: '. $shippingAddress->house_number;
         }
@@ -100,7 +100,7 @@ class Order extends Model
                 $billingAddress['block'].', street: '. $billingAddress['street'].', building: '. $billingAddress['building'].
                 ', floor: '. $billingAddress['floor'];
 
-            if($user->type = User::TYPE_USER)
+            if($user->type == User::TYPE_USER)
             {
                 $prepareBillingAddress .= ', home: '. $shippingAddress['house_number'];
             }
@@ -134,22 +134,26 @@ class Order extends Model
             {
                 return ['error' => 'order has item out-stock'];
             }
+            $itemPrice = $this->calculateItemPriceBasedOnQty($item->product_attribute_value_id, $item->qty, $user->type);
             $items[] = new OrderItem([
                 'product_attribute_value_id' => $item->product_attribute_value_id,
-                'unit_price' => $item->unit_price,
+                'unit_price' => $itemPrice,
                 'qty' => $item->qty,
                 'print_image'    => $item->print_image ?? '',
             ]);
 
-            $itemsTotal += $item->unit_price * $item->qty;
+            if(!$itemPrice){
+                return ['error' => 'prices not set correctly please contact Admin!'];
+            }
+            $itemsTotal += $itemPrice * $item->qty;
 
             $emailConfirmationData['items'][] = [
                 'name' => $item->item_name,
                 'image' => $item->item_image,
                 'print_image'    => $item->print_image ?? '',
-                'unit_price' => $item->unit_price,
+                'unit_price' => $itemPrice,
                 'qty' => $item->qty,
-                'total_price'   => $item->qty * $item->unit_price
+                'total_price'   => $item->qty * $itemPrice
             ];
         }
         $emailConfirmationData['discount'] = $data['discount'];
@@ -175,6 +179,63 @@ class Order extends Model
         }
 
         return false;
+    }
+
+    public function calculateItemPriceBasedOnQty($productAttributeId, $itemQty,  $userType)
+    {
+        $productAttribute = ProductAttributeValue::find($productAttributeId);
+        $product = Product::with( 'prices' )
+            ->where( 'id', $productAttribute->product->id )
+            ->first();
+
+        //load prices
+        $basePrice = null;
+
+        $discountEnabled = Setting::find(1);
+        $checkDiscountEnabled = $discountEnabled->enable_offers_page;
+        foreach ($product->prices as $price)
+        {
+            if ( $userType == User::TYPE_USER )
+            {
+                if(!$checkDiscountEnabled)
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->individual_unit_price;
+                    }
+                }
+                else
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->individual_discounted_unit_price ?? $price->individual_unit_price;
+                    }
+                }
+
+            }
+
+            if ( $userType == User::TYPE_CORPORATE )
+            {
+
+                if(!$checkDiscountEnabled)
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->corporate_unit_price;
+                    }
+                }
+                else
+                {
+                    if($itemQty >= $price->max_qty)
+                    {
+                        $basePrice = $price->corporate_discounted_unit_price ?? $price->corporate_unit_price;
+                    }
+                }
+
+            }
+        }
+
+        return $basePrice ;
     }
 
     protected function deleteCart($userCart)

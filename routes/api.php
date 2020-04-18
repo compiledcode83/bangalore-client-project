@@ -82,6 +82,7 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('user/reviews-list','UserController@userReviews');
         Route::get('user-ability/review/{id}','UserController@userAbleToReview');
         Route::post('/user/review','UserController@reviewStore');
+        Route::post('/review/report','UserController@reportReview');
 
         Route::get('account/checkout/addresses','AddressesController@getUserAddressesForCheckout');
         Route::get('account/addresses','AddressesController@getUserAddresses');

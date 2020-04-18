@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\Review;
+use App\Models\ReviewAbuse;
 use App\Models\User;
 use App\Models\WishList;
 use Illuminate\Http\Request;
@@ -43,6 +44,31 @@ class UserController extends Controller {
         }
 
         return $responseData;
+    }
+
+    public function reportReview(Request $request)
+    {
+        $user = Auth::user();
+        $attribute = $request->only('reviewId');
+
+        $checkReview = ReviewAbuse::where('review_id', $attribute['reviewId'])
+                                ->where('report_by_user_id', $user->id)
+                                ->first();
+
+        if($checkReview)
+        {
+            return 2;
+        }
+        else
+        {
+            ReviewAbuse::create([
+                'review_id' => $attribute['reviewId'],
+                'report_by_user_id' => $user->id
+            ]);
+
+            return 1;
+        }
+
     }
 
     public function userAbleToReview( $productAttributeId )

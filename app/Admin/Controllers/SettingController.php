@@ -52,7 +52,7 @@ class SettingController extends AdminController
 
         $form->tab('General', function ($form) {
             $form->switch('individual_can_register', __('Enable Individuals To Register'))->default(0);
-            $form->switch('enable_offers_page', __('Enable Offers Page'))->default(0);
+            $form->switch('enable_offers_page', __('Enable Discounts & Offers Page'))->default(0);
             $form->text('header_phone', __('Header Phone'));
             $form->number('number_of_days_for_new_badge', __('Number of Days for New badge icon'))->rules( 'required' )->required();
             })->tab('Banners', function ($form) {
@@ -61,6 +61,7 @@ class SettingController extends AdminController
                 $form->image('media_banner', __('Media banner'))->required();
                 $form->image('services_banner', __('Services banner'))->rules( 'required' )->required();
                 $form->image('special_offers_banner', __('Special offers banner'))->rules( 'required' )->required();
+                $form->image('best_seller_banner', __('Best Seller banner'))->rules( 'required' )->required();
                 $form->image('account_banner', __('User Account Banner'))->rules( 'required' )->required();
             })->tab('Contact', function ($form) {
                 $form->image('contact_img', __('Contact Banner'))->move('pages')->uniqueName()->rules( 'required' )->required();

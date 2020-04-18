@@ -74,7 +74,7 @@
                                <strong> {{$t('pages.login_to_check_price')}} </strong>
                             </div>
                             <div class="pull-right stock">
-                                <span v-if="selected_attribute.stock > 0">{{$t('pages.inStock')}}</span>
+                                <span v-if="selected_attribute.stock > 0 ">{{$t('pages.inStock')}}</span>
                                 <strong> {{selected_attribute.sku}} </strong>
                             </div>
 
@@ -220,6 +220,7 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-7">
                                             <p class="date-rate">{{review.created_at}}</p>
+                                            <img :title="$t('pages.report')" src="/images/abuse.png" style="width:25px;cursor: pointer;" v-if="isAuth" @click.prevent="reportAbuse(review.id)">
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +234,7 @@
             </div><!--/.product-details-->
         </div><!--/.innr-cont-area-->
 
-        <div class="related-products" v-if="product.relatedProductsDetails.length >= 1">
+        <div class="related-products" v-if="product.relatedProductsDetails && product.relatedProductsDetails.length >= 1">
             <div class="container">
                 <h2>{{$t('pages.related')}} <span>{{$t('pages.products')}}</span></h2>
                 <ul class="relatedprod-slide">
@@ -267,6 +268,7 @@
         data: function () {
             return {
                 showMainImage: true,
+                priceTableWithDiscount: [],
                 colorInputsCount: 1,
                 originalPrice: null,
                 discountFound: null,
@@ -441,6 +443,7 @@
                             this.productPrices = response.data.priceTable;
                             this.originalPrice = response.data.originalPrice;
                             this.discountFound = response.data.priceTable;
+                            this.priceTableWithDiscount = response.data.priceTableWithDiscount;
                             this.min_price = Math.min.apply( null, Object.values(this.productPrices) );
                             let pricesForMinQtyKey = Math.min.apply( null, Object.keys(response.data.priceTableWithDiscount) );
                             this.pricesForMinQty = response.data.priceTableWithDiscount[pricesForMinQtyKey];
@@ -543,13 +546,16 @@
                     if(parseInt(this.qtyInputs[key]) > 0) {
                         this.cartItem = {
                             item_name: this.product.name_en,
+                            item_description: this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
                             product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
                             product_image: colorObjectInput.images[0],
                             product_print_image: '',
                             product_qty: parseInt(this.qtyInputs[key]),
                             product_color_name: colorObjectInput.name,
                             product_price: 0,
-                            base_product_prices: this.productPrices,
+                            product_discount: 0,
+                            // base_product_prices: this.productPrices,
+                            base_product_prices: this.priceTableWithDiscount,
                             total: 0,
                             stock: findAttribute.stock,
                             status: false
@@ -579,6 +585,7 @@
                     formData.append('product_qty', this.qtyInputs[key]);
                     formData.append('product_color_name', colorObjectInput.name);
                     formData.append('product_price', this.cartItem.product_price);
+                    formData.append('product_discount', this.cartItem.product_discount);
                     formData.append('total', '0');
                     /*
                       Make the request to the POST /single-file URL
@@ -839,8 +846,14 @@
                 }else{
                     qtyIndexSelected = searchQtyDefined;
                 }
-                qtyPriceSelected = basePrices[qtyIndexSelected];
+                qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
                 item.product_price = parseInt(qtyPriceSelected);
+                if(parseInt(basePrices[qtyIndexSelected]['discount']) > 0){
+                    item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+                }else{
+                    item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+                }
+
 
                 return item;
             },
@@ -886,6 +899,44 @@
                     //     this.colorInputs.reverse();
                     // }
                 }
+            },
+            reportAbuse(id){
+                this.$swal({
+                    title: 'Are you sure you want to report abuse for this review?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, report it!'
+                }).then((result) => {
+                    if (result.value) {
+                        axios.post(
+                            '/api/v1/review/report', {'reviewId': id},
+                            {headers: {
+                                    "Authorization" : `Bearer ${this.$store.state.authModule.accessToken}`
+                                }
+                            }
+                        ).then((response) => {
+                            if(response.data == 1){
+                                this.$swal({
+                                    title: 'Success!',
+                                    text: "review reported successfully!",
+                                    icon: 'success',
+                                });
+                            }
+                            if(response.data == 2){
+                                this.$swal({
+                                    title: 'Success!',
+                                    text: "this review already reported by you!",
+                                    icon: 'info',
+                                });
+                            }
+
+                        });
+
+                    }
+                });
             }
 
         },

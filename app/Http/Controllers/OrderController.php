@@ -272,7 +272,8 @@ class OrderController extends Controller {
                         'product_qty'          => $item->qty,
                         'product_color_name'   => $item->productAttributeValue->attributeValue->value_en,
                         'product_price'        => $item->unit_price,
-                        'base_product_prices'  => $productPrices['priceTable'],
+                        'base_product_prices'  => $productPrices['priceTableWithDiscount'],
+                        'product_discount'     => 0,
                         'total'                => $item->unit_price * $item->qty,
                         'status'               => false,
                         'stock'                => $item->productAttributeValue->stock

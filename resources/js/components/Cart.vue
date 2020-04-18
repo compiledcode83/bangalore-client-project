@@ -32,7 +32,7 @@
                                     <div class="col-lg-8 col-md-7 data">
                                         <h4> {{cartItem.item_name}} </h4>
                                         <strong>Color</strong> - {{cartItem.product_color_name}}<br>
-                                        <p v-if="cartItem.description"></p>
+                                        <p v-if="cartItem.item_description">{{cartItem.item_description}}</p>
                                         <div v-if="cartItem.product_print_image">
                                             <strong>Print Image</strong> - <a :href="cartItem.product_print_image" target="_blank"> Open Print Image </a><br>
                                         </div>
@@ -97,7 +97,7 @@
                                     {{$t('pages.discount')}}
                                 </div>
                                 <div class="col-xs-6 list text-right" v-if="discount">
-                                    {{$t('pages.kd')}} {{cart.discount}}
+                                    {{$t('pages.kd')}} {{calcDiscount}}
                                 </div>
 <!--                                <div class="col-xs-6 list">-->
 <!--                                    Delivery-->
@@ -143,6 +143,8 @@
         },
         mounted() {
             $('.cart_box').hide(600);
+            this.discount = this.calcDiscount;
+            console.log(this.cart);
         },
         methods: {
             addToWishList(productId){
@@ -246,9 +248,20 @@
                 return total;
             },
             totalCart(){
-
-                return this.subTotalCart - this.discount;
+                return this.subTotalCart - this.calcDiscount;
             },
+            calcDiscount(){
+
+                let discount = 0;
+                this.cart.items.forEach(function(item){
+                    if(item.product_discount > 0){
+                        discount += (item.product_discount * item.product_qty);
+                    }
+                });
+
+                return discount;
+
+            }
         }
 
     }

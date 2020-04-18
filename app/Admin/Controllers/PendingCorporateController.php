@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Mail\ApproveCorporateAccountMail;
 use App\Mail\RejectCorporateAccountMail;
+use App\Models\SocialMedia;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -65,7 +66,11 @@ class PendingCorporateController extends AdminController
         $show->field('job_title', __('Job Title'));
         $show->field('contact_person', __('Contact Person'));
         $show->company_license()->as(function ($company_license) {
-            return '/uploads/corporates/'.$company_license;
+            if($company_license)
+            {
+                return '/uploads/corporates/'.$company_license;
+            }
+             return "No uploads";
         })->link();
         $show->type(__('Account Type'))
             ->using([User::TYPE_USER => 'USER', User::TYPE_CORPORATE => 'CORPORATE']);

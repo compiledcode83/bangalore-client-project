@@ -14,7 +14,7 @@
         </div>
         <div v-else>
             <div class="innr-banner fullwidth">
-            <img :src="'/uploads/'"
+            <img :src="'/uploads/'+settings.best_seller_banner"
                  @error="onImageLoadFailure($event, '1400x250')"
                  style="max-height: 315px;" />
             <div class="heading">
@@ -79,6 +79,15 @@
         mounted() {
             this.loadProducts();
         },
+        beforeCreate(){
+            axios.get('/api/v1/settings/')
+                .then((response) =>{
+                    if(!response.data.enable_offers_page){
+                        return this.$router.push({ name: 'home'});
+                    }
+                    this.settings = response.data;
+                });
+        },
         beforeRouteUpdate(to, from, next) {
             this.loadProducts();
             next();
@@ -91,7 +100,10 @@
         methods: {
             loadProducts(){
                 axios.all([
-                    axios.get('/api/v1/products-best-list/')
+                    axios.get('/api/v1/products-best-list/', {headers: {
+                        'xLocalization' : this.$store.state.langModule.lang,
+                        "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                    }})
                 ]).then(axios.spread((productResponse) => {
                     this.products = productResponse.data;
                 })).then(() => {
@@ -107,6 +119,7 @@
         data: function () {
             return {
                 loading: true,
+                settings: {},
                 products: []
             }
         }

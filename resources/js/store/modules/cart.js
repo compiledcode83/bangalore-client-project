@@ -113,8 +113,14 @@ export const actions = {
         }else{
             qtyIndexSelected = searchQtyDefined;
         }
-        qtyPriceSelected = basePrices[qtyIndexSelected];
+        qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
         item.product_price = parseInt(qtyPriceSelected);
+        if(parseInt(basePrices[qtyIndexSelected]['discount']) > 0){
+            item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+        }else{
+            item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+        }
+
     },
     removeItemFromCart({ commit }, item) {
         //check item is already in cart
