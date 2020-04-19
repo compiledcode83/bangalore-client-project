@@ -71,7 +71,9 @@
                                 :enable-cross="enableCross"
                                 :tooltip-style="tooltipStyle"
                                 :process-style="processStyle"
-                                @drag-end="toggleQueryString('price',0)">
+                                :formatter="formatter"
+                                :lazy=true
+                                @slide-end="toggleQueryString('price',0)">
                             </vue-range-slider>
 
                             <input class="rangedprice pull-left" type="text" id="amountfrm" readonly style="text-align:left;">
@@ -112,13 +114,13 @@
                                 <span class="checkmark"></span>
                             </label>
                         </li>
-                        <li>
-                            <label class="discount-chk">{{$t('pages.fullPrice')}}
-                                <input type="checkbox"  v-model="fullPrice"
-                                       :checked="toggleQueryString('discount','0')">
-                                <span class="checkmark"></span>
-                            </label>
-                        </li>
+<!--                        <li>-->
+<!--                            <label class="discount-chk">{{$t('pages.fullPrice')}}-->
+<!--                                <input type="checkbox"  v-model="fullPrice"-->
+<!--                                       :checked="toggleQueryString('discount','0')">-->
+<!--                                <span class="checkmark"></span>-->
+<!--                            </label>-->
+<!--                        </li>-->
                     </ul>
                 </li>
             </ul>
@@ -143,7 +145,10 @@
                 filterBoxes: [],
                 filterCategory: [],
                 filterColor: [],
-                filterPrice: []
+                filterPrice: [],
+                sliderPriceMin: parseInt(this.minPrice),
+                sliderPriceMax: parseInt(this.maxPrice),
+                priceSliderValue: [parseInt(this.minPrice),parseInt(this.maxPrice)]
             }
         },
         watch: {
@@ -172,26 +177,27 @@
             this.processStyle = {
                 backgroundColor: '#be1522'
             };
+            this.formatter = value => `${value} KD`
             /* End price slider */
         },
         computed: {
             isAuth() {
                 return this.$store.getters['authModule/isAuthenticated'];
             },
-            sliderPriceMin(){
-                return parseInt(this.minPrice);
-            },
-            sliderPriceMax(){
-                return parseInt(this.maxPrice);
-            },
-            priceSliderValue:{
-                get(){
-                    return [parseInt(this.minPrice),parseInt(this.maxPrice)];
-                },
-                set(minPrice, maxPrices){
-                    return [parseInt(minPrice),parseInt(maxPrices)];
-                }
-            }
+            // sliderPriceMin(){
+            //     return parseInt(this.minPrice);
+            // },
+            // sliderPriceMax(){
+            //     return parseInt(this.maxPrice);
+            // },
+            // priceSliderValue:{
+            //     get(){
+            //         return [parseInt(this.minPrice),parseInt(this.maxPrice)];
+            //     },
+            //     set(minPrice, maxPrices){
+            //         return [parseInt(minPrice),parseInt(maxPrices)];
+            //     }
+            // }
         },
         methods: {
 

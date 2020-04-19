@@ -17,8 +17,8 @@
                             <li><router-link to="/contact">{{$t('pages.quickLinks_contactUs')}}</router-link></li>
                             <li><router-link to="/pages/privacy">{{$t('pages.quickLinks_privacyPolice')}}</router-link></li>
                             <li><router-link to="/pages/terms">{{$t('pages.quickLinks_termsConditions')}}</router-link></li>
-                            <li><router-link to="/pages/faqs">{{$t('pages.quickLinks_faqs')}}</router-link></li>
-                            <li><router-link to="/pages/sitemap">{{$t('pages.quickLinks_siteMap')}}</router-link></li>
+                            <li><router-link to="/faq">{{$t('pages.quickLinks_faqs')}}</router-link></li>
+                            <li><router-link to="/sitemap">{{$t('pages.quickLinks_siteMap')}}</router-link></li>
                         </ul>
                     </div><!--/.row-->
                 </div><!--/.col-sm-4-->

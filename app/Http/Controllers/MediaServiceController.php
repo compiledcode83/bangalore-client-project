@@ -16,42 +16,71 @@ class MediaServiceController extends Controller {
 
     public function getMedias()
     {
-        $media_banner = Setting::find( 1 )->get( ['media_banner'] );
-        $medias = MediaService::where( [['is_active', '=', '1'], ['type', '=', '1']] )->get();
+        $settings = Setting::find( 1 );
+        $mediaItems = MediaService::where( [['is_active', '=', '1'], ['type', '=', '1']] )->get();
 
-//                                ->get( ['title_en', 'id', 'short_description_en','image','created_at'] );
+        $mediaData = [];
+        foreach ($mediaItems as $item)
+        {
+            $mediaData [] = [
+                'id'                => $item->id,
+                'title'             => $item->logo,
+                'short_description' => $item->short_description,
+                'image'             => $item->image,
+                'date'              => date( "d M Y", strtotime( $item->created_at ) ),
+            ];
+        }
+
+        $mediaData = $this->paginate( $mediaData, $perPage = 6, $page = null, $options = [] );
 
         return [
-            'media_banner' => $media_banner,
-            'medias'       => MediaResource::collection( $medias )
+            'media_banner' => $settings->media_banner,
+            'mediaItems'   => $mediaData
         ];
 
+    }
+
+    public function getMediaDetails( $id )
+    {
+        $settings = Setting::find( 1 );
+        $mediaItem = MediaService::find( $id );
+
+        $mediaItem = [
+            'id'                => $mediaItem->id,
+            'title'             => $mediaItem->title,
+            'short_description' => $mediaItem->short_description,
+            'full_description'  => $mediaItem->full_description,
+            'image'             => $mediaItem->image,
+            'date'              => date( "d M Y", strtotime( $mediaItem->created_at ) ),
+        ];
+
+        return [
+            'media_banner' => $settings->media_banner,
+            'mediaItems'        => $mediaItem
+        ];
     }
 
     public function getServices()
     {
         $settings = Setting::find( 1 );
         $servicesData = MediaService::where( [['is_active', '=', '1'], ['type', '=', '2']] )->get();
-//                                ->get( ['title_en', 'id', 'short_description_en','image'] );
 
-//        $services = $servicesData->getCollection();
+        $services = [];
         foreach ($servicesData as $service)
         {
             $services [] = [
                 'id'                => $service->id,
-                'title'             => $service->logo,
+                'title'             => $service->title,
                 'short_description' => $service->short_description,
                 'image'             => $service->image
             ];
         }
 
-        $serviceszz =  $this->paginate($services, $perPage = 5, $page = null, $options = []);
-//        $servicesData->deleteCollection();
-//        $servicesData->setCollection($services);
+        $services = $this->paginate( $services, $perPage = 5, $page = null, $options = [] );
 
         return [
             'services_banner' => $settings->services_banner,
-            'services'        => $serviceszz
+            'services'        => $services
         ];
 
     }
@@ -63,7 +92,7 @@ class MediaServiceController extends Controller {
 
         $services = [
             'id'                => $service->id,
-            'title'             => $service->logo,
+            'title'             => $service->title,
             'short_description' => $service->short_description,
             'full_description'  => $service->full_description,
             'image'             => $service->image
@@ -78,20 +107,20 @@ class MediaServiceController extends Controller {
     /**
      * Gera a paginação dos itens de um array ou collection.
      *
-     * @param array|Collection      $items
-     * @param int   $perPage
-     * @param int  $page
-     * @param array $options
+     * @param array|Collection $items
+     * @param int              $perPage
+     * @param int              $page
+     * @param array            $options
      *
      * @return LengthAwarePaginator
      */
-    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    public function paginate( $items, $perPage = 5, $page = null, $options = [] )
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 
-        $items = $items instanceof Collection ? $items : Collection::make($items);
+        $items = $items instanceof Collection ? $items : Collection::make( $items );
 
 
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        return new LengthAwarePaginator( $items->forPage( $page, $perPage ), $items->count(), $perPage, $page, $options );
     }
 }

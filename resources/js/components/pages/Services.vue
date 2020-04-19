@@ -79,6 +79,7 @@
                             'xLocalization' : this.$store.state.langModule.lang
                         }}
                 ).then((response) => {
+                    this.pagination = response.data.services;
                     this.services.push(...Object.values(response.data.services.data));
                 });
             }
