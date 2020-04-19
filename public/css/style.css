@@ -454,7 +454,7 @@ h3.cart-btnx a img {
 
 .cart_box .button-crt {
   background: #be1522;
-  color: #fff;
+  color: #fff !important;
   font-weight: 400;
   margin: 20px 10px 10px;
   display: block;
@@ -4054,6 +4054,7 @@ a.back-spl{
 	.quantity .close{
 		position: absolute;
 		right: 15px;
+		z-index: 9;
 	}
 
 	.rate-big{
@@ -4091,4 +4092,20 @@ a.back-spl{
 }
 .bannerSlider img {
     width: 100% !important;
+}
+.subsidiaries-cvr .box ,.best-sellers .sellerbox{
+	overflow: hidden;
+}
+.best-sellers .sellerbox img{
+	width: 100% !important;
+}
+.get-touch .row form.row{
+	margin: 0px;
+}
+@media(max-width:992px){
+ 
+	.my-account .box a.edit{
+		top: 10px;
+		right: 10px;
+	}
 }

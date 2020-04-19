@@ -457,7 +457,7 @@ h3.cart-btnx a img {
 
 .cart_box .button-crt {
   background: #be1522;
-  color: #fff;
+  color: #fff !important;
   font-weight: 400;
   margin: 20px 10px 10px;
   display: block;
@@ -4060,6 +4060,7 @@ ul.bannerSlider.slick-initialized.slick-slider.slick-dotted , .slider-for , .sli
 	.quantity .close{
 		position: absolute;
 		left: 15px;
+		z-index: 9;
 	} 
 	.rate-big{
 	padding: 5px 15px;
@@ -4099,5 +4100,24 @@ width: auto;
     width: 100% !important;
 }
 .slick-list{
+	direction: ltr;
+}
+.subsidiaries-cvr .box, .best-sellers .sellerbox{
+	overflow: hidden;
+}
+.best-sellers .sellerbox img{
+	width: 100% !important;
+}
+.get-touch .row form.row{
+	margin: 0px;
+}
+@media(max-width:992px){
+ 
+	.my-account .box a.edit{
+		top: 10px;
+		left: 10px;
+	}
+}
+header .top-sec .top-links ul li:first-child .hidden-xs{
 	direction: ltr;
 }
