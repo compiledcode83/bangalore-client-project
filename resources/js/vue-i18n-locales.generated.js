@@ -109,6 +109,7 @@ export default {
 
         },
         "pages": {
+            "back": "رجوع",
             "bestSellers": "اعلى المبيعات",
             "name": "الاسم",
             "subject": "الموضوع",
@@ -591,6 +592,7 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "back": "Back",
             "bestSellers": "best seller",
             "name": "name",
             "subject": "subject",

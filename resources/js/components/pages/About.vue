@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="innr-banner fullwidth">
-            <img :src="'/uploads/'+responseData.informations[0].about_img">
+            <img :src="'/uploads/'+responseData.about_img">
             <div class="heading">
             <h2>{{$t('pages.aboutUs')}}</h2>
             <ul class="breadcrumb">
@@ -14,7 +14,7 @@
         <div class="container innr-cont-area">
             <div class="row">
                 <div class="col-sm-12 about-us">
-                   <div v-html='responseData.informations[0].about_description_en'></div>
+                   <div v-html='responseData.about_description'></div>
                     <br>
                     <h4>{{$t('pages.subsidiaries')}}</h4>
                     <div class="subsidiaries-cvr">
@@ -23,7 +23,7 @@
                                 <div class="box">
                                     <img :src="'/uploads/'+subsidiarie.logo">
                                     <p>
-                                        {{subsidiarie.description_en}}
+                                        {{subsidiarie.description}}
                                         <br>
                                         {{$t('pages.visit')}} <a :href="subsidiarie.url" target="blank">{{subsidiarie.url}}</a> {{$t('pages.forMoreInfo')}}.
                                     </p>
@@ -44,15 +44,31 @@
 
         data(){
             return {
-                responseData: {
-                    informations: [0]
-                }
+                responseData: {},
+                sliderRunning: false
             }
+        },
+        created() {
+
+            let _this = this;
+            this.$root.$on('lang_changed', function(currentLang) {
+                //reload the component
+                axios.get(
+                    '/api/v1/static/about',{
+                        headers: {
+                            'xLocalization' : currentLang
+                        }}).then((response) => {
+                    this.responseData = response.data;
+                });
+            })
+
         },
         mounted() {
             axios.get(
-                '/api/v1/static/about'
-            ).then((response) => {
+                '/api/v1/static/about',{
+                    headers: {
+                        'xLocalization' : this.$store.state.langModule.lang
+                    }}).then((response) => {
                 this.responseData = response.data;
             });
         },
@@ -61,31 +77,34 @@
                 // Code that will run only after the
                 // entire view has been re-rendered .
 
-                $(".subsi-slides").slick({
-                    dots: false,
-                    autoplay: false,
-                    infinite: true,
-                    slidesToShow: 2,
-                    slideswToScroll: 1,
-                    arrows: true,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 2
+                if(!this.sliderRunning) {
+                    this.sliderRunning = true;
+                    $(".subsi-slides").slick({
+                        dots: false,
+                        autoplay: false,
+                        infinite: true,
+                        slidesToShow: 2,
+                        slideswToScroll: 1,
+                        arrows: true,
+                        responsive: [
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    slidesToShow: 2
+                                }
+                            },
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    arrows: false,
+                                    centerMode: true,
+                                    centerPadding: '40px',
+                                    slidesToShow: 1
+                                }
                             }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                arrows: false,
-                                centerMode: true,
-                                centerPadding: '40px',
-                                slidesToShow: 1
-                            }
-                        }
-                    ]
-                });
+                        ]
+                    });
+                }
             })
         },
         methods: {
