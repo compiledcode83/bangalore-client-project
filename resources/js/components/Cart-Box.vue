@@ -13,12 +13,25 @@
                     <div class="row">
                         <div class="col-sm-8 col-xs-8">
                             <h1> {{item.item_name}} </h1>
-                            <span class="block">{{$t('pages.qty')}} : {{item.product_qty}}</span>
+                            <span class="block">{{$t('pages.qty')}} :
+<!--                                {{item.product_qty}}-->
+                                <input type="number"
+                                       class="form-control"
+                                       :min="minimumQty"
+                                       name="qty"
+                                       v-model.number="item.product_qty"
+                                       @change="validateQty(item)"
+                                       :disabled="item.status === false"
+                                        style="width: 45px;display: inline-block;height: 35px;">
+                            </span>
                             <span class="block">{{$t('pages.color')}} : {{item.product_color_name}}</span>
                         </div>
                         <div class="col-sm-4 col-xs-4">
                             <h3>{{$t('pages.kd')}} {{item.product_price}}</h3>
                             <h3 class="cart-btnx crt-mt-10">
+                                <a href="#" @click.prevent="activateCartQtyInput(item.product_attribute_id)">
+                                    <img :src="imageStatus(item)" alt="" style="width: 25%;">
+                                </a>
                                 <a href="#" class="delete-4-cart" @click.prevent="deleteItemFromCartBox(item)">
                                     <img src="/images/dlt.png">
                                 </a>
@@ -48,9 +61,39 @@
         data() {
             return {
                 cart: this.$store.state.cartModule.cart.items,
+                minimumQty: 1
             }
         },
         methods: {
+            validateQty(item){
+                if(item.product_qty < this.minimumQty){
+                    item.product_qty = this.minimumQty;
+                }
+                if(item.product_qty > item.stock){
+                    item.product_qty = item.stock;
+                }
+                // check if price need to update
+                this.$store
+                    .dispatch('updateItemPriceAfterQtyChanged', item)
+                    .then(() => {
+                        console.log('update success!')
+                    })
+                    .catch(() => {
+                        console.log('There was a problem creating your cart')
+                    });
+            },
+            activateCartQtyInput(itemId){
+                let item = this.cart.find(cart => cart.product_attribute_id == itemId);
+                //change status => input status
+                item.status = !item.status;
+                this.validateQty(item);
+            },
+            imageStatus(item){
+                if(item.status){
+                    return '/images/save.png';
+                }
+                return '/images/edit.png';
+            },
             deleteItemFromCartBox(item) {
                 this.$swal({
                     title: 'Are you sure?',

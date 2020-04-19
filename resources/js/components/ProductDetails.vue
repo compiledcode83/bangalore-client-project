@@ -225,7 +225,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p>{{review.review}}</p>
+                                    <p  style="width: 55%;">{{review.review}}</p>
                                 </div>
                             </div><!--/.row-->
                         </div>
@@ -312,6 +312,13 @@
 
         },
         beforeRouteUpdate(to, from, next) {
+            //when open related from details make sure slider re-initialized with new product images
+            this.sliderFor = false;
+            this.sliderNav = false;
+            this.relatedSliderOnce = false;
+            $('.relatedprod-slide').slick("unslick");
+            this.unSlickSliders();
+
             this.slug = to.params.slug;
             this.loadProductDetails();
             next();
@@ -423,7 +430,6 @@
                     })
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
-                    console.log(this.product);
                     //reset sku
                     this.selected_attribute.sku = this.product.sku;
                     if(!productResponse.data.main_gallery){
@@ -604,7 +610,7 @@
 
                         return _this.persistCartItem();
                     }).catch(function (errors) {
-                        console.log(errors);
+                        // console.log(errors);
                     });
                 }else{
                     this.persistCartItem();
@@ -629,7 +635,6 @@
 
                     })
                     .catch((err) => {
-                        console.log(err);
                         console.log('There was a problem creating your cart');
                     });
             },
@@ -672,7 +677,6 @@
                 event.target.src = '/images/defaule-p.jpg';
             },
             addColorInput(){
-                console.log(this.colorInputs);
                 // check if previous input has color this will help
                 // when delete row will delete color from array
                 let indexOfColorInput = this.colorInputsCount - 1;
@@ -730,8 +734,6 @@
                         this.colorInputs.push(colorValue[0]);
                     }
                 }
-
-                console.log(this.colorInputs);
             },
             getColorObject(index){
                 //color object contains name, code, images ...
@@ -869,17 +871,7 @@
 
                     this.colorInputsCount = this.colorInputsCount -  1;
 
-                    console.log('asddd ' + lastIndex + ' ddddd ' + index + ' ddddd ' +lastValue);
                     this.colorInputs.pop();
-                    // if(lastIndex == index){
-                    // }else{
-                    //     this.colorInputs.splice(index, 1);
-                    // }
-
-                    console.log(this.colorInputs);
-                    // if(index == 0){
-                    //     this.colorInputs.reverse();
-                    // }
                 }
             },
             replaceColorInput(index){
