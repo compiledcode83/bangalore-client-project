@@ -60,6 +60,7 @@ Route::group(['prefix'=>'v1'], function(){
     Route::post('static/contact','ContactController@sentMail');
     Route::get('static/media','MediaServiceController@getMedias');
     Route::get('static/service','MediaServiceController@getServices');
+    Route::get('static/service-details/{id}','MediaServiceController@getServicesDetails');
     Route::get('static/page/{slug}','PageController@getPage');
     Route::get('social','PageController@getSocial');
 
