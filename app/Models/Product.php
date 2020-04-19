@@ -241,7 +241,8 @@ class Product extends Model
                     {
                         $priceTable[$price->max_qty] = [
                             'baseOriginal'    => $price->individual_unit_price,
-                            'discount' => $price->individual_discounted_unit_price
+                            'discount' => $price->individual_discounted_unit_price,
+                            'discountInPercentage' => (($price->individual_unit_price - $price->individual_discounted_unit_price) / $price->individual_unit_price) * 100
                         ];
                     }
                 }
@@ -264,14 +265,15 @@ class Product extends Model
                     {
                         $priceTable[$price->max_qty] = [
                             'baseOriginal'    => (float)$price->corporate_unit_price,
-                            'discount' => (float)$price->corporate_discounted_unit_price
+                            'discount' => (float)$price->corporate_discounted_unit_price,
+                            'discountInPercentage' => (($price->corporate_unit_price - $price->corporate_discounted_unit_price) / $price->corporate_unit_price) * 100
                         ];
                     }
                 }
             }
 
             $priceTable = collect($priceTable);
-            $product->price = $priceTable->first();
+            $product->price = $priceTable->sort()->first();
         }
     }
 

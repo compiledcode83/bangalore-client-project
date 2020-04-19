@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\LocaleTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Faq extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LocaleTrait;
 
+    /**
+     * The attributes that should be mutated locale.
+     * @var array
+     */
+    protected $localeStrings = ['title','description'];
     /**
      * The attributes that are mass assignable.
      *

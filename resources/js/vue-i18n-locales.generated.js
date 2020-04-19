@@ -109,6 +109,8 @@ export default {
 
         },
         "pages": {
+            "sitemap": 'خريطة الموقع',
+            "faq": "الاسئلة الشائعة",
             "back": "رجوع",
             "bestSellers": "اعلى المبيعات",
             "name": "الاسم",
@@ -592,6 +594,8 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "sitemap": 'Sitemap',
+            "faq": "FAQs",
             "back": "Back",
             "bestSellers": "best seller",
             "name": "name",

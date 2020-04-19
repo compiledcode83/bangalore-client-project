@@ -59,8 +59,8 @@
                                     <span> {{$t('pages.sortBy')}} : </span>
                                     <select v-model="filterSort" @change="loadProducts">
                                         <option></option>
-                                        <option value="price_asc">{{$t('pages.price')}} - {{$t('pages.lowToHigh')}}</option>
-                                        <option value="price_desc">{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>
+                                        <option value="price_asc" v-if="isAuthenticated">{{$t('pages.price')}} - {{$t('pages.lowToHigh')}}</option>
+                                        <option value="price_desc" v-if="isAuthenticated">{{$t('pages.price')}} - {{$t('pages.highToLow')}}</option>
                                         <option value="asc">{{$t('pages.alphabetic')}} - {{$t('pages.aToZ')}}</option>
                                         <option value="desc">{{$t('pages.alphabetic')}} - {{$t('pages.zToA')}}</option>
                                     </select>
@@ -93,6 +93,7 @@
     import ProductBox from "./Product-box";
     import VueContentLoading from 'vue-content-loading';
     import ProductFilter from "./ProductFilter";
+    import {mapGetters} from "vuex";
 
     export default {
         components: {ProductFilter, ProductBox, VueContentLoading},
@@ -121,7 +122,10 @@
         computed: {
             productChunks(){
                 return _.chunk(Object.values(this.products), 3);
-            }
+            },
+            ...mapGetters('authModule', [
+                'isAuthenticated',
+            ])
         },
         methods: {
             getFilterData(){
@@ -173,9 +177,14 @@
                     if(filterQueryString !== ''){
                         filterQueryString += '&';
                     }
-                    this.filterDiscounts.forEach(function(item){
-                        filterQueryString += 'discount[]='+item+'&';
-                    });
+                    if(!Array.isArray(this.filterDiscounts)){
+                        filterQueryString += 'discount[]='+this.filterDiscounts+'&';
+                    }else{
+                        this.filterDiscounts.forEach(function(item){
+                            filterQueryString += 'discount[]='+item+'&';
+                        });
+                    }
+
                 }
                 if(filterQueryString !== ''){
                     filterQueryString = '?'+filterQueryString;
@@ -223,25 +232,10 @@
                 ]).then(axios.spread((categoryResponse) => {
                     console.log(categoryResponse.data.products.data);
                     if(Array.isArray(categoryResponse.data.products.data)){
-                        // console.log(categoryResponse.data.products.data);
+
                         this.products.push(...categoryResponse.data.products.data);
                     }else{
-                        // let objectArray = Object.entries(categoryResponse.data.products.data);
 
-                        let objectArray  = Object.keys(categoryResponse.data.products.data);
-
-                        objectArray.forEach(function(value){
-                            value = categoryResponse.data.products.data.value;
-
-                        });
-                        let arr = [];
-                        let objKeys = Object.keys(categoryResponse.data.products.data);
-                        let objValues = Object.values(categoryResponse.data.products.data);
-                        for (let i = 0; i < objKeys.length; i++) {
-                            arr[objKeys[i]] = objValues[i];
-                        }
-                        console.log(arr);
-                        console.log(Object.values(categoryResponse.data.products.data));
                         this.products.push(...Object.values(categoryResponse.data.products.data));
                     }
                     this.pagination = categoryResponse.data.products;

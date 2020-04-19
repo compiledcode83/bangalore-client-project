@@ -79,38 +79,6 @@ class CategoryController extends Controller {
             });
         }
 
-        if(isset($filterOptions['discount']))
-        {
-            if(in_array('upTo30',$filterOptions['discount'] )){
-                $query->whereHas('prices', function ($query) use ($filterOptions, $user){
-
-                    if(isset($user->type))
-                    {
-                        if($user->type == User::TYPE_CORPORATE)
-                        {
-//                        $query->where('percentage_discount', '<=',  $filterOptions['min']);
-//                        $query->where('corporate_unit_price', '<=',  $filterOptions['max']);
-                        }
-                        else
-                        {
-//                        $query->where('individual_unit_price', '>=',  $filterOptions['min']);
-//                        $query->where('individual_unit_price', '<=',  $filterOptions['max']);
-                        }
-                    }
-
-                });
-            }
-            if(in_array('upTo50',$filterOptions['discount'] )){
-//                dd($filterOptions['discount']);
-            }
-            if(in_array('upTo60',$filterOptions['discount'] )){
-//                dd($filterOptions['discount']);
-            }
-            if(in_array('moreThan60',$filterOptions['discount'] )){
-//                dd($filterOptions['discount']);
-            }
-        }
-
         if(isset($filterOptions['sort']))
         {
             $products = $query->active()->orderBy( 'name_en', $filterOptions['sort'] )->get();
@@ -139,6 +107,111 @@ class CategoryController extends Controller {
             $products = $productModel->getProductsRatingColors($products);
             $products = $this->addWishListedProducts($products, $wishList);
             $products = $productModel->addPrices($products,$user);
+
+            if(isset($filterOptions['discount']))
+            {
+                $discountFilterProducts = collect($products);
+                foreach ($discountFilterProducts as $key => $product)
+                {
+                    $flagToRemoveProductFromCollection = false;
+                    if(in_array('upTo30',$filterOptions['discount'] ))
+                    {
+                        if($product->price['discountInPercentage'] > 30 || $product->price['discountInPercentage'] == 0)
+                        {
+                            $flagToRemoveProductFromCollection = true;
+                        }
+                        else
+                        {
+                            //this means we need this product
+                            continue;
+                        }
+                    }
+
+                    if(in_array('upTo50',$filterOptions['discount'] ))
+                    {
+                        if($product->price['discountInPercentage'] < 30 || $product->price['discountInPercentage'] > 50)
+                        {
+                            $flagToRemoveProductFromCollection = true;
+                        }
+                        else
+                        {
+                            //this means we need this product
+                            continue;
+                        }
+                    }
+
+                    if(in_array('upTo60',$filterOptions['discount'] ))
+                    {
+                        if($product->price['discountInPercentage'] < 50 || $product->price['discountInPercentage'] > 60)
+                        {
+                            $flagToRemoveProductFromCollection = true;
+                        }
+                        else
+                        {
+                            //this means we need this product
+                            continue;
+                        }
+                    }
+
+                    if(in_array('moreThan60',$filterOptions['discount'] ))
+                    {
+                        if($product->price['discountInPercentage'] < 60)
+                        {
+                            $flagToRemoveProductFromCollection = true;
+                        }
+                        else
+                        {
+                            //this means we need this product
+                            continue;
+                        }
+                    }
+
+                    if($flagToRemoveProductFromCollection)
+                    {
+                        $discountFilterProducts->forget($key);
+                    }
+
+                }
+
+                $products = $discountFilterProducts;
+
+//                $productsAfterDiscountFilter30 = [];
+//                if(in_array('upTo30',$filterOptions['discount'] )){
+//                    $productsAfterDiscountFilter30 = collect($products);
+//                    foreach ($productsAfterDiscountFilter30 as $key => $product){
+//                        if($product->price['discountInPercentage'] > 30 || $product->price['discountInPercentage'] == 0){
+//                            $productsAfterDiscountFilter30->forget($key);
+//                        }
+//                    }
+//                }
+//                $productsAfterDiscountFilter50 = [];
+//                if(in_array('upTo50',$filterOptions['discount'] )){
+//                    $productsAfterDiscountFilter50 = collect($products);
+//                    foreach ($productsAfterDiscountFilter50 as $key => $product){
+//                        if($product->price['discountInPercentage'] < 30 || $product->price['discountInPercentage'] > 50){
+//                            $productsAfterDiscountFilter50->forget($key);
+//                        }
+//                    }
+//                }
+//                $productsAfterDiscountFilter60 = [];
+//                if(in_array('upTo60',$filterOptions['discount'] )){
+//                    $productsAfterDiscountFilter60 = collect($products);
+//                    foreach ($productsAfterDiscountFilter60 as $key => $product){
+//                        if($product->price['discountInPercentage'] < 50 || $product->price['discountInPercentage'] > 60){
+//                            $productsAfterDiscountFilter60->forget($key);
+//                        }
+//                    }
+//                }
+//                $productsAfterDiscountFilter60More = [];
+//                if(in_array('moreThan60',$filterOptions['discount'] )){
+//                    $productsAfterDiscountFilter60More = collect($products);
+//                    foreach ($productsAfterDiscountFilter60More as $key => $product){
+//                        if($product->price['discountInPercentage'] < 60){
+//                            $productsAfterDiscountFilter60More->forget($key);
+//                        }
+//                    }
+//                }
+            }
 
             if (isset($filterOptions['sort_by_price']))
             {
@@ -181,16 +254,16 @@ class CategoryController extends Controller {
 
             if(isset($filterOptions['min']) || isset($filterOptions['max']))
             {
-                foreach ($products as $product)
+                foreach ($products as $key => $product)
                 {
                     if($product->price['discount']){
 
-                        if($product->price['discount'] < $filterOptions['min'] && $product->price['discount'] > $filterOptions['max']){
-                            $products->forget($product);
+                        if($product->price['discount'] < $filterOptions['min'] || $product->price['discount'] > $filterOptions['max']){
+                            $products->forget($key);
                         }
                     }else{
-                        if($product->price['baseOriginal'] < $filterOptions['min'] && $product->price['baseOriginal'] > $filterOptions['max']){
-                            $products->forget($product);
+                        if($product->price['baseOriginal'] < $filterOptions['min'] || $product->price['baseOriginal'] > $filterOptions['max']){
+                            $products->forget($key);
                         }
                     }
                 }
