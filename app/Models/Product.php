@@ -185,9 +185,14 @@ class Product extends Model
             }
             $product->colors = $colors;
 
-            $daysOfNewBadge = Setting::find(1);
+            $settings = Setting::find(1);
+            $daysOfNewBadge = 1;
+            if($settings->number_of_days_for_new_badge)
+            {
+                $daysOfNewBadge = $settings->number_of_days_for_new_badge;
+            }
 
-            if($product->created_at >= Carbon::now()->subDays($daysOfNewBadge->number_of_days_for_new_badge)->toDateTimeString())
+            if($product->created_at >= Carbon::now()->subDays($daysOfNewBadge)->toDateTimeString())
             {
                 $product->newIcon = true;
             }

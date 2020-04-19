@@ -1,7 +1,10 @@
 <template>
     <div class="col-sm-3 side-filtering">
         <div class="panel panel-default">
-            <ul class="nav nav-pills nav-stacked" id="stacked-menu">
+            <button id="filter_btn" class="btn-lg btn-primary full-width hidden-md hidden-sm hidden-lg"><span class="glyphicon glyphicon-filter"></span>
+                  Filter
+              </button>
+            <ul class="nav nav-pills nav-stacked hidden-xs" id="stacked-menu">
                 <!-- Category collapsed menu -->
                 <li class="main-cat" v-if="(singleCategories && singleCategories.length >= 1) || (multipleCategories && multipleCategories.length >= 1)">
                     <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#categories">{{$t('pages.categories')}}</a>

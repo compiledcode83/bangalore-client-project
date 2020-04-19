@@ -286,7 +286,7 @@ select.form-control{
 .rate {
     float: left;
     height: 36px;
-    padding: 5px 0px;
+    padding: 0px 0px;
 }
 .rate:not(:checked) > input {
     position:absolute;
@@ -365,3 +365,9 @@ select.form-control{
 
 
 
+@media(max-width:992px){
+	select.form-control{
+		background-position: right 5px center;
+	}
+ 
+}
