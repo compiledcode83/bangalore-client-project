@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
+use App\Traits\LocaleTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MediaService extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LocaleTrait;
 
     const TYPE_MEDIA = 1;
     const TYPE_SERVICE = 2;
+
+
+    /**
+     * The attributes that should be mutated locale.
+     * @var array
+     */
+    protected $localeStrings = ['title','short_description', 'full_description'];
 
     protected $guarded = ['id'];
 

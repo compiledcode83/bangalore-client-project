@@ -33,6 +33,7 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 import Layout from "./components/partials/Layout";
 import Router from 'vue-router'
 import Vue from "vue";
+import ServiceDetails from "./components/pages/ServiceDetails";
 
 // const routes = new Router({
 export default {
@@ -198,6 +199,12 @@ export default {
             path: '/services',
             name: 'pages.services',
             component: Services
+        },
+        {
+            path: '/service/:id',
+            name: 'pages.serviceDetails',
+            component: ServiceDetails,
+            props: true
         },
         {
             path: '/media',
