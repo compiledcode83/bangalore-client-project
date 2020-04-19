@@ -44959,20 +44959,20 @@ var Slider = {
       type: Number,
       default: 0.5
     },
-    useKeyboard: {
-      type: Boolean,
-      default: false
-    },
-    actionsKeyboard: {
-      type: Array,
-      default: function _default() {
-        return [function (i) {
-          return i - 1;
-        }, function (i) {
-          return i + 1;
-        }];
-      }
-    },
+    // useKeyboard: {
+    //   type: Boolean,
+    //   default: false
+    // },
+    // actionsKeyboard: {
+    //   type: Array,
+    //   default: function _default() {
+    //     return [function (i) {
+    //       return i - 1;
+    //     }, function (i) {
+    //       return i + 1;
+    //     }];
+    //   }
+    // },
     data: Array,
     formatter: [String, Function],
     mergeFormatter: [String, Function],
@@ -67145,8 +67145,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /websites/itc/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /websites/itc/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
