@@ -16,7 +16,7 @@
                     <img :src="'/uploads/'+media.image">
                     <h4>{{ media.title_en }}</h4>
                     <span class="date">{{ media.date }}</span>
-                    <p>{{ media.short_description_en.substring(0, 40) + ' ...' }}</p>
+                    <p v-html="media.short_description_en.substring(0, 40) + ' ...'"></p>
                     <a :href="'media-details/'+media.id">{{$t('pages.viewMore')}}</a>
                 </div><!--/.col-sm-4 col-xs-6 w-full-->
             </div>

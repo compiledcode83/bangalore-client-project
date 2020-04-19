@@ -118,7 +118,7 @@
                         <div class="row payment-mthd">
                             <div class="col-xs-6 col-sm-6 col-md-3">
                                 <div class="bx">
-                                    <label class="checkbox"><img :src="'/'+siteSettings.cod_logo">
+                                    <label class="checkbox"><img :src="'/uploads/'+siteSettings.cod_logo" style="max-width: 84px;max-height: 55px;">
                                         <input type="radio" name="payment" value="cash" v-model="paymentMethod">
                                         <span class="checkmark"></span>
                                     </label>
@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3">
                                 <div class="bx">
-                                    <label class="checkbox"><img :src="'/'+siteSettings.tab_logo">
+                                    <label class="checkbox"><img :src="'/uploads/'+siteSettings.tab_logo" style="max-width: 84px;max-height: 55px;">
                                         <input type="radio" name="payment" value="tab" v-model="paymentMethod">
                                         <span class="checkmark"></span>
                                     </label>
