@@ -4999,6 +4999,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8072,7 +8075,7 @@ __webpack_require__.r(__webpack_exports__);
   updated: function updated() {
     this.$nextTick(function () {
       // Code that will run only after the
-      // entire view has been re-rendered
+      // entire view has been re-rendered .
       if (!this.sliderRunning) {
         this.sliderRunning = true;
         $(".subsi-slides").slick({
@@ -34127,7 +34130,13 @@ var render = function() {
                     _c("div", { staticClass: "bx" }, [
                       _c("label", { staticClass: "checkbox" }, [
                         _c("img", {
-                          attrs: { src: "/" + _vm.siteSettings.cod_logo }
+                          staticStyle: {
+                            "max-width": "84px",
+                            "max-height": "55px"
+                          },
+                          attrs: {
+                            src: "/uploads/" + _vm.siteSettings.cod_logo
+                          }
                         }),
                         _vm._v(" "),
                         _c("input", {
@@ -34163,7 +34172,13 @@ var render = function() {
                     _c("div", { staticClass: "bx" }, [
                       _c("label", { staticClass: "checkbox" }, [
                         _c("img", {
-                          attrs: { src: "/" + _vm.siteSettings.tab_logo }
+                          staticStyle: {
+                            "max-width": "84px",
+                            "max-height": "55px"
+                          },
+                          attrs: {
+                            src: "/uploads/" + _vm.siteSettings.tab_logo
+                          }
                         }),
                         _vm._v(" "),
                         _c("input", {
@@ -36920,10 +36935,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm-3 side-filtering" }, [
     _c("div", { staticClass: "panel panel-default" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "ul",
         {
-          staticClass: "nav nav-pills nav-stacked",
+          staticClass: "nav nav-pills nav-stacked hidden-xs",
           attrs: { id: "stacked-menu" }
         },
         [
@@ -37473,7 +37490,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn-lg btn-primary full-width hidden-md hidden-sm hidden-lg",
+        attrs: { id: "filter_btn" }
+      },
+      [
+        _c("span", { staticClass: "glyphicon glyphicon-filter" }),
+        _vm._v("\n              Filter\n          ")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -41508,7 +41543,8 @@ var render = function() {
                                       _c(
                                         "router-link",
                                         {
-                                          staticClass: "btn btn-danger",
+                                          staticClass:
+                                            "btn btn-danger full-width",
                                           attrs: {
                                             to: "/products/" + product.slug
                                           }
@@ -41520,30 +41556,48 @@ var render = function() {
                                               " "
                                           )
                                         ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "remove",
+                                          staticStyle: {
+                                            cursor: "pointer",
+                                            margin: "0px 15px",
+                                            color: "#e11b22",
+                                            "text-transform": "uppercase",
+                                            "vertical-align": "middle",
+                                            width: "100%",
+                                            "text-align": "center",
+                                            border: "1px solid #e11b22",
+                                            "line-height": "36px"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.removeWishItem(
+                                                product.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(_vm.$t("pages.remove")) +
+                                              " "
+                                          ),
+                                          _c("span", {
+                                            staticClass:
+                                              "glyphicon glyphicon-trash"
+                                          })
+                                        ]
                                       )
                                     ],
                                     1
                                   )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "remove",
-                                    staticStyle: { cursor: "pointer" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.removeWishItem(product.id)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      " " + _vm._s(_vm.$t("pages.remove")) + " "
-                                    )
-                                  ]
-                                )
+                                ])
                               ])
                             ])
                           ])
@@ -42460,13 +42514,13 @@ var render = function() {
                     _vm._v(_vm._s(media.date))
                   ]),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      _vm._s(
+                  _c("p", {
+                    domProps: {
+                      innerHTML: _vm._s(
                         media.short_description_en.substring(0, 40) + " ..."
                       )
-                    )
-                  ]),
+                    }
+                  }),
                   _vm._v(" "),
                   _c("a", { attrs: { href: "media-details/" + media.id } }, [
                     _vm._v(_vm._s(_vm.$t("pages.viewMore")))
@@ -44959,20 +45013,20 @@ var Slider = {
       type: Number,
       default: 0.5
     },
-    // useKeyboard: {
-    //   type: Boolean,
-    //   default: false
-    // },
-    // actionsKeyboard: {
-    //   type: Array,
-    //   default: function _default() {
-    //     return [function (i) {
-    //       return i - 1;
-    //     }, function (i) {
-    //       return i + 1;
-    //     }];
-    //   }
-    // },
+    useKeyboard: {
+      type: Boolean,
+      default: false
+    },
+    actionsKeyboard: {
+      type: Array,
+      default: function _default() {
+        return [function (i) {
+          return i - 1;
+        }, function (i) {
+          return i + 1;
+        }];
+      }
+    },
     data: Array,
     formatter: [String, Function],
     mergeFormatter: [String, Function],
@@ -67145,8 +67199,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /websites/itc/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /websites/itc/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
