@@ -4498,48 +4498,90 @@ function formatState(state) {
       if (this.file && this.cartItem.product_print_image === '') {
         //create tempCartItem
         //validate file
-        this.validateFile(); //Initialize the form data
+        if (this.validateFile()) {
+          console.log('inside'); //Initialize the form data
 
-        var formData = new FormData(); // upload file
+          var formData = new FormData(); // upload file
 
-        formData.append('file', this.file);
-        formData.append('item_name', this.product.name_en);
-        formData.append('product_attribute_id', this.colorInputs[key]);
-        formData.append('product_image', colorObjectInput.images[0]);
-        formData.append('product_qty', this.qtyInputs[key]);
-        formData.append('product_color_name', colorObjectInput.name);
-        formData.append('product_price', this.cartItem.product_price);
-        formData.append('product_discount', this.cartItem.product_discount);
-        formData.append('total', '0');
-        /*
-          Make the request to the POST /single-file URL
-        */
+          formData.append('file', this.file);
+          formData.append('item_name', this.product.name_en);
+          formData.append('product_attribute_id', this.colorInputs[key]);
+          formData.append('product_image', colorObjectInput.images[0]);
+          formData.append('product_qty', this.qtyInputs[key]);
+          formData.append('product_color_name', colorObjectInput.name);
+          formData.append('product_price', this.cartItem.product_price);
+          formData.append('product_discount', this.cartItem.product_discount);
+          formData.append('total', '0');
+          /*
+            Make the request to the POST /single-file URL
+          */
 
-        var _this = this;
+          var _this = this;
 
-        console.log('uploading ...');
-        axios.post('/api/v1/cart/item', formData, {
-          headers: {
-            'Content-Type': "multipart/form-data"
-          }
-        }).then(function (response) {
-          _this.cartItem.product_print_image = 'uploads/print_images/' + response.data.fileName;
-          console.log('End of uploading ...');
-          return _this.persistCartItem();
-        })["catch"](function (errors) {// console.log(errors);
-        });
+          console.log('uploading ...');
+          axios.post('/api/v1/cart/item', formData, {
+            headers: {
+              'Content-Type': "multipart/form-data"
+            }
+          }).then(function (response) {
+            _this.cartItem.product_print_image = 'uploads/print_images/' + response.data.fileName;
+            var itemWithImage = response.data.item;
+            console.log(response.data);
+
+            var findAttribute = _this.product.product_attribute_values.find(function (element) {
+              return element.id == response.data.item.product_attribute_id;
+            });
+
+            var descriptionItem = '';
+
+            if (_this.product.short_description_en && _this.product.short_description_en != '') {
+              descriptionItem = _this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+            }
+
+            itemWithImage.item_description = descriptionItem;
+            itemWithImage.product_print_image = 'uploads/print_images/' + response.data.fileName;
+            itemWithImage.base_product_prices = _this.priceTableWithDiscount;
+            itemWithImage.stock = findAttribute.stock;
+            itemWithImage.status = false;
+            return _this.persistCartItemWithImage(itemWithImage);
+          })["catch"](function (errors) {
+            console.log(errors);
+          });
+        }
       } else {
         this.persistCartItem();
       }
     },
-    persistCartItem: function persistCartItem() {
+    persistCartItemWithImage: function persistCartItemWithImage(item) {
       var _this7 = this;
+
+      var _this = this;
+
+      this.$store.dispatch('createCalculatedItemPriceAlreadyUploaded', item).then(function () {
+        // this.cart = this.$store.state.cart;
+        _this7.$swal({
+          title: 'New Item in cart!',
+          text: "Item added to cart successfully!",
+          icon: 'success'
+        }); //clean form
+
+
+        _this.colorInputs = [];
+        _this.qtyInputs = [];
+
+        _this.resetAddToCartInputs();
+      })["catch"](function (err) {
+        console.log('There was a problem creating your cart');
+      });
+    },
+    persistCartItem: function persistCartItem() {
+      var _this8 = this;
 
       var _this = this;
 
       this.$store.dispatch('createCalculatedItemPrice', this.cartItem).then(function () {
         // this.cart = this.$store.state.cart;
-        _this7.$swal({
+        _this8.$swal({
           title: 'New Item in cart!',
           text: "Item added to cart successfully!",
           icon: 'success'
@@ -4607,7 +4649,7 @@ function formatState(state) {
       }
     },
     validateInput: function validateInput(idAndColor, selectIndex) {
-      var _this8 = this;
+      var _this9 = this;
 
       //id and color concatenated
       var colorValue = idAndColor.split("-"); // load attribute images by attribute ID
@@ -4620,7 +4662,7 @@ function formatState(state) {
           title: 'Oops...',
           text: 'This Color is out-Stock!'
         }).then(function () {
-          _this8.removeColorInput(selectIndex);
+          _this9.removeColorInput(selectIndex);
         });
       } // select color value by setting select2 input
 
@@ -4634,7 +4676,7 @@ function formatState(state) {
           text: 'Color is already added!'
         }).then(function () {
           // delete inputs & delete color from array
-          _this8.removeColorInput(selectIndex); // this.colorInputsCount = this.colorInputsCount - 1;
+          _this9.removeColorInput(selectIndex); // this.colorInputsCount = this.colorInputsCount - 1;
 
         });
       } // add new attribute color to cart
@@ -4676,7 +4718,7 @@ function formatState(state) {
       this.show_prices = !this.show_prices;
     },
     checkUserAbilityToReview: function checkUserAbilityToReview() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (!this.selected_attribute.id) {
         this.$swal({
@@ -4691,7 +4733,7 @@ function formatState(state) {
         var checkUser = response.data; //if already review it
 
         if (checkUser.ability === 'found') {
-          _this9.$swal({
+          _this10.$swal({
             title: 'Already reviewed!',
             text: "You already reviewed this product!",
             icon: 'info'
@@ -4702,7 +4744,7 @@ function formatState(state) {
           //show review modal
           $('#addReview').modal('show');
         } else {
-          _this9.$swal({
+          _this10.$swal({
             title: 'Did you buy it!',
             text: "You have to buy this item to be able to submit a review!",
             icon: 'error'
@@ -4713,7 +4755,7 @@ function formatState(state) {
       });
     },
     submitReview: function submitReview() {
-      var _this10 = this;
+      var _this11 = this;
 
       if (!this.reviewRating || !this.reviewNickname || !this.reviewText) {
         this.$swal({
@@ -4732,19 +4774,19 @@ function formatState(state) {
       };
       axios.post('/api/v1/user/review/', postData).then(function (response) {
         if (response.data.message === 'success') {
-          _this10.$swal({
+          _this11.$swal({
             title: 'Success!',
             text: "Your review submitted successfully!",
             icon: 'success'
           }); //reset form
 
 
-          _this10.reviewRating = 0;
-          _this10.reviewNickname = '';
-          _this10.reviewText = '';
+          _this11.reviewRating = 0;
+          _this11.reviewNickname = '';
+          _this11.reviewText = '';
           $('#addReview').modal('hide');
         } else {
-          _this10.$swal({
+          _this11.$swal({
             title: 'Error!',
             text: "Something went wrong!",
             icon: 'error'
@@ -4818,7 +4860,7 @@ function formatState(state) {
       }
     },
     reportAbuse: function reportAbuse(id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.$swal({
         title: 'Are you sure you want to report abuse for this review?',
@@ -4834,11 +4876,11 @@ function formatState(state) {
             'reviewId': id
           }, {
             headers: {
-              "Authorization": "Bearer ".concat(_this11.$store.state.authModule.accessToken)
+              "Authorization": "Bearer ".concat(_this12.$store.state.authModule.accessToken)
             }
           }).then(function (response) {
             if (response.data == 1) {
-              _this11.$swal({
+              _this12.$swal({
                 title: 'Success!',
                 text: "review reported successfully!",
                 icon: 'success'
@@ -4846,7 +4888,7 @@ function formatState(state) {
             }
 
             if (response.data == 2) {
-              _this11.$swal({
+              _this12.$swal({
                 title: 'Success!',
                 text: "this review already reported by you!",
                 icon: 'info'
@@ -67171,12 +67213,15 @@ var mutations = {
     state.cart.total = state.cart.subtotal - state.cart.discount;
   },
   CLEAR_CART: function CLEAR_CART(state) {
-    state.cart.items.forEach(function (item) {
-      state.cart.items.splice(state.cart.items.indexOf(item), 1);
-    });
+    // state.cart.items.forEach(function(item){
+    //     // state.cart.items.splice(state.cart.items.indexOf(item), 1);
+    //     state.cart.items.pop();
+    // });
+    state.cart.items = [];
     state.cart.total = 0;
     state.cart.subtotal = 0;
     state.cart.discount = 0;
+    state.cartItem = {};
   }
 };
 var actions = {
@@ -67184,7 +67229,6 @@ var actions = {
     var commit = _ref.commit;
     //check item is already in cart
     var savedCartItem = this.getters.getCartItem(item);
-    console.log(savedCartItem);
 
     if (savedCartItem) {
       //update item qty
@@ -67206,26 +67250,56 @@ var actions = {
     commit('UPDATE_CART_SUBTOTAL');
     commit('UPDATE_CART_TOTAL');
   },
-  createCalculatedItemPrice: function createCalculatedItemPrice(_ref2, item) {
+  createCartItemAlreadyUploaded: function createCartItemAlreadyUploaded(_ref2, item) {
     var commit = _ref2.commit;
+    //check item is already in cart
+    var savedCartItem = this.getters.getCartItem(item);
+
+    if (savedCartItem) {
+      //update item qty
+      var updatedQty = item.product_qty + savedCartItem.product_qty;
+      this.dispatch('calcItemPrice', {
+        item: item,
+        updatedQty: updatedQty
+      });
+      _services_CartService__WEBPACK_IMPORTED_MODULE_0__["default"].updateCartItemQty(item).then(function () {
+        commit('UPDATE_ITEM_QTY', item);
+        commit('UPDATE_ITEM_PRICE', item);
+      });
+    } else {
+      commit('ADD_ITEM_TO_CART', item);
+    }
+
+    commit('UPDATE_CART_SUBTOTAL');
+    commit('UPDATE_CART_TOTAL');
+  },
+  createCalculatedItemPrice: function createCalculatedItemPrice(_ref3, item) {
+    var commit = _ref3.commit;
     this.dispatch('calcItemPrice', {
       item: item
     });
     this.dispatch('createCartItem', item);
   },
-  updateItemPriceAfterQtyChanged: function updateItemPriceAfterQtyChanged(_ref3, item) {
-    var commit = _ref3.commit;
+  createCalculatedItemPriceAlreadyUploaded: function createCalculatedItemPriceAlreadyUploaded(_ref4, item) {
+    var commit = _ref4.commit;
+    this.dispatch('calcItemPrice', {
+      item: item
+    });
+    this.dispatch('createCartItemAlreadyUploaded', item);
+  },
+  updateItemPriceAfterQtyChanged: function updateItemPriceAfterQtyChanged(_ref5, item) {
+    var commit = _ref5.commit;
     this.dispatch('calcItemPrice', {
       item: item
     });
     commit('UPDATE_ITEM_PRICE', item);
     _services_CartService__WEBPACK_IMPORTED_MODULE_0__["default"].setCartItem(item);
   },
-  calcItemPrice: function calcItemPrice(_ref4, _ref5) {
-    var commit = _ref4.commit;
-    var item = _ref5.item,
-        _ref5$updatedQty = _ref5.updatedQty,
-        updatedQty = _ref5$updatedQty === void 0 ? 0 : _ref5$updatedQty;
+  calcItemPrice: function calcItemPrice(_ref6, _ref7) {
+    var commit = _ref6.commit;
+    var item = _ref7.item,
+        _ref7$updatedQty = _ref7.updatedQty,
+        updatedQty = _ref7$updatedQty === void 0 ? 0 : _ref7$updatedQty;
     // get base prices defined by admin
     // search for max_qty based on user enter qty
     // calc item price
@@ -67257,8 +67331,8 @@ var actions = {
       item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
     }
   },
-  removeItemFromCart: function removeItemFromCart(_ref6, item) {
-    var commit = _ref6.commit;
+  removeItemFromCart: function removeItemFromCart(_ref8, item) {
+    var commit = _ref8.commit;
     //check item is already in cart
     var savedCartItem = this.getters.getCartItem(item);
 
@@ -67270,24 +67344,24 @@ var actions = {
       console.log('item already deleted');
     }
   },
-  fetchCart: function fetchCart(_ref7) {
-    var commit = _ref7.commit;
+  fetchCart: function fetchCart(_ref9) {
+    var commit = _ref9.commit;
     _services_CartService__WEBPACK_IMPORTED_MODULE_0__["default"].getUserCart().then(function (response) {
       commit('SET_CART', response.data);
     })["catch"](function (error) {
       console.log('There was an error:', error.response);
     });
   },
-  setCart: function setCart(_ref8, cart) {
-    var commit = _ref8.commit;
+  setCart: function setCart(_ref10, cart) {
+    var commit = _ref10.commit;
     commit('SET_CART', cart);
   },
-  clearCart: function clearCart(_ref9) {
-    var commit = _ref9.commit;
+  clearCart: function clearCart(_ref11) {
+    var commit = _ref11.commit;
     commit('CLEAR_CART');
   },
-  getStockInCart: function getStockInCart(_ref10, id) {
-    var commit = _ref10.commit;
+  getStockInCart: function getStockInCart(_ref12, id) {
+    var commit = _ref12.commit;
     var totalQty = this.getters.getCartItemQtyById(id);
 
     if (totalQty) {
@@ -67482,6 +67556,7 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "البريد الإلكتروني"
     },
     "pages": {
+      "estimatedTime": "تقدير وصول الشحنه",
       "report": "بلغ عن سوء",
       "sitemap": 'خريطة الموقع',
       "faq": "الاسئلة الشائعة",
@@ -67636,8 +67711,8 @@ __webpack_require__.r(__webpack_exports__);
       "office": "مكتب. مقر. مركز",
       "useAsBillingAddress": "استخدام كعنوان الفواتير",
       "workingHoursAndDays": "ساعات العمل والأيام",
-      "printingShippingDays": "طباعة أيام الشحن",
-      "withoutPrintingShippingDays": "بدون طباعة أيام الشحن",
+      "printingShippingDays": "يتطلب طباعة - حتى 14 يومًا بعد الموافقة على إثبات الطباعة ، سيتصل بك أحد مندوبي المبيعات لدينا عبر البريد الإلكتروني لمتابعة",
+      "withoutPrintingShippingDays": "لا يتطلب طباعة - حتى 7 أيام",
       "next": "التالى",
       "choosePaymentMethod": "اختر وسيلة الدفع",
       "billingAddress": "عنوان وصول الفواتير",
@@ -67966,6 +68041,7 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "Email Address"
     },
     "pages": {
+      "estimatedTime": "Estimated Time Arrival",
       "report": "Report",
       "sitemap": 'Sitemap',
       "faq": "FAQs",
@@ -68120,8 +68196,8 @@ __webpack_require__.r(__webpack_exports__);
       "office": "Office",
       "useAsBillingAddress": "Use As Billing Address",
       "workingHoursAndDays": "Working Hours And Days",
-      "printingShippingDays": "Printing Shipping Days",
-      "withoutPrintingShippingDays": "Without Printing Shipping Days",
+      "printingShippingDays": "Requires printing – upto 14 days after Printing Proof Approval, One of our sales representative will contact you by email to follow up on this",
+      "withoutPrintingShippingDays": "No printing requested – upto 7 days",
       "next": "Next",
       "choosePaymentMethod": "Choose Payment Method",
       "billingAddress": "Billing Address",

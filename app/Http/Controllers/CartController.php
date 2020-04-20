@@ -96,6 +96,7 @@ class CartController extends Controller {
             'product_discount',
         ] );
 
+        $attributesCartItem['print_image'] = '';
         if ( $request->hasFile( 'file' ) )
         {
             $attributesCartItem['print_image'] = 'uploads/print_images/' . $printImage;
@@ -105,7 +106,17 @@ class CartController extends Controller {
 
         if ( $request->hasFile( 'file' ) )
         {
-            return ['fileName' => $printImage];
+            return ['fileName' => $printImage,
+                    'item' => [
+                        'item_name' => $attributesCartItem['item_name'],
+                        'product_attribute_id'=> $attributesCartItem['product_attribute_id'],
+                        'product_image'=> $attributesCartItem['product_image'],
+                        'product_qty'=> $attributesCartItem['product_qty'],
+                        'product_color_name'=> $attributesCartItem['product_color_name'],
+                        'product_price'=> $attributesCartItem['product_price'],
+                        'product_discount'=> $attributesCartItem['product_discount'],
+                        ]
+            ];
         }
     }
 
@@ -137,9 +148,10 @@ class CartController extends Controller {
 
         $attributesCartItem = $request->only( [
             'product_attribute_id',
+            'print_image'
         ] );
 
-        $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'] );
+        $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'], $attributesCartItem['print_image'] );
     }
 
 }

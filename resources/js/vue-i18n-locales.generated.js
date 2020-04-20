@@ -109,6 +109,7 @@ export default {
 
         },
         "pages": {
+            "estimatedTime": "تقدير وصول الشحنه",
             "report": "بلغ عن سوء",
             "sitemap": 'خريطة الموقع',
             "faq": "الاسئلة الشائعة",
@@ -263,8 +264,8 @@ export default {
             "office":"مكتب. مقر. مركز",
             "useAsBillingAddress":"استخدام كعنوان الفواتير",
             "workingHoursAndDays":"ساعات العمل والأيام",
-            "printingShippingDays":"طباعة أيام الشحن",
-            "withoutPrintingShippingDays":"بدون طباعة أيام الشحن",
+            "printingShippingDays":"يتطلب طباعة - حتى 14 يومًا بعد الموافقة على إثبات الطباعة ، سيتصل بك أحد مندوبي المبيعات لدينا عبر البريد الإلكتروني لمتابعة",
+            "withoutPrintingShippingDays":"لا يتطلب طباعة - حتى 7 أيام",
             "next":"التالى",
             "choosePaymentMethod":"اختر وسيلة الدفع",
             "billingAddress":"عنوان وصول الفواتير",
@@ -594,6 +595,7 @@ export default {
             "emailAddress": "Email Address"
         },
         "pages": {
+            "estimatedTime": "Estimated Time Arrival",
             "report": "Report",
             "sitemap": 'Sitemap',
             "faq": "FAQs",
@@ -748,8 +750,8 @@ export default {
             "office":"Office",
             "useAsBillingAddress":"Use As Billing Address",
             "workingHoursAndDays":"Working Hours And Days",
-            "printingShippingDays":"Printing Shipping Days",
-            "withoutPrintingShippingDays":"Without Printing Shipping Days",
+            "printingShippingDays":"Requires printing – upto 14 days after Printing Proof Approval, One of our sales representative will contact you by email to follow up on this",
+            "withoutPrintingShippingDays":"No printing requested – upto 7 days",
             "next":"Next",
             "choosePaymentMethod":"Choose Payment Method",
             "billingAddress":"Billing Address",

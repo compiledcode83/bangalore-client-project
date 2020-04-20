@@ -544,6 +544,7 @@
 
                 //Add the form data we need to submit
                 for(let key in this.colorInputs){
+
                     let colorObjectInput = this.getColorObject(this.colorInputs[key]);
                     let _this = this;
                     let findAttribute = this.product.product_attribute_values.find(function(element) {
@@ -554,6 +555,7 @@
                     if(this.product.short_description_en && this.product.short_description_en !=''){
                         descriptionItem = this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
                     }
+
                     if(parseInt(this.qtyInputs[key]) > 0) {
                         this.cartItem = {
                             item_name: this.product.name_en,
@@ -587,47 +589,89 @@
                 if(this.file && this.cartItem.product_print_image === ''){
                     //create tempCartItem
 
-
                     //validate file
-                    this.validateFile();
+                    if(this.validateFile())
+                    {
+                        console.log('inside');
+                        //Initialize the form data
+                        let formData = new FormData();
 
-                    //Initialize the form data
-                    let formData = new FormData();
+                        // upload file
+                        formData.append('file', this.file);
+                        formData.append('item_name', this.product.name_en);
+                        formData.append('product_attribute_id', this.colorInputs[key]);
+                        formData.append('product_image', colorObjectInput.images[0]);
+                        formData.append('product_qty', this.qtyInputs[key]);
+                        formData.append('product_color_name', colorObjectInput.name);
+                        formData.append('product_price', this.cartItem.product_price);
+                        formData.append('product_discount', this.cartItem.product_discount);
+                        formData.append('total', '0');
+                        /*
+                          Make the request to the POST /single-file URL
+                        */
+                        let  _this = this;
 
-                    // upload file
-                    formData.append('file', this.file);
-                    formData.append('item_name', this.product.name_en);
-                    formData.append('product_attribute_id', this.colorInputs[key]);
-                    formData.append('product_image', colorObjectInput.images[0]);
-                    formData.append('product_qty', this.qtyInputs[key]);
-                    formData.append('product_color_name', colorObjectInput.name);
-                    formData.append('product_price', this.cartItem.product_price);
-                    formData.append('product_discount', this.cartItem.product_discount);
-                    formData.append('total', '0');
-                    /*
-                      Make the request to the POST /single-file URL
-                    */
-                    let  _this = this;
 
-                    console.log('uploading ...');
-                    axios.post('/api/v1/cart/item',
-                        formData,
-                        {
-                            headers: {
-                                'Content-Type': "multipart/form-data"
+
+                        console.log('uploading ...');
+                        axios.post('/api/v1/cart/item',
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': "multipart/form-data"
+                                }
                             }
-                        }
-                    ).then(function (response) {
-                        _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                        ).then(function (response) {
+                            _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                            let itemWithImage = response.data.item;
+                            console.log(response.data);
+                            let findAttribute = _this.product.product_attribute_values.find(function(element) {
+                                return element.id == response.data.item.product_attribute_id;
+                            });
 
-                        console.log('End of uploading ...');
-                        return _this.persistCartItem();
-                    }).catch(function (errors) {
-                        // console.log(errors);
-                    });
+                            let descriptionItem = '';
+                            if(_this.product.short_description_en && _this.product.short_description_en !=''){
+                                descriptionItem = _this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+                            }
+
+                            itemWithImage.item_description = descriptionItem;
+                            itemWithImage.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                            itemWithImage.base_product_prices = _this.priceTableWithDiscount;
+                            itemWithImage.stock = findAttribute.stock;
+                            itemWithImage.status = false;
+
+
+                            return _this.persistCartItemWithImage(itemWithImage);
+                        }).catch(function (errors) {
+                            console.log(errors);
+                        });
+                    }
+
                 }else{
                     this.persistCartItem();
                 }
+            },
+            persistCartItemWithImage(item){
+                let  _this = this;
+                this.$store
+                    .dispatch('createCalculatedItemPriceAlreadyUploaded', item)
+                    .then(() => {
+                        // this.cart = this.$store.state.cart;
+                        this.$swal({
+                            title: 'New Item in cart!',
+                            text: "Item added to cart successfully!",
+                            icon: 'success'
+                        });
+
+                        //clean form
+                        _this.colorInputs = [];
+                        _this.qtyInputs  = [];
+                        _this.resetAddToCartInputs();
+
+                    })
+                    .catch((err) => {
+                        console.log('There was a problem creating your cart');
+                    });
             },
             persistCartItem(){
                 let  _this = this;
