@@ -61,6 +61,7 @@ export const actions = {
     createCartItem({ commit }, item) {
         //check item is already in cart
         let savedCartItem = this.getters.getCartItem(item);
+        console.log(savedCartItem);
         if(savedCartItem){
             //update item qty
             let updatedQty = item.product_qty + savedCartItem.product_qty;
@@ -79,7 +80,6 @@ export const actions = {
         commit('UPDATE_CART_TOTAL');
     },
     createCalculatedItemPrice({ commit }, item) {
-
         this.dispatch('calcItemPrice', {item});
         this.dispatch('createCartItem', item);
     },
