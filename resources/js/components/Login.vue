@@ -68,7 +68,6 @@
                                     "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
                                 }
                             }).then((cartResponse) => {
-                            console.log(cartResponse);
                             this.$store
                                 .dispatch('setCart', cartResponse.data);
                         });

@@ -80,9 +80,12 @@ class Order extends Model
         $area = Area::find($shippingAddress->area);
         $billingAddress = $data['defaultBillingAddress'];
 
-        $prepareShippingAddress = $governorate->name_en. ', '. $area->name_en.', block: '.
-                                  $shippingAddress->block.', street: '. $shippingAddress->street.', building: '. $shippingAddress->building.
-                                  ', floor: '. $shippingAddress->floor;
+        try{
+
+            $prepareShippingAddress = $governorate->name_en.', '.$area->name_en.', block: '.$shippingAddress->block.', street: '. $shippingAddress->street.', building: '.$shippingAddress->building.', floor: '. $shippingAddress->floor;
+        }catch (\Exception $e){
+            return ['error' => 'complete your address pleae!'];
+        }
 
         if($user->type == User::TYPE_USER)
         {

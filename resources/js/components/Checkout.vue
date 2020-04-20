@@ -298,7 +298,6 @@
                             text: "Your order has been placed successfully ",
                             icon: 'success',
                         }).then(() => {
-                            console.log(this.placeOrderResponse.cod);
                             if(!this.placeOrderResponse.cod)
                             {
                                 window.location.href = this.placeOrderResponse.PaymentUrl;
@@ -313,6 +312,12 @@
                         });
                     })
                     .catch(error => {
+                        this.$swal({
+                            title: 'Error!',
+                            text: error.response.data.message,
+                            icon: 'error',
+                        });
+                        this.hasPlacedOrder = false;
                         console.log('There was an error:', error.response)
                     })
             }
