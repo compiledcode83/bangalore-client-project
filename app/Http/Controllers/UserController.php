@@ -46,25 +46,24 @@ class UserController extends Controller {
         return $responseData;
     }
 
-    public function reportReview(Request $request)
+    public function reportReview( Request $request )
     {
         $user = Auth::user();
-        $attribute = $request->only('reviewId');
+        $attribute = $request->only( 'reviewId' );
 
-        $checkReview = ReviewAbuse::where('review_id', $attribute['reviewId'])
-                                ->where('report_by_user_id', $user->id)
-                                ->first();
+        $checkReview = ReviewAbuse::where( 'review_id', $attribute['reviewId'] )
+            ->where( 'report_by_user_id', $user->id )
+            ->first();
 
-        if($checkReview)
+        if ( $checkReview )
         {
             return 2;
-        }
-        else
+        } else
         {
-            ReviewAbuse::create([
-                'review_id' => $attribute['reviewId'],
+            ReviewAbuse::create( [
+                'review_id'         => $attribute['reviewId'],
                 'report_by_user_id' => $user->id
-            ]);
+            ] );
 
             return 1;
         }
@@ -113,15 +112,18 @@ class UserController extends Controller {
             'product_attribute_value_id' => $attributes['productAttributeId'],
             'rating'                     => $attributes['rate'],
             'review'                     => $attributes['review'],
-            'nickname'                     => $attributes['nickname'],
+            'nickname'                   => $attributes['nickname'],
         ] );
 
         if ( $review )
         {
             return ['message' => 'success'];
         }
+        else
+        {
+            return $review;
+        }
 
-        return ['error' => 'Error review#255'];
     }
 
     public function accountInfo()

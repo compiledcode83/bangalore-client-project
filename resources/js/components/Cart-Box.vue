@@ -42,10 +42,25 @@
             </div>
             <!-- /.border_dashed -->
 
-            <div v-if="subTotalCart">
-                <h1 class="crt-total">{{$t('pages.total')}}</h1>
+            <div v-if="subTotalCart" class="col-xs-6">
+                <h1 class="crt-total">{{$t('pages.subtotal')}}</h1>
+            </div>
+            <div v-if="subTotalCart" class="col-xs-6 text-right">
                 <h1 class="crt-price-ttl">{{$t('pages.kd')}} {{subTotalCart}}</h1>
             </div>
+            <div v-if="calcDiscount" class="col-xs-6">
+                <h1 class="crt-total">{{$t('pages.discount')}}</h1>
+            </div>
+            <div v-if="calcDiscount" class="col-xs-6 text-right">
+                <h1 class="crt-price-ttl">{{$t('pages.kd')}} {{calcDiscount}}</h1>
+            </div>
+            <div v-if="totalCart" class="col-xs-6">
+                <h1 class="crt-total">{{$t('pages.total')}}</h1>
+            </div>
+            <div v-if="totalCart" class="col-xs-6 text-right">
+                <h1 class="crt-price-ttl">{{$t('pages.kd')}} {{totalCart}}</h1>
+            </div>
+
         </div>
         <!-- /.cart_contents -->
         <router-link to="/cart" class="button-crt" v-if="subTotalCart">
@@ -61,8 +76,12 @@
         data() {
             return {
                 cart: this.$store.state.cartModule.cart.items,
-                minimumQty: 1
+                minimumQty: 1,
+                discount: this.calcDiscount ? this.calcDiscount: 0
             }
+        },
+        mounted(){
+            // this.discount = this.calcDiscount();
         },
         methods: {
             validateQty(item){
@@ -137,8 +156,26 @@
 
                 return total;
             },
+            totalCart(){
+                if(this.calcDiscount){
+                    return this.subTotalCart - this.calcDiscount;
+                }
+                return this.subTotalCart;
+            },
             itemsCount(){
                 return this.cart.length ? this.cart.length : 0;
+            },
+            calcDiscount(){
+
+                let discount = 0;
+                this.cart.forEach(function(item){
+                    if(item.product_discount > 0){
+                        discount += (item.product_discount * item.product_qty);
+                    }
+                });
+
+                return discount;
+
             }
         }
     }

@@ -317,28 +317,41 @@ class Product extends Model
                 // get prices
                 if($product->prices->first())
                 {
+                    $productPrices = [];
                     foreach ($product->prices as $price)
                     {
                         if ( $user->type == User::TYPE_USER )
                         {
-                            $prices [] = $price->individual_unit_price;
+
                             // (unitPrice - discounted) / unitPrice * 100
                             if($price->individual_discounted_unit_price && $price->individual_discounted_unit_price != '0')
                             {
                                 $discounts [] = (($price->individual_unit_price - $price->individual_discounted_unit_price) / $price->individual_unit_price) * 100;
+                                $productPrices [$price->max_qty] = $price->individual_discounted_unit_price;
+                            }
+                            else
+                            {
+                                $productPrices [$price->max_qty] = $price->individual_unit_price;
                             }
                         }
 
                         if ( $user->type == User::TYPE_CORPORATE )
                         {
-                            $prices [] = $price->corporate_unit_price;
+
                             // (unitPrice - discounted) / unitPrice * 100
                             if($price->corporate_discounted_unit_price && $price->corporate_discounted_unit_price != '0')
                             {
                                 $discounts [] = (($price->corporate_unit_price - $price->corporate_discounted_unit_price) / $price->corporate_unit_price) * 100;
+                                $productPrices [$price->max_qty] = $price->corporate_discounted_unit_price;
+                            }
+                            else
+                            {
+                                $productPrices [$price->max_qty] = $price->corporate_unit_price;
                             }
                         }
                     }
+                    $productPrices = collect($productPrices);
+                    $prices[] = $productPrices->sort()->first();
 
                 }
             }
@@ -351,6 +364,7 @@ class Product extends Model
         $prices = array_unique($prices);
         $priceMin = count($prices) > 0 ? min($prices) : 0;
         $priceMax = count($prices) > 0 ? max($prices) : 0;
+
         $discounts = array_unique($discounts);
         foreach ($discounts as $discount)
         {
