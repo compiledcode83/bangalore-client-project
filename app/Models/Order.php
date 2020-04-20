@@ -96,7 +96,7 @@ class Order extends Model
         $prepareBillingAddress = $prepareShippingAddress;
         if(!$data['billingShipping'])
         {
-                $prepareBillingAddress = $billingAddress['governorate']. ', '. $billingAddress['area'].', block: '.
+               $prepareBillingAddress = $billingAddress['governorate']. ', '. $billingAddress['area'].', block: '.
                 $billingAddress['block'].', street: '. $billingAddress['street'].', building: '. $billingAddress['building'].
                 ', floor: '. $billingAddress['floor'];
 
