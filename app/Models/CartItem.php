@@ -66,7 +66,9 @@ class CartItem extends Model
         }
 
         Self::create( $cartItem );
-        return 'Item Added successfully!';
+//        return 'Item Added successfully!';
+
+        return $cartItem;
     }
 
     public function updateItemQty( $cartId, $attributes )

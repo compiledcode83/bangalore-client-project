@@ -159,9 +159,20 @@
                 }else{
                     this.disabledBoxes = false;
                 }
+            },
+            minPrice: function(value) {
+                this.sliderPriceMin = parseInt(this.minPrice);
+                this.sliderPriceMax = parseInt(this.maxPrice);
+                this.priceSliderValue = [parseInt(this.minPrice), parseInt(this.maxPrice)];
+            },
+            maxPrice: function(value) {
+                this.sliderPriceMin = parseInt(this.minPrice);
+                this.sliderPriceMax = parseInt(this.maxPrice);
+                this.priceSliderValue = [parseInt(this.minPrice), parseInt(this.maxPrice)];
             }
         },
         created() {
+
             /* price slider */
             // this.sliderPriceMin = parseInt(this.minPrice);
             // this.sliderPriceMax = parseInt(this.maxPrice);

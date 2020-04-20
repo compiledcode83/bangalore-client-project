@@ -58,6 +58,17 @@
                 this.login({ ...this.credentials })
                     .then(() => {
                         this.hideModal();
+
+                        axios.get('api/v1/cart/restore',
+                            {
+                                headers: {
+                                    "Authorization": `Bearer ${this.$store.state.authModule.accessToken}`
+                                }
+                            }).then((cartResponse) => {
+                            this.$store
+                                .dispatch('setCart', cartResponse.data);
+                        });
+
                         if(this.$router.currentRoute.name !== 'home'){
                             this.$router.push({name: 'home'});
                         }

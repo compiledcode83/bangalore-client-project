@@ -175,9 +175,11 @@
 
                                     </div>
                                     <div class="col-sm-3 col-xs-6">
-                                        <label v-if="!selected_attribute.id || selected_attribute.stock != 0">{{$t('pages.qty')}}</label>
-                                        <span class="out-stock" style="margin-top: 45px;" v-if="selected_attribute.id && selected_attribute.stock == 0"></span>
-                                        <input type="text" v-else class="form-control rounded-0" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required>
+                                        <label>{{$t('pages.qty')}}</label>
+<!--                                        <span class="out-stock" style="margin-top: 45px;" v-if="qtyInputs[index] == 'out-stock'"></span>-->
+                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required>
+<!--                                        <span class="out-stock" style="margin-top: 45px;" v-show="qtyInputs[index] == 'out-stock'"></span>-->
+<!--                                        <input type="text" class="form-control rounded-0" v-show="qtyInputs[index] != 'out-stock'" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required  :disabled="qtyInputs[index] == 'out-stock'">-->
                                     </div>
                                 </li>
                             </ul>
@@ -195,7 +197,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Details" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">{{$t('pages.details')}}</a></li>
                         <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Info" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">moreInformation</a></li>
-                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">{{$t('pages.reviews')}} (6)</a></li>
+                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">{{$t('pages.reviews')}} ({{product.reviews.length}})</a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -542,17 +544,20 @@
 
                 //Add the form data we need to submit
                 for(let key in this.colorInputs){
-
                     let colorObjectInput = this.getColorObject(this.colorInputs[key]);
                     let _this = this;
                     let findAttribute = this.product.product_attribute_values.find(function(element) {
                         return element.id == _this.colorInputs[key];
                     });
 
+                    let descriptionItem = '';
+                    if(this.product.short_description_en && this.product.short_description_en !=''){
+                        descriptionItem = this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+                    }
                     if(parseInt(this.qtyInputs[key]) > 0) {
                         this.cartItem = {
                             item_name: this.product.name_en,
-                            item_description: this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
+                            item_description: descriptionItem,
                             product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
                             product_image: colorObjectInput.images[0],
                             product_print_image: '',
@@ -567,16 +572,22 @@
                             status: false
                         };
 
-                        this.cartItem = this.calcItemPrice(this.cartItem);
+                        console.log('start');
+                        console.log(this.cartItem);
 
+                        this.cartItem = this.calcItemPrice(this.cartItem);
                         this.addToCart(colorObjectInput, key);
                     }
                 }
             },
             addToCart(colorObjectInput, key) {
 
+                console.log('add To Cart');
                 //if item has print image and not uploaded before
                 if(this.file && this.cartItem.product_print_image === ''){
+                    //create tempCartItem
+
+
                     //validate file
                     this.validateFile();
 
@@ -598,6 +609,7 @@
                     */
                     let  _this = this;
 
+                    console.log('uploading ...');
                     axios.post('/api/v1/cart/item',
                         formData,
                         {
@@ -608,6 +620,7 @@
                     ).then(function (response) {
                         _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
 
+                        console.log('End of uploading ...');
                         return _this.persistCartItem();
                     }).catch(function (errors) {
                         // console.log(errors);
@@ -698,6 +711,15 @@
                 var colorValue = idAndColor.split("-");
                 // load attribute images by attribute ID
                 this.loadColorImages(null, colorValue[0] );
+                if(this.selected_attribute.stock == 0){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'This Color is out-Stock!',
+                    }).then(() => {
+                        this.removeColorInput(selectIndex);
+                    });
+                }
                 // select color value by setting select2 input
                 $('.select-colors-product-'+selectIndex).val(idAndColor);
                 // delete color & quantity inputs if color already selected
@@ -825,6 +847,7 @@
 
             },
             calcItemPrice(item){
+                console.log('calc price');
                 //same in store.js ===> URGENT refactor
                 // get base prices defined by admin
                 // search for max_qty based on user enter qty

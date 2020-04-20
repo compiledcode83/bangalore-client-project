@@ -2042,13 +2042,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cartBox',
   data: function data() {
     return {
       cart: this.$store.state.cartModule.cart.items,
-      minimumQty: 1
+      minimumQty: 1,
+      discount: this.calcDiscount ? this.calcDiscount : 0
     };
+  },
+  mounted: function mounted() {// this.discount = this.calcDiscount();
   },
   methods: {
     validateQty: function validateQty(item) {
@@ -2127,8 +2145,24 @@ __webpack_require__.r(__webpack_exports__);
 
       return total;
     },
+    totalCart: function totalCart() {
+      if (this.calcDiscount) {
+        return this.subTotalCart - this.calcDiscount;
+      }
+
+      return this.subTotalCart;
+    },
     itemsCount: function itemsCount() {
       return this.cart.length ? this.cart.length : 0;
+    },
+    calcDiscount: function calcDiscount() {
+      var discount = 0;
+      this.cart.forEach(function (item) {
+        if (item.product_discount > 0) {
+          discount += item.product_discount * item.product_qty;
+        }
+      });
+      return discount;
     }
   }
 });
@@ -2733,8 +2767,6 @@ __webpack_require__.r(__webpack_exports__);
           text: "Your order has been placed successfully ",
           icon: 'success'
         }).then(function () {
-          console.log(_this5.placeOrderResponse.cod);
-
           if (!_this5.placeOrderResponse.cod) {
             window.location.href = _this5.placeOrderResponse.PaymentUrl;
           } else {
@@ -2744,6 +2776,13 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       })["catch"](function (error) {
+        _this5.$swal({
+          title: 'Error!',
+          text: error.response.data.message,
+          icon: 'error'
+        });
+
+        _this5.hasPlacedOrder = false;
         console.log('There was an error:', error.response);
       });
     }
@@ -3429,8 +3468,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             "Authorization": "Bearer ".concat(_this.$store.state.authModule.accessToken)
           }
         }).then(function (cartResponse) {
-          console.log(cartResponse);
-
           _this.$store.dispatch('setCart', cartResponse.data);
         });
 
@@ -4109,6 +4146,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 function formatState(state) {
   if (!state.id) {
     return state.text;
@@ -4417,10 +4456,16 @@ function formatState(state) {
           return element.id == _this.colorInputs[key];
         });
 
+        var descriptionItem = '';
+
+        if (_this6.product.short_description_en && _this6.product.short_description_en != '') {
+          descriptionItem = _this6.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+        }
+
         if (parseInt(_this6.qtyInputs[key]) > 0) {
           _this6.cartItem = {
             item_name: _this6.product.name_en,
-            item_description: _this6.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
+            item_description: descriptionItem,
             product_attribute_id: _this6.colorInputs[key],
             //this.selected_attribute.id,
             product_image: colorObjectInput.images[0],
@@ -4435,6 +4480,8 @@ function formatState(state) {
             stock: findAttribute.stock,
             status: false
           };
+          console.log('start');
+          console.log(_this6.cartItem);
           _this6.cartItem = _this6.calcItemPrice(_this6.cartItem);
 
           _this6.addToCart(colorObjectInput, key);
@@ -4446,8 +4493,10 @@ function formatState(state) {
       }
     },
     addToCart: function addToCart(colorObjectInput, key) {
-      //if item has print image and not uploaded before
+      console.log('add To Cart'); //if item has print image and not uploaded before
+
       if (this.file && this.cartItem.product_print_image === '') {
+        //create tempCartItem
         //validate file
         this.validateFile(); //Initialize the form data
 
@@ -4468,12 +4517,14 @@ function formatState(state) {
 
         var _this = this;
 
+        console.log('uploading ...');
         axios.post('/api/v1/cart/item', formData, {
           headers: {
             'Content-Type': "multipart/form-data"
           }
         }).then(function (response) {
           _this.cartItem.product_print_image = 'uploads/print_images/' + response.data.fileName;
+          console.log('End of uploading ...');
           return _this.persistCartItem();
         })["catch"](function (errors) {// console.log(errors);
         });
@@ -4561,7 +4612,18 @@ function formatState(state) {
       //id and color concatenated
       var colorValue = idAndColor.split("-"); // load attribute images by attribute ID
 
-      this.loadColorImages(null, colorValue[0]); // select color value by setting select2 input
+      this.loadColorImages(null, colorValue[0]);
+
+      if (this.selected_attribute.stock == 0) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This Color is out-Stock!'
+        }).then(function () {
+          _this8.removeColorInput(selectIndex);
+        });
+      } // select color value by setting select2 input
+
 
       $('.select-colors-product-' + selectIndex).val(idAndColor); // delete color & quantity inputs if color already selected
 
@@ -4691,11 +4753,12 @@ function formatState(state) {
       });
     },
     calcItemPrice: function calcItemPrice(item) {
-      //same in store.js ===> URGENT refactor
+      console.log('calc price'); //same in store.js ===> URGENT refactor
       // get base prices defined by admin
       // search for max_qty based on user enter qty
       // calc item price
       // dispatch create item
+
       var basePrices = item.base_product_prices;
       var qtyIndexSelected = null;
       var itemTotalQty = item.product_qty;
@@ -5070,6 +5133,16 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.disabledBoxes = false;
       }
+    },
+    minPrice: function minPrice(value) {
+      this.sliderPriceMin = parseInt(this.minPrice);
+      this.sliderPriceMax = parseInt(this.maxPrice);
+      this.priceSliderValue = [parseInt(this.minPrice), parseInt(this.maxPrice)];
+    },
+    maxPrice: function maxPrice(value) {
+      this.sliderPriceMin = parseInt(this.minPrice);
+      this.sliderPriceMax = parseInt(this.maxPrice);
+      this.priceSliderValue = [parseInt(this.minPrice), parseInt(this.maxPrice)];
     }
   },
   created: function created() {
@@ -8001,6 +8074,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.login(_objectSpread({}, this.credentials)).then(function () {
         _this.hideModal();
+
+        axios.get('api/v1/cart/restore', {
+          headers: {
+            "Authorization": "Bearer ".concat(_this.$store.state.authModule.accessToken)
+          }
+        }).then(function (cartResponse) {
+          _this.$store.dispatch('setCart', cartResponse.data);
+        });
 
         if (_this.$router.currentRoute.name !== 'home') {
           _this.$router.push({
@@ -33599,14 +33680,54 @@ var render = function() {
           }),
           _vm._v(" "),
           _vm.subTotalCart
-            ? _c("div", [
+            ? _c("div", { staticClass: "col-xs-6" }, [
                 _c("h1", { staticClass: "crt-total" }, [
-                  _vm._v(_vm._s(_vm.$t("pages.total")))
-                ]),
-                _vm._v(" "),
+                  _vm._v(_vm._s(_vm.$t("pages.subtotal")))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.subTotalCart
+            ? _c("div", { staticClass: "col-xs-6 text-right" }, [
                 _c("h1", { staticClass: "crt-price-ttl" }, [
                   _vm._v(
                     _vm._s(_vm.$t("pages.kd")) + " " + _vm._s(_vm.subTotalCart)
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.calcDiscount
+            ? _c("div", { staticClass: "col-xs-6" }, [
+                _c("h1", { staticClass: "crt-total" }, [
+                  _vm._v(_vm._s(_vm.$t("pages.discount")))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.calcDiscount
+            ? _c("div", { staticClass: "col-xs-6 text-right" }, [
+                _c("h1", { staticClass: "crt-price-ttl" }, [
+                  _vm._v(
+                    _vm._s(_vm.$t("pages.kd")) + " " + _vm._s(_vm.calcDiscount)
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.totalCart
+            ? _c("div", { staticClass: "col-xs-6" }, [
+                _c("h1", { staticClass: "crt-total" }, [
+                  _vm._v(_vm._s(_vm.$t("pages.total")))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.totalCart
+            ? _c("div", { staticClass: "col-xs-6 text-right" }, [
+                _c("h1", { staticClass: "crt-price-ttl" }, [
+                  _vm._v(
+                    _vm._s(_vm.$t("pages.kd")) + " " + _vm._s(_vm.totalCart)
                   )
                 ])
               ])
@@ -36976,55 +37097,44 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
-                            !_vm.selected_attribute.id ||
-                            _vm.selected_attribute.stock != 0
-                              ? _c("label", [
-                                  _vm._v(_vm._s(_vm.$t("pages.qty")))
-                                ])
-                              : _vm._e(),
+                            _c("label", [_vm._v(_vm._s(_vm.$t("pages.qty")))]),
                             _vm._v(" "),
-                            _vm.selected_attribute.id &&
-                            _vm.selected_attribute.stock == 0
-                              ? _c("span", {
-                                  staticClass: "out-stock",
-                                  staticStyle: { "margin-top": "45px" }
-                                })
-                              : _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.qtyInputs[index],
-                                      expression: "qtyInputs[index]"
-                                    }
-                                  ],
-                                  staticClass: "form-control rounded-0",
-                                  attrs: {
-                                    type: "text",
-                                    name: "qtySelectedWithColors[]",
-                                    max: _vm.selected_attribute.stock,
-                                    required: ""
-                                  },
-                                  domProps: { value: _vm.qtyInputs[index] },
-                                  on: {
-                                    keypress: function($event) {
-                                      return _vm.isNumber($event)
-                                    },
-                                    keyup: function($event) {
-                                      return _vm.checkStock(index, $event)
-                                    },
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.qtyInputs,
-                                        index,
-                                        $event.target.value
-                                      )
-                                    }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.qtyInputs[index],
+                                  expression: "qtyInputs[index]"
+                                }
+                              ],
+                              staticClass: "form-control rounded-0",
+                              attrs: {
+                                type: "text",
+                                name: "qtySelectedWithColors[]",
+                                max: _vm.selected_attribute.stock,
+                                required: ""
+                              },
+                              domProps: { value: _vm.qtyInputs[index] },
+                              on: {
+                                keypress: function($event) {
+                                  return _vm.isNumber($event)
+                                },
+                                keyup: function($event) {
+                                  return _vm.checkStock(index, $event)
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                })
+                                  _vm.$set(
+                                    _vm.qtyInputs,
+                                    index,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
                           ])
                         ])
                       }),
@@ -37116,7 +37226,14 @@ var render = function() {
                           "aria-expanded": "true"
                         }
                       },
-                      [_vm._v(_vm._s(_vm.$t("pages.reviews")) + " (6)")]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.$t("pages.reviews")) +
+                            " (" +
+                            _vm._s(_vm.product.reviews.length) +
+                            ")"
+                        )
+                      ]
                     )
                   ]
                 )
@@ -67067,6 +67184,7 @@ var actions = {
     var commit = _ref.commit;
     //check item is already in cart
     var savedCartItem = this.getters.getCartItem(item);
+    console.log(savedCartItem);
 
     if (savedCartItem) {
       //update item qty
@@ -67364,6 +67482,7 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "البريد الإلكتروني"
     },
     "pages": {
+      "report": "بلغ عن سوء",
       "sitemap": 'خريطة الموقع',
       "faq": "الاسئلة الشائعة",
       "back": "رجوع",
@@ -67396,7 +67515,7 @@ __webpack_require__.r(__webpack_exports__);
       "myOrders": "طلباتي",
       "trackMyOrders": "تتبع طلبي",
       "newsletterSubscriptions": "اشتراك الرسائل الإخبارية",
-      "myProductReviews": "مراجعات المنتج الخاص بي",
+      "myProductReviews": "مراجعاتي للمنتجات",
       "myWishList": "قائمة امنياتي",
       "items": "العناصر",
       "viewItem": "عرض البند",
@@ -67407,15 +67526,15 @@ __webpack_require__.r(__webpack_exports__);
       "addNewAddress": "إضافة عنوان جديد",
       "selectGovernorate": "اختر محافظة",
       "selectArea": "اختر المنطقة",
-      "blockNumber": "منع#",
+      "blockNumber": "قطعة#",
       "street": "شارع",
       "buildingNumber": "بناء",
-      "floorNumber": "أرضية#",
-      "flatNumber": "مسطحة#",
+      "floorNumber": "طابق#",
+      "flatNumber": "شقة#",
       "houseNumber": "منزل#",
       "officeAddress": "عنوان المكتب",
       "officeNumber": "رقم المكتب",
-      "useAsDefaultBilling": "استخدام الفواتير الافتراضية",
+      "useAsDefaultBilling": "عنوان وصول الفواتير الاساسي",
       "saveAddress": "حفظ العنوان",
       "accountDetails": "تفاصيل الحساب",
       "firstName": "الاسم الاول",
@@ -67424,7 +67543,7 @@ __webpack_require__.r(__webpack_exports__);
       "phone": "هاتف",
       "newsletter": "النشرة الإخبارية",
       "notSubscribed": "غير مشترك",
-      "useAsDefaultShipping": "استخدام الشحن الافتراضي",
+      "useAsDefaultShipping": "عنوان الشحن الاساسي",
       "myInfo": "معلوماتي",
       "editAccountInformation": "تحرير معلومات الحساب",
       "company": "شركة",
@@ -67441,7 +67560,7 @@ __webpack_require__.r(__webpack_exports__);
       "recentOrders": "الطلبيات الأخيرة",
       "orderNumber": "رقم الأمر",
       "date": "تاريخ",
-      "orderTotal": "الطلب الكلي",
+      "orderTotal": "اجمالي الطلب",
       "status": "الحالة",
       "action": "عمل",
       "view_order": "مشاهدة الطلب",
@@ -67467,7 +67586,7 @@ __webpack_require__.r(__webpack_exports__);
       "cash": "السيولة النقدية",
       "wishList": "قائمة الرغبات",
       "priceOnRequest": "السعر عند الطلب",
-      "remove": "إزالة",
+      "remove": "حذف",
       "account": "حسابي",
       "aboutUs": "معلومات عنا",
       "subsidiaries": "الشركات التابعة",
@@ -67511,7 +67630,7 @@ __webpack_require__.r(__webpack_exports__);
       "checkout": "الدفع",
       "shipping": "الشحن",
       "payment": "دفع",
-      "block": "منع",
+      "block": "قطعة",
       "building": "بناء",
       "floor": "أرضية",
       "office": "مكتب. مقر. مركز",
@@ -67534,21 +67653,21 @@ __webpack_require__.r(__webpack_exports__);
       "shopMore": "تسوق أكثر",
       "customer": "العملاء",
       "p": "ص",
-      "receiptNumber": "عدد إيصال",
+      "receiptNumber": "رقم الايصال",
       "receipt": "إيصال",
       "product": "المنتج",
       "forgotPassword_enterYourEmail": "أدخل بريدك الالكتروني",
       "sendPasswordResetLink": "أرسل الرابط",
       "newArrival_new": "جديد",
       "newArrival_arrivals": "الوصول",
-      "newArrival_description": "newArrival_description",
+      "newArrival_description": "هنا تجد الجديد",
       "bestSellers_our_best": "أفضل ما لدينا",
       "bestSellers_sellers": "البائعين",
       "bestSellers_description": "الأكثر مبيعًا",
       "bestSellers_view_all": "عرض الكل",
       "specialOffers_special": "مميز",
       "specialOffers_offers": "عروض",
-      "specialOffers_description": "وصفات خاصة",
+      "specialOffers_description": "عروضنا الخاصة",
       "specialOffers_more": "أكثر",
       "registerNow_title": "عنوان",
       "registerNow_description": "وصف",
@@ -67847,13 +67966,14 @@ __webpack_require__.r(__webpack_exports__);
       "emailAddress": "Email Address"
     },
     "pages": {
+      "report": "Report",
       "sitemap": 'Sitemap',
       "faq": "FAQs",
       "back": "Back",
-      "bestSellers": "best seller",
-      "name": "name",
-      "subject": "subject",
-      "message": "message",
+      "bestSellers": "Best seller",
+      "name": "Name",
+      "subject": "Subject",
+      "message": "Message",
       "addYourReview": "Add review",
       "subTotal": "SubTotal",
       "totalDiscount": "Total Discount",
@@ -67863,7 +67983,7 @@ __webpack_require__.r(__webpack_exports__);
       "printImagePending": "Image pending",
       "printImageApproved": "Image Approved",
       "printImageRejected": "Image rejected",
-      "subscribed": "subscribed",
+      "subscribed": "Subscribed",
       "delete": "Delete",
       "media": "Media",
       "account": "Account",
@@ -67887,7 +68007,7 @@ __webpack_require__.r(__webpack_exports__);
       "addressBook": "Address Book",
       "defaultBillingAddress": "Default Billing Address",
       "defaultShippingAddress": "Default Shipping Address",
-      "edit": "edit",
+      "edit": "Edit",
       "addNewAddress": "Add New Address",
       "selectGovernorate": "Select Governorate",
       "selectArea": "Select Area",
@@ -67911,7 +68031,7 @@ __webpack_require__.r(__webpack_exports__);
       "useAsDefaultShipping": "Use As Default Shipping",
       "myInfo": "My Info",
       "editAccountInformation": "Edit Account Information",
-      "company": "company",
+      "company": "Company",
       "contactPerson": "Contact Person",
       "jobTitle": "Job Title",
       "companyLicense": "Company License",
@@ -67921,22 +68041,22 @@ __webpack_require__.r(__webpack_exports__);
       "mySubscription": "My Subscription",
       "subscribeToNewsLetter": "Subscribe To NewsLetter",
       "yesSubscribeToNewsLetter": "Yes Subscribe To NewsLetter",
-      "save": "save",
+      "save": "Save",
       "recentOrders": "Recent Orders",
       "orderNumber": "Order Number",
       "date": "Date",
       "orderTotal": "Order Total",
-      "status": "status",
-      "action": "action",
-      "view_order": "view order",
-      "reorder": "reorder",
+      "status": "Status",
+      "action": "Action",
+      "view_order": "View order",
+      "reorder": "Reorder",
       "myReviews": "My Reviews",
       "trackOrders": "Track Orders",
       "trackRecentOrder": "Track Recent Order",
       "trackOrderStatus": "Track Order Status",
       "orderTrackingStatus": "Order Tracking Status",
       "orderHasNoRecords": "Order Has No Records!",
-      "order": "order",
+      "order": "Order",
       "viewOrder": "View Order",
       "orderId": "Order ID",
       "orderDate": "Order Date",
@@ -67948,13 +68068,13 @@ __webpack_require__.r(__webpack_exports__);
       "totalAmount": "Total Amount",
       "shippingAddress": "Shipping Address",
       "paymentMethod": "Payment Method",
-      "cash": "cash",
+      "cash": "Cash",
       "wishList": "wishList",
       "priceOnRequest": "Price On Request",
-      "remove": "remove",
+      "remove": "Remove",
       "aboutUs": "About Us",
       "subsidiaries": "Subsidiaries",
-      "visit": "visit",
+      "visit": "Visit",
       "forMoreInfo": "For More Info",
       "contactUs": "Contact Us",
       "ourOfficeIn": "Our Office In",
@@ -67976,13 +68096,13 @@ __webpack_require__.r(__webpack_exports__);
       "quickLinks_faqs": "FAQ",
       "quickLinks_siteMap": "Site Map",
       "copyRights": "Copy Rights",
-      "poweredBy": "powered By",
-      "english": "english",
-      "arabic": "arabic",
-      "logout": "logout",
+      "poweredBy": "Powered By",
+      "english": "English",
+      "arabic": "Arabic",
+      "logout": "Logout",
       "NotFoundPage404": "Not Found Page 404",
       "shoppingCart": "Shopping Cart",
-      "price": "price",
+      "price": "Price",
       "moveToWishList": "Move To WishList",
       "summary": "Summary",
       "estimateShipping": "Estimate Shipping",
@@ -68008,7 +68128,7 @@ __webpack_require__.r(__webpack_exports__);
       "editAddress": "Edit Address",
       "placeOrder": "Place Order",
       "summery": "Summery",
-      "itemsInCart": "items In Cart",
+      "itemsInCart": "Items In Cart",
       "subtotal": "Subtotal",
       "discount": "Discount",
       "thankYou": "Thank You",
@@ -68024,20 +68144,20 @@ __webpack_require__.r(__webpack_exports__);
       "sendPasswordResetLink": "Send Link",
       "newArrival_new": "New",
       "newArrival_arrivals": "Arrivals",
-      "newArrival_description": "newArrival_description",
+      "newArrival_description": "Check out whats new in itc promotions",
       "bestSellers_our_best": "Our best",
       "bestSellers_sellers": "Sellers",
-      "bestSellers_description": "bestSellers_description",
+      "bestSellers_description": "Get the best of itc promotions",
       "bestSellers_view_all": "View All",
       "specialOffers_special": "Special",
       "specialOffers_offers": "Offers",
-      "specialOffers_description": "specialOffers_description",
+      "specialOffers_description": "Check out our special offers",
       "specialOffers_more": "More",
       "registerNow_title": "Title",
       "registerNow_description": "Description",
       "registerNow_register": "Register",
-      "login": "login",
-      "password": "password",
+      "login": "Login",
+      "password": "Password",
       "forgotPassword": "Forgot Password",
       "stayLoggedIn": "Stay Logged In",
       "newsLetter_news": "News ",
@@ -68050,48 +68170,48 @@ __webpack_require__.r(__webpack_exports__);
       "left": "Left",
       "price_based_on_select": "price based on select",
       "viewPrices": "View Prices",
-      "inStock": "in Stock",
+      "inStock": "In Stock",
       "quantity": "Quantity",
-      "nickName": "nick Name",
-      "enterYourNickName": "enter Your NickName",
-      "reviewDetails": "review Details",
-      "uploads": "uploads",
-      "uploadOnlyImage": "upload Only Image",
-      "browse": "browse",
-      "addMoreColors": "add More Colors",
-      "addToCart": "add To Cart",
-      "addToWishList": "add To WishList",
-      "details": "details",
-      "reviews": "reviews",
-      "related": "related",
-      "products": "products",
-      "sortBy": "sortBy",
-      "lowToHigh": "low To High",
-      "alphabetic": "alphabetic",
-      "aToZ": "aTo Z",
-      "zToA": "z To A",
-      "register": "register",
-      "registerAs": "register As",
-      "individual": "individual",
-      "corporate": "corporate",
-      "correctFollowingErrors": "correct Following Errors",
-      "email": "email",
-      "confirmPassword": "confirm Password",
-      "mobileNumber": "mobile Number",
-      "agreeForTermsAndConditions": "agree For Terms And Conditions",
-      "subscribeToOurNewsLetter": "subscribe To Our NewsLetter",
-      "resetPassword": "reset Password",
-      "enterPassword": "enter Password",
-      "socialMedia_social": "social",
-      "socialMedia_media": "media",
+      "nickName": "NickName",
+      "enterYourNickName": "Enter Your NickName",
+      "reviewDetails": "Review Details",
+      "uploads": "Uploads",
+      "uploadOnlyImage": "Upload Only Image",
+      "browse": "Browse",
+      "addMoreColors": "Add More Colors",
+      "addToCart": "Add To Cart",
+      "addToWishList": "Add To WishList",
+      "details": "Details",
+      "reviews": "Reviews",
+      "related": "Related",
+      "products": "Products",
+      "sortBy": "Sort By",
+      "lowToHigh": "Low To High",
+      "alphabetic": "Alphabetic",
+      "aToZ": "A To Z",
+      "zToA": "Z To A",
+      "register": "Register",
+      "registerAs": "Register As",
+      "individual": "Individual",
+      "corporate": "Corporate",
+      "correctFollowingErrors": "Correct Following Errors",
+      "email": "Email",
+      "confirmPassword": "Confirm Password",
+      "mobileNumber": "Mobile Number",
+      "agreeForTermsAndConditions": "Agree For Terms And Conditions",
+      "subscribeToOurNewsLetter": "Aubscribe To Our NewsLetter",
+      "resetPassword": "Reset Password",
+      "enterPassword": "Enter Password",
+      "socialMedia_social": "Social",
+      "socialMedia_media": "Media",
       "socialMedia_description": "Connect with us through social media and stay updated...",
-      "specialOffers": "special Offers",
-      "search": "search",
-      "highToLow": "high To Low",
-      "viewMore": "view More",
+      "specialOffers": "Special Offers",
+      "search": "Search",
+      "highToLow": "High To Low",
+      "viewMore": "View More",
       "payment_id": "Payment Id",
       "result": " Result",
-      "reference": "Refernece ",
+      "reference": "Reference ",
       "track_id": "Track Id "
     }
   }

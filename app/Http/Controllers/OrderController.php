@@ -26,6 +26,10 @@ class OrderController extends Controller {
         $attributes = $request->only( 'discount','delivery','shippingAddress', 'billingShipping', 'paymentMethod', 'defaultBillingAddress' );
 
         $order = $this->orderModel->store( $user, $attributes );
+        if(isset($order['error']))
+        {
+            return response()->json(['message'=> $order['error']],422 );
+        }
         $orderProduct = [];
         if($request->paymentMethod == 'cash')
         {
