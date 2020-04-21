@@ -263,7 +263,7 @@ class Order extends Model
     protected function checkStock($item)
     {
         $productAttribute = ProductAttributeValue::find($item->product_attribute_value_id);
-        if($productAttribute-> stock >= $item->qty)
+        if ( $productAttribute->is_active AND $productAttribute->product->is_active AND $productAttribute->stock >= $item->qty)
         {
             return true;
         }
