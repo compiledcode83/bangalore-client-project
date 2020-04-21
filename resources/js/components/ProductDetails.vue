@@ -867,7 +867,7 @@
                 };
                 axios.post('/api/v1/user/review/', postData)
                     .then((response) => {
-                        if(response.data.message === 'success'){
+                        if(response.data.message == 'success'){
                             this.$swal({
                                 title: 'Success!',
                                 text: "Your review submitted successfully!",
@@ -881,13 +881,18 @@
 
                             $('#addReview').modal('hide');
                         }else{
+                            console.log(response);
                             this.$swal({
                                 title: 'Error!',
                                 text: "Something went wrong!",
                                 icon: 'error',
                             });
                         }
+                    }).catch(function (errors) {
+                        console.log(errors);
                     });
+
+                }
 
             },
             calcItemPrice(item){
