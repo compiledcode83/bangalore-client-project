@@ -103,7 +103,7 @@
 <!--                                <span class="alert alert-danger" >@{{ value }}</span>-->
                                         <select class="form-control" v-model="address.governorate" @change="updateAreas($event)">
                                     <option value="0" disabled> {{$t('pages.selectGovernorate')}} </option>
-                                    <option v-for="governorate in user.governorates" :value="governorate.id">{{governorate.name_en}}</option>
+                                        <option v-for="governorate in user.governorates" :value="governorate.id">{{governorate.name_en}}</option>
                                 </select>
                             </div><!--/.col-sm-6-->
                             <div class="col-sm-6">

@@ -119,7 +119,7 @@ class AddressesController extends Controller {
     {
         $attributes = $request->only(
             'governorate', 'area', 'block', 'street', 'building', 'floorNo',
-            'officeAddress', 'officeNo', 'defaultShipping', 'defaultBilling', 'id');
+            'officeAddress', 'officeNo', 'defaultShipping', 'defaultBilling', 'id','house');
 
         if(isset($attributes['id']))
         {
@@ -146,7 +146,7 @@ class AddressesController extends Controller {
             'block'               => $attributes['block'],
             'street'              => $attributes['street'],
             'building'            => $attributes['building'],
-            'floor'               => $attributes['floorNo'],
+            'floor'               => $attributes['floorNo'] ?? '',
             'house_number'        => $attributes['house'] ?? '',
             'office_number'       => $attributes['officeNo'] ?? '',
             'office_address'      => $attributes['officeAddress'] ?? '',
@@ -159,7 +159,7 @@ class AddressesController extends Controller {
     {
         $attributes = $request->only(
             'governorate', 'area', 'block', 'street', 'building', 'floorNo',
-            'officeAddress', 'officeNo', 'defaultShipping', 'defaultBilling', 'id' );
+            'officeAddress', 'officeNo', 'defaultShipping', 'defaultBilling', 'id', 'house' );
 
         $user = Auth::user();
 

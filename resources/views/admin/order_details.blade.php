@@ -57,8 +57,12 @@
                         <tr>
                             <td>{{$item->qty}}</td>
                             <td>{{$item->productAttributeValue->product->name_en}}</td>
-                            <td>{{$item->productAttributeValue->sku}}</td>
-                            strip_tags($subject->body);
+                            <td>
+                                {{$item->productAttributeValue->sku}}
+                                @if($item->print_image && $item->print_image != '')
+                                    - Requested print
+                                @endif
+                            </td>
                             <td>{{Str::substr(strip_tags($item->productAttributeValue->product->short_description_en), 0,20)}}</td>
                             <td>{{($item->unit_price * $item->qty)}}</td>
                         </tr>
