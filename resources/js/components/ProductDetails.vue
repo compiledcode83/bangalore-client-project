@@ -888,11 +888,9 @@
                                 icon: 'error',
                             });
                         }
-                    }).catch(function (errors) {
-                        console.log(errors);
+                    }).catch((err) => {
+                        console.log('There was a problem creating your cart');
                     });
-
-                }
 
             },
             calcItemPrice(item){

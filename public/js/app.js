@@ -3942,9 +3942,1100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductDetails.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/ahmedshalaby/Desktop/code/mawaqaa/itc/resources/js/components/ProductDetails.vue: Unexpected token, expected \";\" (1006:5)\n\n\u001b[0m \u001b[90m 1004 | \u001b[39m        }\u001b[0m\n\u001b[0m \u001b[90m 1005 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1006 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m      | \u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 1007 | \u001b[39m    updated\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m () {\u001b[0m\n\u001b[0m \u001b[90m 1008 | \u001b[39m        let _this \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 1009 | \u001b[39m        let selectIndex \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n    at Parser.raise (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:6975:17)\n    at Parser.unexpected (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:8368:16)\n    at Parser.semicolon (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:8350:40)\n    at Parser.parseExportDefaultExpression (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:11837:12)\n    at Parser.parseExport (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:11738:31)\n    at Parser.parseStatementContent (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:10760:27)\n    at Parser.parseStatement (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:10656:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:11232:25)\n    at Parser.parseBlockBody (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:11219:10)\n    at Parser.parseTopLevel (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:10587:10)\n    at Parser.parse (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:12097:10)\n    at parse (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/parser/lib/index.js:12148:38)\n    at parser (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/core/lib/transformation/normalize-file.js:168:34)\n    at normalizeFile (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/core/lib/transformation/normalize-file.js:102:11)\n    at runSync (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/Users/ahmedshalaby/Desktop/code/mawaqaa/itc/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Product_box__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Product-box */ "./resources/js/components/Product-box.vue");
+/* harmony import */ var vue_rate_it__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-rate-it */ "./node_modules/vue-rate-it/dist/vue-rate-it.min.js");
+/* harmony import */ var vue_rate_it__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_rate_it__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+function formatState(state) {
+  if (!state.id) {
+    return state.text;
+  }
+
+  var $state = $('<span><div style="background-color:' + state.element.value.toLowerCase() + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>');
+  return $state;
+}
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ProductBox: _Product_box__WEBPACK_IMPORTED_MODULE_0__["default"],
+    StarRating: vue_rate_it__WEBPACK_IMPORTED_MODULE_1__["StarRating"]
+  },
+  data: function data() {
+    return {
+      showMainImage: true,
+      priceTableWithDiscount: [],
+      colorInputsCount: 1,
+      originalPrice: null,
+      discountFound: null,
+      productPrices: [],
+      min_price: null,
+      pricesForMinQty: [],
+      show_prices: false,
+      colorInputs: [],
+      qtyInputs: [],
+      defaultMainGallery: Object,
+      images: Object,
+      product: {
+        main_gallery: Object,
+        colors: Object,
+        relatedProductsDetails: [],
+        reviews: {}
+      },
+      selected_attribute: {
+        id: null,
+        sku: 0,
+        stock: 0,
+        color_name: ''
+      },
+      relatedSliderOnce: false,
+      sliderFor: false,
+      sliderNav: false,
+      file: '',
+      cart_discount: 0,
+      cart_product_attributes: {},
+      cart: [],
+      cartItem: this.$store.state.cartModule.cartItem,
+      itemQty: 1,
+      reviewRating: 0,
+      reviewNickname: '',
+      reviewText: ''
+    };
+  },
+  mounted: function mounted() {
+    this.slug = this.$route.params.slug;
+    this.loadProductDetails();
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    //when open related from details make sure slider re-initialized with new product images
+    this.sliderFor = false;
+    this.sliderNav = false;
+    this.relatedSliderOnce = false;
+    $('.relatedprod-slide').slick("unslick");
+    this.unSlickSliders();
+    this.slug = to.params.slug;
+    this.loadProductDetails();
+    next();
+  },
+  methods: {
+    addToWishList: function addToWishList(productId) {
+      var _this2 = this;
+
+      if (this.$store.getters['authModule/isAuthenticated']) {
+        axios.post('/api/v1/account/wishlist', {
+          'productId': productId
+        }, {
+          headers: {
+            "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
+          }
+        }).then(function (response) {
+          _this2.$swal({
+            title: 'Success!',
+            text: "item Added to wishList successfully!",
+            icon: 'success'
+          });
+        });
+      } else {
+        console.log('No authorization');
+      }
+    },
+    isNumber: function isNumber(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+
+      if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46 && charCode !== '') {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    checkStock: function checkStock(index, event) {
+      var _this3 = this;
+
+      var colorAttrId = this.colorInputs[index];
+      var findAttribute = this.product.product_attribute_values.find(function (element) {
+        return element.id == colorAttrId;
+      });
+      var totalCurrentStock = findAttribute.stock;
+      this.$store.dispatch('getStockInCart', findAttribute.id).then(function (result) {
+        totalCurrentStock = totalCurrentStock - result;
+
+        if (_this3.qtyInputs[index] > totalCurrentStock) {
+          var msg = 'Sorry current available ' + totalCurrentStock;
+
+          if (result) {
+            msg += ' plus what you have in your cart';
+          }
+
+          _this3.$swal({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg
+          });
+
+          event.target.value = totalCurrentStock;
+          _this3.qtyInputs[index] = totalCurrentStock;
+        }
+      });
+    },
+    runSelect2: function runSelect2() {
+      var selectIndex = 0;
+
+      var _this = this;
+
+      if (this.colorInputsCount) {
+        selectIndex = this.colorInputsCount - 1;
+      }
+
+      var jqueryColorSelector = $('.select-colors-product-' + selectIndex);
+
+      if (!jqueryColorSelector.hasClass("select2-hidden-accessible")) {
+        // Select2 has been initialized
+        jqueryColorSelector.select2({
+          // tags: "true",
+          // allowClear: true,
+          // placeholder: 'Select an option',
+          templateResult: this.formatState,
+          templateSelection: this.formatState
+        });
+        jqueryColorSelector.on('select2:select', function (e) {
+          var value = e.params.data.element.value;
+          var colorValue = value.split("-");
+
+          _this.validateInput(value, selectIndex);
+        });
+      }
+    },
+    formatState: function formatState(state) {
+      if (!state.id) {
+        return state.text;
+      }
+
+      var colorValue = state.element.value.split("-"); // var baseUrl = "img";
+
+      var $state = $( // '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+      '<span><div style="background-color:' + colorValue[1] + '; border-radius:50%;     border: 1px solid #fff; margin-bottom:1px; box-shadow: 0px 0px 0 1px rgba(0, 0, 0, 0.6588235294117647); width:20px; height:20px; margin-top:5px;" class="img-flag" ></div> ' + state.text + '</span>');
+      return $state;
+    },
+    loadProductDetails: function loadProductDetails() {
+      var _this4 = this;
+
+      axios.all([axios.get('/api/v1/products/' + this.slug, {
+        headers: {
+          "Authorization": "Bearer ".concat(this.$store.state.authModule.accessToken)
+        }
+      })]).then(axios.spread(function (productResponse) {
+        _this4.product = productResponse.data; //reset sku
+
+        _this4.selected_attribute.sku = _this4.product.sku;
+
+        if (!productResponse.data.main_gallery) {
+          _this4.defaultMainGallery['0'] = productResponse.data.main_image;
+        } else {
+          _this4.defaultMainGallery = productResponse.data.main_gallery;
+        } //get prices
+
+
+        _this4.loadProductPrices();
+      }));
+    },
+    loadProductPrices: function loadProductPrices() {
+      var _this5 = this;
+
+      if (this.isAuth) {
+        axios.get('/api/v1/products/' + this.slug + '/prices').then(function (response) {
+          _this5.productPrices = response.data.priceTable;
+          _this5.originalPrice = response.data.originalPrice;
+          _this5.discountFound = response.data.priceTable;
+          _this5.priceTableWithDiscount = response.data.priceTableWithDiscount;
+          _this5.min_price = Math.min.apply(null, Object.values(_this5.productPrices));
+          var pricesForMinQtyKey = Math.min.apply(null, Object.keys(response.data.priceTableWithDiscount));
+          _this5.pricesForMinQty = response.data.priceTableWithDiscount[pricesForMinQtyKey];
+        });
+      }
+    },
+    loadColorImages: function loadColorImages() {
+      var images = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var index = arguments.length > 1 ? arguments[1] : undefined;
+      var colorName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      if (!images) {
+        var colorObject = this.getColorObject(index);
+        images = colorObject.images;
+        colorName = colorObject.name;
+      }
+
+      if (images !== this.product.main_gallery) {
+        this.showMainImage = false; //prepare reload sliders
+
+        this.sliderFor = false;
+        this.sliderNav = false;
+        this.unSlickSliders();
+
+        if (images.length) {
+          this.product.main_gallery = images;
+        } //select attribute
+
+
+        window.attribute = this.product.product_attribute_values.find(function (element) {
+          return element.id == index;
+        });
+        this.selected_attribute.id = attribute.id;
+        this.selected_attribute.sku = attribute.sku;
+        this.selected_attribute.stock = attribute.stock;
+        this.selected_attribute.color_name = colorName;
+      }
+
+      this.runSelect2();
+    },
+    loadDefaultImages: function loadDefaultImages() {
+      if (this.defaultMainGallery !== this.product.main_gallery) {
+        this.unSlickSliders(); //prepare reload sliders
+
+        this.sliderFor = false;
+        this.sliderNav = false;
+
+        if (!this.defaultMainGallery.includes(this.product.main_image)) {
+          this.defaultMainGallery.unshift(this.product.main_image);
+        }
+
+        this.product.main_gallery = this.defaultMainGallery;
+        this.selected_attribute.sku = '';
+        this.selected_attribute.stock = '';
+      }
+    },
+    unSlickSliders: function unSlickSliders() {
+      $('.slider-for').slick("unslick");
+      $('.slider-nav').slick("unslick");
+    },
+    submitCart: function submitCart() {
+      var _this6 = this;
+
+      if (this.selected_attribute.id && this.selected_attribute.stock == 0) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Sorry this color is out-stock ...'
+        });
+        return 0;
+      }
+
+      if (!this.selected_attribute.id || this.colorInputs.length == 0) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please select color before adding to cart ...'
+        });
+        return 0;
+      } // show add qty msg if no  qty added or user add qty then deleted
+
+
+      var foundEmptyElement = Object.keys(this.qtyInputs).every(function (key) {
+        return _this6.qtyInputs[key] === '';
+      });
+
+      if (this.qtyInputs.length == 0 || foundEmptyElement) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please add qty before adding to cart ...'
+        });
+        return 0;
+      } //Add the form data we need to submit
+
+
+      var _loop = function _loop(key) {
+        var colorObjectInput = _this6.getColorObject(_this6.colorInputs[key]);
+
+        var _this = _this6;
+
+        var findAttribute = _this6.product.product_attribute_values.find(function (element) {
+          return element.id == _this.colorInputs[key];
+        });
+
+        var descriptionItem = '';
+
+        if (_this6.product.short_description_en && _this6.product.short_description_en != '') {
+          descriptionItem = _this6.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+        }
+
+        if (parseInt(_this6.qtyInputs[key]) > 0) {
+          _this6.cartItem = {
+            item_name: _this6.product.name_en,
+            item_description: descriptionItem,
+            product_attribute_id: _this6.colorInputs[key],
+            //this.selected_attribute.id,
+            product_image: colorObjectInput.images[0],
+            product_print_image: '',
+            product_qty: parseInt(_this6.qtyInputs[key]),
+            product_color_name: colorObjectInput.name,
+            product_price: 0,
+            product_discount: 0,
+            // base_product_prices: this.productPrices,
+            base_product_prices: _this6.priceTableWithDiscount,
+            total: 0,
+            stock: findAttribute.stock,
+            status: false
+          };
+          console.log('start');
+          console.log(_this6.cartItem);
+          _this6.cartItem = _this6.calcItemPrice(_this6.cartItem);
+
+          _this6.addToCart(colorObjectInput, key);
+        }
+      };
+
+      for (var key in this.colorInputs) {
+        _loop(key);
+      }
+    },
+    addToCart: function addToCart(colorObjectInput, key) {
+      console.log('add To Cart'); //if item has print image and not uploaded before
+
+      if (this.file && this.cartItem.product_print_image === '') {
+        //create tempCartItem
+        //validate file
+        if (this.validateFile()) {
+          console.log('inside'); //Initialize the form data
+
+          var formData = new FormData(); // upload file
+
+          formData.append('file', this.file);
+          formData.append('item_name', this.product.name_en);
+          formData.append('product_attribute_id', this.colorInputs[key]);
+          formData.append('product_image', colorObjectInput.images[0]);
+          formData.append('product_qty', this.qtyInputs[key]);
+          formData.append('product_color_name', colorObjectInput.name);
+          formData.append('product_price', this.cartItem.product_price);
+          formData.append('product_discount', this.cartItem.product_discount);
+          formData.append('total', '0');
+          /*
+            Make the request to the POST /single-file URL
+          */
+
+          var _this = this;
+
+          console.log('uploading ...');
+          axios.post('/api/v1/cart/item', formData, {
+            headers: {
+              'Content-Type': "multipart/form-data"
+            }
+          }).then(function (response) {
+            _this.cartItem.product_print_image = 'uploads/print_images/' + response.data.fileName;
+            var itemWithImage = response.data.item;
+            console.log(response.data);
+
+            var findAttribute = _this.product.product_attribute_values.find(function (element) {
+              return element.id == response.data.item.product_attribute_id;
+            });
+
+            var descriptionItem = '';
+
+            if (_this.product.short_description_en && _this.product.short_description_en != '') {
+              descriptionItem = _this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+            }
+
+            itemWithImage.item_description = descriptionItem;
+            itemWithImage.product_print_image = 'uploads/print_images/' + response.data.fileName;
+            itemWithImage.base_product_prices = _this.priceTableWithDiscount;
+            itemWithImage.stock = findAttribute.stock;
+            itemWithImage.status = false;
+            return _this.persistCartItemWithImage(itemWithImage);
+          })["catch"](function (errors) {
+            console.log(errors);
+          });
+        }
+      } else {
+        this.persistCartItem();
+      }
+    },
+    persistCartItemWithImage: function persistCartItemWithImage(item) {
+      var _this7 = this;
+
+      var _this = this;
+
+      this.$store.dispatch('createCalculatedItemPriceAlreadyUploaded', item).then(function () {
+        // this.cart = this.$store.state.cart;
+        _this7.$swal({
+          title: 'New Item in cart!',
+          text: "Item added to cart successfully!",
+          icon: 'success'
+        }); //clean form
+
+
+        _this.colorInputs = [];
+        _this.qtyInputs = [];
+
+        _this.resetAddToCartInputs();
+      })["catch"](function (err) {
+        console.log('There was a problem creating your cart');
+      });
+    },
+    persistCartItem: function persistCartItem() {
+      var _this8 = this;
+
+      var _this = this;
+
+      this.$store.dispatch('createCalculatedItemPrice', this.cartItem).then(function () {
+        // this.cart = this.$store.state.cart;
+        _this8.$swal({
+          title: 'New Item in cart!',
+          text: "Item added to cart successfully!",
+          icon: 'success'
+        }); //clean form
+
+
+        _this.colorInputs = [];
+        _this.qtyInputs = [];
+
+        _this.resetAddToCartInputs();
+      })["catch"](function (err) {
+        console.log('There was a problem creating your cart');
+      });
+    },
+    resetAddToCartInputs: function resetAddToCartInputs() {
+      this.colorInputsCount = 0;
+    },
+    // Handles a change on the file upload
+    handleFileUpload: function handleFileUpload(event) {
+      if (this.validateFile()) {
+        this.file = this.$refs.file.files[0];
+      }
+    },
+    validateFile: function validateFile(e) {
+      if (this.$refs.file.files[0] && this.$refs.file.files[0].size > 1024 * 1024) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'File too big (> 1MB)!'
+        }); //delete file from input
+
+        this.$refs.file.value = null;
+        return false;
+      }
+
+      if (this.$refs.file.files[0] && (this.$refs.file.files[0].type === "image/jpeg" || this.$refs.file.files[0].type === "image/png")) {
+        return true;
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Only JPG/PNG is allowed!'
+        }); //delete file from input
+
+        this.$refs.file.value = null;
+        return false;
+      }
+    },
+    onImageLoadFailure: function onImageLoadFailure(event, size) {
+      event.target.src = '/images/defaule-p.jpg';
+    },
+    addColorInput: function addColorInput() {
+      // check if previous input has color this will help
+      // when delete row will delete color from array
+      var indexOfColorInput = this.colorInputsCount - 1;
+
+      if (this.colorInputsCount != 0 && (!this.colorInputs[indexOfColorInput] || this.colorInputs[indexOfColorInput] == '')) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'please add color for previous selection!'
+        });
+      } else {
+        this.colorInputsCount += 1;
+      }
+    },
+    validateInput: function validateInput(idAndColor, selectIndex) {
+      var _this9 = this;
+
+      //id and color concatenated
+      var colorValue = idAndColor.split("-"); // load attribute images by attribute ID
+
+      this.loadColorImages(null, colorValue[0]);
+
+      if (this.selected_attribute.stock == 0) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This Color is out-Stock!'
+        }).then(function () {
+          _this9.removeColorInput(selectIndex);
+        });
+      } // select color value by setting select2 input
+
+
+      $('.select-colors-product-' + selectIndex).val(idAndColor); // delete color & quantity inputs if color already selected
+
+      if (this.colorInputs.includes(colorValue[0])) {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Color is already added!'
+        }).then(function () {
+          // delete inputs & delete color from array
+          _this9.removeColorInput(selectIndex); // this.colorInputsCount = this.colorInputsCount - 1;
+
+        });
+      } // add new attribute color to cart
+
+
+      if (this.colorInputsCount == 1) {
+        this.colorInputs.pop();
+        this.colorInputs.push(colorValue[0]);
+      } else if (this.colorInputsCount > 1) {
+        if (this.colorInputsCount == this.colorInputs.length) {
+          var realCountOfInputs = this.colorInputsCount - 1;
+
+          for (var key = 0; key <= realCountOfInputs; key++) {
+            var selectValue = $('.select-colors-product-' + key).val();
+
+            if (selectValue) {
+              var valueSplit = selectValue.split("-");
+              this.colorInputs[key] = valueSplit[0];
+            }
+          }
+        } else {
+          this.colorInputs.push(colorValue[0]);
+        }
+      }
+    },
+    getColorObject: function getColorObject(index) {
+      //color object contains name, code, images ...
+      var colorObject = null;
+
+      for (var key in this.product.colors) {
+        if (key == index) {
+          colorObject = this.product.colors[key];
+        }
+      }
+
+      return colorObject;
+    },
+    togglePrices: function togglePrices() {
+      this.show_prices = !this.show_prices;
+    },
+    checkUserAbilityToReview: function checkUserAbilityToReview() {
+      var _this10 = this;
+
+      if (!this.selected_attribute.id) {
+        this.$swal({
+          title: 'Which Color!',
+          text: "Select color you want to review ...",
+          icon: 'error'
+        });
+        return;
+      }
+
+      axios.get('/api/v1/user-ability/review/' + this.selected_attribute.id).then(function (response) {
+        var checkUser = response.data; //if already review it
+
+        if (checkUser.ability === 'found') {
+          _this10.$swal({
+            title: 'Already reviewed!',
+            text: "You already reviewed this product!",
+            icon: 'info'
+          });
+
+          $('#addReview').modal('hide');
+        } else if (checkUser.ability === 'review') {
+          //show review modal
+          $('#addReview').modal('show');
+        } else {
+          _this10.$swal({
+            title: 'Did you buy it!',
+            text: "You have to buy this item to be able to submit a review!",
+            icon: 'error'
+          });
+
+          $('#addReview').modal('hide');
+        }
+      });
+    },
+    submitReview: function submitReview() {
+      var _this11 = this;
+
+      if (!this.reviewRating || !this.reviewNickname || !this.reviewText) {
+        this.$swal({
+          title: 'Error!',
+          text: "Please fill your form before submit!",
+          icon: 'error'
+        });
+        return 0;
+      }
+
+      var postData = {
+        'productAttributeId': this.selected_attribute.id,
+        'rate': this.reviewRating,
+        'nickname': this.reviewNickname,
+        'review': this.reviewText
+      };
+      axios.post('/api/v1/user/review/', postData).then(function (response) {
+        if (response.data.message == 'success') {
+          _this11.$swal({
+            title: 'Success!',
+            text: "Your review submitted successfully!",
+            icon: 'success'
+          }); //reset form
+
+
+          _this11.reviewRating = 0;
+          _this11.reviewNickname = '';
+          _this11.reviewText = '';
+          $('#addReview').modal('hide');
+        } else {
+          console.log(response);
+
+          _this11.$swal({
+            title: 'Error!',
+            text: "Something went wrong!",
+            icon: 'error'
+          });
+        }
+      })["catch"](function (err) {
+        console.log('There was a problem creating your cart');
+      });
+    },
+    calcItemPrice: function calcItemPrice(item) {
+      console.log('calc price'); //same in store.js ===> URGENT refactor
+      // get base prices defined by admin
+      // search for max_qty based on user enter qty
+      // calc item price
+      // dispatch create item
+
+      var basePrices = item.base_product_prices;
+      var qtyIndexSelected = null;
+      var itemTotalQty = item.product_qty;
+      var qtyPriceSelected = null;
+      var searchQtyDefined = null;
+      var definedQty = Object.keys(basePrices);
+      definedQty.forEach(function (value) {
+        if (parseInt(itemTotalQty) >= value) {
+          searchQtyDefined = value;
+        }
+      });
+
+      if (!searchQtyDefined) {
+        qtyIndexSelected = Math.max.apply(null, definedQty);
+      } else {
+        qtyIndexSelected = searchQtyDefined;
+      }
+
+      qtyPriceSelected = basePrices[qtyIndexSelected]['price'];
+      item.product_price = parseInt(qtyPriceSelected);
+
+      if (parseInt(basePrices[qtyIndexSelected]['discount']) > 0) {
+        item.product_discount = parseInt(qtyPriceSelected) - parseInt(basePrices[qtyIndexSelected]['discount']);
+      } else {
+        item.product_discount = parseInt(basePrices[qtyIndexSelected]['discount']);
+      }
+
+      return item;
+    },
+    removeColorInput: function removeColorInput(index) {
+      //get last index
+      var lastIndex = this.colorInputsCount - 1;
+      var lastValue = this.colorInputs[lastIndex];
+
+      if (this.product.colors[lastValue].color_code) {
+        var buildLastColorValue = lastValue + '-' + this.product.colors[lastValue].color_code;
+        $('.select-colors-product-' + index).val(buildLastColorValue).trigger('change');
+        this.colorInputs[index] = lastValue;
+        this.colorInputsCount = this.colorInputsCount - 1;
+        this.colorInputs.pop();
+      }
+    },
+    replaceColorInput: function replaceColorInput(index) {
+      //get last index
+      var lastIndex = this.colorInputsCount - 1;
+      var lastValue = this.colorInputs[lastIndex];
+
+      if (this.product.colors[lastValue].color_code) {
+        var buildLastColorValue = lastValue + '-' + this.product.colors[lastValue].color_code;
+        $('.select-colors-product-' + index).val(buildLastColorValue).trigger('change');
+        this.colorInputs[index] = lastValue; // this.colorInputs.splice(index, 1);
+
+        this.colorInputsCount = this.colorInputsCount - 1;
+        this.colorInputs.pop(); // if(index == 0){
+        //     this.colorInputs.reverse();
+        // }
+      }
+    },
+    reportAbuse: function reportAbuse(id) {
+      var _this12 = this;
+
+      this.$swal({
+        title: 'Are you sure you want to report abuse for this review?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, report it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.post('/api/v1/review/report', {
+            'reviewId': id
+          }, {
+            headers: {
+              "Authorization": "Bearer ".concat(_this12.$store.state.authModule.accessToken)
+            }
+          }).then(function (response) {
+            if (response.data == 1) {
+              _this12.$swal({
+                title: 'Success!',
+                text: "review reported successfully!",
+                icon: 'success'
+              });
+            }
+
+            if (response.data == 2) {
+              _this12.$swal({
+                title: 'Success!',
+                text: "this review already reported by you!",
+                icon: 'info'
+              });
+            }
+          });
+        }
+      });
+    }
+  },
+  updated: function updated() {
+    var _this = this;
+
+    var selectIndex = 0;
+
+    if (_this.colorInputsCount) {
+      selectIndex = _this.colorInputsCount - 1;
+    }
+
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been re-rendered
+      _this.runSelect2(); // Item slider inner details page
+
+
+      if (!this.sliderFor) {
+        $('.slider-for').slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          fade: true,
+          centerMode: true,
+          asNavFor: '.slider-nav'
+        });
+        this.sliderFor = true;
+      }
+
+      if (!this.sliderNav) {
+        $('.slider-nav').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          asNavFor: '.slider-for',
+          dots: false,
+          arrows: false,
+          centerMode: false,
+          focusOnSelect: true
+        });
+        this.sliderNav = true;
+      } //related products
+
+
+      if (!this.relatedSliderOnce) {
+        $(".relatedprod-slide").slick({
+          dots: false,
+          autoplay: false,
+          infinite: true,
+          slidesToShow: 4,
+          slideswToScroll: 1,
+          arrows: true,
+          responsive: [{
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2
+            }
+          }, {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 1
+            }
+          }]
+        });
+        this.relatedSliderOnce = true;
+      }
+    });
+  },
+  computed: {
+    isAuth: function isAuth() {
+      return this.$store.getters['authModule/isAuthenticated'];
+    },
+    pricesForMinQtyDiscount: function pricesForMinQtyDiscount() {
+      if (this.pricesForMinQty['discount'] && parseInt(this.pricesForMinQty['discount']) != 0) {
+        return this.pricesForMinQty['discount'];
+      }
+
+      return null;
+    }
+  }
+});
 
 /***/ }),
 
