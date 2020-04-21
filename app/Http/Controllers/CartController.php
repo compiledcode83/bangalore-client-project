@@ -151,7 +151,13 @@ class CartController extends Controller {
             'print_image'
         ] );
 
-        $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'], $attributesCartItem['print_image'] );
+        if(isset($attributesCartItem['print_image'])){
+
+            $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'], $attributesCartItem['print_image'] );
+        }else{
+
+            $this->cartItemModel->removeItem( $user->cart->id, $attributesCartItem['product_attribute_id'], '' );
+        }
     }
 
 }
