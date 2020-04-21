@@ -1,14 +1,27 @@
 import CartService from "../../services/CartService";
 
-export const state = {
-    cartItem: {},
-    cart: {
-        items: [],
-        subtotal: 0,
-        discount: 0,
-        total: 0,
+const getDefaultState = () => {
+    return {
+        cartItem: {},
+        cart: {
+            items: [],
+            subtotal: 0,
+            discount: 0,
+            total: 0,
+        }
     }
 };
+
+export const state = getDefaultState();
+//     {
+//     cartItem: {},
+//     cart: {
+//         items: [],
+//         subtotal: 0,
+//         discount: 0,
+//         total: 0,
+//     }
+// };
 
 export const mutations = {
     ADD_ITEM_TO_CART(state, item){
@@ -47,16 +60,26 @@ export const mutations = {
     },
     CLEAR_CART(state){
 
+        Object.assign(state, getDefaultState());
         // state.cart.items.forEach(function(item){
-        //     // state.cart.items.splice(state.cart.items.indexOf(item), 1);
-        //     state.cart.items.pop();
+        //     state.cart.items.splice(state.cart.items.indexOf(item), 1);
         // });
+        // state.cart.items.forEach(function(item){
+        //     state.cart.items.pop(item);
+        // });
+        // let newArray = {
+        //     items: [],
+        //     subtotal: 0,
+        //     discount: 0,
+        //     total: 0,
+        // };
+        //
+        // state.cart = newArray;
+        // state.cart.total = 0;
+        // state.cart.subtotal = 0;
+        // state.cart.discount = 0;
+        // state.cartItem = {};
 
-        state.cart.items = [];
-        state.cart.total = 0;
-        state.cart.subtotal = 0;
-        state.cart.discount = 0;
-        state.cartItem = {};
     }
 };
 

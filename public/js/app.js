@@ -2066,7 +2066,10 @@ __webpack_require__.r(__webpack_exports__);
       discount: this.calcDiscount ? this.calcDiscount : 0
     };
   },
-  mounted: function mounted() {// this.discount = this.calcDiscount();
+  watch: {
+    '$route.query': function $routeQuery(to, from) {
+      this.cart = this.$store.state.cartModule.cart.items;
+    }
   },
   methods: {
     validateQty: function validateQty(item) {
@@ -67170,15 +67173,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony import */ var _services_CartService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/CartService */ "./resources/js/services/CartService.js");
 
-var state = {
-  cartItem: {},
-  cart: {
-    items: [],
-    subtotal: 0,
-    discount: 0,
-    total: 0
-  }
+
+var getDefaultState = function getDefaultState() {
+  return {
+    cartItem: {},
+    cart: {
+      items: [],
+      subtotal: 0,
+      discount: 0,
+      total: 0
+    }
+  };
 };
+
+var state = getDefaultState(); //     {
+//     cartItem: {},
+//     cart: {
+//         items: [],
+//         subtotal: 0,
+//         discount: 0,
+//         total: 0,
+//     }
+// };
+
 var mutations = {
   ADD_ITEM_TO_CART: function ADD_ITEM_TO_CART(state, item) {
     state.cart.items.push(item);
@@ -67213,15 +67230,24 @@ var mutations = {
     state.cart.total = state.cart.subtotal - state.cart.discount;
   },
   CLEAR_CART: function CLEAR_CART(state) {
-    // state.cart.items.forEach(function(item){
-    //     // state.cart.items.splice(state.cart.items.indexOf(item), 1);
-    //     state.cart.items.pop();
+    Object.assign(state, getDefaultState()); // state.cart.items.forEach(function(item){
+    //     state.cart.items.splice(state.cart.items.indexOf(item), 1);
     // });
-    state.cart.items = [];
-    state.cart.total = 0;
-    state.cart.subtotal = 0;
-    state.cart.discount = 0;
-    state.cartItem = {};
+    // state.cart.items.forEach(function(item){
+    //     state.cart.items.pop(item);
+    // });
+    // let newArray = {
+    //     items: [],
+    //     subtotal: 0,
+    //     discount: 0,
+    //     total: 0,
+    // };
+    //
+    // state.cart = newArray;
+    // state.cart.total = 0;
+    // state.cart.subtotal = 0;
+    // state.cart.discount = 0;
+    // state.cartItem = {};
   }
 };
 var actions = {

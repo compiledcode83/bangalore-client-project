@@ -151,7 +151,7 @@ class Order extends Model
             $itemsTotal += $itemPrice * $item->qty;
 
             $emailConfirmationData['items'][] = [
-                'name' => $item->item_name,
+                'name' => $item->item_name . '('.$item->color_name.')',
                 'image' => $item->item_image,
                 'print_image'    => $item->print_image ?? '',
                 'unit_price' => $itemPrice,

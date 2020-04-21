@@ -80,8 +80,11 @@
                 discount: this.calcDiscount ? this.calcDiscount: 0
             }
         },
-        mounted(){
-            // this.discount = this.calcDiscount();
+        watch: {
+            '$route.query' (to, from) {
+
+                this.cart = this.$store.state.cartModule.cart.items;
+            }
         },
         methods: {
             validateQty(item){
