@@ -216,6 +216,9 @@
         mounted(){
             this.discount = this.calcDiscount;
             // User MUST BE authenticated
+            if(this.cart.length < 1){
+                return this.$router.push({path: '/'});
+            }
             this.checkUserAuth();
 
             axios.get(
@@ -286,7 +289,35 @@
             },
             placeOrder(){
                 this.hasPlacedOrder = true;
-                CartService.placeOrder({'discount':this.cart.discount,'delivery': this.deliveryCharges,'defaultBillingAddress': this.defaultBillingAddress,'shippingAddress': this.shippingAddress, 'billingShipping': this.billingShipping, 'paymentMethod': this.paymentMethod})
+
+                let _this = this;
+                axios.get('/api/v1/settings/')
+                    .then((response) =>{
+                        if(response.data.enable_offers_page == '0' && this.calcDiscount > 0){
+                            this.$swal({
+                                title: 'Order Has Discount!',
+                                text: "Unfortunately discount Expired! Do you want continue without discount?",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Yes, Order without discount!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.placeVerifiedOrder();
+                                }else{
+                                    this.hasPlacedOrder = false;
+                                    this.removeDiscount();
+
+                                }
+                            });
+                        }else{
+                            this.placeVerifiedOrder();
+                        }
+                    });
+            },
+            placeVerifiedOrder(){
+                CartService.placeOrder({'discount':this.calcDiscount,'delivery': this.deliveryCharges,'defaultBillingAddress': this.defaultBillingAddress,'shippingAddress': this.shippingAddress, 'billingShipping': this.billingShipping, 'paymentMethod': this.paymentMethod})
                     .then((response) => {
                         this.placeOrderResponse = response.data;
 
@@ -300,7 +331,13 @@
                         }).then(() => {
                             if(!this.placeOrderResponse.cod)
                             {
-                                window.location.href = this.placeOrderResponse.PaymentUrl;
+                                this.$swal({
+                                    title: 'Order placed!',
+                                    text: "You will be redirect to Payment!",
+                                    icon: 'info',
+                                }).then(()=>{
+                                    window.location.href = this.placeOrderResponse.PaymentUrl;
+                                });
                             }
                             else
                             {
@@ -319,7 +356,14 @@
                         });
                         this.hasPlacedOrder = false;
                         console.log('There was an error:', error.response)
-                    })
+                    });
+            },
+            removeDiscount(){
+                this.cart.items.forEach(function(item){
+                    if(item.product_discount > 0){
+                        item.product_discount = 0;
+                    }
+                });
             }
         },
         computed: {

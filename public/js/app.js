@@ -2680,6 +2680,12 @@ __webpack_require__.r(__webpack_exports__);
 
     this.discount = this.calcDiscount; // User MUST BE authenticated
 
+    if (this.cart.length < 1) {
+      return this.$router.push({
+        path: '/'
+      });
+    }
+
     this.checkUserAuth();
     axios.get('/api/v1/account/checkout/addresses', {
       headers: {
@@ -2753,40 +2759,83 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       this.hasPlacedOrder = true;
+
+      var _this = this;
+
+      axios.get('/api/v1/settings/').then(function (response) {
+        if (response.data.enable_offers_page == '0' && _this5.calcDiscount > 0) {
+          _this5.$swal({
+            title: 'Order Has Discount!',
+            text: "Unfortunately discount Expired! Do you want continue without discount?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Order without discount!'
+          }).then(function (result) {
+            if (result.value) {
+              _this5.placeVerifiedOrder();
+            } else {
+              _this5.hasPlacedOrder = false;
+
+              _this5.removeDiscount();
+            }
+          });
+        } else {
+          _this5.placeVerifiedOrder();
+        }
+      });
+    },
+    placeVerifiedOrder: function placeVerifiedOrder() {
+      var _this6 = this;
+
       _services_CartService__WEBPACK_IMPORTED_MODULE_1__["default"].placeOrder({
-        'discount': this.cart.discount,
+        'discount': this.calcDiscount,
         'delivery': this.deliveryCharges,
         'defaultBillingAddress': this.defaultBillingAddress,
         'shippingAddress': this.shippingAddress,
         'billingShipping': this.billingShipping,
         'paymentMethod': this.paymentMethod
       }).then(function (response) {
-        _this5.placeOrderResponse = response.data;
+        _this6.placeOrderResponse = response.data;
 
-        _this5.$store.dispatch('clearCart');
+        _this6.$store.dispatch('clearCart');
 
-        _this5.$swal({
+        _this6.$swal({
           title: 'Order placed!',
           text: "Your order has been placed successfully ",
           icon: 'success'
         }).then(function () {
-          if (!_this5.placeOrderResponse.cod) {
-            window.location.href = _this5.placeOrderResponse.PaymentUrl;
+          if (!_this6.placeOrderResponse.cod) {
+            _this6.$swal({
+              title: 'Order placed!',
+              text: "You will be redirect to Payment!",
+              icon: 'info'
+            }).then(function () {
+              window.location.href = _this6.placeOrderResponse.PaymentUrl;
+            });
           } else {
-            _this5.$router.push({
-              path: '/thank-you/' + _this5.placeOrderResponse.orderCode
+            _this6.$router.push({
+              path: '/thank-you/' + _this6.placeOrderResponse.orderCode
             });
           }
         });
       })["catch"](function (error) {
-        _this5.$swal({
+        _this6.$swal({
           title: 'Error!',
           text: error.response.data.message,
           icon: 'error'
         });
 
-        _this5.hasPlacedOrder = false;
+        _this6.hasPlacedOrder = false;
         console.log('There was an error:', error.response);
+      });
+    },
+    removeDiscount: function removeDiscount() {
+      this.cart.items.forEach(function (item) {
+        if (item.product_discount > 0) {
+          item.product_discount = 0;
+        }
       });
     }
   },
@@ -7236,11 +7285,38 @@ __webpack_require__.r(__webpack_exports__);
 
       var _this = this;
 
+      axios.post('/api/v1/account/reorder/discount', {
+        'orderId': $orderId
+      }).then(function (response) {
+        if (!response.data.continueReorder) {
+          _this3.$swal({
+            title: 'Order Has Discount!',
+            text: "Unfortunately discount Expired! Do you want continue without discount?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Order without discount!'
+          }).then(function (result) {
+            if (result.value) {
+              _this.reOrderValid($orderId);
+            }
+          });
+        } else {
+          _this.reOrderValid($orderId);
+        }
+      });
+    },
+    reOrderValid: function reOrderValid($orderId) {
+      var _this4 = this;
+
+      var _this = this;
+
       axios.post('/api/v1/account/reorder', {
         'orderId': $orderId
       }).then(function (response) {
         if (response.data.error) {
-          _this3.$swal({
+          _this4.$swal({
             title: 'Error!',
             text: response.data.error,
             icon: 'error'
@@ -7252,7 +7328,7 @@ __webpack_require__.r(__webpack_exports__);
             addedItems = _this.persistCartItem(item);
           });
 
-          _this3.$swal({
+          _this4.$swal({
             title: 'Your cart is ready!',
             text: "Items added to cart successfully!",
             icon: 'success'

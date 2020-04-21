@@ -105,6 +105,7 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('account/info','UserController@accountInfo');
         Route::post('account/info','UserController@updateAccountInfo');
         Route::post('account/reorder','OrderController@tryToReorder');
+        Route::post('account/reorder/discount','OrderController@checkReorderDiscount');
 
         Route::post('checkout/delivery-charges','AddressesController@getDeliveryChargesForAddress');
 

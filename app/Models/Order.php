@@ -129,7 +129,7 @@ class Order extends Model
 
         $items = [];
         $emailConfirmationData = [];
-        $itemsTotal = 0;
+        $itemsSubTotal = 0;
         foreach($cart->cartItems as $item)
         {
             $check = $this->checkStock($item);
@@ -138,31 +138,38 @@ class Order extends Model
                 return ['error' => 'order has item out-stock'];
             }
             $itemPrice = $this->calculateItemPriceBasedOnQty($item->product_attribute_value_id, $item->qty, $user->type);
+            //if discount 0 update  total discount
+            if(!$itemPrice['discount'])
+            {
+                $data['discount'] = 0;
+            }
+
             $items[] = new OrderItem([
                 'product_attribute_value_id' => $item->product_attribute_value_id,
-                'unit_price' => $itemPrice,
+                'unit_price' => $itemPrice['base_price'],
+                'discounted_price' => $itemPrice['discount'],
                 'qty' => $item->qty,
                 'print_image'    => $item->print_image ?? '',
             ]);
 
-            if(!$itemPrice){
+            if(!$itemPrice || empty($itemPrice)){
                 return ['error' => 'prices not set correctly please contact Admin!'];
             }
-            $itemsTotal += $itemPrice * $item->qty;
+            $itemsSubTotal += $itemPrice['base_price'] * $item->qty;
 
             $emailConfirmationData['items'][] = [
                 'name' => $item->item_name . '('.$item->color_name.')',
                 'image' => $item->item_image,
                 'print_image'    => $item->print_image ?? '',
-                'unit_price' => $itemPrice,
+                'unit_price' => $itemPrice['base_price'],
                 'qty' => $item->qty,
-                'total_price'   => $item->qty * $itemPrice
+                'total_price'   => $item->qty * $itemPrice['base_price']
             ];
         }
         $emailConfirmationData['discount'] = $data['discount'];
         $emailConfirmationData['delivery'] = $data['delivery'];
-        $emailConfirmationData['subtotal'] = $itemsTotal;
-        $emailConfirmationData['total'] = ($itemsTotal - $data['discount'] + $data['delivery']);
+        $emailConfirmationData['subtotal'] = $itemsSubTotal;
+        $emailConfirmationData['total'] = ($itemsSubTotal - $data['discount'] + $data['delivery']);
         $emailConfirmationData['order_code'] = $order->order_code;
         $emailConfirmationData['order_date'] = $order->created_at;
         $emailConfirmationData['payment_method'] = $order->payment_method;
@@ -170,8 +177,9 @@ class Order extends Model
         $saveItems = $order->orderItems()->saveMany($items);
 
         $order->update([
-            'sub_total' => $itemsTotal,
-            'total' => ($itemsTotal - $data['discount'] + $data['delivery']),
+            'total_discount' => $data['discount'],
+            'sub_total' => $itemsSubTotal,
+            'total' => ($itemsSubTotal - $data['discount'] + $data['delivery']),
         ]);
         if($saveItems)
         {
@@ -192,7 +200,7 @@ class Order extends Model
             ->first();
 
         //load prices
-        $basePrice = null;
+        $basePrice = [];
 
         $discountEnabled = Setting::find(1);
         $checkDiscountEnabled = $discountEnabled->enable_offers_page;
@@ -204,14 +212,16 @@ class Order extends Model
                 {
                     if($itemQty >= $price->max_qty)
                     {
-                        $basePrice = $price->individual_unit_price;
+                        $basePrice['base_price'] = $price->individual_unit_price;
+                        $basePrice['discount'] = 0;
                     }
                 }
                 else
                 {
                     if($itemQty >= $price->max_qty)
                     {
-                        $basePrice = $price->individual_discounted_unit_price ?? $price->individual_unit_price;
+                        $basePrice['base_price'] = $price->individual_unit_price;
+                        $basePrice['discount'] = $price->individual_discounted_unit_price;
                     }
                 }
 
@@ -224,14 +234,16 @@ class Order extends Model
                 {
                     if($itemQty >= $price->max_qty)
                     {
-                        $basePrice = $price->corporate_unit_price;
+                        $basePrice['base_price'] = $price->corporate_unit_price;
+                        $basePrice['discount'] = 0;
                     }
                 }
                 else
                 {
                     if($itemQty >= $price->max_qty)
                     {
-                        $basePrice = $price->corporate_discounted_unit_price ?? $price->corporate_unit_price;
+                        $basePrice['base_price'] = $price->corporate_unit_price;
+                        $basePrice['discount'] = $price->corporate_discounted_unit_price;
                     }
                 }
 
