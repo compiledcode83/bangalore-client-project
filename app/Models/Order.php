@@ -53,7 +53,7 @@ class Order extends Model
     /**
      * Get statuses for the Order.
      */
-    public function OrderStatus()
+    public function orderStatuses()
     {
         return $this->hasMany(OrderStatus::class);
     }

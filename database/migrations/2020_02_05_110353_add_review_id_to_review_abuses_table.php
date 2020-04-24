@@ -12,11 +12,20 @@ class AddReviewIdToReviewAbusesTable extends Migration
      */
     public function up()
     {
-        Schema::table('review_abuses', function (Blueprint $table) {
-            $table->unsignedBigInteger('review_id')->after('id');
-            $table->foreign('review_id')
-                ->references('id')->on('reviews')
-                ->onDelete('cascade');
+        $driver = Schema::connection($this->getConnection())->getConnection()->getDriverName();
+        Schema::table('review_abuses', function (Blueprint $table) use ($driver) {
+
+            if ('sqlite' === $driver) {
+                $table->unsignedBigInteger('review_id')->after('id')->default('');
+                $table->foreign('review_id')
+                    ->references('id')->on('reviews')
+                    ->onDelete('cascade');
+            } else {
+                $table->unsignedBigInteger('review_id')->after('id');
+                $table->foreign('review_id')
+                    ->references('id')->on('reviews')
+                    ->onDelete('cascade');
+            }
         });
     }
 

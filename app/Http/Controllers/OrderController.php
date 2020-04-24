@@ -322,7 +322,7 @@ class OrderController extends Controller {
 
     public function getUserOrderStatuses( $id )
     {
-        $order = Order::with( 'orderStatuses' )->where( 'id', $id )->first();
+        $order = Order::with( 'orderStatuses', 'orderStatuses.status' )->where( 'id', $id )->first();
 
         return $order;
     }

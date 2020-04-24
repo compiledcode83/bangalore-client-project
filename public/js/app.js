@@ -41576,7 +41576,7 @@ var render = function() {
                         _vm._v(
                           _vm._s(_vm.$t("pages.order")) +
                             " " +
-                            _vm._s(orderStatus.name_en)
+                            _vm._s(orderStatus.status.name_en)
                         )
                       ]),
                       _vm._v(" "),

@@ -13,7 +13,7 @@ class AddFinalStatusToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('final_status')->after('order_code');
+            $table->string('final_status')->default('pending')->after('order_code');
         });
     }
 

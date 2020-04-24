@@ -52,7 +52,7 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('offers','ProductController@onlyOffers');
     Route::get('filter-categories/{slug?}','CategoryController@listFilterCategories');
     Route::get('filter-colors','AttributeController@listFilterColors');
-    Route::get('products/{slug}','ProductController@productDetails');
+    Route::get('products/{slug}','ProductController@productDetails')->name('product.show.details');
     Route::get('search/{term}','ProductController@searchProducts');
     Route::get('settings','SettingController@getSettings');
     Route::get('static/about','AboutController@getInformations');

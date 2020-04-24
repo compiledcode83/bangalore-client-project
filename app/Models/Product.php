@@ -6,6 +6,7 @@ use App\Scopes\ActiveScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
@@ -34,10 +35,20 @@ class Product extends Model
 
         static::saving(function ($model) {
 
-            $slug = str_slug($model->name_en);
-            $count = Self::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+            if(App::environment() == "testing")
+            {
+                $slug = str_slug($model->name_en);
+                $count = Self::whereRaw("slug LIKE '^{$slug}(-[0-9]+)?$'")->count();
 
-            $model->slug = $count ? "{$slug}-{$count}" : $slug;
+                $model->slug = $count ? "{$slug}-{$count}" : $slug;
+            }
+            else
+            {
+                $slug = str_slug($model->name_en);
+                $count = Self::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+
+                $model->slug = $count ? "{$slug}-{$count}" : $slug;
+            }
         });
     }
 
