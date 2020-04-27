@@ -865,7 +865,7 @@
                     'nickname': this.reviewNickname,
                     'review': this.reviewText
                 };
-                axios.post('/api/v1/user/review/', postData)
+                axios.post('/api/v1/user/review', postData)
                     .then((response) => {
                         if(response.data.message == 'success'){
                             this.$swal({

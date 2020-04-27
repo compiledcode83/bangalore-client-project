@@ -111,10 +111,10 @@
                 this.loadFilterCategoriesList();
                 this.loadFilterColorsList();
 
-                if(this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath)
-                {
+                // if(this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath)
+                // {
                     this.loadProducts();
-                }
+                // }
 
                 this.currentFullPath = this.$route.fullPath;
             }

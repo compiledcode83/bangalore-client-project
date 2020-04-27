@@ -183,9 +183,11 @@ class Order extends Model
         ]);
         if($saveItems)
         {
+            $settings = Setting::find(1);
             $this->updateStock($cart->cartItems);
             $this->deleteCart($cart);
             Mail::to( $user->email )->send( new OrderConfirmation( $emailConfirmationData ) );
+            Mail::to( $settings->email )->send( new OrderConfirmation( $emailConfirmationData ) );
             return $order;
         }
 

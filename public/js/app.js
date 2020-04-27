@@ -4824,7 +4824,7 @@ function formatState(state) {
         'nickname': this.reviewNickname,
         'review': this.reviewText
       };
-      axios.post('/api/v1/user/review/', postData).then(function (response) {
+      axios.post('/api/v1/user/review', postData).then(function (response) {
         if (response.data.message == 'success') {
           _this11.$swal({
             title: 'Success!',
@@ -5554,11 +5554,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     '$route.query': function $routeQuery(to, from) {
       this.slug = this.$route.params.slug;
       this.loadFilterCategoriesList();
-      this.loadFilterColorsList();
+      this.loadFilterColorsList(); // if(this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath)
+      // {
 
-      if (this.currentFullPath != null && this.currentFullPath !== this.$route.fullPath) {
-        this.loadProducts();
-      }
+      this.loadProducts(); // }
 
       this.currentFullPath = this.$route.fullPath;
     }

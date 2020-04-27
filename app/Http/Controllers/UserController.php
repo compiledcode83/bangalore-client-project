@@ -101,7 +101,7 @@ class UserController extends Controller {
         return ['ability' => $ability];
     }
 
-    public function     reviewStore( Request $request )
+    public function reviewStore( Request $request )
     {
         $attributes = $request->only( 'productAttributeId', 'rate', 'nickname', 'review' );
         $productAttribute = ProductAttributeValue::find( $attributes['productAttributeId'] );
@@ -114,8 +114,6 @@ class UserController extends Controller {
             'review'                     => $attributes['review'],
             'nickname'                   => $attributes['nickname'],
         ] );
-
-        dd($review);
 
         if ( $review )
         {
