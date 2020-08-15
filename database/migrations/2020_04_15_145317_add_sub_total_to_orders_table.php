@@ -12,10 +12,20 @@ class AddSubTotalToOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->decimal('delivery_charges', 8,3)->after('total');
-            $table->decimal('total_discount', 8,3)->after('total');
-            $table->decimal('sub_total', 8,3)->after('total');
+        $driver = Schema::connection($this->getConnection())->getConnection()->getDriverName();
+        Schema::table('orders', function (Blueprint $table) use($driver) {
+            if ('sqlite' === $driver)
+            {
+                $table->decimal('delivery_charges', 8,3)->default('')->after('total');
+                $table->decimal('total_discount', 8,3)->default('')->after('total');
+                $table->decimal('sub_total', 8,3)->default('')->after('total');
+            }
+            else
+            {
+                $table->decimal('delivery_charges', 8,3)->after('total');
+                $table->decimal('total_discount', 8,3)->after('total');
+                $table->decimal('sub_total', 8,3)->after('total');
+            }
         });
     }
 

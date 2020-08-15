@@ -175,9 +175,11 @@
 
                                     </div>
                                     <div class="col-sm-3 col-xs-6">
-                                        <label v-if="!selected_attribute.id || selected_attribute.stock != 0">{{$t('pages.qty')}}</label>
-                                        <span class="out-stock" style="margin-top: 45px;" v-if="selected_attribute.id && selected_attribute.stock == 0"></span>
-                                        <input type="text" v-else class="form-control rounded-0" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required>
+                                        <label>{{$t('pages.qty')}}</label>
+<!--                                        <span class="out-stock" style="margin-top: 45px;" v-if="qtyInputs[index] == 'out-stock'"></span>-->
+                                        <input type="text" class="form-control rounded-0" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required>
+<!--                                        <span class="out-stock" style="margin-top: 45px;" v-show="qtyInputs[index] == 'out-stock'"></span>-->
+<!--                                        <input type="text" class="form-control rounded-0" v-show="qtyInputs[index] != 'out-stock'" name="qtySelectedWithColors[]" :max="selected_attribute.stock" v-model="qtyInputs[index]" @keypress="isNumber($event)" @keyup="checkStock(index, $event)" required  :disabled="qtyInputs[index] == 'out-stock'">-->
                                     </div>
                                 </li>
                             </ul>
@@ -195,7 +197,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Details" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">{{$t('pages.details')}}</a></li>
                         <li role="presentation" class=""><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Info" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">moreInformation</a></li>
-                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">{{$t('pages.reviews')}} (6)</a></li>
+                        <li role="presentation" class="active"><a href="http://www.mawaqaa.com/clients/demos/itc/html3/product-details.html#Reviews" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="true">{{$t('pages.reviews')}} ({{product.reviews.length}})</a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -225,7 +227,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p>{{review.review}}</p>
+                                    <p  style="width: 55%;">{{review.review}}</p>
                                 </div>
                             </div><!--/.row-->
                         </div>
@@ -312,6 +314,13 @@
 
         },
         beforeRouteUpdate(to, from, next) {
+            //when open related from details make sure slider re-initialized with new product images
+            this.sliderFor = false;
+            this.sliderNav = false;
+            this.relatedSliderOnce = false;
+            $('.relatedprod-slide').slick("unslick");
+            this.unSlickSliders();
+
             this.slug = to.params.slug;
             this.loadProductDetails();
             next();
@@ -423,7 +432,6 @@
                     })
                 ]).then(axios.spread((productResponse) => {
                     this.product = productResponse.data;
-                    console.log(this.product);
                     //reset sku
                     this.selected_attribute.sku = this.product.sku;
                     if(!productResponse.data.main_gallery){
@@ -543,10 +551,15 @@
                         return element.id == _this.colorInputs[key];
                     });
 
+                    let descriptionItem = '';
+                    if(this.product.short_description_en && this.product.short_description_en !=''){
+                        descriptionItem = this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+                    }
+
                     if(parseInt(this.qtyInputs[key]) > 0) {
                         this.cartItem = {
                             item_name: this.product.name_en,
-                            item_description: this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40),
+                            item_description: descriptionItem,
                             product_attribute_id: this.colorInputs[key],//this.selected_attribute.id,
                             product_image: colorObjectInput.images[0],
                             product_print_image: '',
@@ -561,54 +574,104 @@
                             status: false
                         };
 
-                        this.cartItem = this.calcItemPrice(this.cartItem);
+                        console.log('start');
+                        console.log(this.cartItem);
 
+                        this.cartItem = this.calcItemPrice(this.cartItem);
                         this.addToCart(colorObjectInput, key);
                     }
                 }
             },
             addToCart(colorObjectInput, key) {
 
+                console.log('add To Cart');
                 //if item has print image and not uploaded before
                 if(this.file && this.cartItem.product_print_image === ''){
+                    //create tempCartItem
+
                     //validate file
-                    this.validateFile();
+                    if(this.validateFile())
+                    {
+                        console.log('inside');
+                        //Initialize the form data
+                        let formData = new FormData();
 
-                    //Initialize the form data
-                    let formData = new FormData();
+                        // upload file
+                        formData.append('file', this.file);
+                        formData.append('item_name', this.product.name_en);
+                        formData.append('product_attribute_id', this.colorInputs[key]);
+                        formData.append('product_image', colorObjectInput.images[0]);
+                        formData.append('product_qty', this.qtyInputs[key]);
+                        formData.append('product_color_name', colorObjectInput.name);
+                        formData.append('product_price', this.cartItem.product_price);
+                        formData.append('product_discount', this.cartItem.product_discount);
+                        formData.append('total', '0');
+                        /*
+                          Make the request to the POST /single-file URL
+                        */
+                        let  _this = this;
 
-                    // upload file
-                    formData.append('file', this.file);
-                    formData.append('item_name', this.product.name_en);
-                    formData.append('product_attribute_id', this.colorInputs[key]);
-                    formData.append('product_image', colorObjectInput.images[0]);
-                    formData.append('product_qty', this.qtyInputs[key]);
-                    formData.append('product_color_name', colorObjectInput.name);
-                    formData.append('product_price', this.cartItem.product_price);
-                    formData.append('product_discount', this.cartItem.product_discount);
-                    formData.append('total', '0');
-                    /*
-                      Make the request to the POST /single-file URL
-                    */
-                    let  _this = this;
 
-                    axios.post('/api/v1/cart/item',
-                        formData,
-                        {
-                            headers: {
-                                'Content-Type': "multipart/form-data"
+
+                        console.log('uploading ...');
+                        axios.post('/api/v1/cart/item',
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': "multipart/form-data"
+                                }
                             }
-                        }
-                    ).then(function (response) {
-                        _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                        ).then(function (response) {
+                            _this.cartItem.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                            let itemWithImage = response.data.item;
+                            console.log(response.data);
+                            let findAttribute = _this.product.product_attribute_values.find(function(element) {
+                                return element.id == response.data.item.product_attribute_id;
+                            });
 
-                        return _this.persistCartItem();
-                    }).catch(function (errors) {
-                        console.log(errors);
-                    });
+                            let descriptionItem = '';
+                            if(_this.product.short_description_en && _this.product.short_description_en !=''){
+                                descriptionItem = _this.product.short_description_en.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 40);
+                            }
+
+                            itemWithImage.item_description = descriptionItem;
+                            itemWithImage.product_print_image = 'uploads/print_images/'+response.data.fileName;
+                            itemWithImage.base_product_prices = _this.priceTableWithDiscount;
+                            itemWithImage.stock = findAttribute.stock;
+                            itemWithImage.status = false;
+
+
+                            return _this.persistCartItemWithImage(itemWithImage);
+                        }).catch(function (errors) {
+                            console.log(errors);
+                        });
+                    }
+
                 }else{
                     this.persistCartItem();
                 }
+            },
+            persistCartItemWithImage(item){
+                let  _this = this;
+                this.$store
+                    .dispatch('createCalculatedItemPriceAlreadyUploaded', item)
+                    .then(() => {
+                        // this.cart = this.$store.state.cart;
+                        this.$swal({
+                            title: 'New Item in cart!',
+                            text: "Item added to cart successfully!",
+                            icon: 'success'
+                        });
+
+                        //clean form
+                        _this.colorInputs = [];
+                        _this.qtyInputs  = [];
+                        _this.resetAddToCartInputs();
+
+                    })
+                    .catch((err) => {
+                        console.log('There was a problem creating your cart');
+                    });
             },
             persistCartItem(){
                 let  _this = this;
@@ -629,7 +692,6 @@
 
                     })
                     .catch((err) => {
-                        console.log(err);
                         console.log('There was a problem creating your cart');
                     });
             },
@@ -672,7 +734,6 @@
                 event.target.src = '/images/defaule-p.jpg';
             },
             addColorInput(){
-                console.log(this.colorInputs);
                 // check if previous input has color this will help
                 // when delete row will delete color from array
                 let indexOfColorInput = this.colorInputsCount - 1;
@@ -694,6 +755,15 @@
                 var colorValue = idAndColor.split("-");
                 // load attribute images by attribute ID
                 this.loadColorImages(null, colorValue[0] );
+                if(this.selected_attribute.stock == 0){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'This Color is out-Stock!',
+                    }).then(() => {
+                        this.removeColorInput(selectIndex);
+                    });
+                }
                 // select color value by setting select2 input
                 $('.select-colors-product-'+selectIndex).val(idAndColor);
                 // delete color & quantity inputs if color already selected
@@ -730,8 +800,6 @@
                         this.colorInputs.push(colorValue[0]);
                     }
                 }
-
-                console.log(this.colorInputs);
             },
             getColorObject(index){
                 //color object contains name, code, images ...
@@ -797,9 +865,9 @@
                     'nickname': this.reviewNickname,
                     'review': this.reviewText
                 };
-                axios.post('/api/v1/user/review/', postData)
+                axios.post('/api/v1/user/review', postData)
                     .then((response) => {
-                        if(response.data.message === 'success'){
+                        if(response.data.message == 'success'){
                             this.$swal({
                                 title: 'Success!',
                                 text: "Your review submitted successfully!",
@@ -813,16 +881,20 @@
 
                             $('#addReview').modal('hide');
                         }else{
+                            console.log(response);
                             this.$swal({
                                 title: 'Error!',
                                 text: "Something went wrong!",
                                 icon: 'error',
                             });
                         }
+                    }).catch((err) => {
+                        console.log('There was a problem creating your cart');
                     });
 
             },
             calcItemPrice(item){
+                console.log('calc price');
                 //same in store.js ===> URGENT refactor
                 // get base prices defined by admin
                 // search for max_qty based on user enter qty
@@ -869,17 +941,7 @@
 
                     this.colorInputsCount = this.colorInputsCount -  1;
 
-                    console.log('asddd ' + lastIndex + ' ddddd ' + index + ' ddddd ' +lastValue);
                     this.colorInputs.pop();
-                    // if(lastIndex == index){
-                    // }else{
-                    //     this.colorInputs.splice(index, 1);
-                    // }
-
-                    console.log(this.colorInputs);
-                    // if(index == 0){
-                    //     this.colorInputs.reverse();
-                    // }
                 }
             },
             replaceColorInput(index){

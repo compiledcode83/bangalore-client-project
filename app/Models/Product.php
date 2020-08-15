@@ -6,6 +6,7 @@ use App\Scopes\ActiveScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
@@ -34,10 +35,20 @@ class Product extends Model
 
         static::saving(function ($model) {
 
-            $slug = str_slug($model->name_en);
-            $count = Self::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+            if(App::environment() == "testing")
+            {
+                $slug = str_slug($model->name_en);
+                $count = Self::whereRaw("slug LIKE '^{$slug}(-[0-9]+)?$'")->count();
 
-            $model->slug = $count ? "{$slug}-{$count}" : $slug;
+                $model->slug = $count ? "{$slug}-{$count}" : $slug;
+            }
+            else
+            {
+                $slug = str_slug($model->name_en);
+                $count = Self::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+
+                $model->slug = $count ? "{$slug}-{$count}" : $slug;
+            }
         });
     }
 
@@ -241,7 +252,8 @@ class Product extends Model
                     {
                         $priceTable[$price->max_qty] = [
                             'baseOriginal'    => $price->individual_unit_price,
-                            'discount' => $price->individual_discounted_unit_price
+                            'discount' => $price->individual_discounted_unit_price,
+                            'discountInPercentage' => (($price->individual_unit_price - $price->individual_discounted_unit_price) / $price->individual_unit_price) * 100
                         ];
                     }
                 }
@@ -264,14 +276,15 @@ class Product extends Model
                     {
                         $priceTable[$price->max_qty] = [
                             'baseOriginal'    => (float)$price->corporate_unit_price,
-                            'discount' => (float)$price->corporate_discounted_unit_price
+                            'discount' => (float)$price->corporate_discounted_unit_price,
+                            'discountInPercentage' => (($price->corporate_unit_price - $price->corporate_discounted_unit_price) / $price->corporate_unit_price) * 100
                         ];
                     }
                 }
             }
 
             $priceTable = collect($priceTable);
-            $product->price = $priceTable->first();
+            $product->price = $priceTable->sort()->first();
         }
     }
 
@@ -315,28 +328,41 @@ class Product extends Model
                 // get prices
                 if($product->prices->first())
                 {
+                    $productPrices = [];
                     foreach ($product->prices as $price)
                     {
                         if ( $user->type == User::TYPE_USER )
                         {
-                            $prices [] = $price->individual_unit_price;
+
                             // (unitPrice - discounted) / unitPrice * 100
                             if($price->individual_discounted_unit_price && $price->individual_discounted_unit_price != '0')
                             {
                                 $discounts [] = (($price->individual_unit_price - $price->individual_discounted_unit_price) / $price->individual_unit_price) * 100;
+                                $productPrices [$price->max_qty] = $price->individual_discounted_unit_price;
+                            }
+                            else
+                            {
+                                $productPrices [$price->max_qty] = $price->individual_unit_price;
                             }
                         }
 
                         if ( $user->type == User::TYPE_CORPORATE )
                         {
-                            $prices [] = $price->corporate_unit_price;
+
                             // (unitPrice - discounted) / unitPrice * 100
                             if($price->corporate_discounted_unit_price && $price->corporate_discounted_unit_price != '0')
                             {
                                 $discounts [] = (($price->corporate_unit_price - $price->corporate_discounted_unit_price) / $price->corporate_unit_price) * 100;
+                                $productPrices [$price->max_qty] = $price->corporate_discounted_unit_price;
+                            }
+                            else
+                            {
+                                $productPrices [$price->max_qty] = $price->corporate_unit_price;
                             }
                         }
                     }
+                    $productPrices = collect($productPrices);
+                    $prices[] = $productPrices->sort()->first();
 
                 }
             }
@@ -349,6 +375,7 @@ class Product extends Model
         $prices = array_unique($prices);
         $priceMin = count($prices) > 0 ? min($prices) : 0;
         $priceMax = count($prices) > 0 ? max($prices) : 0;
+
         $discounts = array_unique($discounts);
         foreach ($discounts as $discount)
         {

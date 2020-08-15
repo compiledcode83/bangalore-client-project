@@ -34,6 +34,9 @@ import Layout from "./components/partials/Layout";
 import Router from 'vue-router'
 import Vue from "vue";
 import ServiceDetails from "./components/pages/ServiceDetails";
+import MediaDetails from "./components/pages/MediaDetails";
+import Faq from "./components/pages/Faq";
+import Sitemap from "./components/pages/Sitemap";
 
 // const routes = new Router({
 export default {
@@ -212,9 +215,25 @@ export default {
             component: Media
         },
         {
+            path: '/media/:id',
+            name: 'pages.mediaDetails',
+            component: MediaDetails,
+            props: true
+        },
+        {
             path: '/pages/:slug',
             name: 'pages',
             component: Pages
+        },
+        {
+            path: '/faq',
+            name: 'pages.faq',
+            component: Faq
+        },
+        {
+            path: '/sitemap',
+            name: 'pages.sitemap',
+            component: Sitemap
         },
         // { path: '/parent/:id', component: Media,
         //     children: [

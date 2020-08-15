@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -32,7 +33,6 @@ class OrderConfirmation extends Mailable
     {
         return $this->subject('Order#'.$this->data['order_code'].' -- ITC-PROMOTIONS.com')
             ->from('orders@itc-promotions.com')
-            ->to($this->data['email'])
             ->view('emails.orderConfirmation');
     }
 }

@@ -32,7 +32,8 @@ class CartItem extends Model
     public function handleCartItem( $cartId, $attributes )
     {
         $checkItem = Self::where('cart_id', $cartId)
-            ->where('product_attribute_value_id', $attributes['product_attribute_id'])->first();
+            ->where('product_attribute_value_id', $attributes['product_attribute_id'])
+            ->where('print_image', $attributes['print_image'])->first();
 
         if($checkItem)
         {
@@ -59,14 +60,17 @@ class CartItem extends Model
             'color_name'                 => $attributes['product_color_name'],
             'unit_price'                 => $attributes['product_price'],
             'unit_discount'               => $attributes['product_discount'],
+            'print_image'                => $attributes['print_image'],
         ];
-        if(isset($attributes['print_image']))
-        {
-            $cartItem['print_image'] = $attributes['print_image'];
-        }
+//        if(isset($attributes['print_image']))
+//        {
+//            $cartItem['print_image'] = $attributes['print_image'];
+//        }
 
         Self::create( $cartItem );
-        return 'Item Added successfully!';
+//        return 'Item Added successfully!';
+
+        return $cartItem;
     }
 
     public function updateItemQty( $cartId, $attributes )
@@ -88,10 +92,11 @@ class CartItem extends Model
         return 'Server Error CI2202!';
     }
 
-    public function removeItem($cartId, $productAttributeId)
+    public function removeItem($cartId, $productAttributeId, $printImage)
     {
         return CartItem::where('cart_id', $cartId)
                         ->where('product_attribute_value_id', $productAttributeId)
+                        ->where('print_image', $printImage)
                         ->forceDelete();
     }
 }

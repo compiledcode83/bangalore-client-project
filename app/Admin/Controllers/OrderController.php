@@ -87,18 +87,19 @@ class OrderController extends AdminController {
         $sendEmailWithPrintImageStatus = [];
         foreach ($order->orderItems as $orderItem)
         {
-            $printImageAttribute = $request->only('print_image_' . $orderItem->id);
+            $attributeName = 'print_image_' . $orderItem->id;
+            $printImageAttribute = $request->only($attributeName);
             // check if item has print image
             if ( isset( $printImageAttribute ) )
             {
                 //in case order has multiple print images if admin accepted some and rejected
                 // others will send email with all accepted and rejected prints
                 //if it's approved add it to email
-                  
+//                dd(isset($printImageAttribute[$attributeName]));
                 //check if status changed
-                if($orderItem->is_print_image_accepted != $printImageAttribute['print_image_'. $orderItem->id])
+                if(isset($printImageAttribute[$attributeName]) && $orderItem->is_print_image_accepted != $printImageAttribute[$attributeName])
                 {
-                    if ( $printImageAttribute['print_image_'. $orderItem->id] == '1' )
+                    if ( $printImageAttribute[$attributeName] == '1' )
                     {
                         $orderItem->update( [
                             'is_print_image_accepted' => '1'
@@ -132,7 +133,7 @@ class OrderController extends AdminController {
             Mail::to( $customerEmail )->send( new PrintImagesConfirmation( $sendEmailWithPrintImageStatus ) );
         }
 
-        return redirect()->route('orders.index');
+        return redirect('admin/orders');
     }
 
     /**

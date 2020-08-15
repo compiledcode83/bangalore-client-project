@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFinalStatusToOrdersTable extends Migration
+class AddDiscountedPriceToOrderItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddFinalStatusToOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('final_status')->default('pending')->after('order_code');
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->decimal('discounted_price', 8,3)->default(0)->after('unit_price');
         });
     }
 
@@ -24,8 +24,8 @@ class AddFinalStatusToOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('final_status');
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->dropColumn('discounted_price');
         });
     }
 }

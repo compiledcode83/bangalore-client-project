@@ -287,9 +287,9 @@
                                                                 <th align="right" style="padding:15px 0px;font-size: 17px;text-transform: uppercase;font-weight: bold;width: 130px;" class="esd-block-text">PRICE</th>
                                                                 <th align="right" style="padding:15px 0px; font-size: 17px; text-transform: uppercase; font-weight: bold;" class="esd-block-text">SUBTOTAL</th>
                                                             </tr>
-                                                            <tr>
-                                                                <td align="left" style=" font-size: 16px; " class="esd-block-text">PRODUCT</td>
-                                                            </tr>
+{{--                                                            <tr>--}}
+{{--                                                                <td align="left" style=" font-size: 16px; " class="esd-block-text">PRODUCT</td>--}}
+{{--                                                            </tr>--}}
 
 
 
@@ -312,7 +312,7 @@
                                                                     <img style="width: 100px;" src="{{asset('/uploads/'.$item['image'])}}" /> {{$item['name']}}
                                                                     @if($item['print_image'])
                                                                         <p>
-                                                                            <img style="width: 50px;" src="{{'/uploads/'.asset($item['print_image'])}}" width="100" />
+                                                                            <img style="width: 50px;" src="{{asset('/'.$item['print_image'])}}" width="100" />
                                                                         </p>
                                                                     @endif
                                                                 </td>

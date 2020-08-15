@@ -78,6 +78,33 @@
             tryToReorder($orderId){
                 let _this = this;
                 axios.post(
+                    '/api/v1/account/reorder/discount',
+                    {
+                        'orderId' : $orderId
+                    }
+                ).then((response) => {
+                    if(!response.data.continueReorder) {
+                        this.$swal({
+                            title: 'Order Has Discount!',
+                            text: "Unfortunately discount Expired! Do you want continue without discount?",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Yes, Order without discount!'
+                        }).then((result) => {
+                            if (result.value) {
+                                _this.reOrderValid($orderId);
+                            }
+                        });
+                    }else{
+                        _this.reOrderValid($orderId);
+                    }
+                });
+            },
+            reOrderValid($orderId){
+                let _this = this;
+                axios.post(
                     '/api/v1/account/reorder',
                     {
                         'orderId' : $orderId

@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                         <tr v-for="orderStatus in order.order_statuses">
-                            <td>{{$t('pages.order')}} {{orderStatus.name_en}}</td>
+                            <td>{{$t('pages.order')}} {{orderStatus.status.name_en}}</td>
                             <td>{{orderStatus.created_at}}</td>
                         </tr>
                         </tbody>

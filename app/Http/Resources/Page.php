@@ -15,8 +15,8 @@ class Page extends JsonResource
     public function toArray($request)
     {
         return [
-            'title_en' => $this->title_en ,
-            'body_en' => $this->body_en,
+            'title_en' => $this->title ,
+            'body_en' => $this->body,
             'banner' => $this->banner,
             'slug' => $this->slug,
         ];

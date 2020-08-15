@@ -52,16 +52,19 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('offers','ProductController@onlyOffers');
     Route::get('filter-categories/{slug?}','CategoryController@listFilterCategories');
     Route::get('filter-colors','AttributeController@listFilterColors');
-    Route::get('products/{slug}','ProductController@productDetails');
+    Route::get('products/{slug}','ProductController@productDetails')->name('product.show.details');
     Route::get('search/{term}','ProductController@searchProducts');
     Route::get('settings','SettingController@getSettings');
     Route::get('static/about','AboutController@getInformations');
     Route::get('static/contact','ContactController@getInformations');
     Route::post('static/contact','ContactController@sentMail');
     Route::get('static/media','MediaServiceController@getMedias');
+    Route::get('static/media-details/{id}','MediaServiceController@getMediaDetails');
     Route::get('static/service','MediaServiceController@getServices');
     Route::get('static/service-details/{id}','MediaServiceController@getServicesDetails');
     Route::get('static/page/{slug}','PageController@getPage');
+    Route::get('static/faq','PageController@getFAQPage');
+    Route::get('static/sitemap','PageController@getSitemapPage');
     Route::get('social','PageController@getSocial');
 
     // Send reset password mail
@@ -102,6 +105,7 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('account/info','UserController@accountInfo');
         Route::post('account/info','UserController@updateAccountInfo');
         Route::post('account/reorder','OrderController@tryToReorder');
+        Route::post('account/reorder/discount','OrderController@checkReorderDiscount');
 
         Route::post('checkout/delivery-charges','AddressesController@getDeliveryChargesForAddress');
 

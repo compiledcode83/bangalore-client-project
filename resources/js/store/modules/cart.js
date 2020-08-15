@@ -1,14 +1,27 @@
 import CartService from "../../services/CartService";
 
-export const state = {
-    cartItem: {},
-    cart: {
-        items: [],
-        subtotal: 0,
-        discount: 0,
-        total: 0,
+const getDefaultState = () => {
+    return {
+        cartItem: {},
+        cart: {
+            items: [],
+            subtotal: 0,
+            discount: 0,
+            total: 0,
+        }
     }
 };
+
+export const state = getDefaultState();
+//     {
+//     cartItem: {},
+//     cart: {
+//         items: [],
+//         subtotal: 0,
+//         discount: 0,
+//         total: 0,
+//     }
+// };
 
 export const mutations = {
     ADD_ITEM_TO_CART(state, item){
@@ -47,13 +60,26 @@ export const mutations = {
     },
     CLEAR_CART(state){
 
-        state.cart.items.forEach(function(item){
-            state.cart.items.splice(state.cart.items.indexOf(item), 1);
-        });
+        Object.assign(state, getDefaultState());
+        // state.cart.items.forEach(function(item){
+        //     state.cart.items.splice(state.cart.items.indexOf(item), 1);
+        // });
+        // state.cart.items.forEach(function(item){
+        //     state.cart.items.pop(item);
+        // });
+        // let newArray = {
+        //     items: [],
+        //     subtotal: 0,
+        //     discount: 0,
+        //     total: 0,
+        // };
+        //
+        // state.cart = newArray;
+        // state.cart.total = 0;
+        // state.cart.subtotal = 0;
+        // state.cart.discount = 0;
+        // state.cartItem = {};
 
-        state.cart.total = 0;
-        state.cart.subtotal = 0;
-        state.cart.discount = 0;
     }
 };
 
@@ -61,6 +87,7 @@ export const actions = {
     createCartItem({ commit }, item) {
         //check item is already in cart
         let savedCartItem = this.getters.getCartItem(item);
+
         if(savedCartItem){
             //update item qty
             let updatedQty = item.product_qty + savedCartItem.product_qty;
@@ -78,10 +105,32 @@ export const actions = {
         commit('UPDATE_CART_SUBTOTAL');
         commit('UPDATE_CART_TOTAL');
     },
-    createCalculatedItemPrice({ commit }, item) {
+    createCartItemAlreadyUploaded({ commit }, item) {
+        //check item is already in cart
+        let savedCartItem = this.getters.getCartItem(item);
 
+        if(savedCartItem){
+            //update item qty
+            let updatedQty = item.product_qty + savedCartItem.product_qty;
+            this.dispatch('calcItemPrice', {item, updatedQty});
+            CartService.updateCartItemQty(item).then(() => {
+                commit('UPDATE_ITEM_QTY', item);
+                commit('UPDATE_ITEM_PRICE', item);
+            });
+        }else{
+            commit('ADD_ITEM_TO_CART', item);
+        }
+
+        commit('UPDATE_CART_SUBTOTAL');
+        commit('UPDATE_CART_TOTAL');
+    },
+    createCalculatedItemPrice({ commit }, item) {
         this.dispatch('calcItemPrice', {item});
         this.dispatch('createCartItem', item);
+    },
+    createCalculatedItemPriceAlreadyUploaded({ commit }, item) {
+        this.dispatch('calcItemPrice', {item});
+        this.dispatch('createCartItemAlreadyUploaded', item);
     },
     updateItemPriceAfterQtyChanged({ commit }, item) {
 

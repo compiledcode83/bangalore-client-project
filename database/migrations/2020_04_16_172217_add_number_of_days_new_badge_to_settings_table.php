@@ -12,8 +12,17 @@ class AddNumberOfDaysNewBadgeToSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->string('number_of_days_for_new_badge')->after('id');
+        $driver = Schema::connection($this->getConnection())->getConnection()->getDriverName();
+        Schema::table('settings', function (Blueprint $table) use ($driver) {
+            if ('sqlite' === $driver)
+            {
+                $table->string('number_of_days_for_new_badge')->after('id')->default('');
+            }
+            else
+            {
+                $table->string('number_of_days_for_new_badge')->after('id');
+            }
+
         });
     }
 

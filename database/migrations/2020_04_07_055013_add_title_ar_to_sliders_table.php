@@ -12,15 +12,25 @@ class AddTitleArToSlidersTable extends Migration
      */
     public function up()
     {
-        Schema::table('sliders', function (Blueprint $table) {
-//            remove old titles
-            $table->dropColumn('sub_title');
-            $table->dropColumn('title');
+        $driver = Schema::connection($this->getConnection())->getConnection()->getDriverName();
+        Schema::table('sliders', function (Blueprint $table) use($driver) {
+            if ('sqlite' === $driver) {
+                //            remove old titles
 
-            $table->string('sub_title_ar')->after('id')->nullable();
-            $table->string('sub_title_en')->after('id')->nullable();
-            $table->string('title_ar')->after('id')->nullable();
-            $table->string('title_en')->after('id')->nullable();
+                $table->string('sub_title_ar')->after('id')->nullable();
+                $table->string('sub_title_en')->after('id')->nullable();
+                $table->string('title_ar')->after('id')->nullable();
+                $table->string('title_en')->after('id')->nullable();
+            } else {
+                //            remove old titles
+                $table->dropColumn('sub_title');
+                $table->dropColumn('title');
+
+                $table->string('sub_title_ar')->after('id')->nullable();
+                $table->string('sub_title_en')->after('id')->nullable();
+                $table->string('title_ar')->after('id')->nullable();
+                $table->string('title_en')->after('id')->nullable();
+            }
         });
     }
 

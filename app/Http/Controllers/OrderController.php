@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderStatus;
 use App\Models\OrderTransactions;
+use App\Models\Setting;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +27,10 @@ class OrderController extends Controller {
         $attributes = $request->only( 'discount','delivery','shippingAddress', 'billingShipping', 'paymentMethod', 'defaultBillingAddress' );
 
         $order = $this->orderModel->store( $user, $attributes );
+        if(isset($order['error']))
+        {
+            return response()->json(['message'=> $order['error']],422 );
+        }
         $orderProduct = [];
         if($request->paymentMethod == 'cash')
         {
@@ -36,7 +41,7 @@ class OrderController extends Controller {
              array_push($orderProduct , array (
                 'CurrencyCode' => 'KWD',
                 'Quantity' => $item->qty,
-                'TotalPrice' => $item->qty * $item->unit_price,
+                'TotalPrice' => $item->qty * ($item->unit_price - $item->discounted_price),
                 'UnitID' => $item->product_attribute_value_id,
                 'UnitName' => $item->productAttributeValue->product->name,
                 'UnitPrice' => $item->unit_price,
@@ -249,9 +254,31 @@ class OrderController extends Controller {
         return $order;
     }
 
+    public function checkReorderDiscount(Request $request)
+    {
+        $attribute = $request->only( 'orderId' );
+        $settings = Setting::find(1);
+        if($settings->enable_offers_page)
+        {
+            return ['continueReorder' => 1];
+        }
+        $order = Order::with( 'orderItems' )->where( 'id', $attribute['orderId'] )->first();
+        $items = [];
+        foreach ($order->orderItems as $item)
+        {
+            if($item->discounted_price > 0)
+            {
+                return ['continueReorder' => 0];
+            }
+        }
+
+        return ['continueReorder' => 1];
+    }
+
     public function tryToReorder( Request $request )
     {
         $attribute = $request->only( 'orderId' );
+        $settings = Setting::find(1);
         $order = Order::with( 'orderItems' )->where( 'id', $attribute['orderId'] )->first();
         $items = [];
         foreach ($order->orderItems as $item)
@@ -273,7 +300,7 @@ class OrderController extends Controller {
                         'product_color_name'   => $item->productAttributeValue->attributeValue->value_en,
                         'product_price'        => $item->unit_price,
                         'base_product_prices'  => $productPrices['priceTableWithDiscount'],
-                        'product_discount'     => 0,
+                        'product_discount'     => $settings->enable_offers_page ? $item->discounted_price : 0,
                         'total'                => $item->unit_price * $item->qty,
                         'status'               => false,
                         'stock'                => $item->productAttributeValue->stock
@@ -295,7 +322,7 @@ class OrderController extends Controller {
 
     public function getUserOrderStatuses( $id )
     {
-        $order = Order::with( 'orderStatuses' )->where( 'id', $id )->first();
+        $order = Order::with( 'orderStatuses', 'orderStatuses.status' )->where( 'id', $id )->first();
 
         return $order;
     }
